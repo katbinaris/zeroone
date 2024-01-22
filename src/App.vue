@@ -106,10 +106,10 @@ const state = reactive({ count: 12 })
           <div>
             <div class="space-y-1 p-6 pb-0">
               <h2 class="text-md leading-none">
-                Profiles
+                {{ $t('profiles.title') }}
               </h2>
               <p class="text-xs text-muted-foreground">
-                An open-source UI component library.
+                {{ $t('profiles.subtitle') }}
               </p>
             </div>
             <Separator class="my-4" />
@@ -129,7 +129,7 @@ const state = reactive({ count: 12 })
                 <div class="flex flex-col">
                   <div class="space-y-1 p-6">
                     <h1 class="leading-none text-lg">
-                      Quick Preview
+                      {{ $t('preview.title') }}
                     </h1>
                     <!-- <p class="text-xs text-muted-foreground">
                       Pre-rendered preview with live feedback from current position.
@@ -143,7 +143,7 @@ const state = reactive({ count: 12 })
                   <div class="flex-none">
                     <Bolt class="h-4 w-4" />
                   </div>
-                  <div clas="flex-initial"><h2 class="text-sm px-2 py-4">Configuration Options</h2></div>
+                  <div class="flex-initial"><h2 class="text-sm px-2 py-4">{{ $t('config_options.title') }}</h2></div>
 
                 </div>
 
@@ -152,10 +152,10 @@ const state = reactive({ count: 12 })
                   class="text-left rounded-none border-solid border-t data-[state=active]:bg-zinc-100 data-[state=active]:text-zinc-900 data-[state=active]:ring-none">
                   <div class="p-4">
                     <h1 class="leading-none text-lg">
-                      Program Settings
+                      {{ $t('config_options.program_settings.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Operation mode and Profile Naming
+                      {{ $t('config_options.program_settings.subtitle') }}
                     </p>
 
                   </div>
@@ -166,10 +166,10 @@ const state = reactive({ count: 12 })
                   class="text-left rounded-none border-solid border-t data-[state=active]:bg-zinc-100 data-[state=active]:text-zinc-900 data-[state=active]:ring-none">
                   <div class="p-4">
                     <h1 class="leading-none text-lg pb-1">
-                      Feedback Designer
+                      {{ $t('config_options.feedback_designer.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Feedback mode selector and parameter adjustment
+                      {{ $t('config_options.feedback_designer.subtitle') }}
                     </p>
 
                   </div>
@@ -179,10 +179,10 @@ const state = reactive({ count: 12 })
                   class="text-left rounded-none border-solid border-t data-[state=active]:bg-zinc-100 data-[state=active]:text-zinc-900 data-[state=active]:ring-none">
                   <div class="p-4">
                     <h1 class="leading-none text-lg">
-                      Mapping Configuration
+                      {{ $t('config_options.mapping_configuration.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Assign function to Knob and Keys
+                      {{ $t('config_options.mapping_configuration.subtitle') }}
                     </p>
 
                   </div>
@@ -194,10 +194,10 @@ const state = reactive({ count: 12 })
                   class="text-left rounded-none border-solid border-t data-[state=active]:bg-zinc-100 data-[state=active]:text-zinc-900 data-[state=active]:ring-none">
                   <div class="p-4">
                     <h1 class="leading-none text-lg">
-                      Light Designer
+                      {{ $t('config_options.light_designer.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Adjust behavior of LED Ring. Turn On/Off.
+                      {{ $t('config_options.light_designer.subtitle') }}
                     </p>
 
                   </div>
@@ -207,12 +207,12 @@ const state = reactive({ count: 12 })
                   class="text-left rounded-none border-solid border-t data-[state=active]:bg-zinc-100 data-[state=active]:text-zinc-900 data-[state=active]:ring-none"
                   disabled="true">
                   <div class="p-4">
-                    <Badge class="font-mono h-4 mb-1 rounded-full">COMING SOON</badge>
+                    <Badge class="font-mono h-4 mb-1 rounded-full">{{ $t('common.coming_soon') }}</badge>
                     <h1 class="leading-none text-muted-foreground text-lg">
-                      GUI Designer
+                      {{ $t('config_options.gui_designer.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Adjust graphic interface parameters
+                      {{ $t('config_options.gui_designer.subtitle') }}
                     </p>
 
                   </div>
@@ -227,10 +227,10 @@ const state = reactive({ count: 12 })
 
                   <div class="space-y-1 p-6">
                     <h1 class="leading-none text-lg">
-                      Feedback Designer
+                      {{ $t('config_options.feedback_designer.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Create or tune device haptic response
+                      {{ $t('config_options.feedback_designer.subtitle') }}
                     </p>
 
                   </div>
@@ -242,7 +242,8 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <GaugeCircle class="h-4 w-4" />
                       </div>
-                      <div clas="flex-initial"><h2 class="text-sm px-2 py-4">Feedback Type</h2></div>
+                      <div class="flex-initial"><h2 class="text-sm px-2 py-4">
+                        {{ $t('config_options.feedback_designer.feedback_type.title') }}</h2></div>
 
                     </div>
                     <Separator />
@@ -254,9 +255,9 @@ const state = reactive({ count: 12 })
                             <div class="size-16 mb-2">
                               <img src="@/assets/gui-ico/ico-fd.svg" />
                             </div>
-                            <span class="text-xs leading-3 text-wrap">
-        Fine Detents
-      </span>
+                            <span
+                              class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.fine_detents')
+                              }}</span>
                           </div>
                         </TabsTrigger>
                         <TabsTrigger value="cd">
@@ -264,9 +265,9 @@ const state = reactive({ count: 12 })
                             <div class="size-16 mb-2">
                               <img src="@/assets/gui-ico/ico-cd.svg" />
                             </div>
-                            <span class="text-xs leading-3 text-wrap">
-        Coarse Detents
-      </span>
+                            <span
+                              class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.coarse_detents')
+                              }}</span>
                           </div>
                         </TabsTrigger>
                         <TabsTrigger value="vr">
@@ -274,9 +275,9 @@ const state = reactive({ count: 12 })
                             <div class="size-16 mb-2">
                               <img src="@/assets/gui-ico/ico-vf.svg" />
                             </div>
-                            <span class="text-xs leading-3 text-wrap">
-        Viscous Rotation
-      </span>
+                            <span
+                              class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.viscous_rotation')
+                              }}</span>
                           </div>
                         </TabsTrigger>
                         <TabsTrigger value="rt">
@@ -285,8 +286,8 @@ const state = reactive({ count: 12 })
                               <img src="@/assets/gui-ico/ico-rc.svg" />
                             </div>
                             <span class="text-xs leading-3 text-wrap">
-        Return to Center
-      </span>
+                              {{ $t('config_options.feedback_designer.feedback_type.return_to_center') }}
+                            </span>
                           </div>
                         </TabsTrigger>
                       </TabsList>
@@ -295,7 +296,9 @@ const state = reactive({ count: 12 })
 
                     <Separator />
                     <div class="flex flex-col p-8 pt-4">
-                      <span class="text-sm text-muted-foreground font-mono h-8 text-center">Total Positions</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono h-8 text-center">{{ $t('config_options.feedback_designer.total_positions')
+                        }}</span>
 
                       <div class="flex w-full max-w-sm items-center gap-0">
                         <Button
@@ -324,7 +327,8 @@ const state = reactive({ count: 12 })
                         <AudioWaveform class="h-4 w-4" />
                       </div>
                       <div class="grow">
-                        <h2 class="text-sm px-2 py-4">Haptic Response</h2>
+                        <h2 class="text-sm px-2 py-4">{{ $t('config_options.feedback_designer.haptic_response.title')
+                          }}</h2>
                       </div>
                       <div class="flex-none">
                         <Toggle
@@ -338,7 +342,9 @@ const state = reactive({ count: 12 })
                     <Separator />
 
                     <div class="flex flex-col p-8 pt-4">
-                      <span class="text-sm text-muted-foreground font-mono">Feedback Strength</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.feedback_strength')
+                        }}</span>
                       <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
                       <div class="flex flex-row px-1 py-1.5">
                         <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
@@ -351,7 +357,9 @@ const state = reactive({ count: 12 })
                     </div>
                     <Separator />
                     <div class="flex flex-col p-8 pt-4">
-                      <span class="text-sm text-muted-foreground font-mono">Bounce Back Strength</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.bounce_back_strength')
+                        }}</span>
                       <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
                       <div class="flex flex-row px-1 py-1.5">
                         <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
@@ -363,7 +371,9 @@ const state = reactive({ count: 12 })
                     </div>
                     <Separator />
                     <div class="flex flex-col p-8 pt-4">
-                      <span class="text-sm text-muted-foreground font-mono">Output Ramp Dampening</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.output_ramp_dampening')
+                        }}</span>
                       <Slider :default-value="[4]" :max="4" :step="1" class="pt-4" />
                       <div class="flex flex-row px-1 py-1.5">
                         <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
@@ -380,7 +390,8 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <AudioLines class="h-4 w-4" />
                       </div>
-                      <div class="grow"><h2 class="text-sm px-2 py-4"> Auditory Response</h2></div>
+                      <div class="grow"><h2 class="text-sm px-2 py-4">
+                        {{ $t('config_options.feedback_designer.auditory_response.title') }}</h2></div>
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
@@ -391,7 +402,9 @@ const state = reactive({ count: 12 })
                     </div>
                     <Separator />
                     <div class="flex flex-col p-8 pt-4">
-                      <span class="text-sm text-muted-foreground font-mono">Auditory Haptic Level</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.auditory_response.haptic_level')
+                        }}</span>
                       <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
                       <div class="flex flex-row px-1 py-1.5">
                         <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
@@ -404,7 +417,9 @@ const state = reactive({ count: 12 })
                     <Separator />
                     <div class="flex flex-col p-8 pt-4">
 
-                      <span class="text-sm text-muted-foreground font-mono">Auditory Magnitude</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.auditory_response.magnitude')
+                        }}</span>
                       <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
                       <div class="flex flex-row px-1 py-1.5">
                         <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Faint</div>
@@ -427,10 +442,10 @@ const state = reactive({ count: 12 })
 
                   <div class="space-y-1 p-6">
                     <h1 class="leading-none text-lg">
-                      Mapping Configuration
+                      {{ $t('config_options.mapping_configuration.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Create or tune device haptic response
+                      {{ $t('config_options.mapping_configuration.subtitle') }}
                     </p>
 
                   </div>
@@ -442,7 +457,8 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <Keyboard class="h-4 w-4" />
                       </div>
-                      <div clas="flex-initial"><h2 class="text-sm px-2 py-4">Key Mapping</h2></div>
+                      <div class="flex-initial"><h2 class="text-sm px-2 py-4">
+                        {{ $t('config_options.mapping_configuration.key_mapping.title') }}</h2></div>
 
                     </div>
                     <Separator />
@@ -455,9 +471,9 @@ const state = reactive({ count: 12 })
                               <img src="@/assets/gui-ico/ico-key-o.svg" />
                             </div>
                             <span class="text-xs leading-3 text-wrap">
-        Switch A
-        <Badge class="bg-orange-400 mt-2">Shift</Badge>
-      </span>
+                              {{ $t('config_options.mapping_configuration.key_mapping.switch.a') }}
+                              <Badge class="bg-orange-400 mt-2">Shift</Badge>
+                            </span>
                           </div>
                         </TabsTrigger>
                         <TabsTrigger value="cd">
@@ -466,9 +482,9 @@ const state = reactive({ count: 12 })
                               <img src="@/assets/gui-ico/ico-key.svg" />
                             </div>
                             <span class="text-xs leading-3 text-wrap">
-        Switch B
-        <Badge class="bg-zinc-400 mt-2">Fn1</Badge>
-      </span>
+                              {{ $t('config_options.mapping_configuration.key_mapping.switch.b') }}
+                              <Badge class="bg-zinc-400 mt-2">Fn1</Badge>
+                            </span>
                           </div>
                         </TabsTrigger>
                         <TabsTrigger value="vr">
@@ -477,9 +493,9 @@ const state = reactive({ count: 12 })
                               <img src="@/assets/gui-ico/ico-key-g.svg" />
                             </div>
                             <span class="text-xs leading-3 text-wrap">
-        Switch C
-        <Badge class="bg-zinc-400 mt-2">Fn2</Badge>
-      </span>
+                              {{ $t('config_options.mapping_configuration.key_mapping.switch.c') }}
+                              <Badge class="bg-zinc-400 mt-2">Fn2</Badge>
+                            </span>
                           </div>
                         </TabsTrigger>
                         <TabsTrigger value="rt">
@@ -488,9 +504,9 @@ const state = reactive({ count: 12 })
                               <img src="@/assets/gui-ico/ico-key-d.svg" />
                             </div>
                             <span class="text-xs leading-3 text-wrap">
-        Switch D
-        <Badge class="bg-zinc-400 mt-2">M0</Badge>
-      </span>
+                              {{ $t('config_options.mapping_configuration.key_mapping.switch.d') }}
+                              <Badge class="bg-zinc-400 mt-2">M0</Badge>
+                            </span>
                           </div>
                         </TabsTrigger>
                       </TabsList>
@@ -501,10 +517,10 @@ const state = reactive({ count: 12 })
                     <Command>
 
                       <CommandList>
-                        <CommandEmpty>Key or function not found :(
+                        <CommandEmpty>{{ $t('config_options.mapping_configuration.key_mapping.not_found') }}
 
                         </CommandEmpty>
-                        <CommandInput placeholder="Find Key, Function or Macro..." />
+                        <CommandInput :placeholder="$t('config_options.mapping_configuration.key_mapping.search_placeholder')" />
                         <CommandGroup heading="Common">
                           <CommandItem value="backspace">
                             <Squircle color="grey" class="w-4 h-4 mr-2" />
@@ -580,7 +596,7 @@ const state = reactive({ count: 12 })
                         <GaugeCircle class="h-4 w-4" />
                       </div>
                       <div class="grow">
-                        <h2 class="text-sm px-2 py-4">Knob Mapping</h2>
+                        <h2 class="text-sm px-2 py-4">{{ $t('config_options.mapping_configuration.knob_mapping.title') }}</h2>
                       </div>
                       <div class="flex-none">
                         <Toggle
@@ -807,10 +823,10 @@ const state = reactive({ count: 12 })
 
                   <div class="space-y-1 p-6">
                     <h1 class="leading-none text-lg">
-                      Light Designer
+                      {{ $t('config_options.light_designer.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Create or tune device haptic response
+                      {{ $t('config_options.light_designer.subtitle') }}
                     </p>
 
                   </div>
@@ -822,7 +838,7 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <GaugeCircle class="h-4 w-4" />
                       </div>
-                      <div clas="flex-initial"><h2 class="text-sm px-2 py-4">Feedback Type</h2></div>
+                      <div class="flex-initial"><h2 class="text-sm px-2 py-4">Feedback Type</h2></div>
 
                     </div>
                     <Separator />

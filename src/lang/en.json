@@ -1,14 +1,80 @@
 {
+  "common": {
+    "coming_soon": "COMING SOON"
+  },
+  "config_options": {
+    "feedback_designer": {
+      "feedback_type": {
+        "coarse_detents": "Coarse Detents",
+        "fine_detents": "Fine Detents",
+        "return_to_center": "Return to Center",
+        "title": "Feedback Type",
+        "viscous_rotation": "Viscous Rotation"
+      },
+      "haptic_response": {
+        "title": "Haptic Response",
+        "feedback_strength": "Feedback Strength",
+        "bounce_back_strength": "Bounce Back Strength",
+        "output_ramp_dampening": "Output Ramp Dampening"
+      },
+      "subtitle": "Feedback mode selector and parameter adjustment",
+      "title": "Feedback Designer",
+      "total_positions": "Total Positions",
+      "auditory_response": {
+        "title": "Auditory Response",
+        "haptic_level": "Auditory Haptic Level",
+        "magnitude": "Auditory Magnitude"
+      }
+    },
+    "gui_designer": {
+      "subtitle": "Adjust graphic interface parameters",
+      "title": "GUI Designer"
+    },
+    "light_designer": {
+      "subtitle": "Adjust behavior of LED Ring. Turn On/Off.",
+      "title": "Light Designer"
+    },
+    "mapping_configuration": {
+      "subtitle": "Assign function to Knob and Keys",
+      "title": "Mapping Configuration",
+      "key_mapping": {
+        "title": "Key Mapping",
+        "switch": {
+          "a": "Switch A",
+          "b": "Switch B",
+          "c": "Switch C",
+          "d": "Switch D"
+        },
+        "not_found": "Key or function not found :(",
+        "search_placeholder": "Find Key, Function or Macro..."
+      },
+      "knob_mapping": {
+        "title": "Knob Mapping"
+      }
+    },
+    "program_settings": {
+      "subtitle": "Operation mode and Profile Naming",
+      "title": "Program Settings"
+    },
+    "title": "Configuration Options"
+  },
   "navbar": {
     "device": {
-      "title": "Device",
+      "about": "About Device",
       "connect": "Connect",
       "disconnect": "Disconnect",
-      "about": "About Device",
-      "preferences": "Preferences",
       "export": "Export JSON",
       "import": "Import JSON",
-      "quit": "Quit"
+      "preferences": "Preferences",
+      "quit": "Quit",
+      "title": "Device"
     }
+  },
+  "preview": {
+    "title": "Quick Preview"
+  },
+  "profiles": {
+    "subtitle": "Customize to your heart's content",
+    "title": "Profiles"
   }
 }
