@@ -12,9 +12,12 @@ import {
   CommandShortcut,
 } from '@/components/ui/command'
 import { Input } from '@/components/ui/input'
+import PixelBarTest from '@/components/device-gui/PixelBarTest.vue'
 </script>
 
 <template>
+
+  <PixelBarTest />
 
   <input
     v-model="defaultName"
@@ -22,7 +25,7 @@ import { Input } from '@/components/ui/input'
     aria-label="Add Profile"
     placeholder="add Profile"
     @keyup.enter="addNewProfile"
-  />
+  >
   <Command>
 
     <CommandList>

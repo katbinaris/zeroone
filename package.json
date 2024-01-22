@@ -73,6 +73,7 @@
       "space-before-function-paren": "off",
       "object-curly-spacing": "off",
       "comma-dangle": "off",
+      "vue/html-self-closing": "warn",
       "@intlify/vue-i18n/no-v-html": "off",
       "@intlify/vue-i18n/no-dynamic-keys": "off",
       "@intlify/vue-i18n/no-raw-text": [

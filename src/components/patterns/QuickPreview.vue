@@ -6,15 +6,17 @@
   <div class="flex self-center bg-cover w-72 h-72 mb-7" style="background-image: url(src/assets/gui-ico/xl-bg-ico.svg)">
     <div v-if="profiles" class="flex flex-col w-full justify-center p-10 rounded-full overflow-hidden">
       <div class="self-center w-8 mb-1 opacity-50">
-        <img src="@/assets/gui-ico/ico-midi-logo.svg" />
+        <img src="@/assets/gui-ico/ico-midi-logo.svg" alt="midi-logo" />
       </div>
-      <h2 v-for="feedbackConfig in profiles" class="self-center font-pixellg text-5xl ">{{ feedbackConfig.pos }}</h2>
+      <h2 v-for="feedbackConfig in profiles" :key="feedbackConfig" class="self-center font-pixellg text-5xl ">
+        {{ feedbackConfig.pos }}</h2>
 
       <div class="self-center font-pixelsm text-md pt-1 pb-2">{{ profiles.name }}</div>
       <div id="scales" class="flex self-center text-xs py-0"></div>
 
       <div
         v-for="profileConfig in profiles"
+        :key="profileConfig"
         class="self-center text-center text-muted-foreground font-pixelsm text-xs pt-0.5 w-40">
         {{ profileConfig.profileDesc }}
       </div>

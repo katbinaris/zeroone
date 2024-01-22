@@ -76,7 +76,7 @@ const state = reactive({ count: 12 })
       <div class="flex">
         <Menubar class="w-full rounded-none bg-zinc-950">
           <MenubarMenu>
-            <MenubarTrigger v-t="'navbar.device.title'"></MenubarTrigger>
+            <MenubarTrigger v-t="'navbar.device.title'" />
             <MenubarContent>
               <!-- TODO: Switch keyboard shortcut icons based on platform -->
               <MenubarItem>
@@ -253,7 +253,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="fd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center ">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-fd.svg" />
+                              <img src="@/assets/gui-ico/ico-fd.svg">
                             </div>
                             <span
                               class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.fine_detents')
@@ -263,7 +263,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="cd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-cd.svg" />
+                              <img src="@/assets/gui-ico/ico-cd.svg">
                             </div>
                             <span
                               class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.coarse_detents')
@@ -273,7 +273,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="vr">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-vf.svg" />
+                              <img src="@/assets/gui-ico/ico-vf.svg">
                             </div>
                             <span
                               class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.viscous_rotation')
@@ -283,7 +283,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="rt">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-rc.svg" />
+                              <img src="@/assets/gui-ico/ico-rc.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
                               {{ $t('config_options.feedback_designer.feedback_type.return_to_center') }}
@@ -468,7 +468,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="fd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center ">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-key-o.svg" />
+                              <img src="@/assets/gui-ico/ico-key-o.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
                               {{ $t('config_options.mapping_configuration.key_mapping.switch.a') }}
@@ -479,7 +479,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="cd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-key.svg" />
+                              <img src="@/assets/gui-ico/ico-key.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
                               {{ $t('config_options.mapping_configuration.key_mapping.switch.b') }}
@@ -490,7 +490,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="vr">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-key-g.svg" />
+                              <img src="@/assets/gui-ico/ico-key-g.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
                               {{ $t('config_options.mapping_configuration.key_mapping.switch.c') }}
@@ -501,7 +501,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="rt">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-key-d.svg" />
+                              <img src="@/assets/gui-ico/ico-key-d.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
                               {{ $t('config_options.mapping_configuration.key_mapping.switch.d') }}
@@ -727,7 +727,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="fd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center ">
                             <div class="w-24 size-w mb-2">
-                              <img src="@/assets/gui-ico/ico-usb-logo.svg" alt="usb-logo" />
+                              <img src="@/assets/gui-ico/ico-usb-logo.svg" alt="usb-logo">
                             </div>
                             <span
                               class="text-xs leading-3 text-wrap">{{ $t('config_options.program_settings.connection_type.usb')
@@ -737,7 +737,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="cd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="w-24 size-w mb-2">
-                              <img src="@/assets/gui-ico/ico-midi-logo.svg" alt="midi-logo" />
+                              <img src="@/assets/gui-ico/ico-midi-logo.svg" alt="midi-logo">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
                               {{ $t('config_options.program_settings.connection_type.midi') }}
@@ -757,7 +757,8 @@ const state = reactive({ count: 12 })
                         <Type class="h-4 w-4" />
                       </div>
                       <div class="grow">
-                        <h2 class="text-sm px-2 py-4">{{ $t('config_options.program_settings.profile_properties.title') }}</h2>
+                        <h2 class="text-sm px-2 py-4">{{ $t('config_options.program_settings.profile_properties.title')
+                          }}</h2>
                       </div>
 
 
@@ -765,7 +766,9 @@ const state = reactive({ count: 12 })
                     <Separator />
 
                     <div class="flex flex-col p-8 py-4">
-                      <span class="text-sm text-muted-foreground font-mono pb-4">{{ $t('config_options.program_settings.profile_properties.program_name') }}</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono pb-4">{{ $t('config_options.program_settings.profile_properties.program_name')
+                        }}</span>
                       <Input
                         type="text" :placeholder="$t('config_options.program_settings.profile_properties.program_name')"
                         class="text-xl border-0 text-center border-b rounded-none focus-visible:ring-0 focus-visible:border-emerald-500 font-pixelsm uppercase"
@@ -775,15 +778,21 @@ const state = reactive({ count: 12 })
                     </div>
                     <Separator />
                     <div class="flex flex-col p-8 py-4">
-                      <span class="text-sm text-muted-foreground font-mono pb-4">{{ $t('config_options.program_settings.profile_properties.program_description') }}</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono pb-4">{{ $t('config_options.program_settings.profile_properties.program_description')
+                        }}</span>
                       <Textarea
                         class="text-lg px-3 bg-inherit text-center focus-visible:outline-none border-b focus-visible:border-emerald-500 resize-none font-pixelsm text-muted-foreground uppercase"
-                        :placeholder="$t('config_options.program_settings.profile_properties.program_description')" default-value="Adjust Korg Oscillator Waveform " rows="2"
+                        :placeholder="$t('config_options.program_settings.profile_properties.program_description')"
+                        default-value="Adjust Korg Oscillator Waveform " rows="2"
                         maxlength="50" />
                       <Label for="textarea" class="text-muted-foreground text-right mt-1 text-xs">24/50</Label>
                       <div class="flex items-center space-x-4 space-y-1">
                         <Switch id="airplane-mode" default-checked="true" />
-                        <Label for="airplane-mode" class="text-xs text-muted-foreground">{{ $t('config_options.program_settings.profile_properties.show_description') }}</Label>
+                        <Label
+for="airplane-mode"
+                               class="text-xs text-muted-foreground">{{ $t('config_options.program_settings.profile_properties.show_description')
+                          }}</Label>
                       </div>
                     </div>
                     <Separator />
@@ -793,7 +802,8 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <Replace class="h-4 w-4" />
                       </div>
-                      <div class="grow"><h2 class="text-sm px-2 py-4">{{ $t('config_options.program_settings.internal_profile_toggle.title') }}</h2></div>
+                      <div class="grow"><h2 class="text-sm px-2 py-4">
+                        {{ $t('config_options.program_settings.internal_profile_toggle.title') }}</h2></div>
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
@@ -807,8 +817,9 @@ const state = reactive({ count: 12 })
                     <p class="flex flex-col p-8 py-4 text-muted-foreground text-xs">
                       {{ $t('config_options.program_settings.internal_profile_toggle.subtitle') }}
                       <Separator class="mt-4" />
-                      <span class="space-y-4">{{ $t('config_options.program_settings.internal_profile_toggle.operation') }}: <Badge class="bg-orange-500">SHIFT</Badge> + <Badge
-                        class="bg-zinc-500">Fn3</Badge> + <Badge>Rotation</Badge></span>
+                      <span class="space-y-4">{{ $t('config_options.program_settings.internal_profile_toggle.operation')
+                        }}: <Badge class="bg-orange-500">SHIFT</Badge> + <Badge
+                          class="bg-zinc-500">Fn3</Badge> + <Badge>Rotation</Badge></span>
                       <Separator class="my-4" />
                       <span>{{ $t('config_options.program_settings.internal_profile_toggle.warning') }}</span>
                     </p>
@@ -850,7 +861,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="fd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center ">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-fd.svg" />
+                              <img src="@/assets/gui-ico/ico-fd.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
         Fine Detents
@@ -860,7 +871,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="cd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-cd.svg" />
+                              <img src="@/assets/gui-ico/ico-cd.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
         Coarse Detents
@@ -870,7 +881,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="vr">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-vf.svg" />
+                              <img src="@/assets/gui-ico/ico-vf.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
         Viscous Rotation
@@ -880,7 +891,7 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="rt">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="size-16 mb-2">
-                              <img src="@/assets/gui-ico/ico-rc.svg" />
+                              <img src="@/assets/gui-ico/ico-rc.svg">
                             </div>
                             <span class="text-xs leading-3 text-wrap">
         Return to Center
