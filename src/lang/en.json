@@ -4,6 +4,11 @@
   },
   "config_options": {
     "feedback_designer": {
+      "auditory_response": {
+        "haptic_level": "Auditory Haptic Level",
+        "magnitude": "Auditory Magnitude",
+        "title": "Auditory Response"
+      },
       "feedback_type": {
         "coarse_detents": "Coarse Detents",
         "fine_detents": "Fine Detents",
@@ -12,19 +17,14 @@
         "viscous_rotation": "Viscous Rotation"
       },
       "haptic_response": {
-        "title": "Haptic Response",
-        "feedback_strength": "Feedback Strength",
         "bounce_back_strength": "Bounce Back Strength",
-        "output_ramp_dampening": "Output Ramp Dampening"
+        "feedback_strength": "Feedback Strength",
+        "output_ramp_dampening": "Output Ramp Dampening",
+        "title": "Haptic Response"
       },
       "subtitle": "Feedback mode selector and parameter adjustment",
       "title": "Feedback Designer",
-      "total_positions": "Total Positions",
-      "auditory_response": {
-        "title": "Auditory Response",
-        "haptic_level": "Auditory Haptic Level",
-        "magnitude": "Auditory Magnitude"
-      }
+      "total_positions": "Total Positions"
     },
     "gui_designer": {
       "subtitle": "Adjust graphic interface parameters",
@@ -35,26 +35,43 @@
       "title": "Light Designer"
     },
     "mapping_configuration": {
-      "subtitle": "Assign function to Knob and Keys",
-      "title": "Mapping Configuration",
       "key_mapping": {
-        "title": "Key Mapping",
+        "not_found": "Key or function not found :(",
+        "search_placeholder": "Find Key, Function or Macro...",
         "switch": {
           "a": "Switch A",
           "b": "Switch B",
           "c": "Switch C",
           "d": "Switch D"
         },
-        "not_found": "Key or function not found :(",
-        "search_placeholder": "Find Key, Function or Macro..."
+        "title": "Key Mapping"
       },
       "knob_mapping": {
         "title": "Knob Mapping"
-      }
+      },
+      "subtitle": "Assign function to Knob and Keys",
+      "title": "Mapping Configuration"
     },
     "program_settings": {
+      "connection_type": {
+        "title": "Connection Type",
+        "usb": "USB (Virtual HID)",
+        "midi": "Standalone MIDI I/O"
+      },
       "subtitle": "Operation mode and Profile Naming",
-      "title": "Program Settings"
+      "title": "Program Settings",
+      "profile_properties": {
+        "title": "Profile Properties",
+        "program_name": "Program Name",
+        "program_description": "Program Description",
+        "show_description": "Show Description in GUI"
+      },
+      "internal_profile_toggle": {
+        "title": "Internal Profile Toggle",
+        "subtitle": "Hardcoded macro that allows you to quickly toggle between stored profiles , comes handy if you want to operate device in Standalone mode.",
+        "warning": "Warning: Overrides software defined macro if combination is the same",
+        "operation": "Operation"
+      }
     },
     "title": "Configuration Options"
   },

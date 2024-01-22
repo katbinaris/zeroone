@@ -72,7 +72,7 @@ const state = reactive({ count: 12 })
 
   <main>
 
-    <div class="w-screen select-none ">
+    <div class="select-none ">
       <div class="flex">
         <Menubar class="w-full rounded-none bg-zinc-950">
           <MenubarMenu>
@@ -520,7 +520,8 @@ const state = reactive({ count: 12 })
                         <CommandEmpty>{{ $t('config_options.mapping_configuration.key_mapping.not_found') }}
 
                         </CommandEmpty>
-                        <CommandInput :placeholder="$t('config_options.mapping_configuration.key_mapping.search_placeholder')" />
+                        <CommandInput
+                          :placeholder="$t('config_options.mapping_configuration.key_mapping.search_placeholder')" />
                         <CommandGroup heading="Common">
                           <CommandItem value="backspace">
                             <Squircle color="grey" class="w-4 h-4 mr-2" />
@@ -596,7 +597,8 @@ const state = reactive({ count: 12 })
                         <GaugeCircle class="h-4 w-4" />
                       </div>
                       <div class="grow">
-                        <h2 class="text-sm px-2 py-4">{{ $t('config_options.mapping_configuration.knob_mapping.title') }}</h2>
+                        <h2 class="text-sm px-2 py-4">{{ $t('config_options.mapping_configuration.knob_mapping.title')
+                          }}</h2>
                       </div>
                       <div class="flex-none">
                         <Toggle
@@ -699,10 +701,10 @@ const state = reactive({ count: 12 })
 
                   <div class="space-y-1 p-6">
                     <h1 class="leading-none text-lg">
-                      Program Settings
+                      {{ $t('config_options.program_settings.title') }}
                     </h1>
                     <p class="text-xs text-muted-foreground">
-                      Create or tune device haptic response
+                      {{ $t('config_options.program_settings.subtitle') }}
                     </p>
 
                   </div>
@@ -714,7 +716,8 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <Cable class="h-4 w-4" />
                       </div>
-                      <div clas="flex-initial"><h2 class="text-sm px-2 py-4">Connection Type</h2></div>
+                      <div class="flex-initial"><h2 class="text-sm px-2 py-4">
+                        {{ $t('config_options.program_settings.connection_type.title') }}</h2></div>
 
                     </div>
                     <Separator />
@@ -724,21 +727,21 @@ const state = reactive({ count: 12 })
                         <TabsTrigger value="fd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center ">
                             <div class="w-24 size-w mb-2">
-                              <img src="@/assets/gui-ico/ico-usb-logo.svg" />
+                              <img src="@/assets/gui-ico/ico-usb-logo.svg" alt="usb-logo" />
                             </div>
-                            <span class="text-xs leading-3 text-wrap">
-        USB (Virtual HID)
-      </span>
+                            <span
+                              class="text-xs leading-3 text-wrap">{{ $t('config_options.program_settings.connection_type.usb')
+                              }}</span>
                           </div>
                         </TabsTrigger>
                         <TabsTrigger value="cd">
                           <div class="grid grid-flow-row auto-rows-max justify-items-center">
                             <div class="w-24 size-w mb-2">
-                              <img src="@/assets/gui-ico/ico-midi-logo.svg" />
+                              <img src="@/assets/gui-ico/ico-midi-logo.svg" alt="midi-logo" />
                             </div>
                             <span class="text-xs leading-3 text-wrap">
-        Standalone MIDI I/O
-      </span>
+                              {{ $t('config_options.program_settings.connection_type.midi') }}
+                            </span>
                           </div>
                         </TabsTrigger>
                       </TabsList>
@@ -754,7 +757,7 @@ const state = reactive({ count: 12 })
                         <Type class="h-4 w-4" />
                       </div>
                       <div class="grow">
-                        <h2 class="text-sm px-2 py-4">Profile Properties</h2>
+                        <h2 class="text-sm px-2 py-4">{{ $t('config_options.program_settings.profile_properties.title') }}</h2>
                       </div>
 
 
@@ -762,9 +765,9 @@ const state = reactive({ count: 12 })
                     <Separator />
 
                     <div class="flex flex-col p-8 py-4">
-                      <span class="text-sm text-muted-foreground font-mono pb-4">Program Name</span>
+                      <span class="text-sm text-muted-foreground font-mono pb-4">{{ $t('config_options.program_settings.profile_properties.program_name') }}</span>
                       <Input
-                        type="text" placeholder="Program Name"
+                        type="text" :placeholder="$t('config_options.program_settings.profile_properties.program_name')"
                         class="text-xl border-0 text-center border-b rounded-none focus-visible:ring-0 focus-visible:border-emerald-500 font-pixelsm uppercase"
                         default-value="Oscillator 1" maxlength="20" />
 
@@ -772,15 +775,15 @@ const state = reactive({ count: 12 })
                     </div>
                     <Separator />
                     <div class="flex flex-col p-8 py-4">
-                      <span class="text-sm text-muted-foreground font-mono pb-4">Program Description</span>
+                      <span class="text-sm text-muted-foreground font-mono pb-4">{{ $t('config_options.program_settings.profile_properties.program_description') }}</span>
                       <Textarea
                         class="text-lg px-3 bg-inherit text-center focus-visible:outline-none border-b focus-visible:border-emerald-500 resize-none font-pixelsm text-muted-foreground uppercase"
-                        placeholder="Program Description" default-value="Adjust Korg Oscillator Waveform " rows="2"
+                        :placeholder="$t('config_options.program_settings.profile_properties.program_description')" default-value="Adjust Korg Oscillator Waveform " rows="2"
                         maxlength="50" />
                       <Label for="textarea" class="text-muted-foreground text-right mt-1 text-xs">24/50</Label>
                       <div class="flex items-center space-x-4 space-y-1">
                         <Switch id="airplane-mode" default-checked="true" />
-                        <Label for="airplane-mode" class="text-xs text-muted-foreground">Show Description in GUI</Label>
+                        <Label for="airplane-mode" class="text-xs text-muted-foreground">{{ $t('config_options.program_settings.profile_properties.show_description') }}</Label>
                       </div>
                     </div>
                     <Separator />
@@ -790,7 +793,7 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <Replace class="h-4 w-4" />
                       </div>
-                      <div class="grow"><h2 class="text-sm px-2 py-4">Internal Profile Toggle</h2></div>
+                      <div class="grow"><h2 class="text-sm px-2 py-4">{{ $t('config_options.program_settings.internal_profile_toggle.title') }}</h2></div>
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
@@ -802,13 +805,12 @@ const state = reactive({ count: 12 })
 
                     </div>
                     <p class="flex flex-col p-8 py-4 text-muted-foreground text-xs">
-                      Hardcoded macro that allows you to quickly toggle between stored profiles , comes handy if you
-                      want to operate device in Standalone mode.
+                      {{ $t('config_options.program_settings.internal_profile_toggle.subtitle') }}
                       <Separator class="mt-4" />
-                      <span class="space-y-4">Operation: <Badge class="bg-orange-500">SHIFT</Badge> + <Badge
+                      <span class="space-y-4">{{ $t('config_options.program_settings.internal_profile_toggle.operation') }}: <Badge class="bg-orange-500">SHIFT</Badge> + <Badge
                         class="bg-zinc-500">Fn3</Badge> + <Badge>Rotation</Badge></span>
                       <Separator class="my-4" />
-                      <span>Warning: Overrides software defined macro if combination is the same</span>
+                      <span>{{ $t('config_options.program_settings.internal_profile_toggle.warning') }}</span>
                     </p>
 
 
