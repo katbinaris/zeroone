@@ -60,19 +60,20 @@ const state = reactive({ count: 12 });
   <div class="flex">
   <Menubar class="w-full rounded-none bg-zinc-950">
     <MenubarMenu>
-      <MenubarTrigger>Device</MenubarTrigger>
+      <MenubarTrigger v-t="'navbar.device.title'"></MenubarTrigger>
       <MenubarContent>
+        <!-- TODO: Switch keyboard shortcut icons based on platform -->
         <MenubarItem>
-          Disconnect <MenubarShortcut>⌘D</MenubarShortcut>
+          {{$t('navbar.device.disconnect')}} <MenubarShortcut>⌘D</MenubarShortcut>
         </MenubarItem>
-        <MenubarItem>About Device</MenubarItem>
+        <MenubarItem>{{ $t('navbar.device.about') }}</MenubarItem>
         <MenubarSeparator />
-        <MenubarItem>Preferences</MenubarItem>
+        <MenubarItem>{{ $t('navbar.device.preferences') }}</MenubarItem>
         <MenubarSeparator />
-        <MenubarItem>Export JSON<MenubarShortcut>⌘E</MenubarShortcut></MenubarItem>
-        <MenubarItem>Export JSON<MenubarShortcut>⌘E</MenubarShortcut></MenubarItem>
+        <MenubarItem>{{ $t('navbar.device.export') }}<MenubarShortcut>⌘E</MenubarShortcut></MenubarItem>
+        <MenubarItem>{{ $t('navbar.device.import') }}<MenubarShortcut>⌘I</MenubarShortcut></MenubarItem>
         <MenubarSeparator />
-        <MenubarItem>Quit<MenubarShortcut>⌘Q</MenubarShortcut></MenubarItem>
+        <MenubarItem>{{ $t('navbar.device.quit') }}<MenubarShortcut>⌘Q</MenubarShortcut></MenubarItem>
       </MenubarContent>
     </MenubarMenu>
   </Menubar>
