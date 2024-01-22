@@ -3,14 +3,15 @@ import './assets/main.css'
 import {createApp} from 'vue'
 import {createI18n} from 'vue-i18n'
 
-import en from './lang/en.js'
+import en from './lang/en.json'
 
 import App from './App.vue'
 
+// Create VueI18n instance with locales loaded from /lang directory
 const i18n = createI18n({
     locale: 'en',
     fallbackLocale: 'en',
-    messages: {en}
+    messages: {en: en}
 })
 
 const app = createApp(App)
