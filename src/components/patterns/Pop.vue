@@ -1,0 +1,140 @@
+<script setup>
+import { FileDigit } from 'lucide-vue-next'
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from '@/components/ui/command'
+import { Input } from '@/components/ui/input'
+</script>
+
+<template>
+
+<input
+      type="text"
+      v-model="defaultName"
+      @keyup.enter="addNewProfile"
+      aria-label="Add Profile"
+      placeholder="add Profile"
+    />
+  <Command>
+  
+    <CommandList>
+      
+      <CommandInput placeholder="Search Profile..." /> 
+      <CommandEmpty>No profile found</CommandEmpty>  
+      <CommandGroup v-for="(profileTag, index) in tags" :key="index" :heading="profileTag">
+        <CommandItem class="cursor-pointer" v-for="(name, id, innerIndex) in names(profileTag)" :key="innerIndex" :value="name.id">
+          <FileDigit color="grey" class="w-4 h-4 mr-2"/> {{ name.name }} <span class="text-xs pl-2 text-muted-foreground text-right">uID: {{ name.id }} </span>
+      </CommandItem>
+      </CommandGroup>
+    </CommandList>
+    <CommandSeparator/>
+    
+  </Command>
+  
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "nanoConfig",
+  data() {
+    return {
+      profiles: [],
+    };
+  },
+  async created() {
+    try {
+        const res = await axios.get('http://localhost:3001/profiles');
+        this.profiles = res.data;
+    } catch (e) {
+        console.error(e);
+    }
+  },
+  computed: {
+    tags() {
+        const tags = new Set();
+        this.profiles.forEach(tag => tags.add(tag.profileTag));
+        return Array.from(tags);
+    }
+  },
+  methods: {
+    names(profileTag) {
+        return this.profiles
+        .filter(tag => tag.profileTag === profileTag)
+        .map(tag => ({name: tag.name, id: tag.id}));
+    },
+    async addNewProfile() {
+        try {
+            const res = await axios.post('http://localhost:3001/profiles', 
+            { 
+                
+                name: this.defaultName,
+                profileTag: "Uncategorized",
+                profileConfig: {
+                  profileDesc: "",
+                  profileType: 1,
+                  showDesc: true,
+                },
+                feedbackConfig: {
+                  feedbackEn: true,
+                  feedbackType: "fd",
+                  multiRev: false,
+                  feedbackStrength: 1,
+                  endstopStrength: 1,
+                  outputRamp: 10000,
+                  minMaxPos: [0, 156],
+                  secondaryHaptic: true,
+                  secondaryVol: 5,
+                },
+                mappingConfig: {
+                  internalMacro: false,
+                  knobMap: "arrL",
+                  switchA: "shift",
+                  switchB: "ctrl",
+                  switchC: "alt",
+                  switchD: "esc",
+                },
+                ledConfig: {
+                  ledEnable: true,
+                  ledMode: 1,
+                  primary: {
+                    h: 100,
+                    s: 100,
+                    l: 100,
+                  },
+                  secondary: {
+                    h: 120,
+                    s: 120,
+                    l: 120,
+                  },
+                  pointer: {
+                    h: 255,
+                    s: 255,
+                    l: 255,
+                  },
+                },
+                guiConfig: {
+                  guiEnable: true,
+                } 
+            });
+
+            this.profiles = [...this.profiles, res.data];
+
+            this.defaultName = "";
+        } catch (e) {
+            console.error(e);
+        }
+        
+    }
+  }
+}
+</script>

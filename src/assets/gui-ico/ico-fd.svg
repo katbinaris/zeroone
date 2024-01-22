@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:1;">
+    <g id="ico-fd" transform="matrix(1.0546,0,0,1.0625,0,0)">
+        <rect x="0" y="0" width="64.48" height="64" style="fill:none;"/>
+        <g transform="matrix(0.946468,0,0,0.939428,-786.455,-170.513)">
+            <g transform="matrix(1.21795,0,0,1.21795,-173.301,-31.064)">
+                <circle cx="852.5" cy="202.5" r="25.5" style="fill:none;stroke:rgb(92,92,92);stroke-width:1.65px;stroke-dasharray:0.66,6.58,0,0,0,0;"/>
+            </g>
+            <g transform="matrix(0.168979,1.20617,-1.20617,0.168979,965.195,-846.907)">
+                <g transform="matrix(0.803922,0,0,0.803922,167.157,39.7059)">
+                    <path d="M852.5,177C866.574,177 878,188.426 878,202.5C878,216.574 866.574,228 852.5,228C838.426,228 827,216.574 827,202.5C827,188.426 838.426,177 852.5,177ZM852.5,179.046C839.556,179.046 829.046,189.556 829.046,202.5C829.046,215.444 839.556,225.954 852.5,225.954C865.444,225.954 875.954,215.444 875.954,202.5C875.954,189.556 865.444,179.046 852.5,179.046Z" style="fill:white;"/>
+                </g>
+                <g transform="matrix(0.4,0,0,0.4,511.5,111.2)">
+                    <path d="M852.5,182L852.5,192" style="fill:none;stroke:white;stroke-width:4.11px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
