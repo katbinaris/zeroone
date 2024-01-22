@@ -67,6 +67,7 @@
       }
     },
     "rules": {
+      "indent": "off",
       "camelcase": "off",
       "space-before-function-paren": "off",
       "object-curly-spacing": "off",
@@ -93,6 +94,13 @@
         }
       ]
     }
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "printWidth": 120,
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
   },
   "type": "module"
 }
