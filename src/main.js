@@ -8,6 +8,8 @@ import en from './lang/en.json'
 
 import App from './App.vue'
 
+import Ajv from 'ajv'
+
 // Create a new store instance
 const store = createStore({
   state() {
@@ -26,4 +28,7 @@ const app = createApp(App)
 
 app.use(i18n)
 app.use(store)
+
+app.provide('ajv', new Ajv())
+
 app.mount('#app')
