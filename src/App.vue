@@ -8,7 +8,6 @@ import { Slider } from '@/components/ui/slider'
 import { Textarea } from '@/components/ui/textarea'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Separator } from '@/components/ui/separator'
-import { computed } from 'vue'
 import {
   Replace,
   Type,
@@ -20,17 +19,11 @@ import {
   GaugeCircle,
   AudioLines,
   AudioWaveform,
-  Binary,
   Power,
-  Bold,
-  Italic,
-  Underline,
-  FileDigit,
-  FileX,
+
 } from 'lucide-vue-next'
 
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Toggle } from '@/components/ui/toggle'
 import Pop from '@/components/patterns/Pop.vue'
 import QuickPreview from '@/components/patterns/QuickPreview.vue'
@@ -47,23 +40,21 @@ import {
 
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
+
 } from '@/components/ui/command'
 
-import { ref } from 'vue'
 import { reactive } from 'vue'
 
 const state = reactive({ count: 12 })
 
 
-// Import JSON make it available for all components and views
+// TODO: Import JSON & make it available for all components and views -> vuex
 
 </script>
 
@@ -205,7 +196,7 @@ const state = reactive({ count: 12 })
                 <TabsTrigger
                   value="gui-config"
                   class="text-left rounded-none border-solid border-t data-[state=active]:bg-zinc-100 data-[state=active]:text-zinc-900 data-[state=active]:ring-none"
-                  disabled="true">
+                  disabled>
                   <div class="p-4">
                     <Badge class="font-mono h-4 mb-1 rounded-full">{{ $t('common.coming_soon') }}</badge>
                     <h1 class="leading-none text-muted-foreground text-lg">
@@ -333,7 +324,7 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
-                          size="sm" default-value="true" aria-label="EnablePrimary">
+                          size="sm" :default-value="true" aria-label="EnablePrimary">
                           <Power class="w-4 h-4" />
                         </Toggle>
                       </div>
@@ -395,7 +386,7 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
-                          size="sm" default-value="true" aria-label="EnablePrimary">
+                          size="sm" :default-value="true" aria-label="EnablePrimary">
                           <Power class="w-4 h-4" />
                         </Toggle>
                       </div>
@@ -603,7 +594,7 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
-                          size="sm" default-value="true" aria-label="EnablePrimary">
+                          size="sm" :default-value="true" aria-label="EnablePrimary">
                           <Power class="w-4 h-4" />
                         </Toggle>
                       </div>
@@ -658,7 +649,7 @@ const state = reactive({ count: 12 })
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
-                          size="sm" default-value="true" aria-label="EnablePrimary">
+                          size="sm" :default-value="true" aria-label="EnablePrimary">
                           <Power class="w-4 h-4" />
                         </Toggle>
                       </div>
@@ -790,8 +781,8 @@ const state = reactive({ count: 12 })
                       <div class="flex items-center space-x-4 space-y-1">
                         <Switch id="airplane-mode" default-checked="true" />
                         <Label
-for="airplane-mode"
-                               class="text-xs text-muted-foreground">{{ $t('config_options.program_settings.profile_properties.show_description')
+                          for="airplane-mode"
+                          class="text-xs text-muted-foreground">{{ $t('config_options.program_settings.profile_properties.show_description')
                           }}</Label>
                       </div>
                     </div>
@@ -807,7 +798,7 @@ for="airplane-mode"
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
-                          size="sm" default-value="true" aria-label="EnablePrimary">
+                          size="sm" :default-value="true" aria-label="EnablePrimary">
                           <Power class="w-4 h-4" />
                         </Toggle>
                       </div>
@@ -932,7 +923,7 @@ for="airplane-mode"
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
-                          size="sm" default-value="true" aria-label="EnablePrimary">
+                          size="sm" :default-value="true" aria-label="EnablePrimary">
                           <Power class="w-4 h-4" />
                         </Toggle>
                       </div>
@@ -987,7 +978,7 @@ for="airplane-mode"
                       <div class="flex-none">
                         <Toggle
                           class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
-                          size="sm" default-value="true" aria-label="EnablePrimary">
+                          size="sm" :default-value="true" aria-label="EnablePrimary">
                           <Power class="w-4 h-4" />
                         </Toggle>
                       </div>
