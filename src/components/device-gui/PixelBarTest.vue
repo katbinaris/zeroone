@@ -63,9 +63,9 @@ const current_pos = computed(() => {
       </g>
     </svg>
     <div v-if="show_controls  ">
-      <Input v-model="percent" type="number" placeholder="Fill" class="m-2" />
-      <Input v-model="count" type="number" placeholder="Count" class="m-2" />
-      <Input v-model="width" type="number" placeholder="Width" class="m-2" />
+      <Input v-model="percent" type="number" min="0" max="100" placeholder="Fill" class="m-2" />
+      <Input v-model="count" type="number" min="1" placeholder="Count" class="m-2" />
+      <Input v-model="width" type="number" min="4" placeholder="Width" class="m-2" />
     </div>
   </div>
 </template>
