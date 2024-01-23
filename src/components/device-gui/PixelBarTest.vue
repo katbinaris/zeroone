@@ -2,9 +2,9 @@
 import { ref, computed } from 'vue'
 import { Input } from '@/components/ui/input'
 
-const model = defineModel()
+const model = defineModel({ type: Number, default: 60 })
 
-const bar = ref(null);
+const bar = ref(null)
 
 const width = ref(160)
 const count = ref(40)
@@ -19,15 +19,18 @@ const rect_width = computed(() => {
 const current_pos = computed(() => {
   return Math.round((percent.value / 100) * (count.value - 1))
 })
+
 function onMouseDown() {
   window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('mouseup', onMouseUp)
 }
+
 function onMouseMove(e) {
   const rect = bar.value.getBoundingClientRect()
   percent.value = Math.max(0, Math.min(Math.round((e.clientX - rect.left - 9) / (width.value - 6) * 100), 100))
   model.value = percent.value
 }
+
 function onMouseUp() {
   window.removeEventListener('mousemove', onMouseMove)
   window.removeEventListener('mouseup', onMouseUp)
