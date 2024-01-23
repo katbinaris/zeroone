@@ -105,5 +105,6 @@
     "semi": false,
     "singleQuote": true
   },
-  "type": "module"
+  "type": "module",
+  "web-types": "./web-types.json"
 }
