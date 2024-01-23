@@ -1,0 +1,169 @@
+{
+  "title": "Nano Configuration Profile",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the profile"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the profile"
+    },
+    "profileTag": {
+      "type": "string",
+      "description": "Tag associated with the profile"
+    },
+    "profileConfig": {
+      "type": "object",
+      "properties": {
+        "profileDesc": {
+          "type": "string",
+          "description": "Description of the profile"
+        },
+        "profileType": {
+          "type": "integer",
+          "description": "Type of the profile"
+        },
+        "showDesc": {
+          "type": "boolean",
+          "description": "Flag to indicate whether to show the description"
+        }
+      },
+      "required": ["profileDesc", "profileType", "showDesc"],
+      "additionalProperties": false
+    },
+    "feedbackConfig": {
+      "type": "object",
+      "properties": {
+        "feedbackEn": {
+          "type": "boolean",
+          "description": "Flag to enable feedback"
+        },
+        "feedbackType": {
+          "type": "string",
+          "description": "Type of feedback"
+        },
+        "multiRev": {
+          "type": "boolean",
+          "description": "Flag for multi-revolution feedback"
+        },
+        "feedbackStrength": {
+          "type": "integer",
+          "description": "Strength of feedback"
+        },
+        "endstopStrength": {
+          "type": "integer",
+          "description": "Strength of endstop"
+        },
+        "outputRamp": {
+          "type": "integer",
+          "description": "Output ramp value"
+        },
+        "pos": {
+          "type": "integer",
+          "description": "Position value"
+        },
+        "secondaryHaptic": {
+          "type": "boolean",
+          "description": "Flag for secondary haptic feedback"
+        },
+        "secondaryVol": {
+          "type": "integer",
+          "description": "Secondary haptic volume"
+        }
+      },
+      "required": ["feedbackEn", "feedbackType", "multiRev", "feedbackStrength", "endstopStrength", "outputRamp", "pos", "secondaryHaptic", "secondaryVol"],
+      "additionalProperties": false
+    },
+    "mappingConfig": {
+      "type": "object",
+      "properties": {
+        "internalMacro": {
+          "type": "boolean",
+          "description": "Flag for internal macro"
+        },
+        "knobMap": {
+          "type": "string",
+          "description": "Mapping for knob"
+        },
+        "switchA": {
+          "type": "string",
+          "description": "Mapping for switch A"
+        },
+        "switchB": {
+          "type": "string",
+          "description": "Mapping for switch B"
+        },
+        "switchC": {
+          "type": "string",
+          "description": "Mapping for switch C"
+        },
+        "switchD": {
+          "type": "string",
+          "description": "Mapping for switch D"
+        }
+      },
+      "required": ["internalMacro", "knobMap", "switchA", "switchB", "switchC", "switchD"],
+      "additionalProperties": false
+    },
+    "ledConfig": {
+      "type": "object",
+      "properties": {
+        "ledEnable": {
+          "type": "boolean",
+          "description": "Flag to enable LED"
+        },
+        "ledMode": {
+          "type": "integer",
+          "description": "LED mode"
+        },
+        "primary": {
+          "type": "object",
+          "properties": {
+            "h": { "type": "integer", "description": "Hue value for primary LED" },
+            "s": { "type": "integer", "description": "Saturation value for primary LED" },
+            "l": { "type": "integer", "description": "Lightness value for primary LED" }
+          },
+          "required": ["h", "s", "l"],
+          "additionalProperties": false
+        },
+        "secondary": {
+          "type": "object",
+          "properties": {
+            "h": { "type": "integer", "description": "Hue value for secondary LED" },
+            "s": { "type": "integer", "description": "Saturation value for secondary LED" },
+            "l": { "type": "integer", "description": "Lightness value for secondary LED" }
+          },
+          "required": ["h", "s", "l"],
+          "additionalProperties": false
+        },
+        "pointer": {
+          "type": "object",
+          "properties": {
+            "h": { "type": "integer", "description": "Hue value for pointer LED" },
+            "s": { "type": "integer", "description": "Saturation value for pointer LED" },
+            "l": { "type": "integer", "description": "Lightness value for pointer LED" }
+          },
+          "required": ["h", "s", "l"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["ledEnable", "ledMode", "primary", "secondary", "pointer"],
+      "additionalProperties": false
+    },
+    "guiConfig": {
+      "type": "object",
+      "properties": {
+        "guiEnable": {
+          "type": "boolean",
+          "description": "Flag to enable GUI"
+        }
+      },
+      "required": ["guiEnable"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["id", "name", "profileTag", "profileConfig", "feedbackConfig", "mappingConfig", "ledConfig", "guiConfig"],
+  "additionalProperties": false
+}
