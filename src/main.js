@@ -15,6 +15,7 @@ const store = createStore({
   state() {
     return {}
   },
+  mutations: {},
 })
 
 // Create VueI18n instance with locales loaded from /lang directory
