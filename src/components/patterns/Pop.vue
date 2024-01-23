@@ -13,11 +13,16 @@ import {
 } from '@/components/ui/command'
 import { Input } from '@/components/ui/input'
 import PixelBarTest from '@/components/device-gui/PixelBarTest.vue'
+import SchemaTest from '@/components/SchemaTest.vue'
 </script>
 
 <template>
 
+  <!-- Dumping ground for testing components -->
+
   <PixelBarTest />
+
+  <SchemaTest />
 
   <input
     v-model="defaultName"
