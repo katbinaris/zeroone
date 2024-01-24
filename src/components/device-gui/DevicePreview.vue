@@ -14,9 +14,9 @@
   </div>
 </template>
 <script>
-import QuickPreview from '@/components/patterns/QuickPreview.vue'
-import ScrambleReveal from '@/components/ScrambleText.vue'
-import ConfigSelect from '@/ConfigSelect.vue'
+import QuickPreview from '@/components/old/QuickPreview.vue'
+import ScrambleReveal from '@/components/effects/ScrambleText.vue'
+import ConfigSelect from '@/components/ConfigSelect.vue'
 
 export default {
   name: 'DevicePreview',

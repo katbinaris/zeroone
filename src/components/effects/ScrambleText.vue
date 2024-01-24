@@ -28,6 +28,8 @@ const props = defineProps({
   },
 })
 
+let scrambling = false
+
 const content = ref('')
 
 function randomCharacter(characterSet = props.characterSet) {
@@ -35,6 +37,8 @@ function randomCharacter(characterSet = props.characterSet) {
 }
 
 function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props.replaceInterval, fillInterval = props.fillInterval, characterSet = props.characterSet, text = props.text) {
+  if (scrambling) return
+  scrambling = true
   content.value = ''
   const fillContent = function() {
     if (content.value.length < text.length) {
@@ -59,6 +63,8 @@ function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props
           const index = indices[Math.floor(Math.random() * indices.length)]
           content.value = content.value.substring(0, index) + text.charAt(index) + content.value.substring(index + 1)
           setTimeout(replaceContent, replaceInterval * (1 + Math.random()))
+        } else {
+          scrambling = false
         }
       }
       replaceContent()

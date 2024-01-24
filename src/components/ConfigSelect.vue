@@ -10,7 +10,7 @@
       @mouseenter="$refs.configSelect[index].scramble(0.15, 100)">
       <div>
         <h1 class="text-lg" :class="{'text-muted-foreground': config.disabled}">
-          <ScrambleReveal ref="configSelect" class="align-middle" :text="$t(`config_options.${config.id}.title`)" />
+          <ScrambleText ref="configSelect" class="align-middle" :text="$t(`config_options.${config.id}.title`)" />
           <Badge
             v-if="config.hasOwnProperty('badgeKey')"
             v-t="config.badgeKey"
@@ -25,7 +25,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import ScrambleReveal from '@/components/ScrambleText.vue'
+import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { Badge } from '@/components/ui/badge/index.js'
 
 const config_tabs = ref([

@@ -2,7 +2,7 @@
   <div>
     <div class="p-4">
       <h1 class="text-lg">
-        <ScrambleReveal :text="$t('profiles.title')" />
+        <ScrambleText :text="$t('profiles.title')" />
       </h1>
       <p class="text-xs text-muted-foreground">
         {{ $t('profiles.subtitle') }}
@@ -10,15 +10,19 @@
     </div>
     <Separator />
     <Pop />
+    <DeviceBar />
+    <SchemaTest />
   </div>
 </template>
 <script>
-import Pop from '@/components/patterns/Pop.vue'
-import ScrambleReveal from '@/components/ScrambleText.vue'
+import Pop from '@/components/old/Pop.vue'
+import ScrambleReveal from '@/components/effects/ScrambleText.vue'
 import { Separator } from '@/components/ui/separator/index.js'
+import SchemaTest from '@/components/SchemaTest.vue'
+import DeviceBar from '@/components/device-gui/DeviceBar.vue'
 
 export default {
   name: 'ProfileManager',
-  components: { Separator, Pop, ScrambleReveal },
+  components: { DeviceBar: DeviceBar, SchemaTest, Separator, Pop, ScrambleText: ScrambleReveal },
 }
 </script>

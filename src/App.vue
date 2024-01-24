@@ -1,9 +1,9 @@
 <script setup>
 import ProfileManager from '@/components/ProfileManager.vue'
-import DevicePreview from '@/DevicePreview.vue'
-import ConfigPane from '@/ConfigPane.vue'
-import Navbar from '@/Navbar.vue'
-import ConfigSelect from '@/ConfigSelect.vue'
+import DevicePreview from '@/components/device-gui/DevicePreview.vue'
+import ConfigPane from '@/components/ConfigPane.vue'
+import Navbar from '@/components/Navbar.vue'
+import ConfigSelect from '@/components/ConfigSelect.vue'
 import { ref } from 'vue'
 
 const currentConfigPage = ref('program_settings')

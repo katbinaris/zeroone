@@ -30,7 +30,7 @@
             <TabsTrigger value="fd">
               <div class="grid grid-flow-row auto-rows-max justify-items-center ">
                 <div class="w-24 size-w mb-2">
-                  <img src="@/assets/gui-ico/ico-usb-logo.svg" alt="usb-logo">
+                  <img src="../../assets/gui-ico/ico-usb-logo.svg" alt="usb-logo">
                 </div>
                 <span
                   class="text-xs leading-3 text-wrap">{{ $t('config_options.program_settings.connection_type.usb')
@@ -40,7 +40,7 @@
             <TabsTrigger value="cd">
               <div class="grid grid-flow-row auto-rows-max justify-items-center">
                 <div class="w-24 size-w mb-2">
-                  <img src="@/assets/gui-ico/ico-midi-logo.svg" alt="midi-logo">
+                  <img src="../../assets/gui-ico/ico-midi-logo.svg" alt="midi-logo">
                 </div>
                 <span class="text-xs leading-3 text-wrap">
                               {{ $t('config_options.program_settings.connection_type.midi') }}

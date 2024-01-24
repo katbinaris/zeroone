@@ -12,44 +12,38 @@ import {
   CommandShortcut,
 } from '@/components/ui/command'
 import { Input } from '@/components/ui/input'
-import PixelBarTest from '@/components/device-gui/PixelBarTest.vue'
+import PixelBarTest from '@/components/device-gui/DeviceBar.vue'
 import SchemaTest from '@/components/SchemaTest.vue'
 </script>
 
 <template>
+  <div class="h-60">
+    <input
+      v-model="defaultName"
+      type="text"
+      aria-label="Add Profile"
+      placeholder="add Profile"
+      @keyup.enter="addNewProfile"
+    >
+    <Command>
 
-  <!-- Dumping ground for testing components -->
+      <CommandList>
 
-  <PixelBarTest />
+        <CommandInput placeholder="Search Profile..." />
+        <CommandEmpty>No profile found</CommandEmpty>
+        <CommandGroup v-for="(profileTag, index) in tags" :key="index" :heading="profileTag">
+          <CommandItem
+            v-for="(name, id, innerIndex) in names(profileTag)" :key="innerIndex" class="cursor-pointer"
+            :value="name.id">
+            <FileDigit color="grey" class="w-4 h-4 mr-2" />
+            {{ name.name }} <span class="text-xs pl-2 text-muted-foreground text-right">uID: {{ name.id }} </span>
+          </CommandItem>
+        </CommandGroup>
+      </CommandList>
+      <CommandSeparator />
 
-  <SchemaTest />
-
-  <input
-    v-model="defaultName"
-    type="text"
-    aria-label="Add Profile"
-    placeholder="add Profile"
-    @keyup.enter="addNewProfile"
-  >
-  <Command>
-
-    <CommandList>
-
-      <CommandInput placeholder="Search Profile..." />
-      <CommandEmpty>No profile found</CommandEmpty>
-      <CommandGroup v-for="(profileTag, index) in tags" :key="index" :heading="profileTag">
-        <CommandItem
-          v-for="(name, id, innerIndex) in names(profileTag)" :key="innerIndex" class="cursor-pointer"
-          :value="name.id">
-          <FileDigit color="grey" class="w-4 h-4 mr-2" />
-          {{ name.name }} <span class="text-xs pl-2 text-muted-foreground text-right">uID: {{ name.id }} </span>
-        </CommandItem>
-      </CommandGroup>
-    </CommandList>
-    <CommandSeparator />
-
-  </Command>
-
+    </Command>
+  </div>
 </template>
 
 <script>
