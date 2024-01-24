@@ -56,8 +56,8 @@
               </button>
               <button
                 :data-selected="currentProfile===profile.id"
-                class="h-full hover:bg-zinc-900 aspect-square hidden justify-center items-center delete-button data-[selected=true]:bg-zinc-200 hover:data-[selected=true]:bg-zinc-100 data-[selected=true]:text-black">
-                <Trash class="h-4 w-4 text-muted-foreground" />
+                class="h-full bg-orange-950 hover:bg-orange-700 aspect-square text-black hidden justify-center items-center delete-button data-[selected=true]:bg-orange-600 hover:data-[selected=true]:bg-orange-500">
+                <Trash2 class="h-4 w-4" />
               </button>
             </div>
           </CollapsibleContent>
@@ -70,7 +70,7 @@
 <script setup>
 import SchemaTest from '@/components/SchemaTest.vue'
 import { Separator } from '@/components/ui/separator/index.js'
-import { FileDigit, ChevronRight, Search, Trash } from 'lucide-vue-next'
+import { FileDigit, ChevronRight, Search, Trash2 } from 'lucide-vue-next'
 import axios from 'axios'
 import { computed, onMounted, ref } from 'vue'
 import {
