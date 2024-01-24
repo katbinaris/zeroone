@@ -1,18 +1,6 @@
 <template>
   <TabsContent value="map-config" class="mt-0">
     <div class="w-96 bg-zinc-900 bg-opacity-40">
-
-      <div class="space-y-1 p-6">
-        <h1 class="leading-none text-lg">
-          {{ $t('config_options.mapping_configuration.title') }}
-        </h1>
-        <p class="text-xs text-muted-foreground">
-          {{ $t('config_options.mapping_configuration.subtitle') }}
-        </p>
-
-      </div>
-
-      <Separator />
       <ScrollArea class="h-[720px]">
         <div class="flex flex-row h-12 items-center px-4 text-sm bg-zinc-900">
 
