@@ -248,8 +248,22 @@
   </TabsContent>
 </template>
 <script>
+import { ScrollArea } from '@/components/ui/scroll-area/index.js'
+import { Badge } from '@/components/ui/badge/index.js'
+import { Tabs } from '@/components/ui/tabs/index.js'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList, CommandSeparator,
+} from '@/components/ui/command/index.js'
+import { Slider } from '@/components/ui/slider/index.js'
+
 export default {
   name: 'MappingConfig',
+  components: { Slider, CommandSeparator, CommandGroup, CommandItem, CommandInput, CommandEmpty, CommandList, Command, Tabs, Badge, ScrollArea },
 }
 </script>
 <style scoped>

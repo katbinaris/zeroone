@@ -14,17 +14,9 @@
     </div>
     <Separator />
     <div>
-      <input
-        type="text"
-        aria-label="Add Profile"
-        placeholder="Profile name"
-        @keyup.enter="addNewProfile"
-      >
       <Command>
-
         <CommandList>
-
-          <CommandInput placeholder="Search Profile..." />
+          <CommandInput placeholder="Filter Profiles..." />
           <CommandEmpty>No profile found :(</CommandEmpty>
           <CommandGroup v-for="(profileTag, index) in tags" :key="index" :heading="profileTag">
             <CommandItem
@@ -36,7 +28,6 @@
           </CommandGroup>
         </CommandList>
         <CommandSeparator />
-
       </Command>
     </div>
     <SchemaTest />
@@ -85,7 +76,7 @@ const addNewProfile = async (event) => {
   console.log(event)
   const res = await axios.post('http://localhost:3001/profiles',
     {
-      name: "TODO: CHANGE THIS",
+      name: 'TODO: CHANGE THIS',
       profileTag: 'Uncategorized',
       profileConfig: {
         profileDesc: '',
