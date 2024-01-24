@@ -26,9 +26,11 @@ const props = defineProps({
     type: Number,
     default: 15,
   },
+  scrambleOnMount: {
+    type: Boolean,
+    default: false,
+  },
 })
-
-let scrambling = false
 
 const content = ref('')
 
@@ -36,14 +38,40 @@ function randomCharacter(characterSet = props.characterSet) {
   return props.characterSet.charAt(Math.floor(Math.random() * characterSet.length))
 }
 
-function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props.replaceInterval, fillInterval = props.fillInterval, characterSet = props.characterSet, text = props.text) {
-  if (scrambling) return
-  scrambling = true
+function replaceContent(text = props.text, replaceInterval = props.replaceInterval, steps = 0) {
+  if (steps > text.length + 16) {
+    content.value = text
+  }
+  console.log('hey')
+  if (content.value !== text) {
+    // get all the indices of characters that don't match text
+    const indices = []
+    for (let i = 0; i < text.length; i++) {
+      if (content.value.charAt(i) !== text.charAt(i)) {
+        indices.push(i)
+      }
+    }
+    if (indices.length > 0) {
+      const index = indices[Math.floor(Math.random() * indices.length)]
+      content.value = content.value.substring(0, index) + text.charAt(index) + content.value.substring(index + 1)
+    } else if (content.value.length < text.length) {
+      content.value += text.charAt(content.value.length)
+    } else {
+      content.value = content.value.substring(0, content.value.length - 1)
+    }
+    setTimeout(() => {
+      replaceContent(text, replaceInterval, steps + 1)
+    }, replaceInterval * (1 + Math.random()))
+  }
+}
+
+function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props.replaceInterval, fillInterval = props.fillInterval, characterSet = props.characterSet, text = props.text, fillText = props.text) {
   content.value = ''
   const fillContent = function() {
     if (content.value.length < text.length) {
-      if (Math.random() > scrambleAmount) {
-        content.value += text.charAt(content.value.length)
+      const char = fillText.charAt(content.value.length) || ''
+      if (char === ' ' || Math.random() > scrambleAmount) {
+        content.value += char
       } else {
         content.value += randomCharacter(characterSet)
       }
@@ -51,23 +79,7 @@ function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props
         setTimeout(fillContent, fillInterval)
       else fillContent()
     } else {
-      const replaceContent = function() {
-        if (content.value !== text) {
-          // get all the indices of characters that don't match text
-          const indices = []
-          for (let i = 0; i < content.value.length; i++) {
-            if (content.value.charAt(i) !== text.charAt(i)) {
-              indices.push(i)
-            }
-          }
-          const index = indices[Math.floor(Math.random() * indices.length)]
-          content.value = content.value.substring(0, index) + text.charAt(index) + content.value.substring(index + 1)
-          setTimeout(replaceContent, replaceInterval * (1 + Math.random()))
-        } else {
-          scrambling = false
-        }
-      }
-      replaceContent()
+      replaceContent(text, replaceInterval, 0)
     }
   }
   fillContent()
@@ -76,11 +88,15 @@ function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props
 defineExpose({ scramble })
 
 onMounted(() => {
-  scramble()
+  if (props.scrambleOnMount) {
+    scramble()
+  } else {
+    content.value = props.text
+  }
 })
 
 watch(() => props.text, () => {
-  scramble()
+  replaceContent()
 })
 </script>
 

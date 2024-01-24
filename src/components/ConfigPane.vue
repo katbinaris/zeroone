@@ -1,14 +1,13 @@
 <template>
   <div>
     <div
-      class="px-6 h-20 flex items-center bg-zinc-900 bg-opacity-40"
-      @mouseenter="$refs.configPaneTitle.scramble(0.15, 100)">
+      class="px-6 h-20 flex items-center bg-zinc-900 bg-opacity-40">
       <div>
         <h1 class="text-lg">
-          <ScrambleText ref="configPaneTitle" class="align-middle" :text="$t(`config_options.${page}.title`)" />
+          <ScrambleText class="align-middle" :text="$t(`config_options.${page}.title`)" />
         </h1>
         <p class="text-xs text-muted-foreground">
-          {{ $t(`config_options.${page}.subtitle`) }}
+          <ScrambleText class="align-middle" :text="$t(`config_options.${page}.subtitle`)" :replace-interval="5" />
         </p>
       </div>
     </div>

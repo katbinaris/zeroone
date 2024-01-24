@@ -3,7 +3,7 @@
     <div>
       <div class="px-4 py-5">
         <h1 class="text-lg">
-          <ScrambleReveal :text="$t('preview.title')" />
+          {{ $t('preview.title')}}
         </h1>
       </div>
       <div class="flex justify-center">
@@ -37,13 +37,12 @@
   </div>
 </template>
 <script>
-import ScrambleReveal from '@/components/effects/ScrambleText.vue'
 import axios from 'axios'
 import DeviceBar from '@/components/device-gui/DeviceBar.vue'
 
 export default {
   name: 'DevicePreview',
-  components: { DeviceBar, ScrambleReveal },
+  components: { DeviceBar },
   data() {
     return {
       profiles: [],

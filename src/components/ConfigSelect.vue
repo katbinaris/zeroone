@@ -6,8 +6,7 @@
       :data-selected="current_tab===config.id"
       class="px-4 h-20 flex items-center hover:bg-zinc-900 data-[selected=true]:bg-zinc-200 data-[selected=true]:text-black border-solid border-0 border-b"
       :class="config.disabled ? 'cursor-not-allowed' : 'cursor-pointer'"
-      @click="current_tab=config.disabled ? current_tab : config.id; $refs.configSelect[index].scramble()"
-      @mouseenter="$refs.configSelect[index].scramble(0.15, 100)">
+      @click="current_tab=config.disabled ? current_tab : config.id; $refs.configSelect[index].scramble()">
       <div>
         <h1 class="text-lg" :class="{'text-muted-foreground': config.disabled}">
           <ScrambleText ref="configSelect" class="align-middle" :text="$t(`config_options.${config.id}.title`)" />
