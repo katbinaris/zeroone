@@ -12,7 +12,7 @@ import {
   CommandShortcut,
 } from '@/components/ui/command'
 import { Input } from '@/components/ui/input'
-import PixelBarTest from '@/components/device-gui/DeviceBar.vue'
+import PixelBarTest from '@/components/device/DeviceBar.vue'
 import SchemaTest from '@/components/SchemaTest.vue'
 </script>
 

@@ -38,7 +38,7 @@
 </template>
 <script>
 import axios from 'axios'
-import DeviceBar from '@/components/device-gui/DeviceBar.vue'
+import DeviceBar from '@/components/device/DeviceBar.vue'
 
 export default {
   name: 'DevicePreview',
