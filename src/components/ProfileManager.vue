@@ -14,7 +14,20 @@
     <Separator />
     <div>
       <MagnifyingGlassIcon class="mr-2 h-4 w-4 shrink-0 opacity-50" />
-      <Input :placeholder="$t('profiles.filter_placeholder')" class="border-none outline-none rounded-none" />
+      <Input v-model="filter" :placeholder="$t('profiles.filter_placeholder')" class="border-none outline-none rounded-none" />
+      <template v-if="filter===''">
+        <div v-for="[profileTag, tagProfiles] in profilesByTag" :key="profileTag">
+          {{ profileTag }}
+          <div v-for="profile in tagProfiles" :key="profile.id" class="ml-4">
+            {{ profile.name }} {{ profile.id }}
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div v-for="profile in filteredProfiles" :key="profile.id">
+          {{ profile.name }} {{ profile.id }}
+        </div>
+      </template>
     </div>
     <SchemaTest />
   </div>
@@ -30,6 +43,8 @@ import { MagnifyingGlassIcon } from '@radix-icons/vue'
 
 const profiles = ref([])
 
+const filter = ref('')
+
 const profilesByTag = computed(() => {
   const map = new Map()
   profiles.value.forEach(profile => {
@@ -40,6 +55,16 @@ const profilesByTag = computed(() => {
     map.get(tag).push(profile)
   })
   return map
+})
+
+const filteredProfiles = computed(() => {
+  const filterLower = filter.value.toLowerCase()
+  return profiles.value.filter(profile => {
+    const nameLower = profile.name.toLowerCase()
+    const idLower = profile.id.toLowerCase()
+    const tagLower = profile.profileTag.toLowerCase()
+    return nameLower.includes(filterLower) || idLower.includes(filterLower) || tagLower.includes(filterLower)
+  })
 })
 
 function fetchProfiles() {
