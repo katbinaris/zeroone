@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar.vue'
 import ConfigSelect from '@/components/ConfigSelect.vue'
 import { ref } from 'vue'
 
-const currentConfigPage = ref('program_settings')
+const currentConfigPage = ref('profile_settings')
 
 </script>
 <template>

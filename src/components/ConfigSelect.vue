@@ -28,7 +28,7 @@ import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { Badge } from '@/components/ui/badge/index.js'
 
 const config_tabs = ref([
-  { id: 'program_settings' },
+  { id: 'profile_settings' },
   { id: 'feedback_designer' },
   { id: 'mapping_configuration' },
   { id: 'light_designer' },
@@ -41,6 +41,6 @@ const config_tabs = ref([
 
 const current_tab = defineModel({
   type: String,
-  default: 'program_settings',
+  default: 'profile_settings',
 })
 </script>

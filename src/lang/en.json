@@ -52,7 +52,7 @@
       "subtitle": "Assign function to Knob and Keys",
       "title": "Mapping Configuration"
     },
-    "program_settings": {
+    "profile_settings": {
       "connection_type": {
         "midi": "Standalone MIDI I/O",
         "title": "Connection Type",
@@ -65,13 +65,13 @@
         "warning": "Warning: Overrides software defined macro if combination is the same"
       },
       "profile_properties": {
-        "program_description": "Program Description",
-        "program_name": "Program Name",
+        "profile_description": "Profile Description",
+        "profile_name": "Profile Name",
         "show_description": "Show Description in GUI",
         "title": "Profile Properties"
       },
       "subtitle": "Operation mode and Profile Naming",
-      "title": "Program Settings"
+      "title": "Profile Settings"
     },
     "title": "Configuration Options"
   },

@@ -16,7 +16,7 @@
 </template>
 <script setup>
 import LEDsConfig from '@/components/config/LEDsConfig.vue'
-import ProgramConfig from '@/components/config/ProgramConfig.vue'
+import ProfileConfig from '@/components/config/ProfileConfig.vue'
 import MappingConfig from '@/components/config/MappingConfig.vue'
 import HapticConfig from '@/components/config/HapticConfig.vue'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
@@ -24,12 +24,12 @@ import ScrambleText from '@/components/effects/ScrambleText.vue'
 defineProps({
   page: {
     type: String,
-    default: 'program_settings',
+    default: 'profile_settings',
   },
 })
 
 const configPages = {
-  program_settings: ProgramConfig,
+  profile_settings: ProfileConfig,
   feedback_designer: HapticConfig,
   mapping_configuration: MappingConfig,
   light_designer: LEDsConfig,
