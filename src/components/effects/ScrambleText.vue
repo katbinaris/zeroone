@@ -42,7 +42,6 @@ function replaceContent(text = props.text, replaceInterval = props.replaceInterv
   if (steps > text.length + 16) {
     content.value = text
   }
-  console.log('hey')
   if (content.value !== text) {
     // get all the indices of characters that don't match text
     const indices = []
