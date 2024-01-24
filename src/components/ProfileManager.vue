@@ -37,7 +37,7 @@
           :open="collapse[profileTag]">
           <CollapsibleTrigger
             v-model="collapse[profileTag]"
-            class="w-full py-2 text-left text-muted-foreground text-sm">
+            class="w-full py-2 text-left text-muted-foreground text-sm hover:bg-zinc-900">
             <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
             {{ profileTag }} <span class="text-xs text-zinc-600">(TAG)</span>
           </CollapsibleTrigger>
