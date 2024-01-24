@@ -1,14 +1,19 @@
 <template>
   <div class="flex">
     <Menubar class="w-full h-20 rounded-none bg-zinc-950 border-l-0">
-      <div class="p-2 min-w-48">
+      <div class="p-2 min-w-48" @click="$refs.zerooneSubtitle.scramble(1,100,0); $refs.zerooneTitle.scramble(1,100,0)">
         <h1 class="text-3xl">
           <ScrambleText
-            text="ZERO/ONE" scramble-on-mount :scramble-amount="1" :fill-interval="100"
-            :replace-interval="100" />
+            ref="zerooneTitle"
+            text=" ZERO/ONE" scramble-on-mount :scramble-amount="1" :fill-interval="100"
+            :replace-interval="100"
+          />
         </h1>
         <p class="text-xs text-muted-foreground">
-          <ScrambleText  text="Haptic Configuration Tool" scramble-on-mount scramble-amount="1" fill-interval="35" replace-interval="40" />
+          <ScrambleText
+            ref="zerooneSubtitle"
+            text="Haptic Configuration Tool" scramble-on-mount scramble-amount="1" fill-interval="35"
+            replace-interval="40" />
         </p>
       </div>
       <MenubarMenu>
