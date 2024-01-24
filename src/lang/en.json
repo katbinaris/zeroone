@@ -36,7 +36,7 @@
     },
     "mapping_configuration": {
       "key_mapping": {
-        "not_found": "Key or function not found :(",
+        "not_found": "Key or function not found ;-;",
         "search_placeholder": "Find Key, Function or Macro...",
         "switch": {
           "a": "Switch A",
@@ -88,9 +88,11 @@
     }
   },
   "preview": {
-    "title": "Quick Preview"
+    "title": "Live Preview"
   },
   "profiles": {
+    "filter_placeholder": "Filter Profiles...",
+    "not_found": "No profiles found ;-;",
     "subtitle": "Customize to your heart's content",
     "title": "Device Profiles"
   }
