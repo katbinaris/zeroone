@@ -247,7 +247,7 @@
     </div>
   </TabsContent>
 </template>
-<script>
+<script setup>
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
 import { Badge } from '@/components/ui/badge/index.js'
 import { Tabs } from '@/components/ui/tabs/index.js'
@@ -260,11 +260,7 @@ import {
   CommandList, CommandSeparator,
 } from '@/components/ui/command/index.js'
 import { Slider } from '@/components/ui/slider/index.js'
-
-export default {
-  name: 'MappingConfig',
-  components: { Slider, CommandSeparator, CommandGroup, CommandItem, CommandInput, CommandEmpty, CommandList, Command, Tabs, Badge, ScrollArea },
-}
+import { KeyboardMusic, Squircle, Keyboard, GaugeCircle, AudioLines, Power } from 'lucide-vue-next'
 </script>
 <style scoped>
 input::-webkit-outer-spin-button,

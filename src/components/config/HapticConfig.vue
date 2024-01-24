@@ -203,15 +203,11 @@
     </div>
   </TabsContent>
 </template>
-<script>
+<script setup>
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
 import { Tabs } from '@/components/ui/tabs/index.js'
 import { Slider } from '@/components/ui/slider/index.js'
-
-export default {
-  name: 'HapticConfig',
-  components: { Slider, Tabs, ScrollArea },
-}
+import { GaugeCircle, AudioLines, AudioWaveform, Power } from 'lucide-vue-next'
 </script>
 <style scoped>
 input::-webkit-outer-spin-button,

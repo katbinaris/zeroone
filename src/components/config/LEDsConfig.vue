@@ -182,10 +182,11 @@
     </div>
   </TabsContent>
 </template>
-<script>
-export default {
-  name: 'LEDsConfig',
-}
+<script setup>
+import { ScrollArea } from '@/components/ui/scroll-area/index.js'
+import { Tabs } from '@/components/ui/tabs/index.js'
+import { Slider } from '@/components/ui/slider/index.js'
+import { GaugeCircle, AudioLines, AudioWaveform, Power } from 'lucide-vue-next'
 </script>
 <style scoped>
 input::-webkit-outer-spin-button,

@@ -22,7 +22,7 @@
                 </div>
                 <span
                   class="text-xs leading-3 text-wrap">{{ $t('config_options.program_settings.connection_type.usb')
-                    }}</span>
+                  }}</span>
               </div>
             </TabsTrigger>
             <TabsTrigger value="cd">
@@ -83,7 +83,7 @@
             <Label
               for="airplane-mode"
               class="text-xs text-muted-foreground">{{
-              $t('config_options.program_settings.profile_properties.show_description')
+                $t('config_options.program_settings.profile_properties.show_description')
               }}</Label>
           </div>
         </div>
@@ -110,7 +110,7 @@
           {{ $t('config_options.program_settings.internal_profile_toggle.subtitle') }}
           <Separator class="mt-4" />
           <span class="space-y-4">{{ $t('config_options.program_settings.internal_profile_toggle.operation')
-              }}: <Badge class="bg-orange-500">SHIFT</Badge> + <Badge
+            }}: <Badge class="bg-orange-500">SHIFT</Badge> + <Badge
               class="bg-zinc-500">Fn3</Badge> + <Badge>Rotation</Badge></span>
           <Separator class="my-4" />
           <span>{{ $t('config_options.program_settings.internal_profile_toggle.warning') }}</span>
@@ -124,10 +124,12 @@
     </div>
   </TabsContent>
 </template>
-<script>
-export default {
-  name: 'ProgramConfig',
-}
+<script setup>
+import { ScrollArea } from '@/components/ui/scroll-area/index.js'
+import { Tabs } from '@/components/ui/tabs/index.js'
+import { Label } from '@/components/ui/label/index.js'
+import { Switch } from '@/components/ui/switch/index.js'
+import { Replace, Type, Cable, Power } from 'lucide-vue-next'
 </script>
 <style scoped>
 input::-webkit-outer-spin-button,
