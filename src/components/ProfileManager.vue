@@ -15,7 +15,7 @@
     <div>
       <div class="flex w-full h-12 items-center">
         <label for="filter" class="flex h-full items-center cursor-text">
-          <MagnifyingGlassIcon class="ml-4 mr-1 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
+          <MagnifyingGlassIcon class="ml-4 mr-2 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
         </label>
         <input
           id="filter"
@@ -24,19 +24,31 @@
           class="grow h-full bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50">
       </div>
       <Separator />
-      <template v-if="filter===''">
-        <div v-for="[profileTag, tagProfiles] in profilesByTag" :key="profileTag">
-          {{ profileTag }}
-          <div v-for="profile in tagProfiles" :key="profile.id" class="ml-4">
-            {{ profile.name }} {{ profile.id }}
-          </div>
+      <div v-if="filteredProfiles.length === 0">
+        <div class="flex flex-col items-center justify-center h-32">
+          <p class="text-sm text-muted-foreground">
+            {{ $t('profiles.not_found') }}
+          </p>
         </div>
-      </template>
-      <template v-else>
-        <div v-for="profile in filteredProfiles" :key="profile.id">
-          {{ profile.name }} {{ profile.id }}
-        </div>
-      </template>
+      </div>
+      <div>
+        <Collapsible
+          v-for="[profileTag, tagProfiles] in filteredProfilesByTag" :key="profileTag" :default-open="true"
+          :open="collapse[profileTag]">
+          <CollapsibleTrigger
+            v-model="collapse[profileTag]"
+            class="w-full py-2 text-left text-muted-foreground text-sm">
+            <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
+            {{ profileTag }} <span class="text-xs text-zinc-600">(TAG)</span>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <button v-for="profile in tagProfiles" :key="profile.id" class="w-full h-10 text-left hover:bg-zinc-900">
+              <FileDigit class="h-4 w-4 mb-1 ml-10 mr-2 inline-block text-muted-foreground" />
+              <span>{{ profile.name }}</span> <span class="text-xs text-zinc-600">uID:{{ profile.id }}</span>
+            </button>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
     </div>
     <SchemaTest />
   </div>
@@ -44,30 +56,24 @@
 <script setup>
 import SchemaTest from '@/components/SchemaTest.vue'
 import { Separator } from '@/components/ui/separator/index.js'
-import { Input } from '@/components/ui/input'
-import { FileDigit } from 'lucide-vue-next'
+import { FileDigit, ChevronRight } from 'lucide-vue-next'
 import axios from 'axios'
 import { computed, onMounted, ref } from 'vue'
 import { MagnifyingGlassIcon } from '@radix-icons/vue'
-import { cn } from '@/lib/utils.js'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible'
 
 const profiles = ref([])
-
 const filter = ref('')
-
-const profilesByTag = computed(() => {
-  const map = new Map()
-  profiles.value.forEach(profile => {
-    const tag = profile.profileTag || 'Uncategorized'
-    if (!map.has(tag)) {
-      map.set(tag, [])
-    }
-    map.get(tag).push(profile)
-  })
-  return map
-})
+const collapse = ref({})
 
 const filteredProfiles = computed(() => {
+  if (!filter.value) {
+    return profiles.value
+  }
   const filterLower = filter.value.toLowerCase()
   return profiles.value.filter(profile => {
     const nameLower = profile.name.toLowerCase()
@@ -75,6 +81,18 @@ const filteredProfiles = computed(() => {
     const tagLower = profile.profileTag.toLowerCase()
     return nameLower.includes(filterLower) || idLower.includes(filterLower) || tagLower.includes(filterLower)
   })
+})
+
+const filteredProfilesByTag = computed(() => {
+  const map = new Map()
+  filteredProfiles.value.forEach(profile => {
+    const tag = profile.profileTag || 'Uncategorized'
+    if (!map.has(tag)) {
+      map.set(tag, [])
+    }
+    map.get(tag).push(profile)
+  })
+  return map
 })
 
 function fetchProfiles() {
@@ -89,3 +107,8 @@ onMounted(() => {
   fetchProfiles()
 })
 </script>
+<style>
+[data-state=open] > .chevrot {
+  transform: rotate(90deg);
+}
+</style>
