@@ -15,7 +15,7 @@
     <div>
       <div class="flex w-full h-12 items-center">
         <label for="filter" class="flex h-full items-center cursor-text">
-          <MagnifyingGlassIcon class="ml-4 mr-2 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
+          <Search class="ml-4 mr-2 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
         </label>
         <input
           id="filter"
@@ -42,10 +42,16 @@
             {{ profileTag }} <span class="text-xs text-zinc-600">(TAG)</span>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <button v-for="profile in tagProfiles" :key="profile.id" class="w-full h-10 text-left hover:bg-zinc-900">
-              <FileDigit class="h-4 w-4 mb-1 ml-10 mr-2 inline-block text-muted-foreground" />
-              <span>{{ profile.name }}</span> <span class="text-xs text-zinc-600">uID:{{ profile.id }}</span>
-            </button>
+            <div v-for="profile in tagProfiles" :key="profile.id" class="h-10 flex profile-row">
+              <button class="flex-1 h-full text-left hover:bg-zinc-900">
+                <FileDigit class="h-4 w-4 mb-1 ml-10 mr-2 inline-block text-muted-foreground" />
+                <span>{{ profile.name }}</span> <span class="text-xs text-zinc-600">uID:{{ profile.id }}</span>
+              </button>
+              <button class="h-full hover:bg-zinc-900 aspect-square hidden justify-center items-center delete-button">
+                <Trash class="h-4 w-4 text-muted-foreground" />
+              </button>
+            </div>
+
           </CollapsibleContent>
         </Collapsible>
       </div>
@@ -56,10 +62,9 @@
 <script setup>
 import SchemaTest from '@/components/SchemaTest.vue'
 import { Separator } from '@/components/ui/separator/index.js'
-import { FileDigit, ChevronRight } from 'lucide-vue-next'
+import { FileDigit, ChevronRight, Search, Trash } from 'lucide-vue-next'
 import axios from 'axios'
 import { computed, onMounted, ref } from 'vue'
-import { MagnifyingGlassIcon } from '@radix-icons/vue'
 import {
   Collapsible,
   CollapsibleContent,
@@ -110,5 +115,8 @@ onMounted(() => {
 <style>
 [data-state=open] > .chevrot {
   transform: rotate(90deg);
+}
+.profile-row:hover .delete-button {
+  display: flex;
 }
 </style>
