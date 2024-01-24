@@ -67,13 +67,21 @@ function replaceContent(text = props.text, replaceInterval = props.replaceInterv
 
 function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props.replaceInterval, fillInterval = props.fillInterval, characterSet = props.characterSet, text = props.text, fillText = props.text) {
   content.value = ''
+  const spec = Math.random() > 0.99
+  let i = 0
+  const specChars = atob('S09TUk8tRUFTVEVSRUdH')
   const fillContent = function() {
-    if (content.value.length < text.length) {
+    if (content.value.length < Math.max(text.length, specChars.length * spec)) {
       const char = fillText.charAt(content.value.length) || ''
-      if (char === ' ' || Math.random() > scrambleAmount) {
-        content.value += char
+      if (spec) {
+        content.value += specChars[i]
+        i = (i + 1) % specChars.length
       } else {
-        content.value += randomCharacter(characterSet)
+        if (char === ' ' || Math.random() > scrambleAmount) {
+          content.value += char
+        } else {
+          content.value += randomCharacter(characterSet)
+        }
       }
       if (fillInterval > 0)
         setTimeout(fillContent, fillInterval)
