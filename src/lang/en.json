@@ -54,24 +54,24 @@
     },
     "program_settings": {
       "connection_type": {
+        "midi": "Standalone MIDI I/O",
         "title": "Connection Type",
-        "usb": "USB (Virtual HID)",
-        "midi": "Standalone MIDI I/O"
-      },
-      "subtitle": "Operation mode and Profile Naming",
-      "title": "Program Settings",
-      "profile_properties": {
-        "title": "Profile Properties",
-        "program_name": "Program Name",
-        "program_description": "Program Description",
-        "show_description": "Show Description in GUI"
+        "usb": "USB (Virtual HID)"
       },
       "internal_profile_toggle": {
-        "title": "Internal Profile Toggle",
+        "operation": "Operation",
         "subtitle": "Hardcoded macro that allows you to quickly toggle between stored profiles , comes handy if you want to operate device in Standalone mode.",
-        "warning": "Warning: Overrides software defined macro if combination is the same",
-        "operation": "Operation"
-      }
+        "title": "Internal Profile Toggle",
+        "warning": "Warning: Overrides software defined macro if combination is the same"
+      },
+      "profile_properties": {
+        "program_description": "Program Description",
+        "program_name": "Program Name",
+        "show_description": "Show Description in GUI",
+        "title": "Profile Properties"
+      },
+      "subtitle": "Operation mode and Profile Naming",
+      "title": "Program Settings"
     },
     "title": "Configuration Options"
   },
@@ -92,6 +92,6 @@
   },
   "profiles": {
     "subtitle": "Customize to your heart's content",
-    "title": "Profiles"
+    "title": "Device Profiles"
   }
 }

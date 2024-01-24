@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <Menubar class="w-full h-20 rounded-none bg-zinc-950 border-l-0">
-      <div class="p-8">
+      <div class="p-2">
         <h1 class="text-3xl">ZERO/ONE</h1>
         <p class="text-xs text-muted-foreground">Haptic Configuration Tool</p>
       </div>

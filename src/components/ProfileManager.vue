@@ -13,20 +13,18 @@
       </div>
     </div>
     <Separator />
-    <Pop />
     <DeviceBar />
     <SchemaTest />
   </div>
 </template>
 <script>
-import Pop from '@/components/old/Pop.vue'
 import ScrambleReveal from '@/components/effects/ScrambleText.vue'
-import { Separator } from '@/components/ui/separator/index.js'
 import SchemaTest from '@/components/SchemaTest.vue'
 import DeviceBar from '@/components/device-gui/DeviceBar.vue'
+import { Separator } from '@/components/ui/separator/index.js'
 
 export default {
   name: 'ProfileManager',
-  components: { DeviceBar: DeviceBar, SchemaTest, Separator, Pop, ScrambleText: ScrambleReveal },
+  components: { Separator, DeviceBar: DeviceBar, SchemaTest, ScrambleText: ScrambleReveal },
 }
 </script>
