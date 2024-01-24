@@ -1,12 +1,16 @@
 <template>
   <div>
-    <div class="p-4">
-      <h1 class="text-lg">
-        <ScrambleText :text="$t('profiles.title')" />
-      </h1>
-      <p class="text-xs text-muted-foreground">
-        {{ $t('profiles.subtitle') }}
-      </p>
+    <div
+      class="px-4 h-20 flex items-center"
+      @mouseenter="$refs.configPaneTitle.scramble(0.15, 100)">
+      <div>
+        <h1 class="text-lg">
+          <ScrambleText ref="configPaneTitle" class="align-middle" :text="$t(`profiles.title`)" />
+        </h1>
+        <p class="text-xs text-muted-foreground">
+          {{ $t(`profiles.subtitle`) }}
+        </p>
+      </div>
     </div>
     <Separator />
     <Pop />
