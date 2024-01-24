@@ -4,7 +4,7 @@
       v-for="(config, index) in config_tabs"
       :key="config"
       :data-selected="current_tab===config.id"
-      class="px-4 h-20 flex items-center hover:bg-zinc-900 data-[selected=true]:bg-zinc-200 data-[selected=true]:text-black border-solid border-0 border-b"
+      class="px-4 h-20 flex items-center hover:bg-zinc-900 data-[selected=true]:bg-zinc-200 hover:data-[selected=true]:bg-zinc-100 data-[selected=true]:text-black border-solid border-0 border-b"
       :class="config.disabled ? 'cursor-not-allowed' : 'cursor-pointer'"
       @click="current_tab=config.disabled ? current_tab : config.id; $refs.configSelect[index].scramble()">
       <div>

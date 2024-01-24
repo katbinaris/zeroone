@@ -27,9 +27,7 @@
       <Separator />
       <div v-if="filteredProfiles.length === 0">
         <div class="flex flex-col items-center justify-center h-32">
-          <p class="text-sm text-muted-foreground">
-            {{ $t('profiles.not_found') }}
-          </p>
+          <ScrambleText scramble-on-mount fill-interval="5" class="text-sm text-muted-foreground" :text="$t('profiles.not_found')" />
         </div>
       </div>
       <div>
@@ -43,12 +41,22 @@
             {{ profileTag }}<span class="font-heading text-sm text-zinc-600"> ({{ tagProfiles.length }})</span>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div v-for="profile in tagProfiles" :key="profile.id" class="h-12 flex profile-row">
-              <button class="flex-1 h-full text-left hover:bg-zinc-900">
-                <FileDigit class="h-4 w-4 mb-1 ml-10 mr-2 inline-block text-muted-foreground" />
-                <span>{{ profile.name }}</span> <span class="text-xs text-zinc-600">uID:{{ profile.id }}</span>
+            <div
+              v-for="profile in tagProfiles" :key="profile.id"
+              class="h-12 flex profile-row">
+              <button
+                :data-selected="currentProfile===profile.id"
+                class="flex-1 h-full text-left data-[selected=true]:font-semibold hover:bg-zinc-900 data-[selected=true]:bg-zinc-200 hover:data-[selected=true]:bg-zinc-100 data-[selected=true]:text-black"
+                @click="currentProfile=profile.id; profileTitles[profile.id].scramble()">
+                <FileDigit
+                  :data-selected="currentProfile===profile.id"
+                  class="h-4 w-4 mb-1 ml-10 mr-2 inline-block text-muted-foreground data-[selected=true]:text-zinc-600" />
+                <ScrambleText :ref="el => { profileTitles[profile.id] = el }" :text="profile.name" />
+                <span class="text-xs text-zinc-600"> uID:{{ profile.id }}</span>
               </button>
-              <button class="h-full hover:bg-zinc-900 aspect-square hidden justify-center items-center delete-button">
+              <button
+                :data-selected="currentProfile===profile.id"
+                class="h-full hover:bg-zinc-900 aspect-square hidden justify-center items-center delete-button data-[selected=true]:bg-zinc-200 hover:data-[selected=true]:bg-zinc-100 data-[selected=true]:text-black">
                 <Trash class="h-4 w-4 text-muted-foreground" />
               </button>
             </div>
@@ -70,12 +78,16 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
+import ScrambleText from '@/components/effects/ScrambleText.vue'
 
 const maxProfiles = 32
 
 const profiles = ref([])
 const filter = ref('')
 const collapse = ref({})
+
+const currentProfile = ref(null)
+const profileTitles = ref({})
 
 const filteredProfiles = computed(() => {
   if (!filter.value) {
