@@ -4,7 +4,8 @@
       class="px-4 h-20 flex items-center">
       <div>
         <h1 class="text-lg">
-          {{ $t(`profiles.title`) }}
+          {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ profiles.length }}/{{ maxProfiles
+          }})</span>
         </h1>
         <p class="text-xs text-muted-foreground">
           {{ $t(`profiles.subtitle`) }}
@@ -37,12 +38,12 @@
           :open="collapse[profileTag]">
           <CollapsibleTrigger
             v-model="collapse[profileTag]"
-            class="w-full py-2 text-left text-muted-foreground text-sm hover:bg-zinc-900">
+            class="w-full h-12 py-2 text-left text-muted-foreground text-sm hover:bg-zinc-900">
             <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
-            {{ profileTag }} <span class="text-xs text-zinc-600">(TAG)</span>
+            {{ profileTag }}<span class="font-heading text-sm text-zinc-600"> ({{ tagProfiles.length }})</span>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div v-for="profile in tagProfiles" :key="profile.id" class="h-10 flex profile-row">
+            <div v-for="profile in tagProfiles" :key="profile.id" class="h-12 flex profile-row">
               <button class="flex-1 h-full text-left hover:bg-zinc-900">
                 <FileDigit class="h-4 w-4 mb-1 ml-10 mr-2 inline-block text-muted-foreground" />
                 <span>{{ profile.name }}</span> <span class="text-xs text-zinc-600">uID:{{ profile.id }}</span>
@@ -51,7 +52,6 @@
                 <Trash class="h-4 w-4 text-muted-foreground" />
               </button>
             </div>
-
           </CollapsibleContent>
         </Collapsible>
       </div>
@@ -70,6 +70,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
+
+const maxProfiles = 32
 
 const profiles = ref([])
 const filter = ref('')
@@ -116,6 +118,7 @@ onMounted(() => {
 [data-state=open] > .chevrot {
   transform: rotate(90deg);
 }
+
 .profile-row:hover .delete-button {
   display: flex;
 }
