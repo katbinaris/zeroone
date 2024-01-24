@@ -104,6 +104,1124 @@
       "guiConfig": {
         "guiEnable": true
       }
+    },
+    {
+      "id": "cb20",
+      "name": {
+        "isTrusted": true,
+        "_vts": 1706057777313
+      },
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "035b",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "8320",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "eacc",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "a4cd",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "bc2b",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "e03b",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "fd19",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "eacd",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "5afb",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "fdeb",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "cb81",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "bf78",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "c430",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "da8c",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "12b6",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "03ff",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "3fcc",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "0630",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "ab59",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "e715",
+      "name": "TODO: CHANGE THIS",
+      "profileTag": "Uncategorized",
+      "profileConfig": {
+        "profileDesc": "",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "minMaxPos": [
+          0,
+          156
+        ],
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 100,
+          "s": 100,
+          "l": 100
+        },
+        "secondary": {
+          "h": 120,
+          "s": 120,
+          "l": 120
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 255
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
     }
   ]
 }
