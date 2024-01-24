@@ -13,18 +13,16 @@
       </div>
     </div>
     <Separator />
-    <DeviceBar />
     <SchemaTest />
   </div>
 </template>
 <script>
 import ScrambleReveal from '@/components/effects/ScrambleText.vue'
 import SchemaTest from '@/components/SchemaTest.vue'
-import DeviceBar from '@/components/device-gui/DeviceBar.vue'
 import { Separator } from '@/components/ui/separator/index.js'
 
 export default {
   name: 'ProfileManager',
-  components: { Separator, DeviceBar: DeviceBar, SchemaTest, ScrambleText: ScrambleReveal },
+  components: { Separator, SchemaTest, ScrambleText: ScrambleReveal },
 }
 </script>
