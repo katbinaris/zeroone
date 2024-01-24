@@ -13,7 +13,7 @@
           <Badge
             v-if="config.hasOwnProperty('badgeKey')"
             v-t="config.badgeKey"
-            class="font-mono rounded-full h-4 align-middle bg-zinc-900 text-muted-foreground" />
+            class="font-mono ml-2 rounded-full h-4 align-middle bg-zinc-900 text-muted-foreground" />
         </h1>
         <p class="text-xs" :class="current_tab===config.id?'text-black' : 'text-muted-foreground'">
           {{ $t(`config_options.${config.id}.subtitle`) }}
