@@ -86,7 +86,9 @@ function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props
         setTimeout(fillContent, fillInterval)
       else fillContent()
     } else {
-      replaceContent(text, replaceInterval, 0)
+      setTimeout(()=> {
+        replaceContent(text, replaceInterval, 0)
+      }, spec * 500)
     }
   }
   fillContent()
