@@ -13,8 +13,17 @@
     </div>
     <Separator />
     <div>
-      <MagnifyingGlassIcon class="mr-2 h-4 w-4 shrink-0 opacity-50" />
-      <Input v-model="filter" :placeholder="$t('profiles.filter_placeholder')" class="border-none outline-none rounded-none" />
+      <div class="flex w-full h-12 items-center">
+        <label for="filter" class="flex h-full items-center cursor-text">
+          <MagnifyingGlassIcon class="ml-4 mr-1 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
+        </label>
+        <input
+          id="filter"
+          v-model="filter"
+          :placeholder="$t('profiles.filter_placeholder')"
+          class="grow h-full bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50">
+      </div>
+      <Separator />
       <template v-if="filter===''">
         <div v-for="[profileTag, tagProfiles] in profilesByTag" :key="profileTag">
           {{ profileTag }}
@@ -40,6 +49,7 @@ import { FileDigit } from 'lucide-vue-next'
 import axios from 'axios'
 import { computed, onMounted, ref } from 'vue'
 import { MagnifyingGlassIcon } from '@radix-icons/vue'
+import { cn } from '@/lib/utils.js'
 
 const profiles = ref([])
 
