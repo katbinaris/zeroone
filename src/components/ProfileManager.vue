@@ -46,7 +46,7 @@
               class="h-12 flex profile-row">
               <button
                 :data-selected="currentProfile===profile.id"
-                class="flex-1 h-full text-left data-[selected=true]:font-semibold hover:bg-zinc-900 data-[selected=true]:bg-zinc-200 hover:data-[selected=true]:bg-zinc-100 data-[selected=true]:text-black"
+                class="flex-1 h-full text-left data-[selected=true]:font-semibold hover:bg-zinc-900 data-[selected=true]:bg-zinc-200 hover:data-[selected=true]:bg-zinc-100 data-[selected=true]:text-black flex-nowrap text-ellipsis overflow-hidden whitespace-nowrap"
                 @click="currentProfile=profile.id; profileTitles[profile.id].scramble()">
                 <FileDigit
                   :data-selected="currentProfile===profile.id"
