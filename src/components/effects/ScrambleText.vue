@@ -1,5 +1,12 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
+import click from '@/assets/click.mp3'
+
+function playClick() {
+  const audio = new Audio(click)
+  audio.volume = 0.01 * (1 + Math.random() * 0.75 - 0.375 )
+  audio.play()
+}
 
 const props = defineProps({
   text: {
@@ -58,6 +65,7 @@ function replaceContent(text = props.text, replaceInterval = props.replaceInterv
     } else {
       content.value = content.value.substring(0, content.value.length - 1)
     }
+    //playClick()
     setTimeout(() => {
       replaceContent(text, replaceInterval, steps + 1)
     }, replaceInterval * (1 + Math.random()))
@@ -82,11 +90,12 @@ function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props
           content.value += randomCharacter(characterSet)
         }
       }
-      if (fillInterval > 0)
+      if (fillInterval > 0) {
+        //playClick()
         setTimeout(fillContent, fillInterval)
-      else fillContent()
+      } else fillContent()
     } else {
-      setTimeout(()=> {
+      setTimeout(() => {
         replaceContent(text, replaceInterval, 0)
       }, spec * 500)
     }
