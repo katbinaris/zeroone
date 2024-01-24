@@ -16,7 +16,7 @@
             v-t="config.badgeKey"
             class="font-mono rounded-full h-4 align-middle bg-zinc-900 text-muted-foreground" />
         </h1>
-        <p class="text-xs text-muted-foreground">
+        <p class="text-xs" :class="current_tab===config.id?'text-black' : 'text-muted-foreground'">
           {{ $t(`config_options.${config.id}.subtitle`) }}
         </p>
       </div>
