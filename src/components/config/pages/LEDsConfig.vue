@@ -2,7 +2,9 @@
   <TabsContent value="led-config" class="mt-0">
     <div class="w-96 bg-zinc-900 bg-opacity-40">
       <ScrollArea class="h-[720px]">
-        <ConfigSection title="TODO: THINK OF TITLE" :icon-component="Lightbulb" />
+        <ConfigSection title="TODO: THINK OF TITLE" :icon-component="Lightbulb">
+          <HSLInput/>
+        </ConfigSection>
       </ScrollArea>
     </div>
   </TabsContent>
@@ -11,6 +13,7 @@
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
 import { Lightbulb } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
+import HSLInput from '@/components/HSLInput.vue'
 </script>
 <style scoped>
 input::-webkit-outer-spin-button,
