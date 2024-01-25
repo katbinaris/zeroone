@@ -61,7 +61,7 @@
       "internal_profile_toggle": {
         "operation": "Operation",
         "subtitle": "Hardcoded macro that allows you to quickly toggle between stored profiles , comes handy if you want to operate device in Standalone mode.",
-        "title": "Internal Profile Toggle",
+        "title": "Internal Profile",
         "warning": "Warning: Overrides software defined macro if combination is the same"
       },
       "profile_properties": {
