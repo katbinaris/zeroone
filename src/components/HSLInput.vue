@@ -257,10 +257,11 @@ function shake() {
   <div>
     <div
       class="w-full flex p-4 font-heading"
-      :style="{backgroundColor: `hsl(${hue},${saturation}%,${lightness}%)`}"
-      style="transition: color 0.2s ease-in-out"
-      :class="{'text-black': foregroundBlack(...rgb)}">
-      <div ref="colorFieldText" class="w-full flex opacity-50">
+      :style="{backgroundColor: `hsl(${hue},${saturation}%,${lightness}%)`}">
+      <div
+        ref="colorFieldText" class="w-full flex opacity-50"
+        :class="foregroundBlack(...rgb) ? 'text-black selection:bg-black selection:text-white' : 'selection:bg-white selection:text-black'"
+        style="transition: color 0.2s ease-in-out">
         <div>
           <form @submit.prevent="onSubmitHueInput">
             <label for="hueInput">H: </label><input
