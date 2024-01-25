@@ -1,14 +1,14 @@
 <template>
-  <TabsContent value="map-config" class="mt-0">
+  <TabsContent value="haptic-config" class="mt-0">
     <div class="w-96 bg-zinc-900 bg-opacity-40">
       <ScrollArea class="h-[720px]">
         <div class="flex flex-row h-12 items-center px-4 text-sm bg-zinc-900">
 
           <div class="flex-none">
-            <Keyboard class="h-4 w-4" />
+            <GaugeCircle class="h-4 w-4" />
           </div>
           <div class="flex-initial"><h2 class="text-sm px-2 py-4">
-            {{ $t('config_options.mapping_configuration.key_mapping.title') }}</h2></div>
+            {{ $t('config_options.feedback_designer.feedback_type.title') }}</h2></div>
 
         </div>
         <Separator />
@@ -18,44 +18,40 @@
             <TabsTrigger value="fd">
               <div class="grid grid-flow-row auto-rows-max justify-items-center ">
                 <div class="size-16 mb-2">
-                  <img src="../../assets/gui-ico/ico-key-o.svg">
+                  <img src="../../../assets/gui-ico/ico-fd.svg">
                 </div>
-                <span class="text-xs leading-3 text-wrap">
-                              {{ $t('config_options.mapping_configuration.key_mapping.switch.a') }}
-                              <Badge class="bg-orange-400 mt-2">Shift</Badge>
-                            </span>
+                <span
+                  class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.fine_detents')
+                    }}</span>
               </div>
             </TabsTrigger>
             <TabsTrigger value="cd">
               <div class="grid grid-flow-row auto-rows-max justify-items-center">
                 <div class="size-16 mb-2">
-                  <img src="../../assets/gui-ico/ico-key.svg">
+                  <img src="../../../assets/gui-ico/ico-cd.svg">
                 </div>
-                <span class="text-xs leading-3 text-wrap">
-                              {{ $t('config_options.mapping_configuration.key_mapping.switch.b') }}
-                              <Badge class="bg-zinc-400 mt-2">Fn1</Badge>
-                            </span>
+                <span
+                  class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.coarse_detents')
+                    }}</span>
               </div>
             </TabsTrigger>
             <TabsTrigger value="vr">
               <div class="grid grid-flow-row auto-rows-max justify-items-center">
                 <div class="size-16 mb-2">
-                  <img src="../../assets/gui-ico/ico-key-g.svg">
+                  <img src="../../../assets/gui-ico/ico-vf.svg">
                 </div>
-                <span class="text-xs leading-3 text-wrap">
-                              {{ $t('config_options.mapping_configuration.key_mapping.switch.c') }}
-                              <Badge class="bg-zinc-400 mt-2">Fn2</Badge>
-                            </span>
+                <span
+                  class="text-xs leading-3 text-wrap">{{ $t('config_options.feedback_designer.feedback_type.viscous_rotation')
+                    }}</span>
               </div>
             </TabsTrigger>
             <TabsTrigger value="rt">
               <div class="grid grid-flow-row auto-rows-max justify-items-center">
                 <div class="size-16 mb-2">
-                  <img src="../../assets/gui-ico/ico-key-d.svg">
+                  <img src="../../../assets/gui-ico/ico-rc.svg">
                 </div>
                 <span class="text-xs leading-3 text-wrap">
-                              {{ $t('config_options.mapping_configuration.key_mapping.switch.d') }}
-                              <Badge class="bg-zinc-400 mt-2">M0</Badge>
+                              {{ $t('config_options.feedback_designer.feedback_type.return_to_center') }}
                             </span>
               </div>
             </TabsTrigger>
@@ -64,90 +60,39 @@
         </Tabs>
 
         <Separator />
-        <Command>
+        <div class="flex flex-col p-8 pt-4">
+                      <span
+                        class="text-sm text-muted-foreground font-mono h-8 text-center">{{ $t('config_options.feedback_designer.total_positions')
+                        }}</span>
 
-          <CommandList>
-            <CommandEmpty>{{ $t('config_options.mapping_configuration.key_mapping.not_found') }}
+          <div class="flex w-full max-w-sm items-center gap-0">
+            <Button
+              type="submit" class="rounded-none text-xl font-pixellg align-middle font-bold"
+              @click="count--">
+              -
+            </Button>
+            <Input
+              id="positions"
+              v-model="count"
+              class="rounded-none border-none text-5xl font-pixellg focus-visible:ring-0"
+              type="number" placeholder="10" max="65535" min="10" />
+            <Button
+              type="submit" class="rounded-none text-xl font-pixellg font-bold"
+              @click="count++">
+              +
+            </Button>
+          </div>
 
-            </CommandEmpty>
-            <CommandInput
-              :placeholder="$t('config_options.mapping_configuration.key_mapping.search_placeholder')" />
-            <CommandGroup heading="Common">
-              <CommandItem value="backspace">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                Backspace
-              </CommandItem>
-              <CommandItem value="delete">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                Delete
-              </CommandItem>
-              <CommandItem value="enter">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                Enter
-              </CommandItem>
-              <CommandItem value="end">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                End
-              </CommandItem>
-              <CommandItem value="arrow up">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                Arrow Up
-              </CommandItem>
-              <CommandItem value="arrow down">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                Arrow Down
-              </CommandItem>
-              <CommandItem value="arrow left">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                Arrow Left
-              </CommandItem>
-              <CommandItem value="arrow right">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                Arrow Right
-              </CommandItem>
-            </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup heading="MIDI Control Changes">
-              <CommandItem value="cc0">
-                <KeyboardMusic color="grey" class="w-4 h-4 mr-2" />
-                Bank Select (CC0)
-              </CommandItem>
-              <CommandItem value="cc2">
-                <KeyboardMusic color="grey" class="w-4 h-4 mr-2" />
-                Modulation (CC1)
-              </CommandItem>
-              <CommandItem value="cc3">
-                <KeyboardMusic color="grey" class="w-4 h-4 mr-2" />
-                Foot Controller (CC4)
-              </CommandItem>
-              <CommandItem value="cc4">
-                <KeyboardMusic color="grey" class="w-4 h-4 mr-2" />
-                Portamento (CC5)
-              </CommandItem>
-              <CommandItem value="cc5">
-                <KeyboardMusic color="grey" class="w-4 h-4 mr-2" />
-                Volume (CC7)
-              </CommandItem>
-            </CommandGroup>
-            <CommandGroup heading="Macros">
-              <CommandItem value="Page Scroll">
-                <Squircle color="grey" class="w-4 h-4 mr-2" />
-                Page Scroller (M0)
-              </CommandItem>
-            </CommandGroup>
-          </CommandList>
-          <CommandSeparator />
-
-        </Command>
+        </div>
         <Separator />
 
         <div class="flex flex-row h-12 items-center px-4 text-sm bg-zinc-900">
 
           <div class="flex-none">
-            <GaugeCircle class="h-4 w-4" />
+            <AudioWaveform class="h-4 w-4" />
           </div>
           <div class="grow">
-            <h2 class="text-sm px-2 py-4">{{ $t('config_options.mapping_configuration.knob_mapping.title')
+            <h2 class="text-sm px-2 py-4">{{ $t('config_options.feedback_designer.haptic_response.title')
               }}</h2>
           </div>
           <div class="flex-none">
@@ -162,7 +107,9 @@
         <Separator />
 
         <div class="flex flex-col p-8 pt-4">
-          <span class="text-sm text-muted-foreground font-mono">Feedback Strength</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.feedback_strength')
+                        }}</span>
           <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
           <div class="flex flex-row px-1 py-1.5">
             <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
@@ -175,7 +122,9 @@
         </div>
         <Separator />
         <div class="flex flex-col p-8 pt-4">
-          <span class="text-sm text-muted-foreground font-mono">Bounce Back Strength</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.bounce_back_strength')
+                        }}</span>
           <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
           <div class="flex flex-row px-1 py-1.5">
             <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
@@ -187,7 +136,9 @@
         </div>
         <Separator />
         <div class="flex flex-col p-8 pt-4">
-          <span class="text-sm text-muted-foreground font-mono">Output Ramp Dampening</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.output_ramp_dampening')
+                        }}</span>
           <Slider :default-value="[4]" :max="4" :step="1" class="pt-4" />
           <div class="flex flex-row px-1 py-1.5">
             <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
@@ -204,7 +155,8 @@
           <div class="flex-none">
             <AudioLines class="h-4 w-4" />
           </div>
-          <div class="grow"><h2 class="text-sm px-2 py-4"> Auditory Response</h2></div>
+          <div class="grow"><h2 class="text-sm px-2 py-4">
+            {{ $t('config_options.feedback_designer.auditory_response.title') }}</h2></div>
           <div class="flex-none">
             <Toggle
               class="data-[state=on]:ring-emerald-600 data-[state=on]:ring-1" variant="outline"
@@ -215,7 +167,9 @@
         </div>
         <Separator />
         <div class="flex flex-col p-8 pt-4">
-          <span class="text-sm text-muted-foreground font-mono">Auditory Haptic Level</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.auditory_response.haptic_level')
+                        }}</span>
           <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
           <div class="flex flex-row px-1 py-1.5">
             <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
@@ -228,7 +182,9 @@
         <Separator />
         <div class="flex flex-col p-8 pt-4">
 
-          <span class="text-sm text-muted-foreground font-mono">Auditory Magnitude</span>
+                      <span
+                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.auditory_response.magnitude')
+                        }}</span>
           <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
           <div class="flex flex-row px-1 py-1.5">
             <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Faint</div>
@@ -249,18 +205,9 @@
 </template>
 <script setup>
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
-import { Badge } from '@/components/ui/badge/index.js'
 import { Tabs } from '@/components/ui/tabs/index.js'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList, CommandSeparator,
-} from '@/components/ui/command/index.js'
 import { Slider } from '@/components/ui/slider/index.js'
-import { KeyboardMusic, Squircle, Keyboard, GaugeCircle, AudioLines, Power } from 'lucide-vue-next'
+import { GaugeCircle, AudioLines, AudioWaveform, Power } from 'lucide-vue-next'
 </script>
 <style scoped>
 input::-webkit-outer-spin-button,

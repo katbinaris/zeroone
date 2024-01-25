@@ -13,7 +13,12 @@ import Ajv from 'ajv'
 // Create a new store instance
 const store = createStore({
   state() {
-    return {}
+    return {
+      device: {
+        connected: false,
+        profiles: [],
+      },
+    }
   },
   mutations: {},
 })

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="px-4 h-20 flex items-center">
+      class="w-full px-4 h-20 flex items-center">
       <div>
         <h1 class="text-lg">
           {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ profiles.length }}/{{ maxProfiles
@@ -23,19 +23,23 @@
           v-model="filter"
           :placeholder="$t('profiles.filter_placeholder')"
           class="grow h-full bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50">
+        <button class="h-full flex justify-center items-center aspect-square border-solid border-0 border-l hover:bg-zinc-900">
+          <Plus />
+        </button>
       </div>
       <Separator />
       <div v-if="filteredProfiles.length === 0">
         <div class="flex flex-col items-center justify-center h-32">
-          <ScrambleText scramble-on-mount fill-interval="5" class="text-sm text-muted-foreground" :text="$t('profiles.not_found')" />
+          <ScrambleText
+            scramble-on-mount fill-interval="5" class="text-sm text-muted-foreground"
+            :text="$t('profiles.not_found')" />
         </div>
       </div>
       <div>
         <Collapsible
-          v-for="[profileTag, tagProfiles] in filteredProfilesByTag" :key="profileTag" :default-open="true"
-          :open="collapse[profileTag]">
+          v-for="[profileTag, tagProfiles] in filteredProfilesByTag" :key="profileTag" v-model:open="collapse[profileTag]"
+          :default-open="true">
           <CollapsibleTrigger
-            v-model="collapse[profileTag]"
             class="w-full h-12 py-2 text-left text-muted-foreground text-sm hover:bg-zinc-900">
             <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
             {{ profileTag }}<span class="font-heading text-sm text-zinc-600"> ({{ tagProfiles.length }})</span>
@@ -56,7 +60,12 @@
               </button>
               <button
                 :data-selected="currentProfile===profile.id"
-                class="h-full bg-orange-950 hover:bg-orange-700 aspect-square text-black hidden justify-center items-center delete-button data-[selected=true]:bg-orange-600 hover:data-[selected=true]:bg-orange-500">
+                class="flex w-0 h-12 transition-all text-zinc-100 justify-center items-center profile-button hover:bg-opacity-100 bg-opacity-50 bg-zinc-900 data-[selected=true]:bg-zinc-200 hover:data-[selected=true]:bg-zinc-100 data-[selected=true]:text-black">
+                <Copy class="h-4 w-4" />
+              </button>
+              <button
+                :data-selected="currentProfile===profile.id"
+                class="flex w-0 h-12 transition-all  bg-orange-900 text-zinc-100 justify-center items-center profile-button hover:bg-orange-700 data-[selected=true]:bg-orange-600 hover:data-[selected=true]:bg-orange-500 data-[selected=true]:text-black">
                 <Trash2 class="h-4 w-4" />
               </button>
             </div>
@@ -70,7 +79,7 @@
 <script setup>
 import SchemaTest from '@/components/SchemaTest.vue'
 import { Separator } from '@/components/ui/separator/index.js'
-import { FileDigit, ChevronRight, Search, Trash2 } from 'lucide-vue-next'
+import { FileDigit, ChevronRight, Search, Trash2, Copy, Plus } from 'lucide-vue-next'
 import axios from 'axios'
 import { computed, onMounted, ref } from 'vue'
 import {
@@ -126,12 +135,12 @@ onMounted(() => {
   fetchProfiles()
 })
 </script>
-<style>
+<style scoped>
 [data-state=open] > .chevrot {
   transform: rotate(90deg);
 }
 
-.profile-row:hover .delete-button {
-  display: flex;
+.profile-row:hover .profile-button {
+  width: 3rem /* 48px */;
 }
 </style>

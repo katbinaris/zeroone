@@ -15,10 +15,10 @@
   </div>
 </template>
 <script setup>
-import LEDsConfig from '@/components/config/LEDsConfig.vue'
-import ProfileConfig from '@/components/config/ProfileConfig.vue'
-import MappingConfig from '@/components/config/MappingConfig.vue'
-import HapticConfig from '@/components/config/HapticConfig.vue'
+import LEDsConfig from '@/components/config/pages/LEDsConfig.vue'
+import ProfileConfig from '@/components/config/pages/ProfileConfig.vue'
+import MappingConfig from '@/components/config/pages/MappingConfig.vue'
+import HapticConfig from '@/components/config/pages/HapticConfig.vue'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
 
 defineProps({
