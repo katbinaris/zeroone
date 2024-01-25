@@ -49,34 +49,37 @@ const rgb = computed(() => hslToRgb(hue.value / 360, saturation.value / 100, lig
         <p class="font-heading">B: {{ String(rgb[2]).padStart(3, '0') }}</p>
       </div>
     </div>
+    <div
+      class="w-full h-10 absolute"
+      :style="{background: `linear-gradient(180deg, hsla(${hue}, ${saturation}%, ${lightness}%, 30%) 0%, transparent 100%`}" />
     <div class="px-6 py-4 flex">
       <p class="font-heading text-muted-foreground w-24">HUE</p>
       <SliderRoot v-model="hue" :max="360" class="relative flex w-full touch-none select-none items-center">
         <SliderTrack
-          class="relative h-1.5 w-full grow overflow-hidden rounded-full"
+          class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
           style="background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 154, 0, 1) 10%, rgba(208, 222, 33, 1) 20%, rgba(79, 220, 74, 1) 30%, rgba(63, 218, 216, 1) 40%, rgba(47, 201, 226, 1) 50%, rgba(28, 127, 238, 1) 60%, rgba(95, 21, 242, 1) 70%, rgba(186, 12, 248, 1) 80%, rgba(251, 7, 217, 1) 90%, rgba(255, 0, 0, 1) 100%)" />
         <SliderThumb
-          class="block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
+          class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
       </SliderRoot>
     </div>
     <div class="px-6 py-4 flex">
       <p class="font-heading text-muted-foreground w-24">SAT</p>
       <SliderRoot v-model="saturation" :max="100" class="relative flex w-full touch-none select-none items-center">
         <SliderTrack
-          class="relative h-1.5 w-full grow overflow-hidden rounded-full"
+          class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
           :style="{background: `linear-gradient(90deg, hsl(${hue}, 0%, ${lightness}%) 0%, hsl(${hue}, 100%, ${lightness}%) 100%)`}" />
         <SliderThumb
-          class="block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
+          class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
       </SliderRoot>
     </div>
     <div class="px-6 py-4 flex">
       <p class="font-heading text-muted-foreground w-24">LIT</p>
       <SliderRoot v-model="lightness" :max="100" class="relative flex w-full touch-none select-none items-center">
         <SliderTrack
-          class="relative h-1.5 w-full grow overflow-hidden rounded-full"
+          class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
           :style="{background: `linear-gradient(90deg, hsl(${hue}, ${saturation}%, 0%) 0%, hsl(${hue}, ${saturation}%, 50%) 50%, hsl(${hue}, ${saturation}%, 100%) 100%)`}" />
         <SliderThumb
-          class="block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
+          class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
       </SliderRoot>
     </div>
   </div>
