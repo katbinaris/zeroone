@@ -23,7 +23,7 @@
           v-model="filter"
           :placeholder="$t('profiles.filter_placeholder')"
           class="grow h-full bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50">
-        <button class="h-full flex justify-center items-center aspect-square border-solid border-0 border-l hover:bg-zinc-900">
+        <button class="h-full flex text-zinc-200 bg-zinc-900 justify-center items-center aspect-square border-solid border-0 border-l hover:bg-zinc-800">
           <Plus />
         </button>
       </div>

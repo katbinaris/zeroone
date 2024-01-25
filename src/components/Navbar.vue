@@ -40,6 +40,9 @@
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
+      <span class="pl-14 inline-block">STATUS: <b class="font-heading text-lg">CONNECTED</b></span>
+      <span class="text-muted-foreground px-5 inline-block">///</span>
+      <p>SYNCING...</p>
     </Menubar>
   </div>
 </template>
