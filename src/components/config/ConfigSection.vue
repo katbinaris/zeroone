@@ -1,6 +1,6 @@
 <template>
   <Collapsible v-model:open="collapse" :default-open="true">
-    <div class="w-full bg-zinc-900 flex">
+    <div class="w-full bg-zinc-900 h-12 flex">
       <div
         class="flex-1 flex items-center px-4"
         :class="{'cursor-pointer hover:bg-zinc-800': showToggle}"
