@@ -31,9 +31,6 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row h-12 items-center px-4 text-sm bg-zinc-900">
-      <h2>{{ $t('config_options.title') }}</h2>
-    </div>
   </div>
 </template>
 <script>

@@ -5,14 +5,13 @@
         class="flex-1 flex items-center px-4"
         :class="{'cursor-pointer hover:bg-zinc-800': showToggle}"
         @click="toggle = !toggle">
-        <component :is="iconComponent" class="h-4 w-4" />
-        <h2 class="text-sm px-2 py-4">{{ title }}</h2>
+        <component :is="iconComponent" v-if="iconComponent" class="h-4 w-4 mr-2" />
+        <h2 class="text-sm py-4">{{ title }}</h2>
         <Switch
           v-if="showToggle" :checked="toggle"
           class="ml-auto" @click.stop="toggle=!toggle" />
       </div>
-
-      <CollapsibleTrigger class="flex items-center justify-center h-12 aspect-square hover:bg-zinc-800">
+      <CollapsibleTrigger v-if="foldable" class="flex items-center justify-center h-12 aspect-square hover:bg-zinc-800">
         <ChevronLeft class="chevrot h-4 w-4 mt-0.5 transition-transform text-muted-foreground" />
       </CollapsibleTrigger>
     </div>
@@ -41,11 +40,15 @@ defineProps({
   },
   iconComponent: {
     type: [String, Object],
-    default: 'div',
+    default: undefined,
   },
   showToggle: {
     type: Boolean,
     default: false,
+  },
+  foldable: {
+    type: Boolean,
+    default: true,
   },
 })
 
