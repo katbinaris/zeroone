@@ -31,6 +31,11 @@
       "title": "GUI Designer"
     },
     "light_designer": {
+      "led_feedback": "LED Feedback",
+      "led_mode": "LED Mode",
+      "pointer_color": "Pointer Color",
+      "primary_color": "Primary Color",
+      "secondary_color": "Secondary Color",
       "subtitle": "Adjust behavior of LED Ring. Turn On/Off.",
       "title": "Light Designer"
     },

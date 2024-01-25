@@ -2,8 +2,21 @@
   <TabsContent value="led-config" class="mt-0">
     <div class="w-96 bg-zinc-900 bg-opacity-40">
       <ScrollArea class="h-[720px]">
-        <ConfigSection title="TODO: THINK OF TITLE" :icon-component="Lightbulb">
-          <HSLInput/>
+        <ConfigSection
+          :title="$t('config_options.light_designer.led_feedback')" :icon-component="Lightbulb"
+          :show-toggle="true">
+          <h2 class="p-6">{{ $t('config_options.light_designer.led_mode') }}</h2>
+        </ConfigSection>
+        <div class="h-6" />
+        <!-- TODO: Instead of 3 color pickers, add a context select above -->
+        <ConfigSection :title="$t('config_options.light_designer.primary_color')" :icon-component="Paintbrush">
+          <HSLInput />
+        </ConfigSection>
+        <ConfigSection :title="$t('config_options.light_designer.secondary_color')" :icon-component="Brush">
+          <HSLInput />
+        </ConfigSection>
+        <ConfigSection :title="$t('config_options.light_designer.pointer_color')" :icon-component="Pencil">
+          <HSLInput />
         </ConfigSection>
       </ScrollArea>
     </div>
@@ -11,20 +24,7 @@
 </template>
 <script setup>
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
-import { Lightbulb } from 'lucide-vue-next'
+import { Lightbulb, Brush, Pencil, Paintbrush } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
 import HSLInput from '@/components/HSLInput.vue'
 </script>
-<style scoped>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-  text-align: center;
-}
-</style>

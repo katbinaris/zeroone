@@ -157,7 +157,11 @@ function onSubmitHueInput() {
     shake()
     return
   }
-  hue.value = Math.max(0, Math.min(input, 360))
+  const newValue = Math.max(0, Math.min(input, 360))
+  if (newValue === hue.value) {
+    updateHueInput(newValue)
+  }
+  hue.value = newValue
 }
 
 function onSubmitSaturationInput() {
@@ -166,7 +170,11 @@ function onSubmitSaturationInput() {
     shake()
     return
   }
-  saturation.value = Math.max(0, Math.min(input, 100))
+  const newValue = Math.max(0, Math.min(input, 100))
+  if (newValue === saturation.value) {
+    updateSaturationInput(newValue)
+  }
+  saturation.value = newValue
 }
 
 function onSubmitLightnessInput() {
@@ -175,7 +183,11 @@ function onSubmitLightnessInput() {
     shake()
     return
   }
-  lightness.value = Math.max(0, Math.min(input, 100))
+  const newValue = Math.max(0, Math.min(input, 100))
+  if (newValue === lightness.value) {
+    updateLightnessInput(newValue)
+  }
+  lightness.value = newValue
 }
 
 function onSubmitRGBInput() {
@@ -186,11 +198,17 @@ function onSubmitRGBInput() {
     shake()
     return
   }
-  rgb.value = [
+  const newValue = [
     Math.max(0, Math.min(r, 255)),
     Math.max(0, Math.min(g, 255)),
     Math.max(0, Math.min(b, 255)),
   ]
+  if (newValue[0] === rgb.value[0] && newValue[1] === rgb.value[1] && newValue[2] === rgb.value[2]) {
+    updateRInput(newValue[0])
+    updateGInput(newValue[1])
+    updateBInput(newValue[2])
+  }
+  rgb.value = newValue
 }
 
 function foregroundBlack(r, g, b) {
