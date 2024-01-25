@@ -2,72 +2,47 @@
   <TabsContent value="prog-config" class="mt-0">
     <div class="w-96 bg-zinc-900 bg-opacity-40">
       <ScrollArea class="h-[720px]">
-        <div class="flex flex-row h-12 items-center px-4 text-sm bg-zinc-900">
-
-          <div class="flex-none">
-            <Cable class="h-4 w-4" />
-          </div>
-          <div class="flex-initial"><h2 class="text-sm px-2 py-4">
-            {{ $t('config_options.profile_settings.connection_type.title') }}</h2></div>
-
-        </div>
-        <Separator />
-
-        <Tabs default-value="fd">
-          <TabsList class="grid grid-cols-2 h-auto text-muted-foreground">
-            <TabsTrigger value="fd">
-              <div class="grid grid-flow-row auto-rows-max justify-items-center ">
-                <div class="w-24 size-w mb-2">
-                  <img src="../../assets/gui-ico/ico-usb-logo.svg" alt="usb-logo">
+        <ConfigSection :title="$t('config_options.profile_settings.title')" :icon-component="Cable">
+          <Tabs default-value="fd">
+            <TabsList class="grid grid-cols-2 h-auto text-muted-foreground">
+              <TabsTrigger value="fd">
+                <div class="grid grid-flow-row auto-rows-max justify-items-center ">
+                  <div class="w-24 size-w mb-2">
+                    <img src="../../../assets/gui-ico/ico-usb-logo.svg" alt="usb-logo">
+                  </div>
+                  <span
+                    class="text-xs leading-3 text-wrap">{{ $t('config_options.profile_settings.connection_type.usb')
+                    }}</span>
                 </div>
-                <span
-                  class="text-xs leading-3 text-wrap">{{ $t('config_options.profile_settings.connection_type.usb')
-                  }}</span>
-              </div>
-            </TabsTrigger>
-            <TabsTrigger value="cd">
-              <div class="grid grid-flow-row auto-rows-max justify-items-center">
-                <div class="w-24 size-w mb-2">
-                  <img src="../../assets/gui-ico/ico-midi-logo.svg" alt="midi-logo">
-                </div>
-                <span class="text-xs leading-3 text-wrap">
+              </TabsTrigger>
+              <TabsTrigger value="cd">
+                <div class="grid grid-flow-row auto-rows-max justify-items-center">
+                  <div class="w-24 size-w mb-2">
+                    <img src="../../../assets/gui-ico/ico-midi-logo.svg" alt="midi-logo">
+                  </div>
+                  <span class="text-xs leading-3 text-wrap">
                               {{ $t('config_options.profile_settings.connection_type.midi') }}
                             </span>
-              </div>
-            </TabsTrigger>
-          </TabsList>
+                </div>
+              </TabsTrigger>
+            </TabsList>
 
-        </Tabs>
-
-
-        <Separator />
-
-        <div class="flex flex-row h-12 items-center px-4 text-sm bg-zinc-900">
-
-          <div class="flex-none">
-            <Type class="h-4 w-4" />
-          </div>
-          <div class="grow">
-            <h2 class="text-sm px-2 py-4">{{ $t('config_options.profile_settings.profile_properties.title')
-              }}</h2>
-          </div>
-
-
-        </div>
-        <Separator />
-
-        <div class="flex flex-col p-8 py-4">
+          </Tabs>
+        </ConfigSection>
+        <ConfigSection :title="$t('config_options.profile_settings.profile_properties.title')" :icon-component="Type">
+          <div class="flex flex-col p-8 py-4">
                       <span
                         class="text-sm text-muted-foreground font-mono pb-4">{{ $t('config_options.profile_settings.profile_properties.profile_name')
                         }}</span>
-          <Input
-            type="text" :placeholder="$t('config_options.profile_settings.profile_properties.profile_name')"
-            class="text-xl border-0 text-center border-b rounded-none focus-visible:ring-0 focus-visible:border-emerald-500 font-pixelsm uppercase"
-            default-value="Oscillator 1" maxlength="20" />
+            <Input
+              type="text" :placeholder="$t('config_options.profile_settings.profile_properties.profile_name')"
+              class="text-xl border-0 text-center border-b rounded-none focus-visible:ring-0 focus-visible:border-emerald-500 font-pixelsm uppercase"
+              default-value="Oscillator 1" maxlength="20" />
 
-          <Label for="text" class="text-muted-foreground text-right mt-1 text-xs">16/20</Label>
-        </div>
-        <Separator />
+            <Label for="text" class="text-muted-foreground text-right mt-1 text-xs">16/20</Label>
+          </div>
+        </ConfigSection>
+
         <div class="flex flex-col p-8 py-4">
                       <span
                         class="text-sm text-muted-foreground font-mono pb-4">{{ $t('config_options.profile_settings.profile_properties.profile_description')
@@ -130,6 +105,7 @@ import { Tabs } from '@/components/ui/tabs/index.js'
 import { Label } from '@/components/ui/label/index.js'
 import { Switch } from '@/components/ui/switch/index.js'
 import { Replace, Type, Cable, Power } from 'lucide-vue-next'
+import ConfigSection from '@/components/config/ConfigSection.vue'
 </script>
 <style scoped>
 input::-webkit-outer-spin-button,
