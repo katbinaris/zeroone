@@ -9,14 +9,8 @@
         </ConfigSection>
         <div class="h-6" />
         <!-- TODO: Instead of 3 color pickers, add a context select above -->
-        <ConfigSection :title="$t('config_options.light_designer.primary_color')" :icon-component="Paintbrush">
-          <HSVInput />
-        </ConfigSection>
-        <ConfigSection :title="$t('config_options.light_designer.secondary_color')" :icon-component="Brush">
-          <HSVInput />
-        </ConfigSection>
-        <ConfigSection :title="$t('config_options.light_designer.pointer_color')" :icon-component="Pencil">
-          <HSVInput />
+        <ConfigSection :title="$t('config_options.light_designer.led_colors')" :icon-component="Palette">
+          <PaletteInput />
         </ConfigSection>
       </ScrollArea>
     </div>
@@ -24,7 +18,7 @@
 </template>
 <script setup>
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
-import { Lightbulb, Brush, Pencil, Paintbrush } from 'lucide-vue-next'
+import { Lightbulb, Palette } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
-import HSVInput from '@/components/HSVInput.vue'
+import PaletteInput from '@/components/config/pages/PaletteInput.vue'
 </script>
