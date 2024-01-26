@@ -6,7 +6,7 @@
       :class="currentOption!==key ? 'hover:bg-zinc-800 text-zinc-200' : 'text-black bg-zinc-200 hover:bg-zinc-100'"
       @click="currentOption = key">
       {{ $t(option.key) }}
-      <div class="h-4 w-full mt-2" :style="{background: option.color.hex()}"/>
+      <div class="h-4 w-full mt-2" :style="{background: option.color.hex()}" />
     </button>
   </div>
   <HSVInput v-model="options[currentOption].color" class="relative z-20" />
@@ -14,28 +14,33 @@
 <script setup>
 import HSVInput from '@/components/HSVInput.vue'
 import Color from 'color'
-import { reactive, ref } from 'vue'
+import { onBeforeMount, reactive, ref } from 'vue'
 
-const currentOption = ref('primary')
+const currentOption = ref(null)
 
 const model = defineModel({
   type: Object,
   default: () => ({
-    primary: {
-      key: 'config_options.light_designer.primary_color',
+    one: {
+      key: 'One',
       color: Color('#ff0000'),
     },
-    secondary: {
-      key: 'config_options.light_designer.secondary_color',
+    two: {
+      key: 'Two',
       color: Color('#00ff00'),
     },
-    pointer: {
-      key: 'config_options.light_designer.pointer_color',
+    three: {
+      key: 'Three',
       color: Color('#0000ff'),
     },
   }),
 })
 
 const options = reactive(model.value)
+
+onBeforeMount(() => {
+  if (currentOption.value === null)
+    currentOption.value = Object.keys(options)[0]
+})
 
 </script>
