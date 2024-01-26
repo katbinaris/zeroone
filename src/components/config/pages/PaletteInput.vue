@@ -3,7 +3,7 @@
     <button
       v-for="(option, key) in options" :key="key"
       class="flex-1 pt-2 items-center text-center relative"
-      :class="currentOption!==key ? '' : 'text-black bg-white'"
+      :class="currentOption!==key ? 'hover:bg-zinc-800 text-zinc-200' : 'text-black bg-zinc-200 hover:bg-zinc-100'"
       @click="currentOption = key">
       {{ $t(option.key) }}
       <div class="h-4 w-full mt-2" :style="{background: option.color.hex()}"/>
