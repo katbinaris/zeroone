@@ -37,10 +37,17 @@ const valueSliderModel = computed({
   },
 })
 
-const color = ref(Color('#FF0000'))
+const color = defineModel({
+  type: Color,
+  default: () => Color.rgb(255, 0, 0),
+})
 
-const sliderColor = computed(() => {
+const saturationSliderColor = computed(() => {
   return Color.hsv(hueSliderModel.value[0], 100, valueSliderModel.value[0])
+})
+
+const valueSliderColor = computed(() => {
+  return Color.hsv(hueSliderModel.value[0], saturationSliderModel.value[0], 100)
 })
 
 const hexInput = ref('FF0000')
@@ -147,7 +154,7 @@ function shake() {
       class="w-full flex p-4 font-heading"
       :style="{backgroundColor: `hsl(${color.hue()},${color.saturationl()}%,${color.lightness()}%)`}">
       <div
-        ref="colorFieldText" class="w-full flex opacity-50"
+        ref="colorFieldText" class="w-full flex opacity-70"
         :class="color.lighten(0.37).isLight() ? 'text-black selection:bg-black selection:text-white' : 'selection:bg-white selection:text-black'"
         style="transition: color 0.2s ease-in-out">
         <div>
@@ -241,7 +248,7 @@ function shake() {
           class="relative flex w-full touch-none select-none items-center">
           <SliderTrack
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
-            :style="{background: `linear-gradient(90deg, hsl(0, 0%, ${sliderColor.lightness()}%) 0%, hsl(${sliderColor.hue()}, 100%, ${sliderColor.lightness()}%) 100%)`}" />
+            :style="{background: `linear-gradient(90deg, hsl(0, 0%, ${saturationSliderColor.lightness()}%) 0%, hsl(${saturationSliderColor.hue()}, 100%, ${saturationSliderColor.lightness()}%) 100%)`}" />
           <SliderThumb
             class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
         </SliderRoot>
@@ -253,7 +260,7 @@ function shake() {
           class="relative flex w-full touch-none select-none items-center">
           <SliderTrack
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
-            :style="{background: `linear-gradient(90deg, black, hsl(${sliderColor.hue()}, ${color.saturationl()}%, 50%) 100%`}" />
+            :style="{background: `linear-gradient(90deg, black, hsl(${valueSliderColor.hue()}, ${valueSliderColor.saturationl()}%, ${valueSliderColor.lightness()}%) 100%`}" />
           <SliderThumb
             class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
         </SliderRoot>
