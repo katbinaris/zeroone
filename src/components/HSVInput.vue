@@ -1,144 +1,55 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
+import Color from 'color'
 import { SliderRoot, SliderThumb, SliderTrack } from 'radix-vue'
+
+const hueSliderValue = ref(0)
+const saturationSliderValue = ref(100)
+const valueSliderValue = ref(50)
 
 const hueSliderModel = computed({
   get() {
-    return [hue.value]
+    return [hueSliderValue.value]
   },
-  set(value) {
-    hue.value = value[0]
+  set(hue) {
+    hueSliderValue.value = hue[0]
+    color.value = color.value.hue(hue[0])
   },
 })
 
 const saturationSliderModel = computed({
   get() {
-    return [saturation.value]
+    return [saturationSliderValue.value]
   },
-  set(value) {
-    saturation.value = value[0]
+  set(saturation) {
+    saturationSliderValue.value = saturation[0]
+    color.value = color.value.saturationv(saturation[0])
   },
 })
 
-const lightnessSliderModel = computed({
+const valueSliderModel = computed({
   get() {
-    return [lightness.value]
+    return [valueSliderValue.value]
   },
   set(value) {
-    lightness.value = value[0]
+    valueSliderValue.value = value[0]
+    color.value = color.value.value(value[0])
   },
 })
 
-const hue = ref(0)
-const saturation = ref(100)
-const lightness = ref(50)
+const color = ref(Color('#FF0000'))
+
+const sliderColor = computed(() => {
+  return Color.hsv(hueSliderModel.value[0], 100, valueSliderModel.value[0])
+})
 
 const hexInput = ref('FF0000')
 const hueInput = ref('000')
 const saturationInput = ref('100')
-const lightnessInput = ref('050')
+const valueInput = ref('050')
 const rInput = ref('255')
 const gInput = ref('000')
 const bInput = ref('000')
-
-function hueToRGB(p, q, t) {
-  if (t < 0) t += 1
-  if (t > 1) t -= 1
-  if (t < 1 / 6) return p + (q - p) * 6 * t
-  if (t < 1 / 2) return q
-  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
-  return p
-}
-
-function RGBtoHSL(r, g, b) {
-  r /= 255
-  g /= 255
-  b /= 255
-
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
-  let h, s, l = (max + min) / 2
-
-  if (max === min) {
-    h = s = 0 // achromatic
-  } else {
-    const d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-    switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0)
-        break
-      case g:
-        h = (b - r) / d + 2
-        break
-      case b:
-        h = (r - g) / d + 4
-        break
-    }
-    h /= 6
-  }
-
-  return [h * 360, s * 100, l * 100]
-}
-
-function HSLtoRGB(h, s, l) {
-  h /= 360
-  s /= 100
-  l /= 100
-
-  let r, g, b
-
-  if (s === 0) {
-    r = g = b = l // achromatic
-  } else {
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s
-    const p = 2 * l - q
-    r = hueToRGB(p, q, h + 1 / 3)
-    g = hueToRGB(p, q, h)
-    b = hueToRGB(p, q, h - 1 / 3)
-  }
-
-  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)]
-}
-
-function hexToRGB(hex) {
-  const r = parseInt(hex.substring(1, 3), 16)
-  const g = parseInt(hex.substring(3, 5), 16)
-  const b = parseInt(hex.substring(5, 7), 16)
-
-  return [r, g, b]
-}
-
-function rgbToHex(r, g, b) {
-  const componentToHex = (c) => {
-    const hex = c.toString(16)
-    return hex.length === 1 ? '0' + hex : hex
-  }
-
-  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b)
-}
-
-const rgb = computed({
-  get() {
-    return HSLtoRGB(hue.value, saturation.value, lightness.value)
-  },
-  set([r, g, b]) {
-    const [h, s, l] = RGBtoHSL(r, g, b)
-    hue.value = h
-    saturation.value = s
-    lightness.value = l
-  },
-})
-
-const hexCode = computed({
-  get() {
-    return rgbToHex(rgb.value[0], rgb.value[1], rgb.value[2])
-  },
-  set(hex) {
-    const [r, g, b] = hexToRGB(hex)
-    rgb.value = [r, g, b]
-  },
-})
 
 function onSubmitHexInput() {
   let input = hexInput.value
@@ -146,7 +57,7 @@ function onSubmitHexInput() {
     input = '#' + input
   }
   if (input.match(/^#[0-9A-F]{6}$/i)) {
-    hexCode.value = input
+    color.value = Color(input)
   } else
     shake()
 }
@@ -157,11 +68,11 @@ function onSubmitHueInput() {
     shake()
     return
   }
-  const newValue = Math.max(0, Math.min(input, 360))
-  if (newValue === hue.value) {
-    updateHueInput(newValue)
+  const newHue = Math.max(0, Math.min(input, 360))
+  if (newHue === color.value.hue()) {
+    updateInputs()
   }
-  hue.value = newValue
+  color.value = color.value.hue(newHue)
 }
 
 function onSubmitSaturationInput() {
@@ -170,24 +81,24 @@ function onSubmitSaturationInput() {
     shake()
     return
   }
-  const newValue = Math.max(0, Math.min(input, 100))
-  if (newValue === saturation.value) {
-    updateSaturationInput(newValue)
+  const newSaturation = Math.max(0, Math.min(input, 100))
+  if (newSaturation === color.value.saturationv()) {
+    updateInputs()
   }
-  saturation.value = newValue
+  color.value = color.value.saturationv(newSaturation)
 }
 
-function onSubmitLightnessInput() {
-  const input = parseInt(lightnessInput.value)
+function onSubmitValueInput() {
+  const input = parseInt(valueInput.value)
   if (isNaN(input)) {
     shake()
     return
   }
   const newValue = Math.max(0, Math.min(input, 100))
-  if (newValue === lightness.value) {
-    updateLightnessInput(newValue)
+  if (newValue === color.value.value()) {
+    updateInputs()
   }
-  lightness.value = newValue
+  color.value = color.value.value(newValue)
 }
 
 function onSubmitRGBInput() {
@@ -198,68 +109,27 @@ function onSubmitRGBInput() {
     shake()
     return
   }
-  const newValue = [
-    Math.max(0, Math.min(r, 255)),
-    Math.max(0, Math.min(g, 255)),
-    Math.max(0, Math.min(b, 255)),
-  ]
-  if (newValue[0] === rgb.value[0] && newValue[1] === rgb.value[1] && newValue[2] === rgb.value[2]) {
-    updateRInput(newValue[0])
-    updateGInput(newValue[1])
-    updateBInput(newValue[2])
+  const newColor = Color.rgb(r, g, b)
+  if (newColor.hex() === color.value.hex()) {
+    updateInputs()
   }
-  rgb.value = newValue
+  color.value = newColor
 }
 
-function foregroundBlack(r, g, b) {
-  const bgColor = [r / 255, g / 255, b / 255]
-  const c = bgColor.map((col) => {
-    if (col <= 0.03928) {
-      return col / 12.92
-    }
-    return Math.pow((col + 0.055) / 1.055, 2.4)
-  })
-  const l = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2])
-  return l > 0.179
+function updateInputs() {
+  hexInput.value = color.value.hex().substring(1, 7)
+  hueInput.value = String(parseInt(color.value.hue())).padStart(3, '0')
+  saturationInput.value = String(parseInt(color.value.saturationv())).padStart(3, '0')
+  valueInput.value = String(parseInt(color.value.value())).padStart(3, '0')
+  rInput.value = String(parseInt(color.value.red())).padStart(3, '0')
+  gInput.value = String(parseInt(color.value.green())).padStart(3, '0')
+  bInput.value = String(parseInt(color.value.blue())).padStart(3, '0')
+  hueSliderValue.value = color.value.hue()
+  saturationSliderValue.value = color.value.saturationv()
+  valueSliderValue.value = color.value.value()
 }
 
-function updateHexInput(hex) {
-  hexInput.value = hex.substring(1, 7)
-}
-
-function updateHueInput(hue) {
-  hueInput.value = String(parseInt(hue)).padStart(3, '0')
-}
-
-function updateSaturationInput(saturation) {
-  saturationInput.value = String(parseInt(saturation)).padStart(3, '0')
-}
-
-function updateLightnessInput(lightness) {
-  lightnessInput.value = String(parseInt(lightness)).padStart(3, '0')
-}
-
-function updateRInput(r) {
-  rInput.value = String(parseInt(r)).padStart(3, '0')
-}
-
-function updateGInput(g) {
-  gInput.value = String(parseInt(g)).padStart(3, '0')
-}
-
-function updateBInput(b) {
-  bInput.value = String(parseInt(b)).padStart(3, '0')
-}
-
-watch(hexCode, updateHexInput)
-watch(hue, updateHueInput)
-watch(saturation, updateSaturationInput)
-watch(lightness, updateLightnessInput)
-watch(rgb, ([r, g, b]) => {
-  updateRInput(r)
-  updateGInput(g)
-  updateBInput(b)
-}, { deep: true })
+watch(color, updateInputs)
 
 const colorFieldText = ref(null)
 
@@ -275,10 +145,10 @@ function shake() {
   <div>
     <div
       class="w-full flex p-4 font-heading"
-      :style="{backgroundColor: `hsl(${hue},${saturation}%,${lightness}%)`}">
+      :style="{backgroundColor: `hsl(${color.hue()},${color.saturationl()}%,${color.lightness()}%)`}">
       <div
         ref="colorFieldText" class="w-full flex opacity-50"
-        :class="foregroundBlack(...rgb) ? 'text-black selection:bg-black selection:text-white' : 'selection:bg-white selection:text-black'"
+        :class="color.lighten(0.37).isLight() ? 'text-black selection:bg-black selection:text-white' : 'selection:bg-white selection:text-black'"
         style="transition: color 0.2s ease-in-out">
         <div>
           <form @submit.prevent="onSubmitHueInput">
@@ -288,7 +158,7 @@ function shake() {
             onfocus="this.select()"
             type="number" maxlength="3"
             class="w-8 bg-transparent focus-visible:ring-0 focus-visible:outline-none"
-            @blur="updateHueInput(hue)">
+            @blur="updateInputs">
           </form>
           <form @submit.prevent="onSubmitSaturationInput">
             <label for="saturationInput">S: </label><input
@@ -297,16 +167,16 @@ function shake() {
             onfocus="this.select()"
             type="number" maxlength="3"
             class="w-8 bg-transparent focus-visible:ring-0 focus-visible:outline-none"
-            @blur="updateSaturationInput(saturation)">
+            @blur="updateInputs">
           </form>
-          <form @submit.prevent="onSubmitLightnessInput">
-            <label for="lightnessInput">L: </label><input
-            id="lightnessInput"
-            v-model="lightnessInput"
+          <form @submit.prevent="onSubmitValueInput">
+            <label for="valueInput">V: </label><input
+            id="valueInput"
+            v-model="valueInput"
             onfocus="this.select()"
             type="number" maxlength="3"
             class="w-8 bg-transparent focus-visible:ring-0 focus-visible:outline-none"
-            @blur="updateLightnessInput(lightness)">
+            @blur="updateInputs">
           </form>
         </div>
         <div class="mx-auto">
@@ -316,7 +186,7 @@ function shake() {
             v-model="hexInput" maxlength="6"
             onfocus="this.select()"
             class="w-16 bg-transparent focus-visible:ring-0 focus-visible:outline-none"
-            @blur="updateHexInput(hexCode)">
+            @blur="updateInputs">
           </form>
         </div>
         <div>
@@ -327,7 +197,7 @@ function shake() {
             onfocus="this.select()"
             type="number" maxlength="3"
             class="w-8 bg-transparent focus-visible:ring-0 focus-visible:outline-none"
-            @blur="updateRInput(rgb[0])">
+            @blur="updateInputs">
           </form>
           <form @submit.prevent="onSubmitRGBInput">
             <label for="gInput">G: </label><input
@@ -336,7 +206,7 @@ function shake() {
             onfocus="this.select()"
             type="number" maxlength="3"
             class="w-8 bg-transparent focus-visible:ring-0 focus-visible:outline-none"
-            @blur="updateGInput(rgb[1])">
+            @blur="updateInputs">
           </form>
           <form @submit.prevent="onSubmitRGBInput">
             <label for="bInput">B: </label><input
@@ -345,17 +215,17 @@ function shake() {
             onfocus="this.select()"
             type="number" maxlength="3"
             class="w-8 bg-transparent focus-visible:ring-0 focus-visible:outline-none"
-            @blur="updateBInput(rgb[2])">
+            @blur="updateInputs">
           </form>
         </div>
       </div>
     </div>
     <div
-      :style="{background: `linear-gradient(180deg, hsla(${hue}, ${saturation}%, ${lightness}%, 30%) 0%, transparent 30%`}">
+      :style="{background: `linear-gradient(180deg, hsla(${color.hue()}, ${color.saturationl()}%, ${color.lightness()}%, 30%) 0%, transparent 30%`}">
       <div class="px-6 py-4 flex">
         <p class="font-heading text-muted-foreground w-24">HUE</p>
         <SliderRoot
-          v-model="hueSliderModel" :max="360"
+          v-model="hueSliderModel" :max="359"
           class="relative flex w-full touch-none select-none items-center">
           <SliderTrack
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
@@ -371,19 +241,19 @@ function shake() {
           class="relative flex w-full touch-none select-none items-center">
           <SliderTrack
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
-            :style="{background: `linear-gradient(90deg, hsl(${hue}, 0%, ${lightness}%) 0%, hsl(${hue}, 100%, ${lightness}%) 100%)`}" />
+            :style="{background: `linear-gradient(90deg, hsl(0, 0%, ${sliderColor.lightness()}%) 0%, hsl(${sliderColor.hue()}, 100%, ${sliderColor.lightness()}%) 100%)`}" />
           <SliderThumb
             class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
         </SliderRoot>
       </div>
       <div class="px-6 py-4 flex">
-        <p class="font-heading text-muted-foreground w-24">LIT</p>
+        <p class="font-heading text-muted-foreground w-24">VAL</p>
         <SliderRoot
-          v-model="lightnessSliderModel" :max="100"
+          v-model="valueSliderModel" :max="100"
           class="relative flex w-full touch-none select-none items-center">
           <SliderTrack
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
-            :style="{background: `linear-gradient(90deg, hsl(${hue}, ${saturation}%, 0%) 0%, hsl(${hue}, ${saturation}%, 50%) 50%, hsl(${hue}, ${saturation}%, 100%) 100%)`}" />
+            :style="{background: `linear-gradient(90deg, black, hsl(${sliderColor.hue()}, ${color.saturationl()}%, 50%) 100%`}" />
           <SliderThumb
             class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
         </SliderRoot>

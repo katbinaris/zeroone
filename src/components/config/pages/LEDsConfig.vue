@@ -10,13 +10,13 @@
         <div class="h-6" />
         <!-- TODO: Instead of 3 color pickers, add a context select above -->
         <ConfigSection :title="$t('config_options.light_designer.primary_color')" :icon-component="Paintbrush">
-          <HSLInput />
+          <HSVInput />
         </ConfigSection>
         <ConfigSection :title="$t('config_options.light_designer.secondary_color')" :icon-component="Brush">
-          <HSLInput />
+          <HSVInput />
         </ConfigSection>
         <ConfigSection :title="$t('config_options.light_designer.pointer_color')" :icon-component="Pencil">
-          <HSLInput />
+          <HSVInput />
         </ConfigSection>
       </ScrollArea>
     </div>
@@ -26,5 +26,5 @@
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
 import { Lightbulb, Brush, Pencil, Paintbrush } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
-import HSLInput from '@/components/HSLInput.vue'
+import HSVInput from '@/components/HSVInput.vue'
 </script>
