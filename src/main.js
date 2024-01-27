@@ -1,17 +1,21 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
-import 'electron-squirrel-startup';
+import ess from 'electron-squirrel-startup';
+import { ipcMain } from 'electron';
+import nanodevices from './backend/nanodevices.js';
+import nano from './backend/nano.js';
 
-// TODO Handle creating/removing shortcuts on Windows when installing/uninstalling.
-//if (require('electron-squirrel-startup')) {
-//  app.quit();
-//}
+
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (ess) {
+  app.quit();
+}
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1100,
+    height: 912,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -26,12 +30,33 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  return mainWindow;
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.whenReady().then(() => {
+  ipcMain.handle('nanodevices:list', nanodevices.list);
+  ipcMain.handle('nanodevices:connect', nanodevices.connect);
+  ipcMain.handle('nanodevices:disconnect', nanodevices.disconnect);
+  ipcMain.handle('nano:get', nano.get);
+  ipcMain.handle('nano:set', nano.set);
+  const mainWindow = createWindow();
+  nanodevices.onAttach((device) => {
+    console.log("Attached device", device);
+    mainWindow.webContents.send('nanodevice-attached', device);
+  });
+  nanodevices.onDetach((device) => {
+    console.log("Detached device", device);
+    mainWindow.webContents.send('nanodevice-detached', device);
+  });
+  nano.onValueReceived((value) => {
+    console.log("Value received", value);
+    mainWindow.webContents.send('nano-onvalue', value);
+  });
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
