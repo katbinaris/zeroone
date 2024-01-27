@@ -32,6 +32,7 @@ import { createI18n } from 'vue-i18n'
 import App from './App.vue'
 import en from '@/lang/en.json'
 
+import './assets/main.css'
 import './assets/index.css'
 
 import { store } from '@/store.js'
