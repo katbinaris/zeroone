@@ -94,11 +94,17 @@ const filteredProfiles = computed(() => {
   })
 })
 
-function newProfileId() {
-  let id = ''
-  do {
-    id = Math.floor(Math.random() * 9999).toString().padStart(4, '0')
-  } while (store.profileIds.includes(id))
+function newProfileId(originalId = '') {
+  let id = originalId
+  if (originalId) {
+    do {
+      id = Math.floor((parseInt(id) + 1) % 9999).toString().padStart(4, '0')
+    } while (store.profileIds.includes(id))
+  } else {
+    do {
+      id = Math.floor(Math.random() * 9999).toString().padStart(4, '0')
+    } while (store.profileIds.includes(id))
+  }
   return id
 }
 
@@ -115,7 +121,7 @@ const duplicateProfile = (id) => {
   const profile = profiles.value.find(p => p.id === id)
   const profileIndex = profiles.value.indexOf(profile)
   const newProfile = JSON.parse(JSON.stringify(profile))
-  newProfile.id = newProfileId()
+  newProfile.id = newProfileId(id)
   newProfile.name = newProfileName(profile.name)
   profiles.value.splice(profileIndex + 1, 0, newProfile)
 }
