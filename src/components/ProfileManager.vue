@@ -50,7 +50,9 @@
             <ProfileButton
               v-for="(profile, index) in tagProfiles" :key="profile.id" v-model="tagProfiles[index]"
               :selected="currentProfileId===profile.id"
-              @select="currentProfileId=profile.id" />
+              @select="currentProfileId=profile.id"
+              @duplicate="duplicateProfile(profile.id)"
+              @delete="deleteProfile(profile.id)" />
           </CollapsibleContent>
         </Collapsible>
       </div>
@@ -91,6 +93,47 @@ const filteredProfiles = computed(() => {
     return nameLower.includes(filterLower) || idLower.includes(filterLower) || tagLower.includes(filterLower)
   })
 })
+
+function newProfileId(originalId = '') {
+  let id = originalId
+  if (originalId) {
+    do {
+      id = Math.floor((parseInt(id) + 1) % 9999).toString().padStart(4, '0')
+    } while (store.profileIds.includes(id))
+  } else {
+    do {
+      id = Math.floor(Math.random() * 9999).toString().padStart(4, '0')
+    } while (store.profileIds.includes(id))
+  }
+  return id
+}
+
+function newProfileName(originalName) {
+  let name = originalName
+  let i = 1
+  while (profiles.value.find(p => p.name === name)) {
+    name = `${originalName}-${i++}`
+  }
+  return name
+}
+
+const duplicateProfile = (id) => {
+  const profile = profiles.value.find(p => p.id === id)
+  const profileIndex = profiles.value.indexOf(profile)
+  const newProfile = JSON.parse(JSON.stringify(profile))
+  newProfile.id = newProfileId(id)
+  newProfile.name = newProfileName(profile.name)
+  profiles.value.splice(profileIndex + 1, 0, newProfile)
+}
+
+const deleteProfile = (id) => {
+  const profile = profiles.value.find(p => p.id === id)
+  const profileIndex = profiles.value.indexOf(profile)
+  profiles.value.splice(profileIndex, 1)
+  if (currentProfileId.value === id && profiles.value.length > 0) {
+    currentProfileId.value = profiles.value[0].id
+  }
+}
 
 const filteredProfilesByTag = computed(() => {
   const map = new Map()
