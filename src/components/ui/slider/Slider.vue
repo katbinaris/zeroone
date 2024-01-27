@@ -5,8 +5,8 @@ import {
   SliderThumb,
   SliderTrack,
   useEmitAsProps,
-} from "radix-vue";
-import { cn } from "@/lib/utils";
+} from 'radix-vue'
+import { cn } from '@/lib/utils'
 
 const props = defineProps({
   name: { type: String, required: false },
@@ -22,8 +22,8 @@ const props = defineProps({
   minStepsBetweenThumbs: { type: Number, required: false },
   asChild: { type: Boolean, required: false },
   as: { type: null, required: false },
-});
-const emits = defineEmits(["update:modelValue", "valueCommit"]);
+})
+const emits = defineEmits(['update:modelValue', 'valueCommit'])
 </script>
 
 <template>
@@ -42,7 +42,6 @@ const emits = defineEmits(["update:modelValue", "valueCommit"]);
       <SliderRange class="absolute h-full bg-primary" />
     </SliderTrack>
     <SliderThumb
-      class="block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-    />
+      class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
   </SliderRoot>
 </template>
