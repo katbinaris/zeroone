@@ -100,6 +100,7 @@
     "filter_placeholder": "Filter Profiles...",
     "not_found": "No profiles found ;-;",
     "subtitle": "Customize to your heart's content",
-    "title": "Device Profiles"
+    "title": "Device Profiles",
+    "name_placeholder": "Profile name"
   }
 }

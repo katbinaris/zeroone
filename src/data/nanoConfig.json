@@ -52,6 +52,108 @@
       }
     },
     {
+      "id": "1232",
+      "name": "Another",
+      "profileTag": "Binaris",
+      "profileConfig": {
+        "profileDesc": "KORG MINILOGUE OSCILLATOR 1",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "pos": 140,
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 255,
+          "s": 255,
+          "l": 100
+        },
+        "secondary": {
+          "h": 255,
+          "s": 255,
+          "l": 100
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 10
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "1232",
+      "name": "DUPLICATE ID",
+      "profileTag": "Binaris",
+      "profileConfig": {
+        "profileDesc": "KORG MINILOGUE OSCILLATOR 1",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "pos": 140,
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledMode": 1,
+        "primary": {
+          "h": 255,
+          "s": 255,
+          "l": 100
+        },
+        "secondary": {
+          "h": 255,
+          "s": 255,
+          "l": 100
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "l": 10
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
       "id": "5238",
       "name": "sdfsdf",
       "profileTag": "Uncategorized",

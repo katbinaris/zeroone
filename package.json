@@ -10,7 +10,7 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "preview": "vite preview",
-    "serve": "concurrently \"json-server --watch src/data/nanoConfig.json --port=3001\" \"vite\" "
+    "serve": "concurrently \"json-server src/data/nanoConfig.json --port=3001\" \"vite\" "
   },
   "main": "background.js",
   "dependencies": {
@@ -32,7 +32,6 @@
     "vee-validate": "^4.12.4",
     "vue": "^3.3.11",
     "vue-i18n": "^9.9.0",
-    "vuex": "^4.1.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
