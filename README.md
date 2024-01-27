@@ -1,29 +1,16 @@
 # zeroone
 
-This template should help get you started developing with Vue 3 in Vite.
+Haptic configuration utility 
 
-## Recommended IDE Setup
+## Running the code
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- use VSCode
+- run `sudo npm -g json-server`
+- run `npm install`
+- in another terminal, run `json-server --watch src/data/nanoConfig.json --port 3001`
+- run `npm start`
 
-## Customize configuration
+## Connecting your Nano
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+TODO
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```

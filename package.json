@@ -1,18 +1,18 @@
 {
   "name": "zeroone",
   "version": "0.1.1",
+  "description": "Haptic configuration tool",
   "private": true,
+  "main": ".vite/build/main.js",
+  "XXtype": "module",
+  "XXmain": "background.js",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite",
-    "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
-    "preview": "vite preview",
-    "serve": "concurrently \"json-server src/data/nanoConfig.json --port=3001\" \"vite\" "
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
   },
-  "main": "background.js",
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",
     "@radix-ui/react-icons": "^1.3.0",
@@ -25,31 +25,37 @@
     "clsx": "^2.1.0",
     "color": "^4.2.3",
     "concurrently": "^8.2.2",
+    "electron-squirrel-startup": "^1.0.0",
     "lucide-vue-next": "^0.309.0",
     "radix-vue": "^1.3.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "vee-validate": "^4.12.4",
-    "vue": "^3.3.11",
+    "vue": "^3.4.15",
     "vue-i18n": "^9.9.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "@electron-forge/plugin-vite": "^7.2.0",
     "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
     "@types/node": "^20.11.0",
-    "@vitejs/plugin-vue": "^4.5.2",
-    "autoprefixer": "^10.4.16",
-    "electron": "^13.0.0",
-    "electron-devtools-installer": "^3.1.0",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "autoprefixer": "^10.4.17",
+    "electron": "28.2.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.20.1",
     "json-server": "^1.0.0-alpha.21",
     "postcss": "^8.4.33",
+    "postcss-loader": "^8.0.0",
     "prettier": "3.2.4",
-    "tailwindcss": "^3.4.1",
-    "vite": "^5.0.10",
-    "vue-cli-plugin-electron-builder": "~2.1.1"
+    "tailwindcss": "^3.4.1"
   },
   "eslintConfig": {
     "root": true,
@@ -105,6 +111,5 @@
     "semi": false,
     "singleQuote": true
   },
-  "type": "module",
   "web-types": "./web-types.json"
 }

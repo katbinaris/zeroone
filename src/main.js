@@ -1,48 +1,54 @@
-import './assets/main.css'
-import Axios from 'axios'
+import { app, BrowserWindow } from 'electron';
+import path from 'path';
+import 'electron-squirrel-startup';
 
-import { createApp } from 'vue'
-import { createI18n } from 'vue-i18n'
+// TODO Handle creating/removing shortcuts on Windows when installing/uninstalling.
+//if (require('electron-squirrel-startup')) {
+//  app.quit();
+//}
 
-import en from '@/lang/en.json'
+const createWindow = () => {
+  // Create the browser window.
+  const mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+    },
+  });
 
-import App from '@/App.vue'
+  // and load the index.html of the app.
+  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  } else {
+    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+  }
 
-import { store } from '@/store.js'
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools();
+};
 
-import Ajv from 'ajv'
-import schema from '@/data/profileSchema.json'
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createWindow);
 
-const ajv = new Ajv()
+// Quit when all windows are closed, except on macOS. There, it's common
+// for applications and their menu bar to stay active until the user quits
+// explicitly with Cmd + Q.
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 
-Axios.get('http://localhost:3001/profiles').then((res) => {
-  const profiles = res.data
-  console.log(profiles)
-  const ids = new Set()
-  const validate = ajv.compile(schema)
-  store.device.profiles = profiles.filter((profile) => {
-    if (!validate(profile)) {
-      console.error('Failed to validate profile: ' + profile.name, validate.errors)
-      return false
-    }
-    if (ids.has(profile.id)) {
-      console.error('Duplicate profile id: ' + profile.id + ' for profile: ' + profile.name)
-      return false
-    }
-    ids.add(profile.id)
-    return true
-  })
-}).catch((err) => {
-  console.error(err)
-})
+app.on('activate', () => {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
+});
 
-// Create VueI18n instance with locales loaded from /lang directory
-const i18n = createI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: { en: en },
-})
-
-const app = createApp(App)
-app.use(i18n)
-app.mount('#app')
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and import them here.
