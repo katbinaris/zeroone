@@ -49,8 +49,8 @@
           <CollapsibleContent>
             <ProfileButton
               v-for="(profile, index) in tagProfiles" :key="profile.id" v-model="tagProfiles[index]"
-              :selected="currentProfile===profile.id"
-              @select="currentProfile=profile.id" />
+              :selected="currentProfileId===profile.id"
+              @select="currentProfileId=profile.id" />
           </CollapsibleContent>
         </Collapsible>
       </div>
@@ -60,7 +60,7 @@
 <script setup>
 import { Separator } from '@/components/ui/separator/index.js'
 import { ChevronRight, Plus, Search } from 'lucide-vue-next'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { store } from '@/store.js'
@@ -68,17 +68,16 @@ import ProfileButton from '@/components/ProfileButton.vue'
 
 const maxProfiles = 32
 
-const editingId = ref(null)
-
 const profiles = computed({
   get: () => store.device.profiles,
   set: val => store.device.profiles = val,
 })
+const currentProfileId = computed({
+  get: () => store.currentProfileId,
+  set: val => store.currentProfileId = val,
+})
 const filter = ref('')
 const collapse = ref({})
-
-const currentProfile = ref(null)
-const profileTitles = ref({})
 
 const filteredProfiles = computed(() => {
   if (!filter.value) {
@@ -104,10 +103,15 @@ const filteredProfilesByTag = computed(() => {
   })
   return map
 })
+
+watch(profiles, () => {
+  if (!currentProfileId.value && profiles.value.length > 0)
+    currentProfileId.value = profiles.value[0].id
+})
+
 </script>
 <style scoped>
 [data-state=open] > .chevrot {
   transform: rotate(90deg);
 }
-
 </style>

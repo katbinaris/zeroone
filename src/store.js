@@ -1,9 +1,15 @@
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 
 export const store = reactive({
   device: {
     profiles: [],
-    activeProfile: null,
+    activeProfileId: null,
+    activeProfile: computed(() => {
+      return store.device.profiles.find(p => p.id === store.device.activeProfileId)
+    }),
   },
-  currentProfile: null,
+  currentProfileId: null,
+  currentProfile: computed(() => {
+    return store.device.profiles.find(p => p.id === store.currentProfileId)
+  }),
 })
