@@ -30,21 +30,22 @@
       },
       "ledConfig": {
         "ledEnable": true,
+        "ledBrightness": 100,
         "ledMode": 1,
         "primary": {
           "h": 255,
           "s": 255,
-          "l": 100
+          "v": 100
         },
         "secondary": {
           "h": 255,
           "s": 255,
-          "l": 100
+          "v": 100
         },
         "pointer": {
           "h": 255,
           "s": 255,
-          "l": 10
+          "v": 10
         }
       },
       "guiConfig": {
@@ -81,21 +82,22 @@
       },
       "ledConfig": {
         "ledEnable": true,
+        "ledBrightness": 100,
         "ledMode": 1,
         "primary": {
           "h": 255,
           "s": 255,
-          "l": 100
+          "v": 100
         },
         "secondary": {
           "h": 255,
           "s": 255,
-          "l": 100
+          "v": 100
         },
         "pointer": {
           "h": 255,
           "s": 255,
-          "l": 10
+          "v": 10
         }
       },
       "guiConfig": {
@@ -132,21 +134,22 @@
       },
       "ledConfig": {
         "ledEnable": true,
+        "ledBrightness": 100,
         "ledMode": 1,
         "primary": {
           "h": 255,
           "s": 255,
-          "l": 100
+          "v": 100
         },
         "secondary": {
           "h": 255,
           "s": 255,
-          "l": 100
+          "v": 100
         },
         "pointer": {
           "h": 255,
           "s": 255,
-          "l": 10
+          "v": 10
         }
       },
       "guiConfig": {
@@ -186,21 +189,22 @@
       },
       "ledConfig": {
         "ledEnable": true,
+        "ledBrightness": 100,
         "ledMode": 1,
         "primary": {
           "h": 100,
           "s": 100,
-          "l": 100
+          "v": 100
         },
         "secondary": {
           "h": 120,
           "s": 120,
-          "l": 120
+          "v": 120
         },
         "pointer": {
           "h": 255,
           "s": 255,
-          "l": 255
+          "v": 255
         }
       },
       "guiConfig": {

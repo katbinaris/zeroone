@@ -30,7 +30,11 @@
           "description": "Flag to indicate whether to show the description"
         }
       },
-      "required": ["profileDesc", "profileType", "showDesc"],
+      "required": [
+        "profileDesc",
+        "profileType",
+        "showDesc"
+      ],
       "additionalProperties": false
     },
     "feedbackConfig": {
@@ -73,7 +77,17 @@
           "description": "Secondary haptic volume"
         }
       },
-      "required": ["feedbackEn", "feedbackType", "multiRev", "feedbackStrength", "endstopStrength", "outputRamp", "pos", "secondaryHaptic", "secondaryVol"],
+      "required": [
+        "feedbackEn",
+        "feedbackType",
+        "multiRev",
+        "feedbackStrength",
+        "endstopStrength",
+        "outputRamp",
+        "pos",
+        "secondaryHaptic",
+        "secondaryVol"
+      ],
       "additionalProperties": false
     },
     "mappingConfig": {
@@ -104,7 +118,14 @@
           "description": "Mapping for switch D"
         }
       },
-      "required": ["internalMacro", "knobMap", "switchA", "switchB", "switchC", "switchD"],
+      "required": [
+        "internalMacro",
+        "knobMap",
+        "switchA",
+        "switchB",
+        "switchC",
+        "switchD"
+      ],
       "additionalProperties": false
     },
     "ledConfig": {
@@ -114,6 +135,10 @@
           "type": "boolean",
           "description": "Flag to enable LED"
         },
+        "ledBrightness": {
+          "type": "integer",
+          "description": "LED brightness multiplier in percent"
+        },
         "ledMode": {
           "type": "integer",
           "description": "LED mode"
@@ -121,35 +146,81 @@
         "primary": {
           "type": "object",
           "properties": {
-            "h": { "type": "integer", "description": "Hue value for primary LED" },
-            "s": { "type": "integer", "description": "Saturation value for primary LED" },
-            "l": { "type": "integer", "description": "Lightness value for primary LED" }
+            "h": {
+              "type": "integer",
+              "description": "Hue value for primary LED"
+            },
+            "s": {
+              "type": "integer",
+              "description": "Saturation value for primary LED"
+            },
+            "v": {
+              "type": "integer",
+              "description": "Value value for primary LED"
+            }
           },
-          "required": ["h", "s", "l"],
+          "required": [
+            "h",
+            "s",
+            "v"
+          ],
           "additionalProperties": false
         },
         "secondary": {
           "type": "object",
           "properties": {
-            "h": { "type": "integer", "description": "Hue value for secondary LED" },
-            "s": { "type": "integer", "description": "Saturation value for secondary LED" },
-            "l": { "type": "integer", "description": "Lightness value for secondary LED" }
+            "h": {
+              "type": "integer",
+              "description": "Hue value for secondary LED"
+            },
+            "s": {
+              "type": "integer",
+              "description": "Saturation value for secondary LED"
+            },
+            "v": {
+              "type": "integer",
+              "description": "Value value for secondary LED"
+            }
           },
-          "required": ["h", "s", "l"],
+          "required": [
+            "h",
+            "s",
+            "v"
+          ],
           "additionalProperties": false
         },
         "pointer": {
           "type": "object",
           "properties": {
-            "h": { "type": "integer", "description": "Hue value for pointer LED" },
-            "s": { "type": "integer", "description": "Saturation value for pointer LED" },
-            "l": { "type": "integer", "description": "Lightness value for pointer LED" }
+            "h": {
+              "type": "integer",
+              "description": "Hue value for pointer LED"
+            },
+            "s": {
+              "type": "integer",
+              "description": "Saturation value for pointer LED"
+            },
+            "v": {
+              "type": "integer",
+              "description": "Value value for pointer LED"
+            }
           },
-          "required": ["h", "s", "l"],
+          "required": [
+            "h",
+            "s",
+            "v"
+          ],
           "additionalProperties": false
         }
       },
-      "required": ["ledEnable", "ledMode", "primary", "secondary", "pointer"],
+      "required": [
+        "ledEnable",
+        "ledBrightness",
+        "ledMode",
+        "primary",
+        "secondary",
+        "pointer"
+      ],
       "additionalProperties": false
     },
     "guiConfig": {
@@ -160,10 +231,21 @@
           "description": "Flag to enable GUI"
         }
       },
-      "required": ["guiEnable"],
+      "required": [
+        "guiEnable"
+      ],
       "additionalProperties": false
     }
   },
-  "required": ["id", "name", "profileTag", "profileConfig", "feedbackConfig", "mappingConfig", "ledConfig", "guiConfig"],
+  "required": [
+    "id",
+    "name",
+    "profileTag",
+    "profileConfig",
+    "feedbackConfig",
+    "mappingConfig",
+    "ledConfig",
+    "guiConfig"
+  ],
   "additionalProperties": false
 }
