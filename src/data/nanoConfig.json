@@ -1,8 +1,8 @@
 {
   "profiles": [
     {
-      "id": "5867",
-      "name": "NEW PROFILE",
+      "id": "1732",
+      "name": "Official Profile #1",
       "profileTag": "Binaris",
       "profileConfig": {
         "profileDesc": "KORG MINILOGUE OSCILLATOR 1",
@@ -53,9 +53,61 @@
       }
     },
     {
+      "id": "5867",
+      "name": "My First Profile 😳",
+      "profileTag": "Custom",
+      "profileConfig": {
+        "profileDesc": "KORG MINILOGUE OSCILLATOR 1",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "pos": 140,
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledBrightness": 100,
+        "ledMode": 1,
+        "primary": {
+          "h": 255,
+          "s": 255,
+          "v": 100
+        },
+        "secondary": {
+          "h": 255,
+          "s": 255,
+          "v": 100
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "v": 10
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
       "id": "1232",
-      "name": "Another",
-      "profileTag": "Binaris",
+      "name": "AN0Th3R Pr0f1l3",
+      "profileTag": "Custom",
       "profileConfig": {
         "profileDesc": "KORG MINILOGUE OSCILLATOR 1",
         "profileType": 1,
@@ -157,8 +209,60 @@
       }
     },
     {
+      "id": "2891",
+      "name": "Color Grading M-2",
+      "profileTag": "Third Party",
+      "profileConfig": {
+        "profileDesc": "KORG MINILOGUE OSCILLATOR 1",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "pos": 140,
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledBrightness": 100,
+        "ledMode": 1,
+        "primary": {
+          "h": 255,
+          "s": 255,
+          "v": 100
+        },
+        "secondary": {
+          "h": 255,
+          "s": 255,
+          "v": 100
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "v": 10
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
       "id": "5238",
-      "name": "sdfsdf",
+      "name": "sdfsdf (Invalid)",
       "profileTag": "Uncategorized",
       "profileConfig": {
         "profileDesc": "",

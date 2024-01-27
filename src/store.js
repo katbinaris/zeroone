@@ -12,4 +12,5 @@ export const store = reactive({
   currentProfile: computed(() => {
     return store.device.profiles.find(p => p.id === store.currentProfileId)
   }),
+  profileIds: computed(() => store.device.profiles.map(p => p.id)),
 })
