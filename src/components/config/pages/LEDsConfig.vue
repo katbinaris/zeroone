@@ -21,7 +21,7 @@
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
 import { Lightbulb, Palette } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
-import PaletteInput from '@/components/config/pages/PaletteInput.vue'
+import PaletteInput from '@/components/config/PaletteInput.vue'
 import Color from 'color'
 import { computed, ref } from 'vue'
 import { store } from '@/store.js'

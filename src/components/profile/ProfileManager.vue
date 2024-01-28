@@ -60,13 +60,13 @@
   </div>
 </template>
 <script setup>
-import { Separator } from '@/components/ui/separator/index.js'
+import { Separator } from '@/components/ui/separator'
 import { ChevronRight, Plus, Search } from 'lucide-vue-next'
 import { computed, ref, watch } from 'vue'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { store } from '@/store.js'
-import ProfileButton from '@/components/ProfileButton.vue'
+import ProfileButton from '@/components/profile/ProfileButton.vue'
 
 const maxProfiles = 32
 
@@ -112,7 +112,7 @@ function newProfileName(originalName) {
   let name = originalName
   let i = 1
   while (profiles.value.find(p => p.name === name)) {
-    name = `${originalName}-${i++}`
+    name = `${originalName} (${i++})`
   }
   return name
 }

@@ -1,5 +1,5 @@
 <script setup>
-import ProfileManager from '@/components/ProfileManager.vue'
+import ProfileManager from '@/components/profile/ProfileManager.vue'
 import DevicePreview from '@/components/device/DevicePreview.vue'
 import ConfigPane from '@/components/config/ConfigPane.vue'
 import Navbar from '@/components/Navbar.vue'
