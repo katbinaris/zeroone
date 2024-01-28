@@ -32,7 +32,7 @@
       <div v-if="filteredProfiles.length === 0">
         <div class="flex flex-col items-center justify-center h-32">
           <ScrambleText
-            scramble-on-mount fill-interval="5" class="text-sm text-muted-foreground"
+            scramble-on-mount :fill-interval="5" class="text-sm text-muted-foreground"
             :text="$t('profiles.not_found')" />
         </div>
       </div>

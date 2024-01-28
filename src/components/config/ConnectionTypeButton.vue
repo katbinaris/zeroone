@@ -23,7 +23,7 @@ defineProps({
     default: '',
   },
   icon: {
-    type: String,
+    type: [String, Object, Function],
     default: '',
   },
   selected: {

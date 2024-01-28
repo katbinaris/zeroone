@@ -24,7 +24,7 @@
           maxlength="50" />
         <Label for="textarea" class="text-muted-foreground text-right mt-1 text-xs">24/50</Label>
         <div class="flex items-center space-x-4 space-y-1">
-          <Switch id="airplane-mode" default-checked="true" />
+          <Switch id="airplane-mode" :default-checked="true" />
           <Label
             for="airplane-mode"
             class="text-xs text-muted-foreground">{{

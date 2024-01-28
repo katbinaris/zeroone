@@ -39,7 +39,7 @@ defineProps({
     default: 'MISSING_TITLE',
   },
   iconComponent: {
-    type: [String, Object],
+    type: [String, Object, Function],
     default: undefined,
   },
   showToggle: {
