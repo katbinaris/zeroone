@@ -12,7 +12,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint . --ext .js, .vue",
-    "mock": "concurrently --kill-others \"json-server src/data/nanoConfig.json --port=3001\" \"electron-forge start\" "
+    "dev": "concurrently --kill-others \"json-server src/data/nanoConfig.json --port=3001\" \"electron-forge start\" "
   },
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",

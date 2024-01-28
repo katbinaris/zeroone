@@ -1,16 +1,13 @@
-# zeroone
+# ZERO/ONE
 
-Haptic configuration utility 
+Haptic configuration tool
 
 ## Running the code
 
-- use VSCode
-- run `sudo npm -g json-server`
-- run `npm install`
-- in another terminal, run `json-server --watch src/data/nanoConfig.json --port 3001`
-- run `npm start`
+- use VSCode (or WebStorm) with the appropriate Vue plugins (Vetur, i18n Ally, ESLint, Prettier, etc.)
+- run `npm i` to install dependencies
+- run `npm run dev` to start the json-server and electron app
 
 ## Connecting your Nano
 
 TODO
-
