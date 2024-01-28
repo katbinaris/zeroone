@@ -16,7 +16,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1100,
     height: 912,
-    icon: path.join(__dirname, '../renderer/main_window/assets/favicon.png'),
+    icon: path.join(__dirname, `/assets/favicon.png`),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
