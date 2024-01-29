@@ -22,7 +22,7 @@ const currentConfigPage = ref('profile_settings')
         <ConfigSelect v-model="currentConfigPage" class="overflow-y-auto flex-1" />
       </div>
       <ConfigPane
-        class="flex-1 basis-1/3 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-30"
+        class="flex-1 basis-2/5 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-30"
         :page="currentConfigPage" />
     </div>
   </main>
