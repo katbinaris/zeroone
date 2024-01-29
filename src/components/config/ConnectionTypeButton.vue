@@ -9,7 +9,7 @@
       :src="icon" alt="connection-type-icon"
       class="w-24 size-w mb-2"
       :class="{'invert': selected}">
-    <ScrambleText ref="title" class="text-xs text-wrap" :text="title" />
+    <ScrambleText ref="title" :resize="false" class="text-xs text-wrap" :text="title" />
   </button>
 </template>
 <script setup>

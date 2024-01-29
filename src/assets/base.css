@@ -106,19 +106,4 @@
   h1,h2,h3,h4,h5,h6{
     @apply font-heading;
   }
-
-  #scale div{
-    width: 2px;
-    margin-right: 2px;
-    height: 5px;
-    @apply bg-white;
-  }
-
-  #scale div.active{
-    @apply bg-orange-500;
-  }
-  #scale div.current{
-    @apply bg-orange-500;
-    height: 10px;
-  }
 }

@@ -15,7 +15,7 @@ const currentConfigPage = ref('profile_settings')
   <main class="select-none">
     <Navbar />
     <div class="flex flex-row">
-      <ProfileManager class="border-solid border-0 border-r bg-zinc-900 bg-opacity-30" style="width: 20rem" />
+      <ProfileManager class="border-solid border-0 border-r bg-zinc-900 bg-opacity-30"/>
       <div class="border-solid border-0 border-r" style="width: 25rem">
         <DevicePreview />
         <ConfigSection :title="$t('config_options.title')" :foldable="false" :icon-component="Bolt">

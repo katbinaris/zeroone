@@ -37,6 +37,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  resize: {
+    type: Boolean,
+    default: true,
+  },
   delay: {
     type: Number,
     default: 0,
@@ -78,7 +82,7 @@ function replaceContent(text = props.text, replaceInterval = props.replaceInterv
 
 function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props.replaceInterval, fillInterval = props.fillInterval, characterSet = props.characterSet, text = props.text, fillText = props.text) {
   content.value = ''
-  const spec = Math.random() > 0.99
+  const spec = props.resize && (Math.random() > 0.99)
   let i = 0
   const specChars = atob('S09TUk8tRUFTVEVSRUdH')
   const fillContent = function() {
