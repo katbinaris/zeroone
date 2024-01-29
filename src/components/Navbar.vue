@@ -45,11 +45,23 @@
       <span class="pl-14 inline-block">STATUS: <b class="font-heading text-lg">CONNECTED</b></span>
       <span class="text-muted-foreground px-5 inline-block">///</span>
       <p>SYNCING...</p>
-      <button
-        class="absolute top-0 right-0 py-2 px-3 app-titlebar-button  text-muted-foreground hover:bg-orange-600 hover:text-black"
-        @click="oi('Not implemented ¯\\_(ツ)_/¯')">
-        <X class="h-5 w-5 mr-0.5" />
-      </button>
+      <div class="absolute top-0 right-0 flex h-9 w-32">
+        <button
+          class="grow flex justify-center items-center app-titlebar-button hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50"
+          @click="oi('Not implemented ¯\\_(ツ)_/¯')">
+          <Minus class="h-5 w-5 mr-0.5" />
+        </button>
+        <button
+          class="grow flex justify-center items-center app-titlebar-button hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50"
+          @click="oi('Not implemented ¯\\_(ツ)_/¯')">
+          <Square class="h-4 w-4 mr-0.5" />
+        </button>
+        <button
+          class="grow flex justify-center items-center app-titlebar-button bg-orange-950 hover:bg-orange-900"
+          @click="oi('Not implemented ¯\\_(ツ)_/¯')">
+          <X class="h-5 w-5 mr-0.5" />
+        </button>
+      </div>
     </Menubar>
   </div>
 </template>
@@ -64,7 +76,7 @@ import {
   MenubarContent,
 } from '@/components/ui/menubar/index.js'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
-import { X } from 'lucide-vue-next'
+import { X, Square, Minus } from 'lucide-vue-next'
 
 const oi = (msg) => alert(msg)
 
