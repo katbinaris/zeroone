@@ -1,8 +1,8 @@
 <template>
   <div class="flex app-titlebar">
-    <Menubar class="w-full h-20 rounded-none bg-zinc-950 border-l-0">
+    <Menubar class="w-full h-20 rounded-none bg-zinc-950">
       <div
-        class="p-2 min-w-48 app-titlebar-button"
+        class="p-3 min-w-48 app-titlebar-button"
         @click="$refs.zerooneSubtitle.scramble(1,100,0); $refs.zerooneTitle.scramble(1,100,0)">
         <h1 class="text-3xl">
           <ScrambleText
