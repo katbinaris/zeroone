@@ -4,6 +4,25 @@
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
         -webkit-appearance: none;
-        margin: 0;
     }
+}
+
+body {
+    overflow: hidden;
+    --scrollbar-foreground: rgb(39 39 42);
+    --scrollbar-background: black;
+    scrollbar-color: var(--scrollbar-foreground) var(--scrollbar-background);
+}
+
+::-webkit-scrollbar {
+    width: 0.5em;
+    height: 0.5em;
+}
+
+::-webkit-scrollbar-thumb { /* Foreground */
+    background: var(--scrollbar-foreground);
+}
+
+::-webkit-scrollbar-track { /* Background */
+    background: var(--scrollbar-background);
 }

@@ -1,18 +1,20 @@
 <template>
   <div>
-    <div
-      class="w-full px-4 h-20 flex items-center">
-      <div>
-        <h1 class="text-lg">
-          {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ profiles.length }}/{{ maxProfiles
-          }})</span>
-        </h1>
-        <p class="text-xs text-muted-foreground">
-          {{ $t(`profiles.subtitle`) }}
-        </p>
+    <div>
+      <div
+        class="w-full px-4 h-20 flex items-center">
+        <div>
+          <h1 class="text-lg">
+            {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ profiles.length }}/{{ maxProfiles
+            }})</span>
+          </h1>
+          <p class="text-xs text-muted-foreground">
+            {{ $t(`profiles.subtitle`) }}
+          </p>
+        </div>
       </div>
+      <Separator />
     </div>
-    <Separator />
     <div>
       <div class="flex w-full h-12 items-center">
         <label for="filter" class="flex h-full items-center cursor-text">
@@ -22,13 +24,15 @@
           id="filter"
           v-model="filter"
           :placeholder="$t('profiles.filter_placeholder')"
-          class="grow h-full bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50">
+          class="grow h-full bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0">
         <button
           class="h-full flex text-zinc-200 bg-zinc-900 justify-center items-center aspect-square border-solid border-0 border-l hover:bg-zinc-800">
           <Plus />
         </button>
       </div>
       <Separator />
+    </div>
+    <div class="overflow-y-auto">
       <div v-if="filteredProfiles.length === 0">
         <div class="flex flex-col items-center justify-center h-32">
           <ScrambleText
@@ -36,7 +40,7 @@
             :text="$t('profiles.not_found')" />
         </div>
       </div>
-      <div>
+      <div v-else>
         <Collapsible
           v-for="[profileTag, tagProfiles] in filteredProfilesByTag" :key="profileTag"
           v-model:open="collapse[profileTag]"

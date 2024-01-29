@@ -12,18 +12,17 @@ const currentConfigPage = ref('profile_settings')
 
 </script>
 <template>
-  <main class="select-none">
-    <Navbar />
-    <div class="grid grid-cols-11">
-      <ProfileManager class="col-span-3 border-solid border-0 border-r bg-zinc-900 bg-opacity-30" />
-      <div class="col-span-4 border-solid border-0 border-r">
-        <DevicePreview />
-        <ConfigSection :title="$t('config_options.title')" :foldable="false" :icon-component="Bolt">
-          <ConfigSelect v-model="currentConfigPage" />
-        </ConfigSection>
+  <main class="select-none w-screen h-screen flex flex-col">
+    <Navbar class="flex-none" />
+    <div class="flex-1 min-h-0 flex flex-row">
+      <ProfileManager class="basis-1/3 min-w-80 flex-1 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-30" />
+      <div class="basis-1/3 flex-1 flex flex-col border-solid border-0 border-r">
+        <DevicePreview class="flex-col flex flex-none" />
+        <ConfigSection class="flex-none" :title="$t('config_options.title')" :foldable="false" :icon-component="Bolt" />
+        <ConfigSelect v-model="currentConfigPage" class="overflow-y-auto flex-1" />
       </div>
       <ConfigPane
-        class="col-span-4 border-solid border-0 border-r bg-zinc-900 bg-opacity-30"
+        class="flex-1 basis-1/3 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-30"
         :page="currentConfigPage" />
     </div>
   </main>

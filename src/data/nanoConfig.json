@@ -314,6 +314,110 @@
       "guiConfig": {
         "guiEnable": true
       }
+    },
+    {
+      "id": "1337",
+      "name": "Brought to you by...",
+      "profileTag": "Custom",
+      "profileConfig": {
+        "profileDesc": "Hwhawdhuawhdaddjwidjaiwdiawjdijaidjiawjdj",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "pos": 140,
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledBrightness": 100,
+        "ledMode": 1,
+        "primary": {
+          "h": 255,
+          "s": 255,
+          "v": 100
+        },
+        "secondary": {
+          "h": 255,
+          "s": 255,
+          "v": 100
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "v": 10
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
+    },
+    {
+      "id": "0420",
+      "name": "Overflow Testing Inc.",
+      "profileTag": "Custom",
+      "profileConfig": {
+        "profileDesc": "whaduwhawhdwadhwaudhuwahdu huwadhuawhduhwadhuawhu dwaijdwajiawjdijawidiwajidawidiawjddhawgdjzgesfgkhsfsza",
+        "profileType": 1,
+        "showDesc": true
+      },
+      "feedbackConfig": {
+        "feedbackEn": true,
+        "feedbackType": "fd",
+        "multiRev": false,
+        "feedbackStrength": 1,
+        "endstopStrength": 1,
+        "outputRamp": 10000,
+        "pos": 140,
+        "secondaryHaptic": true,
+        "secondaryVol": 5
+      },
+      "mappingConfig": {
+        "internalMacro": false,
+        "knobMap": "arrL",
+        "switchA": "shift",
+        "switchB": "ctrl",
+        "switchC": "alt",
+        "switchD": "esc"
+      },
+      "ledConfig": {
+        "ledEnable": true,
+        "ledBrightness": 100,
+        "ledMode": 1,
+        "primary": {
+          "h": 255,
+          "s": 255,
+          "v": 100
+        },
+        "secondary": {
+          "h": 255,
+          "s": 255,
+          "v": 100
+        },
+        "pointer": {
+          "h": 255,
+          "s": 255,
+          "v": 10
+        }
+      },
+      "guiConfig": {
+        "guiEnable": true
+      }
     }
   ]
 }

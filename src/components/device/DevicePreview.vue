@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="px-4 py-5">
+    <div class="px-4 pt-5 pb-3">
       <h1 class="text-lg">
         {{ $t('preview.title') }}
       </h1>
     </div>
     <div class="flex justify-center">
       <div
-        class="flex bg-cover m-6 w-full aspect-square"
+        class="flex bg-cover mb-6 w-72 aspect-square"
         style="background-image: url(src/assets/gui-ico/xl-bg-ico.svg)">
         <div class="flex flex-col w-full justify-center p-10 rounded-full overflow-hidden">
           <div class="self-center w-8 mb-1 opacity-50">

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-12 flex profile-row"
+    class="h-12 flex"
     @mouseenter="hover=true" @mouseleave="hover=false">
     <form
       v-if="nameEditable && editing"

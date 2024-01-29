@@ -22,7 +22,7 @@
         "output_ramp_dampening": "Output Ramp Dampening",
         "title": "Haptic Response"
       },
-      "subtitle": "Feedback mode selector and parameter adjustment",
+      "subtitle": "Adjust haptic and auditory feedback",
       "title": "Feedback Designer",
       "total_positions": "Total Positions"
     },
@@ -98,9 +98,9 @@
   },
   "profiles": {
     "filter_placeholder": "Filter Profiles...",
+    "name_placeholder": "Profile name",
     "not_found": "No profiles found ;-;",
     "subtitle": "Customize to your heart's content",
-    "title": "Device Profiles",
-    "name_placeholder": "Profile name"
+    "title": "Device Profiles"
   }
 }

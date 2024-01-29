@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="px-6 h-20 flex items-center bg-zinc-900 bg-opacity-40">
+      class="flex-none px-6 h-20 flex items-center bg-zinc-900 bg-opacity-40">
       <div>
         <h1 class="text-lg">
           <ScrambleText class="align-middle" :text="$t(`config_options.${page}.title`)" />
@@ -11,7 +11,9 @@
         </p>
       </div>
     </div>
-    <component :is="configPages[page]" />
+    <div class="overflow-y-auto">
+      <component :is="configPages[page]" />
+    </div>
   </div>
 </template>
 <script setup>
