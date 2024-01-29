@@ -1,56 +1,48 @@
 <template>
-  <TabsContent value="haptic-config" class="mt-0">
-    <div class="w-96 bg-zinc-900 bg-opacity-40">
-      <ScrollArea class="h-[720px]">
-        <ConfigSection
-          :title="$t('config_options.feedback_designer.feedback_type.title')"
-          :icon-component="GaugeCircle">
-          <div class="flex font-heading">
-            <FeedbackTypeButton
-              v-for="(option, key) in feedbackTypeOptions" :key="key" :title="$t(option.titleKey)"
-              :icon="option.icon" :selected="feedbackType===key" @select="feedbackType=key" />
-          </div>
-        </ConfigSection>
-        <ConfigSection
-          :title="$t('config_options.feedback_designer.haptic_response.title')"
-          :icon-component="AudioWaveform"
-          :show-toggle="true">
-          <SteppedSlider
-            v-model="feedbackStrength"
-            :label="$t('config_options.feedback_designer.haptic_response.feedback_strength')" />
-          <Separator />
-          <SteppedSlider
-            v-model="bounceBackStrength"
-            :label="$t('config_options.feedback_designer.haptic_response.bounce_back_strength')" />
-          <Separator />
-          <SteppedSlider
-            v-model="outputRampDampening"
-            :label="$t('config_options.feedback_designer.haptic_response.output_ramp_dampening')" />
-        </ConfigSection>
-        <ConfigSection
-          :title="$t('config_options.feedback_designer.auditory_response.title')"
-          :icon-component="AudioLines" :show-toggle="true">
-          <SteppedSlider
-            v-model="auditoryHapticLevel"
-            :label="$t('config_options.feedback_designer.auditory_response.haptic_level')" />
-          <Separator />
-          <SteppedSlider
-            v-model="auditoryMagnitude"
-            :label="$t('config_options.feedback_designer.auditory_response.magnitude')"
-            :max="3"
-            :named-positions="[
+  <ConfigSection
+    :title="$t('config_options.feedback_designer.feedback_type.title')"
+    :icon-component="GaugeCircle">
+    <div class="flex font-heading">
+      <FeedbackTypeButton
+        v-for="(option, key) in feedbackTypeOptions" :key="key" :title="$t(option.titleKey)"
+        :icon="option.icon" :selected="feedbackType===key" @select="feedbackType=key" />
+    </div>
+  </ConfigSection>
+  <ConfigSection
+    :title="$t('config_options.feedback_designer.haptic_response.title')"
+    :icon-component="AudioWaveform"
+    :show-toggle="true">
+    <SteppedSlider
+      v-model="feedbackStrength"
+      :label="$t('config_options.feedback_designer.haptic_response.feedback_strength')" />
+    <Separator />
+    <SteppedSlider
+      v-model="bounceBackStrength"
+      :label="$t('config_options.feedback_designer.haptic_response.bounce_back_strength')" />
+    <Separator />
+    <SteppedSlider
+      v-model="outputRampDampening"
+      :label="$t('config_options.feedback_designer.haptic_response.output_ramp_dampening')" />
+  </ConfigSection>
+  <ConfigSection
+    :title="$t('config_options.feedback_designer.auditory_response.title')"
+    :icon-component="AudioLines" :show-toggle="true">
+    <SteppedSlider
+      v-model="auditoryHapticLevel"
+      :label="$t('config_options.feedback_designer.auditory_response.haptic_level')" />
+    <Separator />
+    <SteppedSlider
+      v-model="auditoryMagnitude"
+      :label="$t('config_options.feedback_designer.auditory_response.magnitude')"
+      :max="3"
+      :named-positions="[
               {value:0, label: 'Faint'},
               {value:1, label: 'Soft'},
               {value:2, label: 'Normal'},
               {value:3, label: 'Loud'}]" />
-        </ConfigSection>
-      </ScrollArea>
-      <Separator />
-    </div>
-  </TabsContent>
+  </ConfigSection>
 </template>
 <script setup>
-import { ScrollArea } from '@/components/ui/scroll-area/index.js'
 import { AudioLines, AudioWaveform, GaugeCircle } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
 import SteppedSlider from '@/components/config/SteppedSlider.vue'

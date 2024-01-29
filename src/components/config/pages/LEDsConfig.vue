@@ -1,24 +1,17 @@
 <template>
-  <TabsContent value="led-config" class="mt-0">
-    <div class="w-96 bg-zinc-900 bg-opacity-40">
-      <ScrollArea class="h-[720px]">
-        <ConfigSection
-          :title="$t('config_options.light_designer.led_feedback')" :icon-component="Lightbulb"
-          :show-toggle="true">
-          <h2 class="p-6 inline-block">{{ $t('config_options.light_designer.led_mode') }}</h2> [TODO]
-          <div class="px-6 py-2">
-            <Slider v-model="brightnessSliderModel" max="100" class="h-10" />
-          </div>
-        </ConfigSection>
-        <ConfigSection :title="$t('config_options.light_designer.led_colors')" :icon-component="Palette">
-          <PaletteInput v-model="colors" />
-        </ConfigSection>
-      </ScrollArea>
+  <ConfigSection
+    :title="$t('config_options.light_designer.led_feedback')" :icon-component="Lightbulb"
+    :show-toggle="true">
+    <h2 class="p-6 inline-block">{{ $t('config_options.light_designer.led_mode') }}</h2> [TODO]
+    <div class="px-6 py-2">
+      <Slider v-model="brightnessSliderModel" max="100" class="h-10" />
     </div>
-  </TabsContent>
+  </ConfigSection>
+  <ConfigSection :title="$t('config_options.light_designer.led_colors')" :icon-component="Palette">
+    <PaletteInput v-model="colors" />
+  </ConfigSection>
 </template>
 <script setup>
-import { ScrollArea } from '@/components/ui/scroll-area/index.js'
 import { Lightbulb, Palette } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
 import PaletteInput from '@/components/config/PaletteInput.vue'
