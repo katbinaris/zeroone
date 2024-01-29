@@ -4,7 +4,7 @@ import click from '@/assets/click.mp3'
 
 function playClick() {
   const audio = new Audio(click)
-  audio.volume = 0.01 * (1 + Math.random() * 0.75 - 0.375 )
+  audio.volume = 0.01 * (1 + Math.random() * 0.75 - 0.375)
   audio.play()
 }
 
@@ -36,6 +36,10 @@ const props = defineProps({
   scrambleOnMount: {
     type: Boolean,
     default: false,
+  },
+  delay: {
+    type: Number,
+    default: 0,
   },
 })
 
@@ -107,7 +111,9 @@ defineExpose({ scramble })
 
 onMounted(() => {
   if (props.scrambleOnMount) {
-    scramble()
+    setTimeout(() => {
+      scramble()
+    }, props.delay)
   } else {
     content.value = props.text
   }
