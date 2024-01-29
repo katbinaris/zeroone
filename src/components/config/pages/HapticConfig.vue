@@ -82,49 +82,17 @@
           :title="$t('config_options.feedback_designer.haptic_response.title')"
           :icon-component="AudioWaveform"
           :show-toggle="true">
-          <div class="flex flex-col p-8 pt-4">
-                      <span
-                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.feedback_strength')
-                        }}</span>
-            <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
-            <div class="flex flex-row px-1 py-1.5">
-              <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-4">|</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-3">Default</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-10">|</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono text-right">Max</div>
-            </div>
-
-          </div>
+          <SteppedSlider
+            v-model="feedbackStrength"
+            :label="$t('config_options.feedback_designer.haptic_response.feedback_strength')" />
           <Separator />
-          <div class="flex flex-col p-8 pt-4">
-                      <span
-                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.bounce_back_strength')
-                        }}</span>
-            <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
-            <div class="flex flex-row px-1 py-1.5">
-              <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-4">|</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-3">Default</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-10">|</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono text-right">Max</div>
-            </div>
-          </div>
+          <SteppedSlider
+            v-model="bounceBackStrength"
+            :label="$t('config_options.feedback_designer.haptic_response.bounce_back_strength')" />
           <Separator />
-          <div class="flex flex-col p-8 pt-4">
-                      <span
-                        class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.haptic_response.output_ramp_dampening')
-                        }}</span>
-            <Slider :default-value="[4]" :max="4" :step="1" class="pt-4" />
-            <div class="flex flex-row px-1 py-1.5">
-              <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-4">|</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-3">Default</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-10">|</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono text-right">Max</div>
-            </div>
-
-          </div>
+          <SteppedSlider
+            v-model="outputRampDampening"
+            :label="$t('config_options.feedback_designer.haptic_response.output_ramp_dampening')" />
         </ConfigSection>
         <ConfigSection
           :title="$t('config_options.feedback_designer.auditory_response.title')"
@@ -143,19 +111,15 @@
             </div>
           </div>
           <Separator />
-          <div class="flex flex-col p-8 pt-4">
-            <span
-              class="text-sm text-muted-foreground font-mono">{{ $t('config_options.feedback_designer.auditory_response.magnitude')
-              }}</span>
-            <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
-            <div class="flex flex-row px-1 py-1.5">
-              <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Faint</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-2">Soft</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-3">Default</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono indent-7">Medium</div>
-              <div class="flex-1 text-xs text-muted-foreground font-mono text-right">Hard</div>
-            </div>
-          </div>
+          <SteppedSlider
+            v-model="auditoryMagnitude"
+            :label="$t('config_options.feedback_designer.auditory_response.magnitude')"
+            :max="3"
+            :named-positions="[
+              {value:0, label: 'Faint'},
+              {value:1, label: 'Soft'},
+              {value:2, label: 'Normal'},
+              {value:3, label: 'Loud'}]" />
         </ConfigSection>
       </ScrollArea>
       <Separator />
@@ -166,19 +130,16 @@
 import { ScrollArea } from '@/components/ui/scroll-area/index.js'
 import { Tabs } from '@/components/ui/tabs/index.js'
 import { Slider } from '@/components/ui/slider/index.js'
-import { GaugeCircle, AudioLines, AudioWaveform } from 'lucide-vue-next'
+import { AudioLines, AudioWaveform, GaugeCircle } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
-</script>
-<style scoped>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+import SteppedSlider from '@/components/config/SteppedSlider.vue'
+import { ref } from 'vue'
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-  text-align: center;
-}
-</style>
+const feedbackStrength = ref(2)
+const bounceBackStrength = ref(2)
+const outputRampDampening = ref(2)
+
+const auditoryHapticLevel = ref(2)
+const auditoryMagnitude = ref(2)
+
+</script>
