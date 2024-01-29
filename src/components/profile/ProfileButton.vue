@@ -46,6 +46,7 @@
         :class="{'text-black': selected, 'text-zinc-100': !selected}"
         :text="profile.name" />
       <span
+        v-if="showId"
         class="text-xs text-zinc-600"
         :class="{'hidden': hover}"> uID:{{ profile.id }}</span>
     </button>
@@ -117,9 +118,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  nameEditable: {
+  showId: {
     type: Boolean,
     default: false,
+  },
+  nameEditable: {
+    type: Boolean,
+    default: true,
   },
   initEditing: {
     type: Boolean,
