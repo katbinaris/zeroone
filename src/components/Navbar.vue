@@ -1,7 +1,9 @@
 <template>
-  <div class="flex">
+  <div class="flex app-titlebar">
     <Menubar class="w-full h-20 rounded-none bg-zinc-950 border-l-0">
-      <div class="p-2 min-w-48" @click="$refs.zerooneSubtitle.scramble(1,100,0); $refs.zerooneTitle.scramble(1,100,0)">
+      <div
+        class="p-2 min-w-48 app-titlebar-button"
+        @click="$refs.zerooneSubtitle.scramble(1,100,0); $refs.zerooneTitle.scramble(1,100,0)">
         <h1 class="text-3xl">
           <ScrambleText
             ref="zerooneTitle"
@@ -17,7 +19,7 @@
         </p>
       </div>
       <MenubarMenu>
-        <MenubarTrigger v-t="'navbar.device.title'" />
+        <MenubarTrigger v-t="'navbar.device.title'" class="app-titlebar-button" />
         <MenubarContent>
           <!-- TODO: Switch keyboard shortcut icons based on platform -->
           <MenubarItem>
@@ -43,6 +45,11 @@
       <span class="pl-14 inline-block">STATUS: <b class="font-heading text-lg">CONNECTED</b></span>
       <span class="text-muted-foreground px-5 inline-block">///</span>
       <p>SYNCING...</p>
+      <button
+        class="absolute top-0 right-0 py-2 px-3 app-titlebar-button  text-muted-foreground hover:bg-orange-600 hover:text-black"
+        @click="oi('Not implemented ¯\\_(ツ)_/¯')">
+        <X class="h-5 w-5 mr-0.5" />
+      </button>
     </Menubar>
   </div>
 </template>
@@ -57,4 +64,18 @@ import {
   MenubarContent,
 } from '@/components/ui/menubar/index.js'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
+import { X } from 'lucide-vue-next'
+
+const oi = (msg) => alert(msg)
+
 </script>
+<style scoped>
+.app-titlebar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.app-titlebar-button {
+  -webkit-app-region: no-drag;
+}
+</style>
