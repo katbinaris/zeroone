@@ -32,7 +32,7 @@
       </div>
       <Separator />
     </div>
-    <div class="overflow-y-auto">
+    <div class="grow overflow-y-auto">
       <div v-if="filteredProfiles.length === 0">
         <div class="flex flex-col items-center justify-center h-32">
           <ScrambleText

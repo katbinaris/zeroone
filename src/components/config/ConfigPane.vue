@@ -11,7 +11,7 @@
         </p>
       </div>
     </div>
-    <div class="overflow-y-auto">
+    <div class="grow overflow-y-auto">
       <component :is="configPages[page]" />
     </div>
   </div>
