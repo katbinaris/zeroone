@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:1;">
-    <g transform="matrix(1,0,0,1,-75.1962,-1)">
-        <g id="ico-cd" transform="matrix(1.0546,0,0,1.0625,75.1962,1)">
-            <rect x="0" y="0" width="64.48" height="64" style="fill:none;"/>
-            <g transform="matrix(0.75261,0.536708,-0.54073,0.747012,-499.862,-576.813)">
-                <path d="M852.5,177C866.574,177 878,188.426 878,202.5C878,216.574 866.574,228 852.5,228C838.426,228 827,216.574 827,202.5C827,188.426 838.426,177 852.5,177ZM852.5,179.046C839.556,179.046 829.046,189.556 829.046,202.5C829.046,215.444 839.556,225.954 852.5,225.954C865.444,225.954 875.954,215.444 875.954,202.5C875.954,189.556 865.444,179.046 852.5,179.046Z" style="fill:white;"/>
-            </g>
-            <g transform="matrix(0.374469,0.267045,-0.269046,0.371684,-225.586,-280.493)">
-                <path d="M852.5,182L852.5,192" style="fill:none;stroke:white;stroke-width:4.11px;"/>
-            </g>
-            <g transform="matrix(1.15275,0,0,1.14418,-950.479,-199.696)">
-                <circle cx="852.5" cy="202.5" r="25.5" style="fill:none;stroke:rgb(92,92,92);stroke-width:1.65px;stroke-dasharray:0.66,14.81,0,0,0,0;"/>
-            </g>
-        </g>
-    </g>
-</svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="100%" height="100%" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:1;"><rect id="ico-cd" x="0" y="0" width="68" height="68" style="fill:none;"/><path d="M48.541,13.761c11.171,8.025 13.724,23.61 5.698,34.78c-8.025,11.171 -23.61,13.724 -34.78,5.698c-11.171,-8.025 -13.724,-23.61 -5.698,-34.78c8.025,-11.171 23.61,-13.724 34.78,-5.698Zm-1.167,1.624c-10.274,-7.382 -24.608,-5.033 -31.989,5.241c-7.382,10.274 -5.033,24.608 5.241,31.989c10.274,7.382 24.608,5.033 31.989,-5.241c7.382,-10.273 5.033,-24.608 -5.241,-31.989Z" style="fill:#5c5c5c;"/><path d="M47.123,15.735l-2.838,3.949" style="fill:none;stroke:#5c5c5c;stroke-width:2px;"/><circle cx="34" cy="34" r="31" style="fill:none;stroke:#fff;stroke-width:2px;stroke-dasharray:0.8,18,0,0,0,0;"/></svg>
