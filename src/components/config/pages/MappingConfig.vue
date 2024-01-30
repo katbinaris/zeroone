@@ -1,54 +1,11 @@
 <template>
   <ConfigSection :title="$t('config_options.mapping_configuration.key_mapping.title')" :icon-component="Keyboard">
-    <Tabs default-value="fd">
-      <TabsList class="grid grid-cols-4 h-auto text-muted-foreground">
-        <TabsTrigger value="fd">
-          <div class="grid grid-flow-row auto-rows-max justify-items-center ">
-            <div class="size-16 mb-2">
-              <img src="../../../assets/gui-ico/ico-key-o.svg">
-            </div>
-            <span class="text-xs leading-3 text-wrap">
-                              {{ $t('config_options.mapping_configuration.key_mapping.switch.a') }}
-                              <Badge class="bg-orange-400 mt-2">Shift</Badge>
-                            </span>
-          </div>
-        </TabsTrigger>
-        <TabsTrigger value="cd">
-          <div class="grid grid-flow-row auto-rows-max justify-items-center">
-            <div class="size-16 mb-2">
-              <img src="../../../assets/gui-ico/ico-key.svg">
-            </div>
-            <span class="text-xs leading-3 text-wrap">
-                              {{ $t('config_options.mapping_configuration.key_mapping.switch.b') }}
-                              <Badge class="bg-zinc-400 mt-2">Fn1</Badge>
-                            </span>
-          </div>
-        </TabsTrigger>
-        <TabsTrigger value="vr">
-          <div class="grid grid-flow-row auto-rows-max justify-items-center">
-            <div class="size-16 mb-2">
-              <img src="../../../assets/gui-ico/ico-key-g.svg">
-            </div>
-            <span class="text-xs leading-3 text-wrap">
-                              {{ $t('config_options.mapping_configuration.key_mapping.switch.c') }}
-                              <Badge class="bg-zinc-400 mt-2">Fn2</Badge>
-                            </span>
-          </div>
-        </TabsTrigger>
-        <TabsTrigger value="rt">
-          <div class="grid grid-flow-row auto-rows-max justify-items-center">
-            <div class="size-16 mb-2">
-              <img src="../../../assets/gui-ico/ico-key-d.svg">
-            </div>
-            <span class="text-xs leading-3 text-wrap">
-                              {{ $t('config_options.mapping_configuration.key_mapping.switch.d') }}
-                              <Badge class="bg-zinc-400 mt-2">M0</Badge>
-                            </span>
-          </div>
-        </TabsTrigger>
-      </TabsList>
-
-    </Tabs>
+    <div class="flex font-heading">
+      <KeySelectButton
+        v-for="(option, key) in keySelectOptions" :key="key" :title="$t(option.titleKey)"
+        :invert="option.invert" :badge="option.badge"
+        :icon="option.icon" :selected="selectedKey===key" @select="selectedKey=key" />
+    </div>
     <Separator />
     <Command>
 
@@ -181,19 +138,37 @@ import {
   CommandList, CommandSeparator,
 } from '@/components/ui/command/index.js'
 import { Slider } from '@/components/ui/slider/index.js'
-import { KeyboardMusic, Squircle, Keyboard, GaugeCircle, AudioLines, Power } from 'lucide-vue-next'
+import { KeyboardMusic, Squircle, Keyboard, GaugeCircle, Play, Pause } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
-</script>
-<style scoped>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+import KeyO from '@/assets/gui-ico/ico-key-o.svg'
+import Key from '@/assets/gui-ico/ico-key.svg'
+import KeyG from '@/assets/gui-ico/ico-key-g.svg'
+import KeyD from '@/assets/gui-ico/ico-key-d.svg'
+import { ref } from 'vue'
+import KeySelectButton from '@/components/config/KeySelectButton.vue'
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-  text-align: center;
+const selectedKey = ref('a') // TODO: replace with actual value
+
+const keySelectOptions = {
+  a: {
+    icon: KeyO,
+    titleKey: 'config_options.mapping_configuration.key_mapping.switch.a',
+    invert: false,
+  },
+  b: {
+    icon: Key,
+    titleKey: 'config_options.mapping_configuration.key_mapping.switch.b',
+    invert: true,
+  },
+  c: {
+    icon: KeyG,
+    titleKey: 'config_options.mapping_configuration.key_mapping.switch.c',
+    invert: true,
+  },
+  d: {
+    icon: KeyD,
+    titleKey: 'config_options.mapping_configuration.key_mapping.switch.d',
+    invert: true,
+  },
 }
-</style>
+</script>

@@ -53,7 +53,7 @@ import VfIcon from '@/assets/gui-ico/ico-vf.svg'
 import RcIcon from '@/assets/gui-ico/ico-rc.svg'
 import FeedbackTypeButton from '@/components/config/FeedbackTypeButton.vue'
 
-const feedbackType = ref('usb') // TODO: replace with actual value
+const feedbackType = ref('fineDetents') // TODO: replace with actual value
 
 const feedbackTypeOptions = {
   fineDetents: {
