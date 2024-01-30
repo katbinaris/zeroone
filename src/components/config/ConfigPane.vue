@@ -22,6 +22,7 @@ import ProfileConfig from '@/components/config/pages/ProfileConfig.vue'
 import MappingConfig from '@/components/config/pages/MappingConfig.vue'
 import HapticConfig from '@/components/config/pages/HapticConfig.vue'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
+import DevPlayground from '@/components/config/pages/DevPlayground.vue'
 
 defineProps({
   page: {
@@ -35,5 +36,6 @@ const configPages = {
   feedback_designer: HapticConfig,
   mapping_configuration: MappingConfig,
   light_designer: LEDsConfig,
+  dev_playground: DevPlayground,
 }
 </script>

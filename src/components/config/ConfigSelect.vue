@@ -8,7 +8,7 @@
       :class="config.disabled ? 'cursor-not-allowed' : 'cursor-pointer'"
       @click="current_tab=config.disabled ? current_tab : config.id; $refs.configSelect[index].scramble()">
       <div class="w-full">
-        <h1 class="text-lg" :class="{'text-muted-foreground': config.disabled}">
+        <h1 class="text-lg text-nowrap" :class="{'text-muted-foreground': config.disabled}">
           <ScrambleText ref="configSelect" class="align-middle" :text="$t(`config_options.${config.id}.title`)" />
           <Badge
             v-if="config.hasOwnProperty('badgeKey')"
@@ -39,6 +39,7 @@ const config_tabs = ref([
     disabled: true,
     badgeKey: 'common.coming_soon',
   },
+  { id: 'dev_playground' },
 ])
 
 const current_tab = defineModel({

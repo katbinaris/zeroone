@@ -36,7 +36,7 @@ function onMouseUp() {
 
 <template>
     <span @mousedown="onMouseDown">
-      <svg ref="bar" xmlns="http://www.w3.org/2000/svg" :width="width+12" height="32">
+      <svg ref="bar" :width="width+12" height="32">
         <g>
           <rect
             v-for="(_, i) in count"

@@ -3,6 +3,10 @@
     "coming_soon": "COMING SOON"
   },
   "config_options": {
+    "dev_playground": {
+      "subtitle": "UI Designer's Paradise",
+      "title": "Dev Playground"
+    },
     "feedback_designer": {
       "auditory_response": {
         "haptic_level": "Auditory Haptic Level",
