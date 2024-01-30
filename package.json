@@ -28,6 +28,7 @@
     "concurrently": "^8.2.2",
     "electron-squirrel-startup": "^1.0.0",
     "lucide-vue-next": "^0.309.0",
+    "pinia": "^2.1.7",
     "radix-vue": "^1.3.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",

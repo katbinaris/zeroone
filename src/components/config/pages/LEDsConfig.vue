@@ -17,10 +17,12 @@ import ConfigSection from '@/components/config/ConfigSection.vue'
 import PaletteInput from '@/components/config/PaletteInput.vue'
 import Color from 'color'
 import { computed, ref } from 'vue'
-import { store } from '@/store.js'
+import { useStore } from '@/store.js'
 import { Slider } from '@/components/ui/slider/index.js'
 
-const ledConfig = computed(() => store.currentProfile.ledConfig)
+const store = useStore()
+
+const ledConfig = computed(() => store.selectedProfile.ledConfig)
 
 const brightnessSliderModel = computed({
   get: () => [ledConfig.value.ledBrightness],

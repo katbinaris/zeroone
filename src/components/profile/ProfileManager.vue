@@ -5,7 +5,7 @@
         class="w-full px-4 h-20 flex items-center">
         <div>
           <h1 class="text-lg">
-            {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ profiles.length }}/{{ maxProfiles
+            {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ store.profiles.length }}/{{ maxProfiles
             }})</span>
           </h1>
           <p class="text-xs text-muted-foreground">
@@ -53,10 +53,10 @@
           <CollapsibleContent>
             <ProfileButton
               v-for="(profile, index) in tagProfiles" :key="profile.id" v-model="tagProfiles[index]"
-              :selected="currentProfileId===profile.id"
-              @select="currentProfileId=profile.id"
-              @duplicate="duplicateProfile(profile.id)"
-              @delete="deleteProfile(profile.id)" />
+              :selected="store.selectedProfile.id === profile.id"
+              @select="store.selectProfile(profile.id)"
+              @duplicate="store.duplicateProfile(profile.id)"
+              @delete="store.deleteProfile(profile.id)" />
           </CollapsibleContent>
         </Collapsible>
       </div>
@@ -69,75 +69,27 @@ import { ChevronRight, Plus, Search } from 'lucide-vue-next'
 import { computed, ref, watch } from 'vue'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
-import { store } from '@/store.js'
+import { useStore } from '@/store.js'
 import ProfileButton from '@/components/profile/ProfileButton.vue'
 
 const maxProfiles = 32
 
-const profiles = computed({
-  get: () => store.device.profiles,
-  set: val => store.device.profiles = val,
-})
-const currentProfileId = computed({
-  get: () => store.currentProfileId,
-  set: val => store.currentProfileId = val,
-})
+const store = useStore()
 const filter = ref('')
 const collapse = ref({})
 
 const filteredProfiles = computed(() => {
   if (!filter.value) {
-    return profiles.value
+    return store.profiles
   }
   const filterLower = filter.value.toLowerCase()
-  return profiles.value.filter(profile => {
+  return store.profiles.filter(profile => {
     const nameLower = profile.name.toLowerCase()
     const idLower = profile.id.toLowerCase()
     const tagLower = profile.profileTag.toLowerCase()
     return nameLower.includes(filterLower) || idLower.includes(filterLower) || tagLower.includes(filterLower)
   })
 })
-
-function newProfileId(originalId = '') {
-  let id = originalId
-  if (originalId) {
-    do {
-      id = Math.floor((parseInt(id) + 1) % 9999).toString().padStart(4, '0')
-    } while (store.profileIds.includes(id))
-  } else {
-    do {
-      id = Math.floor(Math.random() * 9999).toString().padStart(4, '0')
-    } while (store.profileIds.includes(id))
-  }
-  return id
-}
-
-function newProfileName(originalName) {
-  let name = originalName
-  let i = 1
-  while (profiles.value.find(p => p.name === name)) {
-    name = `${originalName} (${i++})`
-  }
-  return name
-}
-
-const duplicateProfile = (id) => {
-  const profile = profiles.value.find(p => p.id === id)
-  const profileIndex = profiles.value.indexOf(profile)
-  const newProfile = JSON.parse(JSON.stringify(profile))
-  newProfile.id = newProfileId(id)
-  newProfile.name = newProfileName(profile.name)
-  profiles.value.splice(profileIndex + 1, 0, newProfile)
-}
-
-const deleteProfile = (id) => {
-  const profile = profiles.value.find(p => p.id === id)
-  const profileIndex = profiles.value.indexOf(profile)
-  profiles.value.splice(profileIndex, 1)
-  if (currentProfileId.value === id && profiles.value.length > 0) {
-    currentProfileId.value = profiles.value[0].id
-  }
-}
 
 const filteredProfilesByTag = computed(() => {
   const map = new Map()
@@ -149,11 +101,6 @@ const filteredProfilesByTag = computed(() => {
     map.get(tag).push(profile)
   })
   return map
-})
-
-watch(profiles, () => {
-  if (!currentProfileId.value && profiles.value.length > 0)
-    currentProfileId.value = profiles.value[0].id
 })
 
 </script>
