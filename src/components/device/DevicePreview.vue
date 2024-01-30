@@ -9,7 +9,7 @@
       <div
         class="flex bg-cover mb-6 w-72 aspect-square"
         style="background-image: url(src/assets/gui-ico/xl-bg-ico.svg)">
-        <div class="flex flex-col w-full justify-center p-10 rounded-full overflow-hidden">
+        <div class="flex flex-col w-full justify-center m-9 rounded-full overflow-hidden">
           <div class="self-center w-8 mb-1 opacity-50">
             <img src="@/assets/gui-ico/ico-midi-logo.svg" alt="midi-logo">
           </div>
@@ -18,7 +18,7 @@
           <DeviceBar class="self-center" />
           <span
             class="self-center text-center w-48 font-pixelsm text-xs text-muted-foreground">
-            Profile description will go here!
+            Profile description will go here! And hopefully it will be a long one! Much longer than this one! Actually, this is probably long enough. I don't think we need to make it any longer...
           </span>
         </div>
       </div>

@@ -14,7 +14,7 @@
         <p class="text-xs text-muted-foreground">
           <ScrambleText
             ref="zerooneSubtitle"
-            text="Haptic Configuration Tool" scramble-on-mount :scramble-amount="1" :fill-interval="35"
+            text="Haptics Configurator" scramble-on-mount :scramble-amount="1" :fill-interval="35"
             :replace-interval="40" />
         </p>
       </div>

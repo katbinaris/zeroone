@@ -21,8 +21,9 @@
         class="flex-1 pl-1 h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none"
         :class="{'font-semibold bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
         'hover:bg-zinc-900 bg-opacity-50 text-white': !selected}"
-        @blur="editing=false">
+        @blur="onNameInputBlur">
       <button
+        ref="nameSubmitButton"
         type="submit"
         :class="{'bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
                 'hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50': !selected}"
@@ -104,6 +105,8 @@ import { nextTick, ref } from 'vue'
 
 defineEmits(['select', 'duplicate', 'delete'])
 
+const nameSubmitButton = ref(null)
+
 const profile = defineModel({
   type: Object,
   required: true,
@@ -141,6 +144,11 @@ async function startEditing() {
   editing.value = true
   await nextTick()
   profileNameInput.value.focus()
+}
+
+function onNameInputBlur(e) {
+  if (e.relatedTarget === nameSubmitButton.value) return
+  editing.value = false
 }
 
 const profileNameInput = ref(null)
