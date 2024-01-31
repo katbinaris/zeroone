@@ -1,18 +1,16 @@
 <template>
   <div>
-    <div
-      class="flex-none px-6 h-20 flex items-center bg-zinc-900 bg-opacity-40">
-      <div>
-        <h1 class="text-lg">
-          <ScrambleText class="align-middle" :text="$t(`config_options.${page}.title`)" />
-        </h1>
-        <p class="text-xs text-muted-foreground">
-          <ScrambleText class="align-middle" :text="$t(`config_options.${page}.subtitle`)" :replace-interval="5" />
-        </p>
-      </div>
+    <div class="flex font-heading">
+      <button
+        v-for="(option, key) in configPageOptions" :key="key"
+        class="flex-1 p-4 items-center text-center"
+        :class="currentPage!==key ? 'hover:bg-zinc-800 text-zinc-200' : 'text-black bg-zinc-200 hover:bg-zinc-100'"
+        @click="currentPage = key">
+        {{ $t(option.titleKey) }}
+      </button>
     </div>
     <div class="grow overflow-y-auto">
-      <component :is="configPages[page]" />
+      <component :is="configPageOptions[currentPage].component" />
     </div>
   </div>
 </template>
@@ -21,21 +19,30 @@ import LEDsConfig from '@/components/config/pages/LEDsConfig.vue'
 import ProfileConfig from '@/components/config/pages/ProfileConfig.vue'
 import MappingConfig from '@/components/config/pages/MappingConfig.vue'
 import HapticConfig from '@/components/config/pages/HapticConfig.vue'
-import ScrambleText from '@/components/effects/ScrambleText.vue'
-import DevPlayground from '@/components/config/pages/DevPlayground.vue'
 
 defineProps({
-  page: {
+  currentPage: {
     type: String,
-    default: 'profile_settings',
+    default: 'profileConfig',
   },
 })
 
-const configPages = {
-  profile_settings: ProfileConfig,
-  feedback_designer: HapticConfig,
-  mapping_configuration: MappingConfig,
-  light_designer: LEDsConfig,
-  dev_playground: DevPlayground,
+const configPageOptions = {
+  profileConfig: {
+    titleKey: 'config_options.profile_settings.title',
+    component: ProfileConfig,
+  },
+  hapticConfig: {
+    titleKey: 'config_options.feedback_designer.title',
+    component: HapticConfig,
+  },
+  mappingConfig: {
+    titleKey: 'config_options.mapping_configuration.title',
+    component: MappingConfig,
+  },
+  ledsConfig: {
+    titleKey: 'config_options.light_designer.title',
+    component: LEDsConfig,
+  },
 }
 </script>

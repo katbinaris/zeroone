@@ -5,7 +5,7 @@
   "config_options": {
     "dev_playground": {
       "subtitle": "UI Designer's Paradise",
-      "title": "Dev Playground"
+      "title": "Debug"
     },
     "feedback_designer": {
       "auditory_response": {
@@ -27,12 +27,12 @@
         "title": "Haptic Response"
       },
       "subtitle": "Adjust haptic and auditory feedback",
-      "title": "Feedback Designer",
+      "title": "Feedback",
       "total_positions": "Total Positions"
     },
     "gui_designer": {
       "subtitle": "Adjust graphic interface parameters",
-      "title": "GUI Designer"
+      "title": "Display"
     },
     "light_designer": {
       "led_colors": "LED Colors",
@@ -42,7 +42,7 @@
       "primary_color": "Primary",
       "secondary_color": "Secondary",
       "subtitle": "Adjust behavior of LED Ring. Turn On/Off.",
-      "title": "Light Designer"
+      "title": "Lighting"
     },
     "mapping_configuration": {
       "key_mapping": {
@@ -60,7 +60,7 @@
         "title": "Knob Mapping"
       },
       "subtitle": "Assign function to Knob and Keys",
-      "title": "Mapping Configuration"
+      "title": "Mapping"
     },
     "profile_settings": {
       "connection_type": {
@@ -81,7 +81,7 @@
         "title": "Profile Properties"
       },
       "subtitle": "Operation mode and Profile Naming",
-      "title": "Profile Settings"
+      "title": "Profile"
     },
     "title": "Configuration Options"
   },
@@ -98,13 +98,13 @@
     }
   },
   "preview": {
-    "title": "Live Preview"
+    "title": "Preview"
   },
   "profiles": {
     "filter_placeholder": "Filter Profiles...",
     "name_placeholder": "Profile name",
     "not_found": "No profiles found ;-;",
     "subtitle": "Customize to your heart's content",
-    "title": "Device Profiles"
+    "title": "Profiles"
   }
 }

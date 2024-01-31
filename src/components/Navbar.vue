@@ -1,63 +1,75 @@
 <template>
   <div class="flex app-titlebar">
-    <Menubar class="w-full h-20 rounded-none bg-zinc-950">
-      <div
-        class="p-3 min-w-48 app-titlebar-button"
-        @click="$refs.zerooneSubtitle.scramble(1,100,0); $refs.zerooneTitle.scramble(1,100,0)">
-        <h1 class="text-3xl">
+    <Menubar class="w-full h-14 rounded-none bg-zinc-900 justify-between text-muted-foreground font-mono">
+      <div class="flex items-center">
+        <h1
+          class="text-2xl min-w-32 app-titlebar-button ml-3 text-zinc-100"
+          @click="$refs.zerooneTitle.scramble(1,100,0); $refs.zerooneSubtitle.scramble(1,75,30)">
           <ScrambleText
             ref="zerooneTitle"
             text=" ZERO/ONE" scramble-on-mount :scramble-amount="1" :fill-interval="100"
             :replace-interval="100"
           />
         </h1>
-        <p class="text-xs text-muted-foreground">
+        <h2 class="text-sm min-w-48 text-muted-foreground font-mono">
+          ::
           <ScrambleText
             ref="zerooneSubtitle"
             text="Haptics Configurator" scramble-on-mount :scramble-amount="1" :fill-interval="35"
             :replace-interval="40" />
-        </p>
+        </h2>
       </div>
-      <MenubarMenu>
-        <MenubarTrigger v-t="'navbar.device.title'" class="app-titlebar-button" />
-        <MenubarContent>
-          <!-- TODO: Switch keyboard shortcut icons based on platform -->
-          <MenubarItem>
-            {{ $t('navbar.device.disconnect') }}
-            <MenubarShortcut>⌘D</MenubarShortcut>
-          </MenubarItem>
-          <MenubarItem>{{ $t('navbar.device.about') }}</MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem>{{ $t('navbar.device.preferences') }}</MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem>{{ $t('navbar.device.export') }}
-            <MenubarShortcut>⌘E</MenubarShortcut>
-          </MenubarItem>
-          <MenubarItem>{{ $t('navbar.device.import') }}
-            <MenubarShortcut>⌘I</MenubarShortcut>
-          </MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem>{{ $t('navbar.device.quit') }}
-            <MenubarShortcut>⌘Q</MenubarShortcut>
-          </MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-      <span class="pl-14 inline-block">STATUS: <b class="font-heading text-lg">CONNECTED</b></span>
-      <span class="text-muted-foreground px-5 inline-block">///</span>
-      <p>SYNCING...</p>
-      <div class="absolute top-0 right-0 flex h-9 w-32">
+      <div class="flex gap-2">
+        <MenubarMenu>
+          <MenubarTrigger v-t="'navbar.device.title'" class="app-titlebar-button text-muted-foreground" />
+          <MenubarContent>
+            <!-- TODO: Switch keyboard shortcut icons based on platform -->
+            <MenubarItem>
+              {{ $t('navbar.device.disconnect') }}
+              <MenubarShortcut>⌘D</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem>{{ $t('navbar.device.about') }}</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>{{ $t('navbar.device.preferences') }}</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>{{ $t('navbar.device.export') }}
+              <MenubarShortcut>⌘E</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem>{{ $t('navbar.device.import') }}
+              <MenubarShortcut>⌘I</MenubarShortcut>
+            </MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>{{ $t('navbar.device.quit') }}
+              <MenubarShortcut>⌘Q</MenubarShortcut>
+            </MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger class="app-titlebar-button text-muted-foreground">About</MenubarTrigger>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger class="app-titlebar-button text-muted-foreground">Help</MenubarTrigger>
+        </MenubarMenu>
+      </div>
+      <div class="text-sm">
+        Status: <span class="text-zinc-200">Connected :: Syncing...</span>
+      </div>
+      <Button variant="outline" class="app-titlebar-button">
+        Disconnect
+      </Button>
+      <div class="flex h-full w-32">
         <button
-          class="grow flex justify-center items-center app-titlebar-button hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50"
+          class="grow flex justify-center items-center app-titlebar-button hover:text-white"
           @click="oi('Not implemented ¯\\_(ツ)_/¯')">
           <Minus class="h-5 w-5 mr-0.5" />
         </button>
         <button
-          class="grow flex justify-center items-center app-titlebar-button hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50"
+          class="grow flex justify-center items-center app-titlebar-button hover:text-white"
           @click="oi('Not implemented ¯\\_(ツ)_/¯')">
-          <Square class="h-4 w-4 mr-0.5" />
+          <Square class="h-3.5 w-3.5 mr-0.5" />
         </button>
         <button
-          class="grow flex justify-center items-center app-titlebar-button bg-orange-950 hover:bg-orange-900"
+          class="grow flex justify-center items-center app-titlebar-button hover:text-white"
           @click="oi('Not implemented ¯\\_(ツ)_/¯')">
           <X class="h-5 w-5 mr-0.5" />
         </button>
@@ -77,6 +89,7 @@ import {
 } from '@/components/ui/menubar/index.js'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { X, Square, Minus } from 'lucide-vue-next'
+import { Button } from '@/components/ui/button'
 
 const oi = (msg) => alert(msg)
 

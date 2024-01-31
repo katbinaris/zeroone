@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="px-4 pt-5 pb-3">
-      <h1 class="text-lg">
-        {{ $t('preview.title') }}
-      </h1>
+    <div class="flex px-4 pt-5 pb-3 items-baseline font-heading">
+      <span class="text-lg">{{ $t('preview.title') }}</span>
+      &nbsp;
+      <span class="text-zinc-600">(Nano_D++)</span>
     </div>
     <div class="flex justify-center">
       <div
