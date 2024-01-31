@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex font-heading">
-      <div v-for="(option, index) in configPageOptions" :key="index" class="flex items-center">
+      <div v-for="(option, index) in configPageOptions" :key="index" class="flex flex-1 items-center">
         <button
           class="flex-1 p-4 items-center text-center group"
           :class="index===currentPage ? 'bg-zinc-900': 'hover:bg-zinc-800 text-zinc-200 bg-zinc-950'"
@@ -28,12 +28,7 @@ import HapticConfig from '@/components/config/pages/HapticConfig.vue'
 import { Separator } from '@/components/ui/separator'
 import { ref } from 'vue'
 
-defineProps({
-  currentPage: {
-    type: Number,
-    default: '0',
-  },
-})
+const currentPage = ref(0)
 
 const configPageOptions = [
   {
