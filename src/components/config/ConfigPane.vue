@@ -1,13 +1,19 @@
 <template>
   <div>
     <div class="flex font-heading">
-      <button
-        v-for="(option, key) in configPageOptions" :key="key"
-        class="flex-1 p-4 items-center text-center"
-        :class="currentPage!==key ? 'hover:bg-zinc-800 text-zinc-200' : 'text-black bg-zinc-200 hover:bg-zinc-100'"
-        @click="currentPage = key">
-        {{ $t(option.titleKey) }}
-      </button>
+      <div v-for="(option, index) in configPageOptions" :key="index" class="flex items-center">
+        <button
+          class="flex-1 p-4 items-center text-center group"
+          :class="index===currentPage ? 'bg-zinc-900': 'hover:bg-zinc-800 text-zinc-200 bg-zinc-950'"
+          @click="currentPage = index">
+          {{ $t(option.titleKey) }}
+        </button>
+        <div
+          class="group-hover:h-full"
+          :class="index===currentPage || index+1===currentPage ? 'h-full' : 'h-7'">
+          <Separator orientation="vertical" />
+        </div>
+      </div>
     </div>
     <div class="grow overflow-y-auto">
       <component :is="configPageOptions[currentPage].component" />
@@ -19,30 +25,32 @@ import LEDsConfig from '@/components/config/pages/LEDsConfig.vue'
 import ProfileConfig from '@/components/config/pages/ProfileConfig.vue'
 import MappingConfig from '@/components/config/pages/MappingConfig.vue'
 import HapticConfig from '@/components/config/pages/HapticConfig.vue'
+import { Separator } from '@/components/ui/separator'
+import { ref } from 'vue'
 
 defineProps({
   currentPage: {
-    type: String,
-    default: 'profileConfig',
+    type: Number,
+    default: '0',
   },
 })
 
-const configPageOptions = {
-  profileConfig: {
+const configPageOptions = [
+  {
     titleKey: 'config_options.profile_settings.title',
     component: ProfileConfig,
   },
-  hapticConfig: {
+  {
     titleKey: 'config_options.feedback_designer.title',
     component: HapticConfig,
   },
-  mappingConfig: {
+  {
     titleKey: 'config_options.mapping_configuration.title',
     component: MappingConfig,
   },
-  ledsConfig: {
+  {
     titleKey: 'config_options.light_designer.title',
     component: LEDsConfig,
   },
-}
+]
 </script>

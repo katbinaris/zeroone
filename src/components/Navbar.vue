@@ -51,7 +51,7 @@
           <MenubarTrigger class="app-titlebar-button text-muted-foreground">Help</MenubarTrigger>
         </MenubarMenu>
       </div>
-      <div class="text-sm">
+      <div class="text-sm text-nowrap">
         Status: <span class="text-zinc-200">Connected :: Syncing...</span>
       </div>
       <Button variant="outline" class="app-titlebar-button">

@@ -1,18 +1,32 @@
 <template>
   <ConfigSection
-    :title="$t('config_options.light_designer.led_feedback')" :icon-component="Lightbulb"
+    title="Ring Lights" :icon-component="Lightbulb"
     :show-toggle="true">
     <h2 class="p-6 inline-block">{{ $t('config_options.light_designer.led_mode') }}</h2> [TODO]
     <div class="px-6 py-2">
       <Slider v-model="brightnessSliderModel" max="100" class="h-10" />
     </div>
   </ConfigSection>
-  <ConfigSection :title="$t('config_options.light_designer.led_colors')" :icon-component="Palette">
-    <PaletteInput v-model="colors" />
+  <ConfigSection
+    title="Key Lights" :icon-component="Lightbulb"
+    :show-toggle="true">
+    <h2 class="p-6 inline-block">{{ $t('config_options.light_designer.led_mode') }}</h2> [TODO]
+    <div class="px-6 py-2">
+      <Slider v-model="brightnessSliderModel" max="100" class="h-10" />
+    </div>
+  </ConfigSection>
+  <ConfigSection title="Ring Colors" :icon-component="Circle">
+    <PaletteInput v-model="ringColors" />
+  </ConfigSection>
+  <ConfigSection title="Key Colors" :icon-component="PanelBottom">
+    <PaletteInput v-model="keyColors" />
+  </ConfigSection>
+  <ConfigSection title="Key Colors (Pressed)" :icon-component="PanelBottomClose">
+    <PaletteInput v-model="keyColors" />
   </ConfigSection>
 </template>
 <script setup>
-import { Lightbulb, Palette } from 'lucide-vue-next'
+import { Lightbulb, PanelBottomClose, Circle, PanelBottom } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
 import PaletteInput from '@/components/config/PaletteInput.vue'
 import Color from 'color'
@@ -29,7 +43,7 @@ const brightnessSliderModel = computed({
   set: (val) => ledConfig.value.ledBrightness = val[0],
 })
 
-const colors = ref({
+const ringColors = ref({
   primary: {
     key: 'config_options.light_designer.primary_color',
     color: computed({
@@ -50,6 +64,25 @@ const colors = ref({
       get: () => Color(ledConfig.value.pointer),
       set: (color) => [ledConfig.value.pointer.h, ledConfig.value.pointer.s, ledConfig.value.pointer.v] = color.hsv().color,
     }),
+  },
+})
+
+const keyColors = ref({
+  a: {
+    key: 'a',
+    color: Color('#ff2a7d'),
+  },
+  b: {
+    key: 'b',
+    color: Color('#f32a9c'),
+  },
+  c: {
+    key: 'c',
+    color: Color('#d12ab1'),
+  },
+  d: {
+    key: 'd',
+    color: Color('#a92ac3'),
   },
 })
 </script>

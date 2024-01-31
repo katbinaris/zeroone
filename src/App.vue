@@ -4,16 +4,27 @@ import DevicePreview from '@/components/device/DevicePreview.vue'
 import ConfigPane from '@/components/config/ConfigPane.vue'
 import Navbar from '@/components/Navbar.vue'
 import ConfigSelect from '@/components/config/ConfigSelect.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import ConfigSection from '@/components/config/ConfigSection.vue'
 import { Bolt } from 'lucide-vue-next'
 import { useStore } from '@/store'
 
-const currentConfigPage = ref('profile_settings')
+const currentConfigPage = ref(0)
 
 const store = useStore()
 
 store.fetchProfiles()
+
+const windowWidth = ref(window.innerWidth)
+const windowHeight = ref(window.innerHeight)
+
+onMounted(() => {
+  window.addEventListener('resize', e => {
+    windowWidth.value = window.innerWidth
+    windowHeight.value = window.innerHeight
+  })
+})
+
 
 </script>
 <template>
@@ -28,4 +39,7 @@ store.fetchProfiles()
         :page="currentConfigPage" />
     </div>
   </main>
+  <p
+    class="absolute bottom-2 left-0 right-0 text-center font-heading text-white opacity-15">
+    {{ windowWidth }} x {{ windowHeight }}</p>
 </template>
