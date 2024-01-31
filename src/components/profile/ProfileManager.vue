@@ -2,15 +2,12 @@
   <div>
     <div>
       <div
-        class="w-full px-4 h-20 flex items-center">
+        class="w-full p-4 flex items-center">
         <div>
           <h1 class="text-lg">
             {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ store.profiles.length }}/{{ maxProfiles
             }})</span>
           </h1>
-          <p class="text-xs text-muted-foreground">
-            {{ $t(`profiles.subtitle`) }}
-          </p>
         </div>
       </div>
       <Separator />
@@ -46,17 +43,19 @@
           v-model:open="collapse[profileTag]"
           :default-open="true">
           <CollapsibleTrigger
-            class="w-full h-12 py-2 text-left text-muted-foreground text-sm hover:bg-zinc-900">
+            class="w-full h-12 py-2 text-left text-muted-foreground text-sm bg-zinc-900 border-0 border-b">
             <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
             {{ profileTag }}<span class="font-heading text-sm text-zinc-600"> ({{ tagProfiles.length }})</span>
           </CollapsibleTrigger>
           <CollapsibleContent>
             <ProfileButton
               v-for="(profile, index) in tagProfiles" :key="profile.id" v-model="tagProfiles[index]"
+              class="border-0 border-b"
               :selected="store.selectedProfile.id === profile.id"
               @select="store.selectProfile(profile.id)"
               @duplicate="store.duplicateProfile(profile.id)"
               @delete="store.deleteProfile(profile.id)" />
+            <Separator />
           </CollapsibleContent>
         </Collapsible>
       </div>
