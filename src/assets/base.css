@@ -75,21 +75,21 @@
   }
   @font-face {
     font-family: 'ProtoMono';
-    src: url(gui-fonts/Proto-Mono-Semi-Bold.otf);
+    src: url(fonts/Proto-Mono-Semi-Bold.otf);
   }
   @font-face {
     font-family: 'RenoMono';
-    src: url(gui-fonts/RenoMono.otf);
+    src: url(fonts/RenoMono.otf);
   }
 
   @font-face {
     font-family: 'PixelLg';
-    src: url(gui-fonts/SG12.ttf);
+    src: url(fonts/SG12.ttf);
   }
 
   @font-face {
     font-family: 'PixelSm';
-    src: url(gui-fonts/andina.ttf);
+    src: url(fonts/andina.ttf);
   }
 
   .font-pixellg{

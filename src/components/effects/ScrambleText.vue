@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import click from '@/assets/click.mp3'
+import click from '@/assets/sounds/click.mp3'
 
 function playClick() {
   const audio = new Audio(click)

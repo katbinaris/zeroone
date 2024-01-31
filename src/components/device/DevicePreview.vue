@@ -8,10 +8,10 @@
     <div class="flex justify-center">
       <div
         class="flex bg-cover mb-6 w-72 aspect-square"
-        style="background-image: url(src/assets/gui-ico/xl-bg-ico.svg)">
+        style="background-image: url(src/assets/icons/xl-bg-ico.svg)">
         <div class="flex flex-col w-full justify-center m-9 rounded-full overflow-hidden">
           <div class="self-center w-8 mb-1 opacity-50">
-            <img src="@/assets/gui-ico/ico-midi-logo.svg" alt="midi-logo">
+            <img src="@/assets/icons/ico-midi-logo.svg" alt="midi-logo">
           </div>
           <h2 class="self-center font-pixellg text-5xl ">1337</h2>
           <div class="self-center font-pixelsm text-md pt-1 pb-2">Profile name</div>
@@ -27,4 +27,5 @@
 </template>
 <script setup>
 import DeviceBar from '@/components/device/DeviceBar.vue'
+import DeviceBackground from '@/assets/icons/xl-bg-ico.svg'
 </script>
