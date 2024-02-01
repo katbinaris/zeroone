@@ -7,18 +7,10 @@
       class="flex-1 flex h-full text-left whitespace-nowrap overflow-hidden"
       :class="{'bg-zinc-200' : selected}"
       @submit.prevent="profile.name = nameInput; editing=false">
-      <span class="ml-4 mr-1 h-full w-4 flex items-center">
-        <component
-          :is="draggable && hover ? GripHorizontal : FileDigit"
-          :class="{'text-zinc-600': selected,
-          'text-muted-foreground': !selected}"
-          class="w-4 h-4 mb-0.5"
-        />
-      </span>
       <input
         ref="profileNameInput" v-model="nameInput"
         onfocus="this.select()" :placeholder="$t('profiles.name_placeholder')"
-        class="flex-1 pl-1 h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none"
+        class="flex-1 pl-10 h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none"
         :class="{'font-semibold bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
         'hover:bg-zinc-900 bg-opacity-50 text-white': !selected}"
         @blur="onNameInputBlur">
@@ -37,11 +29,13 @@
       'hover:bg-zinc-900 bg-opacity-50 text-white': !selected}"
       class="flex-1 h-full text-left whitespace-nowrap overflow-hidden text-ellipsis pr-4"
       @click="!editing && $emit('select') && $refs.profileTitle.scramble()">
-      <component
-        :is="draggable && hover ? GripHorizontal : FileDigit"
-        :class="{'text-zinc-600': selected,
+      <span class="ml-4 w-4 mr-2" :class="{'ml-8': !draggable}">
+        <GripHorizontal
+          v-if="draggable"
+          :class="{'text-zinc-600': selected,
         'text-muted-foreground': !selected}"
-        class="ml-4 mr-2 mb-0.5 h-4 w-4 inline-block" />
+          class="mb-0.5 h-4 w-4 inline-block" />
+      </span>
       <ScrambleText
         ref="profileTitle"
         :class="{'text-black': selected, 'text-zinc-100': !selected}"
@@ -49,7 +43,7 @@
       <span
         v-if="showId"
         class="text-xs text-zinc-600"
-        :class="{'hidden': hover}"> uID:{{ profile.id }}</span>
+        :class="{'hidden': hover}"> UID:{{ profile.id }}</span>
     </button>
     <template v-if="!confirmDelete">
       <button
@@ -99,7 +93,7 @@
   </div>
 </template>
 <script setup>
-import { Check, Copy, FileDigit, PenLine, Trash2, X, GripHorizontal } from 'lucide-vue-next'
+import { Check, Copy, PenLine, Trash2, X, GripHorizontal } from 'lucide-vue-next'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { nextTick, ref } from 'vue'
 

@@ -2,18 +2,21 @@
   <div>
     <div>
       <div
-        class="w-full p-4 flex items-center">
-        <div>
-          <h1 class="text-lg">
-            {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ store.profiles.length }}/{{ maxProfiles
-            }})</span>
-          </h1>
-        </div>
+        class="w-full p-4 flex items-center justify-between">
+        <h1 class="text-lg">
+          {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ store.profiles.length }}/{{ maxProfiles
+          }})</span>
+        </h1>
+        <button
+          class="bg-zinc-200 text-black hover:bg-zinc-100 rounded-full aspect-square w-8 flex justify-center items-center"
+          @click="store.addProfile">
+          <Plus class="h-4" />
+        </button>
       </div>
       <Separator />
     </div>
     <div>
-      <div class="flex w-full h-12 items-center">
+      <div v-if="showFilter" class="flex w-full h-12 items-center">
         <label for="filter" class="flex h-full items-center cursor-text">
           <Search class="ml-4 mr-2 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
         </label>
@@ -70,6 +73,13 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { useStore } from '@/store.js'
 import ProfileButton from '@/components/profile/ProfileButton.vue'
+
+defineProps({
+  showFilter: {
+    type: Boolean,
+    default: false,
+  },
+})
 
 const maxProfiles = 32
 

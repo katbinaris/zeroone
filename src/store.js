@@ -41,6 +41,9 @@ export const useStore = defineStore('main', {
       this.selectedProfileId = id
       return true
     },
+    addProfile() {
+      console.log('addProfile is not implemented')
+    },
     duplicateProfile(id) {
       const originalProfile = this.profiles.find(p => p.id === id)
       const newProfile = JSON.parse(JSON.stringify(originalProfile))

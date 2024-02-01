@@ -2,7 +2,7 @@
   <div class="aspect-[800/1100]">
     <div
       class="bg-contain bg-top bg-no-repeat h-full w-full relative"
-      :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 10%), url(${RenderNano})`}">
+      :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.2) 95%, black), url(${RenderNano})`}">
       <div class="flex px-4 pt-5 pb-3 items-baseline font-heading text-lg">
         {{ $t('preview.title') }}
       </div>
