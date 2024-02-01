@@ -57,19 +57,21 @@
       <Button variant="outline" class="app-titlebar-button">
         Disconnect
       </Button>
-      <div class="flex h-full w-32">
+      <div class="flex h-full">
         <button
-          class="grow flex justify-center items-center app-titlebar-button hover:text-white"
+          v-if="resizeable"
+          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
           @click="oi('Not implemented ¯\\_(ツ)_/¯')">
-          <Minus class="h-5 w-5 mr-0.5" />
+          <Minus class="h-5 w-5" />
         </button>
         <button
-          class="grow flex justify-center items-center app-titlebar-button hover:text-white"
+          v-if="resizeable"
+          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
           @click="oi('Not implemented ¯\\_(ツ)_/¯')">
           <Square class="h-3.5 w-3.5 mr-0.5" />
         </button>
         <button
-          class="grow flex justify-center items-center app-titlebar-button hover:text-white"
+          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
           @click="oi('Not implemented ¯\\_(ツ)_/¯')">
           <X class="h-5 w-5 mr-0.5" />
         </button>
@@ -90,8 +92,11 @@ import {
 import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { X, Square, Minus } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
+import { ref } from 'vue'
 
 const oi = (msg) => alert(msg)
+
+const resizeable = ref(false)
 
 </script>
 <style scoped>

@@ -14,9 +14,10 @@ if (ess) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 768,
+    width: 1000,
+    height: 600,
     titleBarStyle: 'hidden',
+    resizable: false,
     icon: path.join(__dirname, `/assets/favicon.png`),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

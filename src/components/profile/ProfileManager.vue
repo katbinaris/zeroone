@@ -2,13 +2,13 @@
   <div>
     <div>
       <div
-        class="w-full p-4 flex items-center justify-between">
-        <h1 class="text-lg">
+        class="w-full h-12 px-4 flex items-center justify-between flex-nowrap text-nowrap bg-zinc-900">
+        <h2 class="mr-2">
           {{ $t(`profiles.title`) }}<span class="text-sm text-zinc-600"> ({{ store.profiles.length }}/{{ maxProfiles
           }})</span>
-        </h1>
+        </h2>
         <button
-          class="bg-zinc-200 text-black hover:bg-zinc-100 rounded-full aspect-square w-8 flex justify-center items-center"
+          class="bg-zinc-200 text-black hover:bg-zinc-100 rounded-full aspect-square h-7 flex justify-center items-center"
           @click="store.addProfile">
           <Plus class="h-4" />
         </button>

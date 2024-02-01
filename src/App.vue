@@ -27,7 +27,7 @@ onMounted(() => {
     <Navbar class="flex-none" />
     <div class="flex-1 min-h-0 flex flex-row">
       <ProfileManager
-        class="basis-1/3 min-w-80 flex-1 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-30" />
+        class="basis-1/3 min-w-60 flex-1 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-30" />
       <DevicePreview class="basis-1/3 flex-col flex-1 flex border-solid border-0 border-r" />
       <ConfigPane
         class="flex-1 basis-2/5 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-30" />

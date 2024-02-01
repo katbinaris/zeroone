@@ -3,11 +3,11 @@
     <div
       class="bg-contain bg-top bg-no-repeat h-full w-full relative"
       :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.2) 95%, black), url(${RenderNano})`}">
-      <div class="px-4 pt-5 pb-3 flex justify-between items-baseline">
-        <div class="font-heading text-lg">
+      <div class="px-4 h-12 flex justify-between items-center">
+        <h2>
           {{ $t('preview.title') }}
-        </div>
-        <div class="font-mono">
+        </h2>
+        <div v-if="store.selectedProfile" class="font-mono text-sm">
           <span class="text-muted-foreground">Profile: </span>{{ store.selectedProfile.name }}
         </div>
       </div>
