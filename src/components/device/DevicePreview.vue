@@ -8,7 +8,8 @@
           {{ $t('preview.title') }}
         </h2>
         <div v-if="store.selectedProfile" class="font-mono text-sm">
-          <span class="text-muted-foreground">Profile: </span>{{ store.selectedProfile.name }}
+          <span class="text-muted-foreground">Profile: </span>
+          <ScrambleText :text="store.selectedProfile.name" />
         </div>
       </div>
       <div
@@ -33,6 +34,7 @@ import RenderNano from '@/assets/images/renderNano.png'
 import LogoMidi from '@/assets/logos/logoMidi.svg'
 import DeviceBar from '@/components/device/DeviceBar.vue'
 import { useStore } from '@/store'
+import ScrambleText from '@/components/effects/ScrambleText.vue'
 
 const store = useStore()
 </script>
