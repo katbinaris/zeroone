@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, globalShortcut } from 'electron'
 import path from 'path'
 import ess from 'electron-squirrel-startup'
 import { ipcMain } from 'electron'
@@ -11,6 +11,8 @@ if (ess) {
   app.quit()
 }
 
+const zoomFactor = 0.9
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -18,10 +20,19 @@ const createWindow = () => {
     height: 600,
     titleBarStyle: 'hidden',
     resizable: false,
+    maximizable: false,
+    fullscreenable: false,
+    center: true,
+    backgroundColor: '#000',
     icon: path.join(__dirname, `/assets/favicon.png`),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      zoomFactor: zoomFactor,
     },
+  })
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.setZoomFactor(zoomFactor)
   })
 
   // and load the index.html of the app.
@@ -30,9 +41,6 @@ const createWindow = () => {
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
   }
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
 
   return mainWindow
 }
@@ -80,3 +88,24 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+// Disable pinch zoom
+app.commandLine.appendSwitch('disable-pinch')
+
+// Disable zoom shortcuts
+const ZOOM_IN_SHORTCUTS = ['CmdOrCtrl+numadd', 'CmdOrCtrl+Plus']
+const ZOOM_OUT_SHORTCUTS = ['CmdOrCtrl+numsub', 'CmdOrCtrl+-']
+const ZOOM_RESET_SHORTCUTS = ['CmdOrCtrl+num0', 'CmdOrCtrl+0']
+
+app.on('browser-window-focus', () => {
+  globalShortcut.registerAll([
+    ...ZOOM_IN_SHORTCUTS,
+    ...ZOOM_OUT_SHORTCUTS,
+    ...ZOOM_RESET_SHORTCUTS,
+  ], () => {
+  })
+})
+
+app.on('browser-window-blur', () => {
+  globalShortcut.unregisterAll()
+})
