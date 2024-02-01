@@ -3,8 +3,13 @@
     <div
       class="bg-contain bg-top bg-no-repeat h-full w-full relative"
       :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.2) 95%, black), url(${RenderNano})`}">
-      <div class="flex px-4 pt-5 pb-3 items-baseline font-heading text-lg">
-        {{ $t('preview.title') }}
+      <div class="px-4 pt-5 pb-3 flex justify-between items-baseline">
+        <div class="font-heading text-lg">
+          {{ $t('preview.title') }}
+        </div>
+        <div class="font-mono">
+          <span class="text-muted-foreground">Profile: </span>{{ store.selectedProfile.name }}
+        </div>
       </div>
       <div
         class="rounded-full aspect-square absolute h-[30%] top-[30.5%]  left-0 right-0 mx-auto flex flex-col justify-center items-center overflow-hidden"
@@ -27,4 +32,7 @@
 import RenderNano from '@/assets/images/renderNano.png'
 import LogoMidi from '@/assets/logos/logoMidi.svg'
 import DeviceBar from '@/components/device/DeviceBar.vue'
+import { useStore } from '@/store'
+
+const store = useStore()
 </script>
