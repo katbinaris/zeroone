@@ -61,18 +61,18 @@
         <button
           v-if="resizeable"
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="window.window.minimize">
+          @click="window.app.minimize">
           <Minus class="h-5 w-5" />
         </button>
         <button
           v-if="resizeable"
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="window.window.maximize">
+          @click="window.app.maximize">
           <Square class="h-3.5 w-3.5 mr-0.5" />
         </button>
         <button
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="window.window.close">
+          @click="window.app.close">
           <X class="h-5 w-5 mr-0.5" />
         </button>
       </div>

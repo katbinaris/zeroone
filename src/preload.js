@@ -38,7 +38,7 @@ contextBridge.exposeInMainWorld('nanodevice', {
 })
 
 // expose an API to close the app
-contextBridge.exposeInMainWorld('window', {
+contextBridge.exposeInMainWorld('app', {
   minimize() {
     BrowserWindow.getFocusedWindow()?.minimize()
   },
