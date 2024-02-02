@@ -5,16 +5,17 @@ const model = defineModel({ type: Number, default: 60 })
 
 const bar = ref(null)
 
-const width = ref(160)
-const count = ref(40)
-const percent = ref(60)
-const gap_width = ref(2)
-
-const rect_width = computed(() => {
-  return (width.value - ((count.value + 1) * gap_width.value)) / (count.value)
+const props = defineProps({
+  width: { type: Number, default: 160 },
+  count: { type: Number, default: 40 },
+  gapWidth: { type: Number, default: 2 },
 })
-const current_pos = computed(() => {
-  return Math.round((percent.value / 100) * (count.value - 1))
+
+const rectWidth = computed(() => {
+  return (props.width - ((props.count + 1) * props.gapWidth)) / props.count
+})
+const currentPosition = computed(() => {
+  return Math.round((model.value / 100) * (props.count - 1))
 })
 
 function onMouseDown() {
@@ -24,8 +25,7 @@ function onMouseDown() {
 
 function onMouseMove(e) {
   const rect = bar.value.getBoundingClientRect()
-  percent.value = Math.max(0, Math.min(Math.round((e.clientX - rect.left - 9) / (width.value - 6) * 100), 100))
-  model.value = percent.value
+  model.value = Math.max(0, Math.min(Math.round((e.clientX - rect.left - 9) / (props.width - 6) * 100), 100))
 }
 
 function onMouseUp() {
@@ -41,12 +41,12 @@ function onMouseUp() {
           <rect
             v-for="(_, i) in count"
             :key="`key${i}`"
-            :style="`fill:${i < current_pos ? '#fff' : '#4a4a4a'}`"
-            :width="rect_width"
+            :style="`fill:${i < currentPosition ? '#fff' : '#4a4a4a'}`"
+            :width="rectWidth"
             :height="i===0 || i===count-1 ? 8 : 5"
-            :x="6+gap_width+i*(rect_width+gap_width)"
+            :x="6+gapWidth+i*(rectWidth+gapWidth)"
             y="10" />
-          <g :transform="`translate(${6+(rect_width+gap_width)*current_pos},0)`">
+          <g :transform="`translate(${6+(rectWidth+gapWidth)*currentPosition},0)`">
             <rect
               style="fill:#000"
               :width="6"

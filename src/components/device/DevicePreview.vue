@@ -17,9 +17,9 @@
         style="background: linear-gradient(45deg, black 30%, #252525 50%, #232323 60%, black)">
         <div class="flex flex-col items-center text-center pb-2 mix-blend-screen">
           <img :src="LogoMidi" alt="midi-logo" class="opacity-50 h-4">
-          <h2 class="font-pixellg text-5xl">101</h2>
+          <h2 class="font-pixellg text-5xl">{{ value }}</h2>
           <div class="font-pixelsm text-md">HIGH PASS</div>
-          <DeviceBar />
+          <DeviceBar v-model="value" :count="30" :width="120" />
           <span
             class="w-36 font-pixelsm text-[7pt] text-muted-foreground">
             KORG MINILOGUE HIGH PASS FILTER 0-127
@@ -35,6 +35,9 @@ import LogoMidi from '@/assets/logos/logoMidi.svg'
 import DeviceBar from '@/components/device/DeviceBar.vue'
 import { useStore } from '@/store'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
+import { ref } from 'vue'
+
+const value = ref(69)
 
 const store = useStore()
 </script>
