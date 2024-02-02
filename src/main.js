@@ -11,15 +11,17 @@ if (ess) {
   app.quit()
 }
 
-const zoomFactor = 0.9
+const zoomFactor = 1
+const width = 1111
+const height = 666
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: width,
+    height: height,
     titleBarStyle: 'hidden',
-    resizable: false,
+    resizable: true,
     maximizable: false,
     fullscreenable: false,
     center: true,
@@ -31,8 +33,12 @@ const createWindow = () => {
     },
   })
 
+  mainWindow.setAspectRatio(width / height)
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.webContents.setZoomFactor(zoomFactor)
+  })
+  mainWindow.on('resize', () => {
+    mainWindow.webContents.setZoomFactor(zoomFactor * mainWindow.getSize()[0] / width)
   })
 
   // and load the index.html of the app.
