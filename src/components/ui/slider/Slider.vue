@@ -7,6 +7,7 @@ import {
   useEmitAsProps,
 } from 'radix-vue'
 import { cn } from '@/lib/utils'
+import { MoreHorizontal } from 'lucide-vue-next'
 
 const props = defineProps({
   name: { type: String, required: false },
@@ -42,6 +43,9 @@ const emits = defineEmits(['update:modelValue', 'valueCommit'])
       <SliderRange class="absolute h-full bg-primary" />
     </SliderTrack>
     <SliderThumb
-      class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
+      class="flex h-6 w-8 rounded-[8px] border hover:bg-zinc-200 border-zinc-100 bg-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
+      style="box-shadow: 0 0 15px 0 black">
+      <MoreHorizontal class="h-full" />
+    </SliderThumb>
   </SliderRoot>
 </template>

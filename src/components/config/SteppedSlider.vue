@@ -19,7 +19,7 @@
 </template>
 <script setup>
 import { Slider } from '@/components/ui/slider'
-import { computed, onBeforeMount } from 'vue'
+import { computed } from 'vue'
 
 const value = defineModel({
   type: Number,
