@@ -11,7 +11,7 @@
             :replace-interval="100"
           />
         </h1>
-        <h2 class="text-sm min-w-48 text-muted-foreground font-mono">
+        <h2 class="text-sm min-w-[188px] text-muted-foreground font-mono">
           ::
           <ScrambleText
             ref="zerooneSubtitle"
@@ -19,8 +19,8 @@
             :replace-interval="40" />
         </h2>
       </div>
-      <div>
-        <Separator orientation="vertical" class="h-6" />
+      <div class="h-8 px-2">
+        <Separator orientation="vertical" />
       </div>
       <div class="flex gap-2">
         <MenubarMenu>
@@ -54,8 +54,8 @@
           <MenubarTrigger class="app-titlebar-button text-muted-foreground">Help</MenubarTrigger>
         </MenubarMenu>
       </div>
-      <div>
-        <Separator orientation="vertical" class="h-6" />
+      <div class="h-8 px-2">
+        <Separator orientation="vertical" />
       </div>
       <div class="grow" />
       <div class="text-sm text-nowrap px-2">
