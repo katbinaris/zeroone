@@ -80,7 +80,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['RenoMono', 'sans-serif'],
+        sans: ['JetbrainsMono', 'sans-serif'],
         heading: ['ProtoMono', 'sans-serif']
       },
       animation: {

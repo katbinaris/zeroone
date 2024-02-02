@@ -117,7 +117,7 @@ const props = defineProps({
   },
   showId: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   nameEditable: {
     type: Boolean,
