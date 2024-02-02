@@ -38,6 +38,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/eslint-parser": "^7.23.10",
     "@electron-forge/cli": "^7.2.0",
     "@electron-forge/maker-deb": "^7.2.0",
     "@electron-forge/maker-rpm": "^7.2.0",
@@ -63,6 +65,11 @@
     "root": true,
     "env": {
       "node": true
+    },
+    "parserOptions": {
+      "parser": "@babel/eslint-parser",
+      "emcaVersion": 2020,
+      "requireConfigFile": false
     },
     "extends": [
       "eslint:recommended",

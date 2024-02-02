@@ -61,18 +61,18 @@
         <button
           v-if="resizeable"
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="oi('Not implemented ¯\\_(ツ)_/¯')">
+          @click="window.window.minimize">
           <Minus class="h-5 w-5" />
         </button>
         <button
           v-if="resizeable"
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="oi('Not implemented ¯\\_(ツ)_/¯')">
+          @click="window.window.maximize">
           <Square class="h-3.5 w-3.5 mr-0.5" />
         </button>
         <button
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="oi('Not implemented ¯\\_(ツ)_/¯')">
+          @click="window.window.close">
           <X class="h-5 w-5 mr-0.5" />
         </button>
       </div>
@@ -93,8 +93,6 @@ import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { X, Square, Minus } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { ref } from 'vue'
-
-const oi = (msg) => alert(msg)
 
 const resizeable = ref(false)
 
