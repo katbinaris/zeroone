@@ -3,23 +3,11 @@ import ProfileManager from '@/components/profile/ProfileManager.vue'
 import DevicePreview from '@/components/device/DevicePreview.vue'
 import ConfigPane from '@/components/config/ConfigPane.vue'
 import Navbar from '@/components/Navbar.vue'
-import { onMounted, ref } from 'vue'
 import { useStore } from '@/store'
 
 const store = useStore()
 
 store.fetchProfiles()
-
-const windowWidth = ref(window.innerWidth)
-const windowHeight = ref(window.innerHeight)
-
-onMounted(() => {
-  window.addEventListener('resize', e => {
-    windowWidth.value = window.innerWidth
-    windowHeight.value = window.innerHeight
-  })
-})
-
 
 </script>
 <template>
@@ -33,7 +21,4 @@ onMounted(() => {
         class="flex-1 basis-2/5 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-50" />
     </div>
   </main>
-  <p
-    class="absolute bottom-2 left-0 right-0 text-center font-heading text-white opacity-15">
-    {{ windowWidth }} x {{ windowHeight }}</p>
 </template>
