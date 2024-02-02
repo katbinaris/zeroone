@@ -32,7 +32,7 @@ import LogoMidi from '@/assets/logos/logoMidi.svg'
 import DeviceBar from '@/components/device/DeviceBar.vue'
 import { useStore } from '@/store'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 const value = ref(69)
 
@@ -40,19 +40,29 @@ const barValue = computed(() => value.value / 127 * 100)
 
 const store = useStore()
 
+let anim = null
+let step = null
+
 onMounted(() => {
-  setInterval(() => {
+  console.log(step)
+  console.log(anim)
+  anim = setInterval(() => {
     const target = Math.floor(Math.random() * 127)
-    const anim = setInterval(() => {
+    step = setInterval(() => {
       const intVal = Math.floor(value.value)
       if (intVal < target) {
         value.value = intVal + 1
       } else if (intVal > target) {
         value.value = intVal - 1
       } else {
-        clearInterval(anim)
+        clearInterval(step)
       }
     }, 20)
   }, 2000)
+})
+
+onUnmounted(() => {
+  clearInterval(anim)
+  clearInterval(step)
 })
 </script>
