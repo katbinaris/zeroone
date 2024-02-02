@@ -2,11 +2,7 @@
   <ConfigSection
     :title="$t('config_options.feedback_designer.feedback_type.title')"
     :icon-component="GaugeCircle">
-    <div class="flex font-heading">
-      <FeedbackTypeButton
-        v-for="(option, key) in feedbackTypeOptions" :key="key" :title="$t(option.titleKey)"
-        :icon="option.icon" :selected="feedbackType===key" @select="feedbackType=key" />
-    </div>
+    <TabSelect v-model="feedbackType" :options="feedbackTypeOptions" />
   </ConfigSection>
   <ConfigSection
     :title="$t('config_options.feedback_designer.haptic_response.title')"
@@ -51,7 +47,7 @@ import FdIcon from '@/assets/icons/iconFineDetents.svg'
 import CdIcon from '@/assets/icons/iconCoarseDetents.svg'
 import VfIcon from '@/assets/icons/iconViscousRotation.svg'
 import RcIcon from '@/assets/icons/iconReturnToCenter.svg'
-import FeedbackTypeButton from '@/components/config/FeedbackTypeButton.vue'
+import TabSelect from '@/components/config/TabSelect.vue'
 
 const feedbackType = ref('fineDetents') // TODO: replace with actual value
 

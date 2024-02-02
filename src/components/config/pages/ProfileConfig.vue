@@ -3,11 +3,7 @@
     <WIP />
   </ConfigSection>
   <ConfigSection :title="$t('config_options.profile_settings.connection_type.title')" :icon-component="Cable">
-    <div class="flex font-heading">
-      <ConnectionTypeButton
-        v-for="(option, key) in connectionTypeOptions" :key="key" :title="$t(option.titleKey)"
-        :icon="option.icon" :selected="connectionType===key" @select="connectionType=key" />
-    </div>
+    <TabSelect v-model="connectionType" :options="connectionTypeOptions" />
   </ConfigSection>
 
   <ConfigSection
@@ -26,17 +22,15 @@
   </ConfigSection>
 </template>
 <script setup>
-import { Label } from '@/components/ui/label/index.js'
-import { Switch } from '@/components/ui/switch/index.js'
 import { Cable, Replace, Type } from 'lucide-vue-next'
 import ConfigSection from '@/components/config/ConfigSection.vue'
 import { Separator } from '@/components/ui/separator/index.js'
 import { ref } from 'vue'
 import UsbIcon from '@/assets/logos/logoUsb.svg'
 import MidiIcon from '@/assets/logos/logoMidi.svg'
-import ConnectionTypeButton from '@/components/config/ConnectionTypeButton.vue'
 import { Badge } from '@/components/ui/badge'
 import WIP from '@/components/WIP.vue'
+import TabSelect from '@/components/config/TabSelect.vue'
 
 const connectionType = ref('usb') // TODO: replace with actual value
 

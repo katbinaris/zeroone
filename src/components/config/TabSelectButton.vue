@@ -1,15 +1,18 @@
 <template>
   <button
-    class="flex-1 flex flex-col justify-center items-center py-4"
+    class="flex-1 flex flex-col items-center rounded-xl my-1 mx-0.5 p-1 gap-2"
     :class="{'text-black bg-zinc-200 hover:bg-zinc-100': selected,
     'hover:bg-zinc-800 text-muted-foreground' : !selected}"
     @click="$emit('select'); $refs.title.scramble()">
-    <img
-      draggable="false"
-      :src="icon" alt="connection-type-icon"
-      class="w-24 size-w mb-2"
-      :class="{'invert': selected}">
-    <ScrambleText ref="title" :resize="false" class="text-xs text-wrap" :text="title" />
+    <slot v-if="$slots['replace']" name="replace" />
+    <template v-else>
+      <img
+        draggable="false"
+        :src="icon" alt="connection-type-icon"
+        class="h-16"
+        :class="{'invert': selected}">
+      <ScrambleText ref="title" :resize="false" class="text-xs text-wrap" :text="title" />
+    </template>
   </button>
 </template>
 <script setup>
