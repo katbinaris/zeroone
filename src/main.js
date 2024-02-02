@@ -22,6 +22,8 @@ const createWindow = () => {
     height: height,
     titleBarStyle: 'hidden',
     resizable: true,
+    minWidth: width / 3,
+    minHeight: height / 3,
     maximizable: false,
     fullscreenable: false,
     center: true,
