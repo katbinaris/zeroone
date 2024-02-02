@@ -12,7 +12,7 @@
         onfocus="this.select()" :placeholder="$t('profiles.name_placeholder')"
         class="flex-1 pl-6 h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none min-w-0"
         :class="{'font-semibold bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
-        'hover:bg-zinc-900 bg-opacity-50 text-white': !selected}"
+        'hover:bg-zinc-900 bg-opacity-50 text-muted-foreground': !selected}"
         @blur="onNameInputBlur">
       <button
         ref="nameSubmitButton"
@@ -26,7 +26,7 @@
     <button
       v-else
       :class="{'font-semibold bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
-      'hover:bg-zinc-900 bg-opacity-50 text-white': !selected}"
+      'hover:bg-zinc-900 bg-opacity-50 text-muted-foreground': !selected}"
       class="flex-1 h-full text-left whitespace-nowrap overflow-hidden text-ellipsis pr-4"
       @click="!editing && $emit('select') && $refs.profileTitle.scramble()">
       <span class="ml-4 w-4 mr-2" :class="{'ml-4': !draggable}">
@@ -38,7 +38,7 @@
       </span>
       <ScrambleText
         ref="profileTitle"
-        :class="{'text-black': selected, 'text-zinc-100': !selected}"
+        :class="{'text-black': selected, 'text-muted-foreground': !selected}"
         :text="profile.name" />
       <span
         v-if="showId"

@@ -4,7 +4,7 @@
       <div v-for="(option, index) in configPageOptions" :key="index" class="flex flex-1 items-center">
         <button
           class="flex-1 h-12 items-center text-center group px-3 font-heading"
-          :class="index===currentPage ? 'bg-zinc-900': 'hover:bg-zinc-800 text-zinc-200 bg-zinc-950'"
+          :class="index===currentPage ? 'bg-zinc-900': 'hover:bg-zinc-800 text-zinc-200'"
           @click="currentPage = index">
           {{ $t(option.titleKey) }}
         </button>
