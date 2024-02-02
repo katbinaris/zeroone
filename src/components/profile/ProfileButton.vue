@@ -10,7 +10,7 @@
       <input
         ref="profileNameInput" v-model="nameInput"
         onfocus="this.select()" :placeholder="$t('profiles.name_placeholder')"
-        class="flex-1 pl-10 h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none"
+        class="flex-1 pl-6 h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none min-w-0"
         :class="{'font-semibold bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
         'hover:bg-zinc-900 bg-opacity-50 text-white': !selected}"
         @blur="onNameInputBlur">
@@ -29,7 +29,7 @@
       'hover:bg-zinc-900 bg-opacity-50 text-white': !selected}"
       class="flex-1 h-full text-left whitespace-nowrap overflow-hidden text-ellipsis pr-4"
       @click="!editing && $emit('select') && $refs.profileTitle.scramble()">
-      <span class="ml-4 w-4 mr-2" :class="{'ml-8': !draggable}">
+      <span class="ml-4 w-4 mr-2" :class="{'ml-4': !draggable}">
         <GripHorizontal
           v-if="draggable"
           :class="{'text-zinc-600': selected,

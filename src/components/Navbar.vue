@@ -19,6 +19,9 @@
             :replace-interval="40" />
         </h2>
       </div>
+      <div>
+        <Separator orientation="vertical" class="h-6" />
+      </div>
       <div class="flex gap-2">
         <MenubarMenu>
           <MenubarTrigger v-t="'navbar.device.title'" class="app-titlebar-button text-muted-foreground" />
@@ -51,8 +54,12 @@
           <MenubarTrigger class="app-titlebar-button text-muted-foreground">Help</MenubarTrigger>
         </MenubarMenu>
       </div>
-      <div class="text-sm text-nowrap">
-        Status: <span class="text-zinc-200">Connected :: Syncing...</span>
+      <div>
+        <Separator orientation="vertical" class="h-6" />
+      </div>
+      <div class="grow" />
+      <div class="text-sm text-nowrap px-2">
+        Status: <span class="text-zinc-200">Connected :: Operation</span>
       </div>
       <Button variant="outline" class="app-titlebar-button">
         Disconnect
@@ -91,6 +98,7 @@ import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { X, Square, Minus } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { ref } from 'vue'
+import { Separator } from '@/components/ui/separator'
 
 const resizeable = ref(false)
 

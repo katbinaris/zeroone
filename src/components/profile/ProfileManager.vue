@@ -15,8 +15,8 @@
       </div>
       <Separator />
     </div>
-    <div>
-      <div v-if="showFilter" class="flex w-full h-12 items-center">
+    <div v-if="showFilter">
+      <div class="flex w-full h-12 items-center">
         <label for="filter" class="flex h-full items-center cursor-text">
           <Search class="ml-4 mr-2 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
         </label>
