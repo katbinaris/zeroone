@@ -47,6 +47,7 @@ onMounted(() => {
   console.log(step)
   console.log(anim)
   anim = setInterval(() => {
+    clearInterval(step)
     const target = Math.floor(Math.random() * 127)
     step = setInterval(() => {
       const intVal = Math.floor(value.value)
