@@ -16,7 +16,7 @@
           <img :src="LogoMidi" alt="midi-logo" class="opacity-50 h-4">
           <h2 class="font-pixellg text-5xl">{{ value }}</h2>
           <div class="font-pixelsm text-md">HIGH PASS</div>
-          <DeviceBar v-model="value" :count="30" :width="120" />
+          <DeviceBar v-model="barValue" :count="30" :width="120" />
           <span
             class="w-36 font-pixelsm text-[7pt] text-muted-foreground">
             KORG MINILOGUE HIGH PASS FILTER 0-127
@@ -32,9 +32,27 @@ import LogoMidi from '@/assets/logos/logoMidi.svg'
 import DeviceBar from '@/components/device/DeviceBar.vue'
 import { useStore } from '@/store'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
-import { ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const value = ref(69)
 
+const barValue = computed(() => value.value / 127 * 100)
+
 const store = useStore()
+
+onMounted(() => {
+  setInterval(() => {
+    const target = Math.floor(Math.random() * 127)
+    const anim = setInterval(() => {
+      const intVal = Math.floor(value.value)
+      if (intVal < target) {
+        value.value = intVal + 1
+      } else if (intVal > target) {
+        value.value = intVal - 1
+      } else {
+        clearInterval(anim)
+      }
+    }, 20)
+  }, 2000)
+})
 </script>
