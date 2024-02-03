@@ -24,7 +24,7 @@
         </span>
         </div>
       </div>
-      <div
+      <button
         class="rounded-full outline-2 absolute h-[41.5%] top-[24.5%] aspect-square left-0 right-0 mx-auto"
         :class="{'outline outline-white': selected==='ring',
         'hover:outline outline-zinc-400': selected!=='ring'}"

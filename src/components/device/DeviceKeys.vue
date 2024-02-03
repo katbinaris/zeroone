@@ -1,17 +1,17 @@
 <template>
   <div class="flex">
-    <div
+    <button
       v-for="(color, key) in keys"
       :key="key" :class="{'outline outline-white ' : key === selected,
       'hover:outline outline-zinc-400' : key !== selected}"
       class="aspect-square flex-1 rounded-[2px] flex items-center justify-center"
       :style="`box-shadow: 0 0 20px 0 ${color.hex()}`"
       @click="$emit('select', key)">
-      <div
+      <span
         class="font-heading text-2xl"
         :class="{'opacity-30 text-black': key!==selected}">{{ key }}
-      </div>
-    </div>
+      </span>
+    </button>
   </div>
 </template>
 
