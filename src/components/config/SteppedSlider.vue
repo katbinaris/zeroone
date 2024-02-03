@@ -1,18 +1,28 @@
 <template>
-  <div class="flex flex-col p-8 pt-4">
+  <div class="flex flex-col px-8 my-4">
     <span class="text-sm text-muted-foreground font-mono">{{ label }}</span>
     <Slider
       ref="steppedSlider" v-model="sliderModelValue" :max="max" :step="1"
       class="pt-4" />
-    <div class="flex justify-between py-1">
+    <div class="flex justify-between py-2">
       <button
         v-for="(position, index) in positions" :key="position"
+        class="min-w-0 text-nowrap"
         :class="{
-          'slider-start mr-2.5': index===0,
+          'slider-start mr-4': index===0,
           'slider-center': index > 0 && index < positions.length-1,
-          'slider-end ml-2.5': index === positions.length-1}"
+          'slider-end ml-4': index === positions.length-1}"
         @click="value = position.value">
-        <span class="text-xs text-muted-foreground font-mono">{{ position.label || '|' }}</span>
+        <span
+          v-if="index===0" class="rounded-full w-2 h-1.5 inline-block mb-[1px]"
+          :class="value===position.value ? 'bg-zinc-100' : 'bg-zinc-600'" />
+        <span
+          v-if="position.label" class="text-xs font-mono uppercase mx-1"
+          :class="value===position.value ? 'text-zinc-100' : 'text-zinc-600'">{{ position.label }}</span>
+        <span
+          v-if="!position.label || index === positions.length-1"
+          class="rounded-full w-2 h-1.5 inline-block mb-[1px]"
+          :class="value===position.value ? 'bg-zinc-100' : 'bg-zinc-600'" />
       </button>
     </div>
   </div>
@@ -50,7 +60,6 @@ const props = defineProps({
         value: 0,
       },
       {
-        label: 'Default',
         value: 2,
       },
       {
@@ -59,18 +68,22 @@ const props = defineProps({
       },
     ],
   },
-  markers: {
+  autoMarkers: {
     type: Boolean,
     default: true,
   },
 })
 
 const positions = computed(() => {
-  const filled = []
-  for (let i = 0; i <= props.max; i++) {
-    filled.push(props.namedPositions.find((p) => p.value === i) || (props.markers && { value: i }))
+  if (props.autoMarkers) {
+    const filled = []
+    for (let i = 0; i <= props.max; i++) {
+      const position = props.namedPositions.find((p) => p.value === i) || { value: i }
+      filled.push(position)
+    }
+    return filled
   }
-  return filled
+  return props.namedPositions
 })
 </script>
 <style scoped>
