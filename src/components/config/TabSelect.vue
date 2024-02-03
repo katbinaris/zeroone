@@ -1,5 +1,6 @@
 <template>
   <div class="flex font-heading px-4 py-2 gap-2">
+    <div class="absolute"/>
     <TabSelectButton
       v-for="(option, key) in options" :key="key"
       :title="$t(option.titleKey)"

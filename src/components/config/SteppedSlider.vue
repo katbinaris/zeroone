@@ -14,14 +14,14 @@
           'slider-end ml-4': index === positions.length-1}"
         @click="value = position.value">
         <span
-          v-if="index===0" class="rounded-full w-2 h-1.5 inline-block mb-[1px]"
+          v-if="index===0" class="rounded-full w-2 h-1.5 inline-block mb-[1px] transition-colors"
           :class="value===position.value ? 'bg-zinc-100' : 'bg-zinc-600'" />
         <span
-          v-if="position.label" class="text-xs font-mono uppercase mx-1"
+          v-if="position.label" class="text-xs font-mono uppercase mx-1 transition-colors"
           :class="value===position.value ? 'text-zinc-100' : 'text-zinc-600'">{{ position.label }}</span>
         <span
           v-if="!position.label || index === positions.length-1"
-          class="rounded-full w-2 h-1.5 inline-block mb-[1px]"
+          class="rounded-full w-2 h-1.5 inline-block mb-[1px] transition-colors"
           :class="value===position.value ? 'bg-zinc-100' : 'bg-zinc-600'" />
       </button>
     </div>
