@@ -1,0 +1,75 @@
+{
+  "actions": {
+    "unique-id-12313": {
+      "trigger": "rotation",
+      // "rotation", "keyDown", "keyUp", "keyHold"
+      "key": "a",
+      "duration": 250,
+      // ms (only for keyHold)
+      "direction": "clockwise",
+      // "counterClockwise" (only for rotation),
+      "condition": {
+        "type": "key",
+        "key": "a"
+      },
+      "events": [
+        {
+          "type": "keyDown",
+          // "keyUp"
+          "key": "ctrl"
+        },
+        {
+          "type": "serialWrite",
+          "data": "Hello, World!"
+        },
+        {
+          "type": "keyCombination",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "type": "delay",
+          "time": 100
+        },
+        {
+          "type": "mouseMove",
+          "x": 100,
+          "y": 20,
+          "smooth": true
+        },
+        {
+          "type": "midiCC",
+          "cc": 64,
+          "value": 127
+        },
+        {
+          "type": "midiNote",
+          "note": 60,
+          "velocity": 127
+        },
+        {
+          "type": "midiProgramChange",
+          "program": 1
+        },
+        {
+          "type": "action",
+          // watch out for infinite loops
+          "action": "unique-id-42069"
+        },
+        {
+          "type": "profileChange",
+          "profile": "+1",
+          // "profile-name"
+          "tag": null
+          // "tag-name"
+        },
+        {
+          "type": "repeat",
+          "times": 3
+        }
+      ]
+    }
+  }
+}

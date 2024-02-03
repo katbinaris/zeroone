@@ -27,6 +27,7 @@
     "color": "^4.2.3",
     "concurrently": "^8.2.2",
     "electron-squirrel-startup": "^1.0.0",
+    "gsap": "^3.12.5",
     "lucide-vue-next": "^0.309.0",
     "pinia": "^2.1.7",
     "radix-vue": "^1.3.0",

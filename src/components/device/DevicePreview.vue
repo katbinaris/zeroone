@@ -9,12 +9,13 @@
           <ScrambleText :text="store.selectedProfile.name" />
         </div>
       </div>
+      <DeviceLEDRing :value="barValue" class="absolute h-[66%] top-[12.5%] left-0 right-0 mx-auto" />
       <div
-        class="rounded-full aspect-square absolute h-[30%] top-[30.5%]  left-0 right-0 mx-auto flex flex-col justify-center items-center overflow-hidden"
+        class="rounded-full aspect-square absolute h-[30%] top-[30.5%] left-0 right-0 mx-auto flex flex-col justify-center items-center overflow-hidden"
         style="background: linear-gradient(45deg, black 30%, #252525 50%, #232323 60%, black)">
         <div class="flex flex-col items-center text-center pb-2 mix-blend-screen">
           <img :src="LogoMidi" alt="midi-logo" class="opacity-50 h-4">
-          <h2 class="font-pixellg text-5xl">{{ value }}</h2>
+          <h2 class="font-pixellg text-5xl">{{ parseInt(value) }}</h2>
           <div class="font-pixelsm text-md">HIGH PASS</div>
           <DeviceBar v-model="barValue" :count="30" :width="120" />
           <span
@@ -23,6 +24,7 @@
         </span>
         </div>
       </div>
+      <DeviceKeys class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto" />
     </div>
   </div>
 </template>
@@ -33,6 +35,9 @@ import DeviceBar from '@/components/device/DeviceBar.vue'
 import { useStore } from '@/store'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import DeviceLEDRing from '@/components/device/DeviceLEDRing.vue'
+import gsap from 'gsap'
+import DeviceKeys from '@/components/device/DeviceKeys.vue'
 
 const value = ref(69)
 
@@ -40,28 +45,14 @@ const barValue = computed(() => value.value / 127 * 100)
 
 const store = useStore()
 
-let anim = null
-let step = null
+const targetValue = ref(69)
+const animateValue = () => {
+  targetValue.value = Math.floor(Math.random() * 127)
+  gsap.to(value, { duration: 1, value: targetValue.value, ease: 'power2.inOut' })
+  setTimeout(animateValue, 1500 + Math.random() * 2000)
+}
 
 onMounted(() => {
-  anim = setInterval(() => {
-    clearInterval(step)
-    const target = Math.floor(Math.random() * 127)
-    step = setInterval(() => {
-      const intVal = Math.floor(value.value)
-      if (intVal < target) {
-        value.value = intVal + 1
-      } else if (intVal > target) {
-        value.value = intVal - 1
-      } else {
-        clearInterval(step)
-      }
-    }, 20)
-  }, 2000)
-})
-
-onUnmounted(() => {
-  clearInterval(anim)
-  clearInterval(step)
+  animateValue()
 })
 </script>
