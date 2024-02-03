@@ -1,23 +1,38 @@
 <template>
   <div class="flex">
     <div
-      v-for="(key, index) in keys" :key="key" class="aspect-square flex-1 rounded-[2px] flex items-center justify-center"
-      :style="`box-shadow: 0 0 20px 0 hsl(${-hue + index * 20},100%,50%)`">
-      <div class="font-heading text-2xl text-black opacity-30">{{ key}}</div>
+      v-for="(color, key) in keys"
+      :key="key" :class="{'outline outline-white ' : key === selected,
+      'hover:outline outline-zinc-400' : key !== selected}"
+      class="aspect-square flex-1 rounded-[2px] flex items-center justify-center"
+      :style="`box-shadow: 0 0 20px 0 ${color.hex()}`"
+      @click="$emit('select', key)">
+      <div
+        class="font-heading text-2xl"
+        :class="{'opacity-30 text-black': key!==selected}">{{ key }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import Color from 'color'
 
-import { onMounted, ref } from 'vue'
-import gsap from 'gsap'
-
-const keys = ref(['a', 'b', 'c', 'd'])
-
-const hue = ref(0)
-
-onMounted(() => {
-  gsap.to(hue, { duration: 10, value: 360, repeat: -1, ease: 'none' })
+defineProps({
+  keys: {
+    type: Object,
+    default: () => ({
+      a: Color.hsl(265, 100, 50),
+      b: Color.hsl(280, 100, 50),
+      c: Color.hsl(300, 100, 50),
+      d: Color.hsl(330, 100, 50),
+    }),
+  },
+  selected: {
+    type: String,
+    default: 'a',
+  },
 })
+
+defineEmits(['select'])
 </script>

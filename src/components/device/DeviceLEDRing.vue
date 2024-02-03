@@ -28,7 +28,7 @@ const props = defineProps({
   },
 })
 
-const leds = ref(new Array(60).fill(Color()))
+const leds = ref(Array(60).fill(Color()))
 
 const radius = ref(100)
 const ledRadius = ref(3)

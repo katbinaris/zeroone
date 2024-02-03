@@ -24,7 +24,14 @@
         </span>
         </div>
       </div>
-      <DeviceKeys class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto" />
+      <div
+        class="rounded-full outline-2 absolute h-[41.5%] top-[24.5%] aspect-square left-0 right-0 mx-auto"
+        :class="{'outline outline-white': selected==='ring',
+        'hover:outline outline-zinc-400': selected!=='ring'}"
+        @click="selected='ring'" />
+      <DeviceKeys
+        :selected="selected" class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
+        @select="args => selected=args" />
     </div>
   </div>
 </template>
@@ -34,10 +41,12 @@ import LogoMidi from '@/assets/logos/logoMidi.svg'
 import DeviceBar from '@/components/device/DeviceBar.vue'
 import { useStore } from '@/store'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import DeviceLEDRing from '@/components/device/DeviceLEDRing.vue'
 import gsap from 'gsap'
 import DeviceKeys from '@/components/device/DeviceKeys.vue'
+
+const selected = ref('a')
 
 const value = ref(69)
 
