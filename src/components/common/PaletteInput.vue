@@ -1,9 +1,9 @@
 <template>
   <div
-    class="p-4"
-    :style="{background: `linear-gradient(180deg, hsla(${options[currentOption].color.hue()}, ${options[currentOption].color.saturationl()}%, ${options[currentOption].color.lightness()}%, 30%) 0%, transparent 50%`}">
+    class="px-4 py-2"
+    :style="{background: `linear-gradient(180deg, ${options[currentOption].color.hex()+'11'}, ${options[currentOption].color.hex()+'30'} 25%, ${options[currentOption].color.hex()+'30'} 40%, transparent 60%`}">
     <div
-      class="flex font-heading rounded-t-xl overflow-hidden">
+      class="flex font-heading rounded-t-xl overflow-hidden border-x border-t border-zinc-800">
       <button
         v-for="(option, key) in options" :key="key"
         class="flex-1 pt-2 items-center text-center"
