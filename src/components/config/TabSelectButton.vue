@@ -1,7 +1,7 @@
 <template>
   <button
-    class="flex-1 flex flex-col items-center rounded-xl p-1 gap-2 transition-colors"
-    :class="{'text-black bg-zinc-300 hover:bg-zinc-200': selected,
+    class="flex-1 flex flex-col items-center rounded-xl p-1 gap-2 transition-all"
+    :class="{'text-black bg-zinc-300 outline outline-zinc-100 hover:bg-zinc-200': selected,
     'hover:bg-zinc-800 text-muted-foreground' : !selected}"
     @click="$emit('select'); $refs.title.scramble()">
     <slot v-if="$slots['replace']" name="replace" />
