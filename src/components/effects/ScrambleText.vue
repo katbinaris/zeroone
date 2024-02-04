@@ -86,7 +86,7 @@ function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props
   let i = 0
   const specChars = atob('S09TUk8tRUFTVEVSRUdH')
   const fillContent = function() {
-    if (content.value.length < Math.max(text.length, specChars.length * spec)) {
+    if (content.value.length < text.length) {
       const char = fillText.charAt(content.value.length) || ''
       if (spec) {
         content.value += specChars[i]
