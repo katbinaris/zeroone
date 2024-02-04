@@ -4,7 +4,7 @@
       v-for="(color, key) in keys"
       :key="key" :class="{'outline outline-white ' : key === selected,
       'hover:outline outline-zinc-400' : key !== selected}"
-      class="aspect-square flex-1 rounded-[2px] flex items-center justify-center transition-all"
+      class="aspect-square flex-1 rounded-[2px] flex items-center justify-center transition-all outline-2"
       :style="`box-shadow: 0 3px 20px -2px ${color.hex()}`"
       @click="$emit('select', key)">
       <span
