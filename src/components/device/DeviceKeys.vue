@@ -9,7 +9,7 @@
       @click="$emit('select', key)">
       <span
         class="font-heading text-2xl transition-colors"
-        :class="{'opacity-30 text-black': key!==selected}">{{ key }}
+        :class="{'opacity-25 text-white': key!==selected}">{{ key }}
       </span>
     </button>
   </div>
