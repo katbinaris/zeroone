@@ -28,13 +28,13 @@
       </div>
       <button
         class="rounded-full outline-2 absolute h-[41.5%] top-[24.5%] aspect-square left-0 right-0 mx-auto transition-all"
-        :class="{'outline outline-white': store.currentConfigPage==='knob',
-        'hover:outline outline-zinc-400': store.currentConfigPage!=='knob'}"
-        @click="store.setCurrentConfigPage('knob')" />
+        :class="{'outline outline-white': store.selectedFeature==='knob',
+        'hover:outline outline-zinc-400': store.selectedFeature!=='knob'}"
+        @click="store.selectConfigFeature('knob')" />
       <DeviceKeys
         class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
-        :selected="store.currentConfigPage"
-        @select="store.setCurrentConfigPage" />
+        :selected="store.selectedFeature"
+        @select="store.selectConfigFeature" />
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ import RenderNano from '@/assets/images/renderNano.png'
 import LogoMidi from '@/assets/logos/logoMidi.svg'
 import DeviceBar from '@/components/device/DeviceBar.vue'
 import { useStore } from '@/store'
-import ScrambleText from '@/components/effects/ScrambleText.vue'
+import ScrambleText from '@/components/common/ScrambleText.vue'
 import { computed, onMounted, ref } from 'vue'
 import DeviceLEDRing from '@/components/device/DeviceLEDRing.vue'
 import gsap from 'gsap'

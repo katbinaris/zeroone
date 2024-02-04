@@ -21,7 +21,7 @@
   </button>
 </template>
 <script setup>
-import ScrambleText from '@/components/effects/ScrambleText.vue'
+import ScrambleText from '@/components/common/ScrambleText.vue'
 import { Badge } from '@/components/ui/badge'
 import { ArrowBigUp } from 'lucide-vue-next'
 

@@ -16,7 +16,7 @@
   </button>
 </template>
 <script setup>
-import ScrambleText from '@/components/effects/ScrambleText.vue'
+import ScrambleText from '@/components/common/ScrambleText.vue'
 
 defineEmits(['select'])
 

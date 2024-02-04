@@ -22,9 +22,9 @@
 </template>
 <script setup>
 import { ChevronLeft } from 'lucide-vue-next'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible/index.js'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { ref } from 'vue'
-import { Switch } from '@/components/ui/switch/index.js'
+import { Switch } from '@/components/ui/switch'
 
 const collapse = ref(true)
 

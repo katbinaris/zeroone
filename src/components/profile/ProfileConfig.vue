@@ -26,14 +26,14 @@
 </template>
 <script setup>
 import { Cable, Replace, Type } from 'lucide-vue-next'
-import ConfigSection from '@/components/config/ConfigSection.vue'
-import { Separator } from '@/components/ui/separator/index.js'
+import ConfigSection from '@/components/common/ConfigSection.vue'
+import { Separator } from '@/components/ui/separator'
 import { ref } from 'vue'
 import UsbIcon from '@/assets/logos/logoUsb.svg'
 import MidiIcon from '@/assets/logos/logoMidi.svg'
 import { Badge } from '@/components/ui/badge'
 import WIP from '@/components/WIP.vue'
-import TabSelect from '@/components/config/TabSelect.vue'
+import TabSelect from '@/components/common/TabSelect.vue'
 
 const connectionType = ref('usb') // TODO: replace with actual value
 

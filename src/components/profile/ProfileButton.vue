@@ -95,7 +95,7 @@
 </template>
 <script setup>
 import { Check, Copy, PenLine, Trash2, X, GripHorizontal } from 'lucide-vue-next'
-import ScrambleText from '@/components/effects/ScrambleText.vue'
+import ScrambleText from '@/components/common/ScrambleText.vue'
 import { nextTick, ref } from 'vue'
 
 defineEmits(['select', 'duplicate', 'delete'])

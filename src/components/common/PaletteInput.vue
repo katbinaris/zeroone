@@ -12,10 +12,9 @@
   <HSVInput v-model="options[currentOption].color" class="relative z-20" />
 </template>
 <script setup>
-import HSVInput from '@/components/config/HSVInput.vue'
+import HSVInput from '@/components/common/HSVInput.vue'
 import Color from 'color'
 import { onBeforeMount, reactive, ref } from 'vue'
-import TabSelect from '@/components/config/TabSelect.vue'
 
 const currentOption = ref(null)
 

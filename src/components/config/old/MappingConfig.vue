@@ -127,8 +127,8 @@
   </ConfigSection>
 </template>
 <script setup>
-import { Badge } from '@/components/ui/badge/index.js'
-import { Tabs } from '@/components/ui/tabs/index.js'
+import { Badge } from '@/components/ui/badge'
+import { Tabs } from '@/components/ui/tabs'
 import {
   Command,
   CommandEmpty,
@@ -136,16 +136,16 @@ import {
   CommandInput,
   CommandItem,
   CommandList, CommandSeparator,
-} from '@/components/ui/command/index.js'
-import { Slider } from '@/components/ui/slider/index.js'
+} from '@/components/ui/command'
+import { Slider } from '@/components/ui/slider'
 import { KeyboardMusic, Squircle, Keyboard, GaugeCircle, Play, Pause } from 'lucide-vue-next'
-import ConfigSection from '@/components/config/ConfigSection.vue'
+import ConfigSection from '@/components/common/ConfigSection.vue'
 import KeyO from '@/assets/icons/iconKeyOrange.svg'
 import Key from '@/assets/icons/iconKeyWhite.svg'
 import KeyG from '@/assets/icons/iconKeyGrey.svg'
 import KeyD from '@/assets/icons/iconKeyDark.svg'
 import { ref } from 'vue'
-import KeySelectButton from '@/components/config/KeySelectButton.vue'
+import KeySelectButton from '@/components/config/old/KeySelectButton.vue'
 
 const selectedKey = ref('a') // TODO: replace with actual value
 

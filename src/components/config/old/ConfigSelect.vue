@@ -22,8 +22,8 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import ScrambleText from '@/components/effects/ScrambleText.vue'
-import { Badge } from '@/components/ui/badge/index.js'
+import ScrambleText from '@/components/common/ScrambleText.vue'
+import { Badge } from '@/components/ui/badge'
 import { ChevronRight } from 'lucide-vue-next'
 
 const config_tabs = ref([

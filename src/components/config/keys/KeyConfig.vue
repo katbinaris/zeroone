@@ -5,8 +5,8 @@
 </template>
 <script setup>
 import { Lightbulb } from 'lucide-vue-next'
-import ConfigSection from '@/components/config/ConfigSection.vue'
-import PaletteInput from '@/components/config/PaletteInput.vue'
+import ConfigSection from '@/components/common/ConfigSection.vue'
+import PaletteInput from '@/components/common/PaletteInput.vue'
 import Color from 'color'
 import { ref } from 'vue'
 

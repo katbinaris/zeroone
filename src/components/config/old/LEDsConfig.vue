@@ -27,12 +27,12 @@
 </template>
 <script setup>
 import { Lightbulb, PanelBottomClose, Circle, PanelBottom } from 'lucide-vue-next'
-import ConfigSection from '@/components/config/ConfigSection.vue'
-import PaletteInput from '@/components/config/PaletteInput.vue'
+import ConfigSection from '@/components/common/ConfigSection.vue'
+import PaletteInput from '@/components/common/PaletteInput.vue'
 import Color from 'color'
 import { computed, ref } from 'vue'
 import { useStore } from '@/store.js'
-import { Slider } from '@/components/ui/slider/index.js'
+import { Slider } from '@/components/ui/slider'
 
 const store = useStore()
 

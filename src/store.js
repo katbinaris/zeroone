@@ -19,8 +19,9 @@ import { createPinia, defineStore } from 'pinia'
 import Axios from 'axios'
 import schema from '@/data/profileSchema.json'
 import Ajv from 'ajv'
-import KnobConfig from '@/components/config/pages/KnobConfig.vue'
-import KeyConfig from '@/components/config/pages/KeyConfig.vue'
+import KnobConfig from '@/components/config/knob/KnobConfig.vue'
+import KeyConfig from '@/components/config/keys/KeyConfig.vue'
+import WIP from '@/components/WIP.vue'
 
 const ajv = new Ajv()
 
@@ -31,38 +32,60 @@ export const useStore = defineStore('main', {
       profiles: [],
       selectedProfileId: null,
       connected: false,
-      currentConfigPage: 'knob',
+      selectedFeature: 'knob',
+      currentConfigPage: 'mapping',
+      configPages: {
+        knob: {
+          mapping: {
+            titleKey: 'config_options.mapping_configuration.title',
+            component: KnobConfig,
+          },
+          feedback: {
+            titleKey: 'config_options.feedback_designer.title',
+            component: KnobConfig,
+          },
+          lighting: {
+            titleKey: 'config_options.light_designer.title',
+            component: KnobConfig,
+          },
+        },
+        key: {
+          mapping: {
+            titleKey: 'config_options.mapping_configuration.title',
+            component: KeyConfig,
+          },
+          feedback: {
+            titleKey: 'config_options.feedback_designer.title',
+            component: KeyConfig,
+          },
+          lighting: {
+            titleKey: 'config_options.light_designer.title',
+            component: KeyConfig,
+          },
+        },
+      },
     }
   },
-  getters: {
-    profileIds: (state) => state.profiles.map(p => p.id),
-    selectedProfile: (state) => state.profiles.find(p => p.id === state.selectedProfileId),
-    currentConfigComponent: (state) => {
-      switch (state.currentConfigPage) {
-        case 'knob':
-          return KnobConfig
-        case 'a':
-          return KeyConfig
-        case 'b':
-          return KeyConfig
-        case 'c':
-          return KeyConfig
-        case 'd':
-          return KeyConfig
-        default:
-          return KnobConfig
-      }
-    },
-  },
+  getters:
+    {
+      profileIds: (state) => state.profiles.map(p => p.id),
+      selectedProfile: (state) => state.profiles.find(p => p.id === state.selectedProfileId),
+      currentConfigFeature: (state) => ['a', 'b', 'c', 'd'].includes(state.selectedFeature) ? 'key' : state.selectedFeature,
+      currentConfigComponent: (state) => state.configPages[state.currentConfigFeature][state.currentConfigPage]?.component || WIP,
+      currentConfigPages: (state) => state.configPages[state.currentConfigFeature] || {},
+    }
+  ,
   actions: {
     selectProfile(id) {
       if (!this.profileIds.includes(id)) return false
       this.selectedProfileId = id
       return true
-    },
+    }
+    ,
     addProfile() {
       console.log('addProfile is not implemented')
-    },
+    }
+    ,
     duplicateProfile(id) {
       const originalProfile = this.profiles.find(p => p.id === id)
       const newProfile = JSON.parse(JSON.stringify(originalProfile))
@@ -71,7 +94,8 @@ export const useStore = defineStore('main', {
       this.profiles.push(newProfile)
       this.selectedProfileId = newProfile.id
       return newProfile.id
-    },
+    }
+    ,
     deleteProfile(id) {
       const index = this.profiles.findIndex(p => p.id === id)
       if (index >= 0) {
@@ -82,7 +106,8 @@ export const useStore = defineStore('main', {
         return true
       }
       return false
-    },
+    }
+    ,
     fetchProfiles() {
       Axios.get('http://localhost:3001/profiles').then((res) => {
         const profiles = res.data
@@ -107,7 +132,8 @@ export const useStore = defineStore('main', {
       }).catch((err) => {
         console.error(err)
       })
-    },
+    }
+    ,
     newProfileName(originalName = '') {
       let name = originalName
       let i = 1
@@ -115,7 +141,8 @@ export const useStore = defineStore('main', {
         name = `${originalName} (${i++})`
       }
       return name
-    },
+    }
+    ,
     newProfileId(originalId = '') {
       let id = originalId
       if (originalId) {
@@ -128,6 +155,12 @@ export const useStore = defineStore('main', {
         } while (this.profileIds.includes(id))
       }
       return id
+    }
+    ,
+    selectConfigFeature(feature) {
+      this.selectedFeature = feature
+      if (!this.configPages[this.currentConfigFeature])
+        this.setCurrentConfigPage('mapping')
     },
     setCurrentConfigPage(page) {
       this.currentConfigPage = page

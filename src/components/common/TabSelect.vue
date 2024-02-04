@@ -20,7 +20,7 @@
 </template>
 <script setup>
 import { CircleDot } from 'lucide-vue-next'
-import TabSelectButton from '@/components/config/TabSelectButton.vue'
+import TabSelectButton from '@/components/common/TabSelectButton.vue'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const model = defineModel({

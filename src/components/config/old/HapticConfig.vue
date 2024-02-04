@@ -37,22 +37,17 @@
               {value:2, label: 'Normal'},
               {value:3, label: 'Loud'}]" />
   </ConfigSection>
-  <ConfigSection title="Ring Light" :icon-component="Lightbulb">
-    <PaletteInput v-model="ringColors" />
-  </ConfigSection>
 </template>
 <script setup>
-import { AudioLines, AudioWaveform, GaugeCircle, Lightbulb } from 'lucide-vue-next'
-import ConfigSection from '@/components/config/ConfigSection.vue'
-import PaletteInput from '@/components/config/PaletteInput.vue'
-import Color from 'color'
-import { computed, ref } from 'vue'
-import TabSelect from '@/components/config/TabSelect.vue'
+import { AudioLines, AudioWaveform, GaugeCircle } from 'lucide-vue-next'
+import ConfigSection from '@/components/common/ConfigSection.vue'
+import SteppedSlider from '@/components/common/SteppedSlider.vue'
+import { ref } from 'vue'
 import FdIcon from '@/assets/icons/iconFineDetents.svg'
 import CdIcon from '@/assets/icons/iconCoarseDetents.svg'
 import VfIcon from '@/assets/icons/iconViscousRotation.svg'
 import RcIcon from '@/assets/icons/iconReturnToCenter.svg'
-import SteppedSlider from '@/components/config/SteppedSlider.vue'
+import TabSelect from '@/components/common/TabSelect.vue'
 
 const feedbackType = ref('fineDetents') // TODO: replace with actual value
 
@@ -82,18 +77,4 @@ const outputRampDampening = ref(2)
 const auditoryHapticLevel = ref(2)
 const auditoryMagnitude = ref(2)
 
-const ringColors = ref({
-  primary: {
-    titleKey: 'config_options.light_designer.primary_color',
-    color: Color('#4f25ef'),
-  },
-  secondary: {
-    titleKey: 'config_options.light_designer.secondary_color',
-    color: Color('#1a1498'),
-  },
-  pointer: {
-    titleKey: 'config_options.light_designer.pointer_color',
-    color: Color('#ffa346'),
-  },
-})
 </script>

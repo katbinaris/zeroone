@@ -88,7 +88,7 @@ import {
   MenubarTrigger,
   MenubarContent,
 } from '@/components/ui/menubar/index.js'
-import ScrambleText from '@/components/effects/ScrambleText.vue'
+import ScrambleText from '@/components/common/ScrambleText.vue'
 import { X, Square, Minus } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { ref } from 'vue'

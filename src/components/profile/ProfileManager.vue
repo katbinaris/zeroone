@@ -84,10 +84,10 @@ import { Separator } from '@/components/ui/separator'
 import { ChevronRight, Plus, Search, ArrowLeft, List } from 'lucide-vue-next'
 import { computed, ref } from 'vue'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-import ScrambleText from '@/components/effects/ScrambleText.vue'
+import ScrambleText from '@/components/common/ScrambleText.vue'
 import { useStore } from '@/store.js'
 import ProfileButton from '@/components/profile/ProfileButton.vue'
-import ProfileConfig from '@/components/config/pages/ProfileConfig.vue'
+import ProfileConfig from '@/components/profile/ProfileConfig.vue'
 
 defineProps({
   showFilter: {
