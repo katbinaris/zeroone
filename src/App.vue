@@ -21,7 +21,7 @@ store.fetchProfiles()
         class="basis-1/3 min-w-60 flex-1 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-50" />
       <DevicePreview
         class="basis-1/3 flex-col flex-1 flex border-solid border-0 border-r"
-        @select="currentConfigPage = Math.floor(Math.random() * 4)" />
+        @select="currentConfigPage = (currentConfigPage+1)%4" />
       <ConfigPane
         v-model="currentConfigPage"
         class="flex-1 basis-2/5 flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-50" />
