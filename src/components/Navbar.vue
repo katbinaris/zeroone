@@ -54,16 +54,10 @@
           <MenubarTrigger class="app-titlebar-button text-muted-foreground">Help</MenubarTrigger>
         </MenubarMenu>
       </div>
-      <div class="h-8 px-2">
-        <Separator orientation="vertical" />
-      </div>
       <div class="grow" />
-      <div class="text-sm text-nowrap px-2">
-        Status: <span class="text-zinc-200">Connected :: Operation</span>
-      </div>
-      <Button variant="outline" class="app-titlebar-button">
-        Disconnect
-      </Button>
+      <MenubarMenu>
+        <MenubarTrigger class="app-titlebar-button text-muted-foreground border-2">Disconnect</MenubarTrigger>
+      </MenubarMenu>
       <div class="flex h-full">
         <button
           v-if="resizeable"

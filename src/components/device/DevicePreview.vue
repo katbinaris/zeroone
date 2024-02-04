@@ -3,11 +3,12 @@
     <div
       class="bg-contain bg-top bg-no-repeat h-full w-full relative"
       :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.3) 95%, black), url(${RenderNano})`}">
-      <div v-if="false" class="px-4 h-12 flex justify-center items-center">
+      <div class="px-10 h-12 flex justify-between items-center">
+        <h2>Nano_D++</h2>
         <!-- TODO: Remove later if not needed -->
         <div v-if="store.selectedProfile" class="font-mono text-sm">
-          <span class="text-muted-foreground">Profile: </span>
-          <ScrambleText :text="store.selectedProfile.name" />
+          <span class="text-muted-foreground">Firmware: </span>
+          <ScrambleText text="v1.3.2a" />
         </div>
       </div>
       <DeviceLEDRing :value="barValue" class="absolute h-[66%] top-[12.5%] left-0 right-0 mx-auto" />
