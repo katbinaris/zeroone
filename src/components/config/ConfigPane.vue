@@ -27,7 +27,6 @@ import ProfileConfig from '@/components/config/pages/ProfileConfig.vue'
 import MappingConfig from '@/components/config/pages/MappingConfig.vue'
 import HapticConfig from '@/components/config/pages/HapticConfig.vue'
 import { Separator } from '@/components/ui/separator'
-import { ref } from 'vue'
 
 defineProps({
   showTabs: {
@@ -36,7 +35,10 @@ defineProps({
   },
 })
 
-const currentPage = ref(1)
+const currentPage = defineModel({
+  type: Number,
+  default: 0,
+})
 
 const configPageOptions = [
   {

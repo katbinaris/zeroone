@@ -16,7 +16,7 @@
       "feedback_type": {
         "coarse_detents": "Coarse Detents",
         "fine_detents": "Fine Detents",
-        "return_to_center": "Return to Center",
+        "return_to_center": "Snap to Center",
         "title": "Feedback Type",
         "viscous_rotation": "Viscous Rotation"
       },
