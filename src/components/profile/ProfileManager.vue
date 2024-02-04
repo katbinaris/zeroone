@@ -10,8 +10,8 @@
             <ScrambleText
               v-if="showProfileList" class="text-sm text-zinc-600"
               scramble-on-mount
-              fill-interval="20"
-              delay="500"
+              :fill-interval="20"
+              :delay="500"
               :text="`(${store.profiles.length}/${ maxProfiles})`" />
           </span>
         </button>

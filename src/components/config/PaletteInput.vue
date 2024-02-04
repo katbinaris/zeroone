@@ -5,7 +5,7 @@
       class="flex-1 pt-2 items-center text-center"
       :class="currentOption!==key ? 'hover:bg-zinc-800 text-zinc-200' : 'text-black bg-zinc-200 hover:bg-zinc-100'"
       @click="currentOption = key">
-      {{ $t(option.key) }}
+      {{ $t(option.titleKey) }}
       <span class="flex h-4 w-full mt-2" :style="{background: option.color.hex()}" />
     </button>
   </div>
@@ -15,6 +15,7 @@
 import HSVInput from '@/components/config/HSVInput.vue'
 import Color from 'color'
 import { onBeforeMount, reactive, ref } from 'vue'
+import TabSelect from '@/components/config/TabSelect.vue'
 
 const currentOption = ref(null)
 
@@ -22,15 +23,15 @@ const model = defineModel({
   type: Object,
   default: () => ({
     one: {
-      key: 'One',
+      titleKey: 'One',
       color: Color('#ff0000'),
     },
     two: {
-      key: 'Two',
+      titleKey: 'Two',
       color: Color('#00ff00'),
     },
     three: {
-      key: 'Three',
+      titleKey: 'Three',
       color: Color('#0000ff'),
     },
   }),

@@ -28,12 +28,13 @@
       </div>
       <button
         class="rounded-full outline-2 absolute h-[41.5%] top-[24.5%] aspect-square left-0 right-0 mx-auto transition-all"
-        :class="{'outline outline-white': selected==='ring',
-        'hover:outline outline-zinc-400': selected!=='ring'}"
-        @click="selected='ring'; $emit('select', selected)" />
+        :class="{'outline outline-white': store.currentConfigPage==='knob',
+        'hover:outline outline-zinc-400': store.currentConfigPage!=='knob'}"
+        @click="store.setCurrentConfigPage('knob')" />
       <DeviceKeys
-        :selected="selected" class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
-        @select="args => {selected=args; $emit('select', selected)}" />
+        class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
+        :selected="store.currentConfigPage"
+        @select="store.setCurrentConfigPage" />
     </div>
   </div>
 </template>
@@ -47,10 +48,6 @@ import { computed, onMounted, ref } from 'vue'
 import DeviceLEDRing from '@/components/device/DeviceLEDRing.vue'
 import gsap from 'gsap'
 import DeviceKeys from '@/components/device/DeviceKeys.vue'
-
-defineEmits(['select'])
-
-const selected = ref('a')
 
 const value = ref(69)
 

@@ -19,6 +19,8 @@ import { createPinia, defineStore } from 'pinia'
 import Axios from 'axios'
 import schema from '@/data/profileSchema.json'
 import Ajv from 'ajv'
+import KnobConfig from '@/components/config/pages/KnobConfig.vue'
+import KeyConfig from '@/components/config/pages/KeyConfig.vue'
 
 const ajv = new Ajv()
 
@@ -29,11 +31,28 @@ export const useStore = defineStore('main', {
       profiles: [],
       selectedProfileId: null,
       connected: false,
+      currentConfigPage: 'knob',
     }
   },
   getters: {
     profileIds: (state) => state.profiles.map(p => p.id),
     selectedProfile: (state) => state.profiles.find(p => p.id === state.selectedProfileId),
+    currentConfigComponent: (state) => {
+      switch (state.currentConfigPage) {
+        case 'knob':
+          return KnobConfig
+        case 'a':
+          return KeyConfig
+        case 'b':
+          return KeyConfig
+        case 'c':
+          return KeyConfig
+        case 'd':
+          return KeyConfig
+        default:
+          return KnobConfig
+      }
+    },
   },
   actions: {
     selectProfile(id) {
@@ -109,6 +128,9 @@ export const useStore = defineStore('main', {
         } while (this.profileIds.includes(id))
       }
       return id
+    },
+    setCurrentConfigPage(page) {
+      this.currentConfigPage = page
     },
   },
 })
