@@ -2,7 +2,7 @@
   <div class="relative">
     <div
       :style="backgroundStyle"
-      class="absolute bg-zinc-300 outline outline-zinc-100 rounded-xl transition-all ease-out duration-75" />
+      class="absolute bg-zinc-300 outline outline-zinc-100 rounded-xl transition-all duration-75 ease-out" />
     <div class="flex font-heading px-4 py-2 gap-2 relative">
       <TabSelectButton
         v-for="(option, key) in options" :key="key"
@@ -29,7 +29,12 @@ const model = defineModel({
 
 const buttons = ref({})
 
-const backgroundStyle = ref({})
+const backgroundStyle = ref({
+  top: '0',
+  left: '0',
+  width: '0',
+  height: '0',
+})
 
 const updateBackgroundStyle = () => {
   const selected = buttons.value[model.value]
