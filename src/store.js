@@ -1,20 +1,3 @@
-// import { computed, reactive } from 'vue'
-//
-// export const store = reactive({
-//   device: {
-//     profiles: [],
-//     activeProfileId: null,
-//     activeProfile: computed(() => {
-//       return store.device.profiles.find(p => p.id === store.device.activeProfileId)
-//     }),
-//   },
-//   currentProfileId: null,
-//   currentProfile: computed(() => {
-//     return store.device.profiles.find(p => p.id === store.currentProfileId)
-//   }),
-//   profileIds: computed(() => store.device.profiles.map(p => p.id)),
-// })
-
 import { createPinia, defineStore } from 'pinia'
 import Axios from 'axios'
 import schema from '@/data/profileSchema.json'
@@ -28,7 +11,6 @@ import KeyLightConfig from '@/components/config/keys/KeyLightConfig.vue'
 const ajv = new Ajv()
 
 export const useStore = defineStore('main', {
-  // arrow function recommended for full type inference
   state: () => {
     return {
       profiles: [],
@@ -125,7 +107,7 @@ export const useStore = defineStore('main', {
             ids.add(profile.id)
             return true
           }),
-          selectedProfileId: profiles[0]?.id || null,
+          //selectedProfileId: profiles[0]?.id || null,
         })
       }).catch((err) => {
         console.error(err)

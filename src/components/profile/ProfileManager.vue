@@ -6,7 +6,7 @@
         <button class="flex items-center" @click="showProfileList=true">
           <component :is="showProfileList ? List : ArrowLeft" class="w-5 h-full mr-1" />
           <span class="font-heading mr-2">
-            <ScrambleText :text="showProfileList ? $t('profiles.title') : store.selectedProfile.name" />
+            <ScrambleText :text="showProfileList ? $t('profiles.title') : store.selectedProfile?.name" />
             <ScrambleText
               v-if="showProfileList" class="text-sm text-zinc-600"
               scramble-on-mount
@@ -64,7 +64,7 @@
               <ProfileButton
                 v-for="(profile, index) in tagProfiles" :key="profile.id" v-model="tagProfiles[index]"
                 class="border-0 border-b"
-                :selected="store.selectedProfile.id === profile.id"
+                :selected="store.selectedProfile?.id === profile.id"
                 @select="store.selectProfile(profile.id); showProfileList=false"
                 @duplicate="store.duplicateProfile(profile.id)"
                 @delete="store.deleteProfile(profile.id)" />

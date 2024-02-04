@@ -2,6 +2,7 @@
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import Color from 'color'
 import { SliderRoot, SliderThumb, SliderTrack } from 'radix-vue'
+import { MoreHorizontal } from 'lucide-vue-next'
 
 const hueSliderValue = ref(0)
 const saturationSliderValue = ref(100)
@@ -152,7 +153,7 @@ function shake() {
 <template>
   <div>
     <div
-      class="w-full flex p-4 font-heading"
+      class="flex p-4 font-heading rounded-b-xl"
       :style="{backgroundColor: `hsl(${color.hue()},${color.saturationl()}%,${color.lightness()}%)`}">
       <div
         ref="colorFieldText" class="w-full flex opacity-70"
@@ -229,10 +230,8 @@ function shake() {
       </div>
     </div>
     <div
-      class="px-6"
-      :style="{background: `linear-gradient(180deg, hsla(${color.hue()}, ${color.saturationl()}%, ${color.lightness()}%, 30%) 0%, transparent 30%`}">
+      class="px-6">
       <div class="flex pt-4">
-        <p class="font-heading text-muted-foreground w-24">HUE</p>
         <SliderRoot
           v-model="hueSliderModel" :max="359"
           class="relative flex w-full touch-none select-none items-center h-10">
@@ -240,11 +239,13 @@ function shake() {
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
             style="background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 154, 0, 1) 10%, rgba(208, 222, 33, 1) 20%, rgba(79, 220, 74, 1) 30%, rgba(63, 218, 216, 1) 40%, rgba(47, 201, 226, 1) 50%, rgba(28, 127, 238, 1) 60%, rgba(95, 21, 242, 1) 70%, rgba(186, 12, 248, 1) 80%, rgba(251, 7, 217, 1) 90%, rgba(255, 0, 0, 1) 100%)" />
           <SliderThumb
-            class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
+            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 outline outline-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
+            style="box-shadow: -3px 0 15px 0 rgba(0,0,0,0.6)">
+            <MoreHorizontal class="h-full" />
+          </SliderThumb>
         </SliderRoot>
       </div>
       <div class="flex pt-4">
-        <p class="font-heading text-muted-foreground w-24">SAT</p>
         <SliderRoot
           v-model="saturationSliderModel" :max="100"
           class="relative flex w-full touch-none select-none items-center h-10">
@@ -252,11 +253,13 @@ function shake() {
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
             :style="{background: `linear-gradient(90deg, hsl(0, 0%, ${saturationSliderColor.lightness()}%) 0%, hsl(${saturationSliderColor.hue()}, 100%, ${saturationSliderColor.lightness()}%) 100%)`}" />
           <SliderThumb
-            class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
+            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 outline outline-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
+            style="box-shadow: -3px 0 15px 0 rgba(0,0,0,0.6)">
+            <MoreHorizontal class="h-full" />
+          </SliderThumb>
         </SliderRoot>
       </div>
       <div class="flex pt-4">
-        <p class="font-heading text-muted-foreground w-24">VAL</p>
         <SliderRoot
           v-model="valueSliderModel" :max="100"
           class="relative flex w-full touch-none select-none items-center h-10">
@@ -264,7 +267,10 @@ function shake() {
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
             :style="{background: `linear-gradient(90deg, black, hsl(${valueSliderColor.hue()}, ${valueSliderColor.saturationl()}%, ${valueSliderColor.lightness()}%) 100%`}" />
           <SliderThumb
-            class="block h-5 w-5 rounded-full border hover:bg-zinc-900 border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" />
+            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 outline outline-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
+            style="box-shadow: -3px 0 15px 0 rgba(0,0,0,0.6)">
+            <MoreHorizontal class="h-full" />
+          </SliderThumb>
         </SliderRoot>
       </div>
     </div>
