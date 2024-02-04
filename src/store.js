@@ -19,9 +19,14 @@ import { createPinia, defineStore } from 'pinia'
 import Axios from 'axios'
 import schema from '@/data/profileSchema.json'
 import Ajv from 'ajv'
-import KnobConfig from '@/components/config/knob/KnobConfig.vue'
-import KeyConfig from '@/components/config/keys/KeyConfig.vue'
+import KnobConfig from '@/components/config/knob/KnobFeedbackConfig.vue'
+import KeyConfig from '@/components/config/keys/KeyLightConfig.vue'
 import WIP from '@/components/WIP.vue'
+import MappingConfig from '@/components/old/MappingConfig.vue'
+import KnobFeedbackConfig from '@/components/config/knob/KnobFeedbackConfig.vue'
+import KnobLightConfig from '@/components/config/knob/KnobLightConfig.vue'
+import KeyLightConfig from '@/components/config/keys/KeyLightConfig.vue'
+import KeyFeedbackConfig from '@/components/config/keys/KeyFeedbackConfig.vue'
 
 const ajv = new Ajv()
 
@@ -38,29 +43,25 @@ export const useStore = defineStore('main', {
         knob: {
           mapping: {
             titleKey: 'config_options.mapping_configuration.title',
-            component: KnobConfig,
+            component: MappingConfig,
           },
           feedback: {
             titleKey: 'config_options.feedback_designer.title',
-            component: KnobConfig,
+            component: KnobFeedbackConfig,
           },
           lighting: {
             titleKey: 'config_options.light_designer.title',
-            component: KnobConfig,
+            component: KnobLightConfig,
           },
         },
         key: {
           mapping: {
             titleKey: 'config_options.mapping_configuration.title',
-            component: KeyConfig,
-          },
-          feedback: {
-            titleKey: 'config_options.feedback_designer.title',
-            component: KeyConfig,
+            component: MappingConfig,
           },
           lighting: {
             titleKey: 'config_options.light_designer.title',
-            component: KeyConfig,
+            component: KeyLightConfig,
           },
         },
       },
@@ -159,7 +160,7 @@ export const useStore = defineStore('main', {
     ,
     selectConfigFeature(feature) {
       this.selectedFeature = feature
-      if (!this.configPages[this.currentConfigFeature])
+      if (!this.currentConfigPages[this.currentConfigPage])
         this.setCurrentConfigPage('mapping')
     },
     setCurrentConfigPage(page) {

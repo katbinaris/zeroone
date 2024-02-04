@@ -1,6 +1,6 @@
 <template>
-  <ConfigSection :title="$t('config_options.mapping_configuration.key_mapping.title')" :icon-component="Keyboard">
-    <div class="flex font-heading">
+  <ConfigSection title="Map some stuff idk" :icon-component="Keyboard">
+    <div v-if="false" class="flex font-heading">
       <KeySelectButton
         v-for="(option, key) in keySelectOptions" :key="key" :title="$t(option.titleKey)"
         :invert="option.invert" :badge="option.badge"
@@ -84,51 +84,8 @@
     </Command>
     <Separator />
   </ConfigSection>
-
-  <ConfigSection
-    :title="$t('config_options.mapping_configuration.knob_mapping.title')"
-    :icon-component="GaugeCircle">
-    <div class="flex flex-col p-8 pt-4">
-      <span class="text-sm text-muted-foreground font-mono">Feedback Strength</span>
-      <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
-      <div class="flex flex-row px-1 py-1.5">
-        <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-4">|</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-3">Default</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-10">|</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono text-right">Max</div>
-      </div>
-
-    </div>
-    <Separator />
-    <div class="flex flex-col p-8 pt-4">
-      <span class="text-sm text-muted-foreground font-mono">Bounce Back Strength</span>
-      <Slider :default-value="[2]" :max="4" :step="1" class="pt-4" />
-      <div class="flex flex-row px-1 py-1.5">
-        <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-4">|</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-3">Default</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-10">|</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono text-right">Max</div>
-      </div>
-    </div>
-    <Separator />
-    <div class="flex flex-col p-8 pt-4">
-      <span class="text-sm text-muted-foreground font-mono">Output Ramp Dampening</span>
-      <Slider :default-value="[4]" :max="4" :step="1" class="pt-4" />
-      <div class="flex flex-row px-1 py-1.5">
-        <div class="flex-1 text-xs text-muted-foreground font-mono text-left">Min</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-4">|</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-3">Default</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono indent-10">|</div>
-        <div class="flex-1 text-xs text-muted-foreground font-mono text-right">Max</div>
-      </div>
-    </div>
-  </ConfigSection>
 </template>
 <script setup>
-import { Badge } from '@/components/ui/badge'
-import { Tabs } from '@/components/ui/tabs'
 import {
   Command,
   CommandEmpty,
@@ -137,15 +94,14 @@ import {
   CommandItem,
   CommandList, CommandSeparator,
 } from '@/components/ui/command'
-import { Slider } from '@/components/ui/slider'
-import { KeyboardMusic, Squircle, Keyboard, GaugeCircle, Play, Pause } from 'lucide-vue-next'
+import { KeyboardMusic, Squircle, Keyboard } from 'lucide-vue-next'
 import ConfigSection from '@/components/common/ConfigSection.vue'
 import KeyO from '@/assets/icons/iconKeyOrange.svg'
 import Key from '@/assets/icons/iconKeyWhite.svg'
 import KeyG from '@/assets/icons/iconKeyGrey.svg'
 import KeyD from '@/assets/icons/iconKeyDark.svg'
 import { ref } from 'vue'
-import KeySelectButton from '@/components/config/old/KeySelectButton.vue'
+import KeySelectButton from '@/components/old/KeySelectButton.vue'
 
 const selectedKey = ref('a') // TODO: replace with actual value
 
