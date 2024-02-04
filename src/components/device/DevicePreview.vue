@@ -3,35 +3,48 @@
     <div
       class="bg-contain bg-top bg-no-repeat h-full w-full relative"
       :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.3) 95%, black), url(${RenderNano})`}">
-      <div class="px-10 h-12 flex justify-between items-center">
+      <div v-if="store.connected" class="px-10 h-12 flex justify-between items-center">
         <h2>Nano_D++</h2>
-        <!-- TODO: Remove later if not needed -->
-        <div v-if="store.selectedProfile" class="font-mono text-sm">
+        <div class="font-mono text-sm">
           <span class="text-muted-foreground">Firmware: </span>
           <ScrambleText text="v1.3.2a" />
         </div>
       </div>
-      <DeviceLEDRing :value="barValue" class="absolute h-[66%] top-[12.5%] left-0 right-0 mx-auto" />
+      <DeviceLEDRing
+        v-if="store.connected" :value="barValue"
+        class="absolute h-[66%] top-[12.5%] left-0 right-0 mx-auto" />
       <div
         class="rounded-full aspect-square absolute h-[30%] top-[30.5%] left-0 right-0 mx-auto flex flex-col justify-center items-center overflow-hidden"
         style="background: linear-gradient(45deg, black 30%, #252525 50%, #232323 60%, black)">
-        <div class="flex flex-col items-center text-center pb-2 mix-blend-screen">
+        <div
+          v-if="store.connected"
+          class="flex flex-col items-center text-center pb-2 mix-blend-screen">
           <img :src="LogoMidi" alt="midi-logo" class="opacity-50 h-4">
           <h2 class="font-pixellg text-5xl">{{ parseInt(value) }}</h2>
           <div class="font-pixelsm text-md">HIGH PASS</div>
           <DeviceBar v-model="barValue" :count="30" :width="120" />
-          <span
-            class="w-36 font-pixelsm text-[7pt] text-muted-foreground">
+          <span class="w-36 font-pixelsm text-[7pt] text-muted-foreground uppercase">
             KORG MINILOGUE HIGH PASS FILTER 0-127
-        </span>
+          </span>
+        </div>
+        <div v-else class="flex flex-col items-center text-center mix-blend-screen">
+          <ScrambleText
+            :text="offlineText"
+            scramble-on-mount
+            :fill-interval="50"
+            :replace-interval="50"
+            class="uppercase font-pixelsm text-[7pt] text-muted-foreground"
+            @finish="nextOfflineText" />
         </div>
       </div>
       <button
+        v-if="store.connected"
         class="rounded-full outline-2 absolute h-[41.5%] top-[24.5%] aspect-square left-0 right-0 mx-auto transition-all"
         :class="{'outline outline-white': store.selectedFeature==='knob',
         'hover:outline outline-zinc-400': store.selectedFeature!=='knob'}"
         @click="store.selectConfigFeature('knob')" />
       <DeviceKeys
+        v-if="store.connected"
         class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
         :selected="store.selectedFeature === 'key' && store.selectedKey"
         @select="store.selectKey" />
@@ -60,6 +73,35 @@ const animateValue = () => {
   targetValue.value = Math.floor(Math.random() * 127)
   gsap.to(value, { duration: 1, value: targetValue.value, ease: 'power2.inOut' })
   setTimeout(animateValue, 1500 + Math.random() * 2000)
+}
+
+const offlineText = ref('NO DEVICE CONNECTED')
+const offlineTexts = [
+  'AWAITING CONNECTION',
+  'ARE YOU STILL THERE?',
+  'DEVICE OFFLINE',
+  'AWAITING CONNECTION',
+  'I MISS YOU',
+  'AWAITING CONNECTION',
+  'NO DEVICE CONNECTED',
+  'IS ANYONE THERE?',
+  'AWAITING CONNECTION',
+  'DEVICE OFFLINE',
+  'NAP TIME',
+  'NO DEVICE CONNECTED',
+]
+
+let offlineTextIndex = 0
+const nextOfflineText = () => {
+  console.log(offlineText.value)
+  if (offlineText.value === '') {
+    offlineText.value = offlineTexts[offlineTextIndex]
+    offlineTextIndex = (offlineTextIndex + 1) % offlineTexts.length
+  } else {
+    setTimeout(() => {
+      offlineText.value = ''
+    }, 2000)
+  }
 }
 
 onMounted(() => {

@@ -149,6 +149,9 @@ export const useStore = defineStore('main', {
     setCurrentConfigPage(page) {
       this.currentConfigPage = page
     },
+    setConnected(connected) {
+      this.connected = connected
+    },
   },
 })
 

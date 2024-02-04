@@ -77,6 +77,8 @@ function replaceContent(text = props.text, replaceInterval = props.replaceInterv
     setTimeout(() => {
       replaceContent(text, replaceInterval, steps + 1)
     }, replaceInterval * (1 + Math.random()))
+  } else {
+    emit('finish')
   }
 }
 
@@ -113,6 +115,8 @@ function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props
 
 defineExpose({ scramble })
 
+const emit = defineEmits(['finish'])
+
 onMounted(() => {
   if (props.scrambleOnMount) {
     setTimeout(() => {
@@ -124,7 +128,11 @@ onMounted(() => {
 })
 
 watch(() => props.text, () => {
-  replaceContent()
+  if (content.value === '') {
+    scramble()
+  } else {
+    replaceContent()
+  }
 })
 </script>
 

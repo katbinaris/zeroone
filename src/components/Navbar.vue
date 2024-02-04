@@ -56,7 +56,11 @@
       </div>
       <div class="grow" />
       <MenubarMenu>
-        <MenubarTrigger class="app-titlebar-button text-muted-foreground border-2">Disconnect</MenubarTrigger>
+        <MenubarTrigger
+          class="app-titlebar-button text-muted-foreground border-2"
+          @click="store.setConnected(!store.connected)">
+          {{ store.connected ? 'Disconnect' : 'Connect' }}
+        </MenubarTrigger>
       </MenubarMenu>
       <div class="flex h-full">
         <button
@@ -90,9 +94,11 @@ import {
 } from '@/components/ui/menubar/index.js'
 import ScrambleText from '@/components/common/ScrambleText.vue'
 import { X, Square, Minus } from 'lucide-vue-next'
-import { Button } from '@/components/ui/button'
 import { ref } from 'vue'
 import { Separator } from '@/components/ui/separator'
+import { useStore } from '@/store'
+
+const store = useStore()
 
 const resizeable = ref(false)
 
