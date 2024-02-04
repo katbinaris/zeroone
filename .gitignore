@@ -32,4 +32,5 @@ coverage
 #Electron-builder output
 /dist_electron
 
-.vite/build/*
+.vite
+out
