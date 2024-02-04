@@ -19,14 +19,11 @@ import { createPinia, defineStore } from 'pinia'
 import Axios from 'axios'
 import schema from '@/data/profileSchema.json'
 import Ajv from 'ajv'
-import KnobConfig from '@/components/config/knob/KnobFeedbackConfig.vue'
-import KeyConfig from '@/components/config/keys/KeyLightConfig.vue'
 import WIP from '@/components/WIP.vue'
 import MappingConfig from '@/components/old/MappingConfig.vue'
 import KnobFeedbackConfig from '@/components/config/knob/KnobFeedbackConfig.vue'
 import KnobLightConfig from '@/components/config/knob/KnobLightConfig.vue'
 import KeyLightConfig from '@/components/config/keys/KeyLightConfig.vue'
-import KeyFeedbackConfig from '@/components/config/keys/KeyFeedbackConfig.vue'
 
 const ajv = new Ajv()
 
@@ -38,6 +35,7 @@ export const useStore = defineStore('main', {
       selectedProfileId: null,
       connected: false,
       selectedFeature: 'knob',
+      selectedKey: 'a',
       currentConfigPage: 'mapping',
       configPages: {
         knob: {
@@ -71,9 +69,8 @@ export const useStore = defineStore('main', {
     {
       profileIds: (state) => state.profiles.map(p => p.id),
       selectedProfile: (state) => state.profiles.find(p => p.id === state.selectedProfileId),
-      currentConfigFeature: (state) => ['a', 'b', 'c', 'd'].includes(state.selectedFeature) ? 'key' : state.selectedFeature,
-      currentConfigComponent: (state) => state.configPages[state.currentConfigFeature][state.currentConfigPage]?.component || WIP,
-      currentConfigPages: (state) => state.configPages[state.currentConfigFeature] || {},
+      currentConfigComponent: (state) => state.configPages[state.selectedFeature][state.currentConfigPage]?.component || WIP,
+      currentConfigPages: (state) => state.configPages[state.selectedFeature] || {},
     }
   ,
   actions: {
@@ -162,6 +159,10 @@ export const useStore = defineStore('main', {
       this.selectedFeature = feature
       if (!this.currentConfigPages[this.currentConfigPage])
         this.setCurrentConfigPage('mapping')
+    },
+    selectKey(key) {
+      this.selectedKey = key
+      this.selectConfigFeature('key')
     },
     setCurrentConfigPage(page) {
       this.currentConfigPage = page
