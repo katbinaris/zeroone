@@ -4,8 +4,8 @@
       <div
         class="w-full h-12 px-4 flex items-center justify-between flex-nowrap text-nowrap bg-zinc-900">
         <button class="flex items-center" @click="showProfileList=true">
-          <ArrowLeft v-if="!showProfileList" class="w-5 h-full mr-1" />
-          <h2 class="mr-2">
+          <component :is="showProfileList ? List : ArrowLeft" class="w-5 h-full mr-1" />
+          <span class="font-heading mr-2">
             <ScrambleText :text="showProfileList ? $t('profiles.title') : store.selectedProfile.name" />
             <ScrambleText
               v-if="showProfileList" class="text-sm text-zinc-600"
@@ -13,7 +13,7 @@
               fill-interval="20"
               delay="500"
               :text="`(${store.profiles.length}/${ maxProfiles})`" />
-          </h2>
+          </span>
         </button>
         <button
           v-if="showProfileList"
@@ -81,7 +81,7 @@
 </template>
 <script setup>
 import { Separator } from '@/components/ui/separator'
-import { ChevronRight, Plus, Search, ArrowLeft } from 'lucide-vue-next'
+import { ChevronRight, Plus, Search, ArrowLeft, List } from 'lucide-vue-next'
 import { computed, ref } from 'vue'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import ScrambleText from '@/components/effects/ScrambleText.vue'
