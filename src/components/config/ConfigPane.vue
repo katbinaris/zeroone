@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="flex">
+    <div v-if="showTabs" class="flex">
+      <!-- TODO: Remove later if not needed -->
       <div v-for="(option, index) in configPageOptions" :key="index" class="flex flex-1 items-center">
         <button
           class="flex-1 h-12 items-center text-center group px-3 font-heading"
@@ -28,7 +29,14 @@ import HapticConfig from '@/components/config/pages/HapticConfig.vue'
 import { Separator } from '@/components/ui/separator'
 import { ref } from 'vue'
 
-const currentPage = ref(0)
+defineProps({
+  showTabs: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const currentPage = ref(1)
 
 const configPageOptions = [
   {

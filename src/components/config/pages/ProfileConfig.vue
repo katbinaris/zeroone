@@ -2,7 +2,10 @@
   <ConfigSection :title="$t('config_options.profile_settings.profile_properties.title')" :icon-component="Type">
     <WIP />
   </ConfigSection>
-  <ConfigSection :title="$t('config_options.profile_settings.connection_type.title')" :icon-component="Cable">
+  <ConfigSection
+    v-if="false" :title="$t('config_options.profile_settings.connection_type.title')"
+    :icon-component="Cable">
+    <!-- TODO: Remove later if not needed -->
     <TabSelect v-model="connectionType" :options="connectionTypeOptions" />
   </ConfigSection>
 
