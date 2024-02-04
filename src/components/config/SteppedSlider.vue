@@ -7,7 +7,7 @@
     <div class="flex justify-between py-2">
       <button
         v-for="(position, index) in positions" :key="position"
-        class="min-w-0 text-nowrap"
+        class="min-w-0 text-nowrap group"
         :class="{
           'slider-start mr-4': index===0,
           'slider-center': index > 0 && index < positions.length-1,
@@ -15,14 +15,14 @@
         @click="value = position.value">
         <span
           v-if="index===0" class="rounded-full w-2 h-1.5 inline-block mb-[1px] transition-colors"
-          :class="value===position.value ? 'bg-zinc-100' : 'bg-zinc-600'" />
+          :class="value===position.value ? 'bg-zinc-100' : 'bg-zinc-600 group-hover:bg-zinc-500'" />
         <span
           v-if="position.label" class="text-xs font-mono uppercase mx-1 transition-colors"
-          :class="value===position.value ? 'text-zinc-100' : 'text-zinc-600'">{{ position.label }}</span>
+          :class="value===position.value ? 'text-zinc-100' : 'text-zinc-600 group-hover:text-zinc-500'">{{ position.label }}</span>
         <span
           v-if="!position.label || index === positions.length-1"
           class="rounded-full w-2 h-1.5 inline-block mb-[1px] transition-colors"
-          :class="value===position.value ? 'bg-zinc-100' : 'bg-zinc-600'" />
+          :class="value===position.value ? 'bg-zinc-100' : 'bg-zinc-600 group-hover:bg-zinc-500'" />
       </button>
     </div>
   </div>
