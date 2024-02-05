@@ -1,7 +1,8 @@
 <template>
   <div
     class="h-12 flex overflow-hidden rounded-lg m-2 group"
-    :class="{'border border-zinc-100 bg-zinc-300': selected}">
+    :class="{'border border-zinc-100 bg-zinc-300': selected,
+    'border border-transparent hover:border-zinc-900': !selected}">
     <form
       v-if="nameEditable && editing"
       class="flex-1 flex h-full text-left whitespace-nowrap overflow-hidden"
