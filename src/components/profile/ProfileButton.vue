@@ -10,7 +10,7 @@
       <input
         ref="profileNameInput" v-model="nameInput"
         onfocus="this.select()" :placeholder="$t('profiles.name_placeholder')"
-        class="flex-1 pl-4 h-full rounded-r-lg text-sm bg-transparent focus-visible:ring-0 focus-visible:outline-none min-w-0 transition-all"
+        class="flex-1 pl-8 h-full rounded-r-lg text-sm bg-transparent focus-visible:ring-0 focus-visible:outline-none min-w-0 transition-all"
         :class="{'font-semibold bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
         'hover:bg-zinc-900 bg-opacity-50 text-muted-foreground': !selected}"
         @blur="onNameInputBlur">
