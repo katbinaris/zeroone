@@ -55,12 +55,14 @@
             v-for="[profileTag, tagProfiles] in filteredProfilesByTag" :key="profileTag"
             v-model:open="collapse[profileTag]"
             :default-open="true">
+            <!-- TODO: Make profile groups computed instead defining them of using v-for -->
             <CollapsibleTrigger
               class="w-full h-12 py-2 text-left text-muted-foreground text-sm bg-zinc-900 border-0 border-b">
               <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
               {{ profileTag }}<span class="font-heading text-sm text-zinc-600"> ({{ tagProfiles.length }})</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
+              <!-- TODO: Insert draggable component here -->
               <ProfileButton
                 v-for="(profile, index) in tagProfiles" :key="profile.id" v-model="tagProfiles[index]"
                 :selected="store.selectedProfile?.id === profile.id"
