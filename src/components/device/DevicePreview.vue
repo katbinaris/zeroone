@@ -100,7 +100,7 @@ const nextOfflineText = () => {
   } else {
     setTimeout(() => {
       offlineText.value = ''
-    }, 2000)
+    }, 3500)
   }
 }
 
