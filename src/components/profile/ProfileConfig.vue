@@ -1,6 +1,13 @@
 <template>
   <ConfigSection :title="$t('config_options.profile_settings.profile_properties.title')" :icon-component="Type">
-    <WIP />
+    <div class="px-8 my-4">
+      <span class="text-sm text-muted-foreground font-mono">Title</span>
+      <Input class="font-pixelsm mt-2 uppercase" default-value="Title text" />
+    </div>
+    <div class="px-8 my-4">
+      <span class="text-sm text-muted-foreground font-mono">Description</span>
+      <Textarea class="font-pixelsm mt-2 uppercase" default-value="Descriptive description describing the profile" />
+    </div>
   </ConfigSection>
   <ConfigSection
     v-if="false" :title="$t('config_options.profile_settings.connection_type.title')"
@@ -34,6 +41,8 @@ import MidiIcon from '@/assets/logos/logoMidi.svg'
 import { Badge } from '@/components/ui/badge'
 import WIP from '@/components/WIP.vue'
 import TabSelect from '@/components/common/TabSelect.vue'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 const connectionType = ref('usb') // TODO: replace with actual value
 
