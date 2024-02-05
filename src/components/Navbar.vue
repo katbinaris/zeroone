@@ -1,9 +1,10 @@
 <template>
   <div class="flex app-titlebar">
-    <Menubar class="w-full h-14 rounded-none bg-zinc-900 justify-between text-muted-foreground font-mono">
+    <Menubar class="w-full h-14 rounded-none bg-zinc-900 justify-between text-muted-foreground font-mono px-3">
+      <div v-if="isMacOS" :style="{width: 80 / zoomFactor + 'px'}" />
       <div class="flex items-center">
         <h1
-          class="text-2xl min-w-32 app-titlebar-button ml-3 text-zinc-100"
+          class="text-2xl min-w-32 app-titlebar-button text-zinc-100"
           @click="$refs.zerooneTitle.scramble(1,100,0); $refs.zerooneSubtitle.scramble(1,75,30)">
           <ScrambleText
             ref="zerooneTitle"
@@ -62,7 +63,7 @@
           {{ store.connected ? 'Disconnect' : 'Connect' }}
         </MenubarTrigger>
       </MenubarMenu>
-      <div class="flex h-full">
+      <div v-if="!isMacOS" class="flex h-full">
         <button
           v-if="minimizable"
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
@@ -96,7 +97,7 @@ import {
 } from '@/components/ui/menubar/index.js'
 import ScrambleText from '@/components/common/ScrambleText.vue'
 import { X, Square, Minus } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Separator } from '@/components/ui/separator'
 import { useStore } from '@/store'
 
@@ -106,6 +107,15 @@ const minimizable = ref(true)
 const maximizable = ref(true)
 
 const { electron } = window
+
+const isMacOS = electron.platform === 'darwin'
+const zoomFactor = ref(1)
+
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    zoomFactor.value = window.outerWidth / window.innerWidth
+  })
+})
 
 </script>
 <style scoped>
