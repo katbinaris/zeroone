@@ -49,7 +49,10 @@
           </MenubarContent>
         </MenubarMenu>
         <MenubarMenu>
-          <MenubarTrigger class="app-titlebar-button text-muted-foreground">About</MenubarTrigger>
+          <MenubarTrigger
+            class="app-titlebar-button text-muted-foreground"
+            @click="electron.openExternal('https://discord.gg/jgRd77YN5T')">Community
+          </MenubarTrigger>
         </MenubarMenu>
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button text-muted-foreground">Help</MenubarTrigger>

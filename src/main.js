@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut } from 'electron'
+import { app, BrowserWindow, globalShortcut, shell } from 'electron'
 import path from 'path'
 import ess from 'electron-squirrel-startup'
 import { ipcMain } from 'electron'
@@ -75,6 +75,7 @@ app.whenReady().then(() => {
     }
   })
   ipcMain.on('electron:closeWindow', () => mainWindow.close())
+  ipcMain.on('electron:openExternal', (_event, url) => shell.openExternal(url))
   nanodevices.onAttach((device) => {
     console.log('Attached device', device)
     mainWindow.webContents.send('nanodevice-attached', device)
