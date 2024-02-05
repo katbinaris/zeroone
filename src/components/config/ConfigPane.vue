@@ -1,14 +1,16 @@
 <template>
   <div>
-    <div v-if="showTabs" class="flex">
-      <!-- TODO: Remove later if not needed -->
-      <button
-        v-for="(option, key) in store.currentConfigPages" :key="key"
-        class="flex-1 h-12 items-center text-center group px-3 font-heading"
-        :class="key===store.currentConfigPage ? 'bg-zinc-900': 'hover:bg-zinc-800 text-zinc-200'"
-        @click="store.setCurrentConfigPage(key)">
-        {{ $t(option.titleKey) }}
-      </button>
+    <div v-if="showTabs" class="p-2 border-solid border-0 border-b">
+      <div class="flex bg-zinc-900 rounded-xl overflow-hidden">
+        <button
+          v-for="(option, key) in store.currentConfigPages" :key="key"
+          class="flex-1 h-12 items-center text-center px-3 font-heading"
+          :class="{'text-black bg-zinc-300 hover:bg-zinc-200': key===store.currentConfigPage,
+          'hover:bg-zinc-800 text-muted-foreground' : key!==store.currentConfigPage}"
+          @click="store.setCurrentConfigPage(key)">
+          {{ $t(option.titleKey) }}
+        </button>
+      </div>
     </div>
     <div class="grow overflow-y-auto">
       <component :is="store.currentConfigComponent" />
