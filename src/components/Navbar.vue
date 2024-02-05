@@ -104,7 +104,7 @@ import { useStore } from '@/store'
 const store = useStore()
 
 const minimizable = ref(true)
-const maximizable = ref(true)
+const maximizable = ref(false)
 
 const { electron } = window
 

@@ -25,7 +25,7 @@ const createWindow = () => {
     resizable: true,
     minWidth: width / 3,
     minHeight: height / 3,
-    maximizable: true,
+    maximizable: false,
     fullscreenable: false,
     center: true,
     backgroundColor: '#000',
