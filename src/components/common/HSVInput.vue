@@ -6,7 +6,7 @@
       :style="{backgroundColor: color.hex()}">
       <div
         ref="colorFieldText" class="w-full flex opacity-70"
-        :class="color.lighten(0.37).isLight() ? 'text-black selection:bg-black selection:text-white' : 'selection:bg-white selection:text-black'"
+        :class="color.isLight() ? 'text-black selection:bg-black selection:text-white' : 'selection:bg-white selection:text-black'"
         style="transition: color 0.2s ease-in-out">
         <div>
           <form @submit.prevent="onSubmitHueInput">
