@@ -6,7 +6,7 @@
       :style="{backgroundColor: color.hex()}">
       <div
         ref="colorFieldText" class="w-full flex opacity-70"
-        :class="color.isLight() ? 'text-black selection:bg-black selection:text-white' : 'selection:bg-white selection:text-black'"
+        :class="!isDark(color) ? 'text-black selection:bg-black selection:text-white' : 'selection:bg-white selection:text-black'"
         style="transition: color 0.2s ease-in-out">
         <div>
           <form @submit.prevent="onSubmitHueInput">
@@ -280,6 +280,13 @@ function shake() {
   setTimeout(() => {
     colorFieldText.value.classList.add('shake')
   }, 5)
+}
+
+function isDark(color) {
+  // YIQ equation from http://24ways.org/2010/calculating-color-contrast
+  const rgb = color.rgb().color;
+  const yiq = (rgb[0] * 6126 + rgb[1] * 7152 + rgb[2] * 722) / 10000; // Changed r factor from 2126
+  return yiq < 128;
 }
 
 </script>
