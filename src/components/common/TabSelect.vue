@@ -1,10 +1,6 @@
 <template>
-  <div class="relative">
-    <div
-      :style="backgroundStyle"
-      :class="{'hidden': !showBackground}"
-      class="absolute bg-zinc-300 outline outline-zinc-100 rounded-xl transition-all duration-75 ease-out" />
-    <div class="flex font-heading px-4 py-2 gap-2 relative">
+  <div class="p-2 border-solid border-0 border-b">
+    <div class="flex bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
       <TabSelectButton
         v-for="(option, key) in options" :key="key"
         :ref="(el) => buttons[key] = el"
