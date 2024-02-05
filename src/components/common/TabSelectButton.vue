@@ -1,14 +1,15 @@
 <template>
   <button
-    class="flex-1 flex flex-col items-center p-2 gap-2 font-heading transition-all"
+    class="flex-1 flex flex-col items-center rounded-xl p-2 gap-2 font-heading transition-all"
     :class="{'text-black bg-zinc-300 hover:bg-zinc-200': selected,
           'hover:bg-zinc-800 text-muted-foreground' : !selected}"
     @click="$emit('select'); $refs.title.scramble()">
     <slot v-if="$slots['replace']" name="replace" />
     <template v-else>
       <img
+        v-if="icon"
         draggable="false"
-        :src="icon" alt="connection-type-icon"
+        :src="icon" :alt="title"
         class="h-16"
         :class="{'invert': selected}">
       <ScrambleText ref="title" :resize="false" class="text-xs text-wrap" :text="title" />
@@ -27,7 +28,7 @@ defineProps({
   },
   icon: {
     type: [String, Object, Function],
-    default: '',
+    default: null,
   },
   selected: {
     type: Boolean,

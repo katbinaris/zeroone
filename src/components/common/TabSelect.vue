@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 border-solid border-0 border-b">
-    <div class="flex bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
+    <div class="flex rounded-xl overflow-hidden border border-zinc-800">
       <TabSelectButton
         v-for="(option, key) in options" :key="key"
         :ref="(el) => buttons[key] = el"

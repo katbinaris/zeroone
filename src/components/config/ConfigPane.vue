@@ -1,17 +1,14 @@
 <template>
   <div>
-    <div v-if="showTabs" class="p-2 border-solid border-0 border-b">
-      <div class="flex bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
-        <button
-          v-for="(option, key) in store.currentConfigPages" :key="key"
-          class="flex-1 h-12 items-center text-center px-3 font-heading transition-all"
-          :class="{'text-black bg-zinc-300 hover:bg-zinc-200': key===store.currentConfigPage,
-          'hover:bg-zinc-800 text-muted-foreground' : key!==store.currentConfigPage}"
-          @click="store.setCurrentConfigPage(key)">
-          {{ $t(option.titleKey) }}
-        </button>
-      </div>
-    </div>
+    <TabSelect
+      v-if="showTabs"
+      v-model="configPage"
+      :options="configPages"
+      class="p-2 border solid border-b">
+      <template v-for="(page, key) in configPages" #[key]>
+        {{ $t(page.titleKey) }}
+      </template>
+    </TabSelect>
     <div class="grow overflow-y-auto">
       <component :is="store.currentConfigComponent" />
     </div>
@@ -19,8 +16,16 @@
 </template>
 <script setup>
 import { useStore } from '@/store'
+import TabSelect from '@/components/common/TabSelect.vue'
+import { computed } from 'vue'
 
 const store = useStore()
+
+const configPages = computed(() => store.currentConfigPages)
+const configPage = computed({
+  get: () => store.currentConfigPage,
+  set: (value) => store.setCurrentConfigPage(value),
+})
 
 defineProps({
   showTabs: {
