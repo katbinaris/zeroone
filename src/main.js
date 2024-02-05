@@ -24,7 +24,7 @@ const createWindow = () => {
     resizable: true,
     minWidth: width / 3,
     minHeight: height / 3,
-    maximizable: false,
+    maximizable: true,
     fullscreenable: false,
     center: true,
     backgroundColor: '#000',
@@ -33,6 +33,7 @@ const createWindow = () => {
       devTools: !app.isPackaged,
       preload: path.join(__dirname, 'preload.js'),
       zoomFactor: zoomFactor,
+      enableRemoteModule: true,
     },
   })
 
@@ -64,6 +65,15 @@ app.whenReady().then(() => {
   ipcMain.handle('nano:get', nano.get)
   ipcMain.handle('nano:set', nano.set)
   const mainWindow = createWindow()
+  ipcMain.on('electron:minimizeWindow', () => mainWindow.minimize())
+  ipcMain.on('electron:toggleMaximizeWindow', () => {
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize()
+    } else {
+      mainWindow.maximize()
+    }
+  })
+  ipcMain.on('electron:closeWindow', () => mainWindow.close())
   nanodevices.onAttach((device) => {
     console.log('Attached device', device)
     mainWindow.webContents.send('nanodevice-attached', device)

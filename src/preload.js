@@ -1,7 +1,7 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer, remote } = require('electron')
 
 
 // expose an API to choose available devices
@@ -35,4 +35,14 @@ contextBridge.exposeInMainWorld('nanodevice', {
   on_value(listener) {
     ipcRenderer.on('nano-onvalue', (_event, value) => listener(value))
   },
+})
+
+//window.maximize = () => remote.BrowserWindow.getFocusedWindow().maximize()
+//window.maximize = () => remote.BrowserWindow.getFocusedWindow().minimize()
+window.funnyThing = 'This is a funny thing!'
+
+contextBridge.exposeInMainWorld('electron', {
+  minimizeWindow: () => ipcRenderer.send('electron:minimizeWindow'),
+  toggleMaximizeWindow: () => ipcRenderer.send('electron:toggleMaximizeWindow'),
+  closeWindow: () => ipcRenderer.send('electron:closeWindow'),
 })

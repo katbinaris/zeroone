@@ -30,6 +30,7 @@
         <div v-else class="flex flex-col items-center text-center mix-blend-screen">
           <ScrambleText
             :text="offlineText"
+            character-set="_()*=0011"
             scramble-on-mount
             :fill-interval="50"
             :replace-interval="50"
@@ -93,7 +94,6 @@ const offlineTexts = [
 
 let offlineTextIndex = 0
 const nextOfflineText = () => {
-  console.log(offlineText.value)
   if (offlineText.value === '') {
     offlineText.value = offlineTexts[offlineTextIndex]
     offlineTextIndex = (offlineTextIndex + 1) % offlineTexts.length

@@ -64,18 +64,20 @@
       </MenubarMenu>
       <div class="flex h-full">
         <button
-          v-if="resizeable"
-          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2">
+          v-if="minimizable"
+          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
+          @click="electron.minimizeWindow">
           <Minus class="h-5 w-5" />
         </button>
         <button
-          v-if="resizeable"
-          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2">
+          v-if="maximizable"
+          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
+          @click="electron.toggleMaximizeWindow">
           <Square class="h-3.5 w-3.5 mr-0.5" />
         </button>
         <button
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="window.close">
+          @click="electron.closeWindow">
           <X class="h-5 w-5 mr-0.5" />
         </button>
       </div>
@@ -100,7 +102,10 @@ import { useStore } from '@/store'
 
 const store = useStore()
 
-const resizeable = ref(false)
+const minimizable = ref(true)
+const maximizable = ref(true)
+
+const { electron } = window
 
 </script>
 <style scoped>
