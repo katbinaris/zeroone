@@ -20,7 +20,8 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: width,
     height: height,
-    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'hidden',
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: 10, y: 10 },
     resizable: true,
     minWidth: width / 3,
     minHeight: height / 3,
