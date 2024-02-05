@@ -1,8 +1,8 @@
 <template>
   <div>
     <div
-      class="flex p-4 font-heading rounded-b-xl border-x border-b border-zinc-800"
-      :class="{'rounded-t-xl': roundedTop}"
+      class="flex p-4 font-heading rounded-b-lg border-x border-b border-zinc-800"
+      :class="{'rounded-t-lg': roundedTop}"
       :style="{backgroundColor: color.hex()}">
       <div
         ref="colorFieldText" class="w-full flex opacity-70"

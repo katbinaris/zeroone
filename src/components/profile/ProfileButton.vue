@@ -1,11 +1,11 @@
 <template>
   <div
-    class="h-12 flex"
+    class="h-12 flex overflow-hidden rounded-lg m-2"
     @mouseenter="hover=true" @mouseleave="hover=false">
     <form
       v-if="nameEditable && editing"
       class="flex-1 flex h-full text-left whitespace-nowrap overflow-hidden"
-      :class="{'bg-zinc-200' : selected}"
+      :class="{'bg-zinc-300' : selected}"
       @submit.prevent="profile.name = nameInput; editing=false">
       <input
         ref="profileNameInput" v-model="nameInput"
@@ -17,7 +17,7 @@
       <button
         ref="nameSubmitButton"
         type="submit"
-        :class="{'bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
+        :class="{'bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
                 'hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50': !selected}"
         class="flex h-full aspect-square justify-center items-center flex-shrink-0 transition-colors  ">
         <Check class="h-4 w-4" />
@@ -25,7 +25,7 @@
     </form>
     <button
       v-else
-      :class="{'font-semibold bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
+      :class="{'font-semibold bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
       'hover:bg-zinc-900 bg-opacity-50 text-muted-foreground': !selected}"
       class="flex-1 h-12 text-left text-sm whitespace-nowrap overflow-hidden text-ellipsis pr-4 transition-colors"
       @click="!editing && $emit('select') && $refs.profileTitle.scramble()">
@@ -49,7 +49,7 @@
     <template v-if="!confirmDelete">
       <button
         v-if="nameEditable"
-        :class="{'bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
+        :class="{'bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
                 'hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50': !selected,
                 'w-12' : hover && !editing}"
         class="flex w-0 h-12 justify-center items-center flex-shrink-0 transition-colors"
@@ -57,7 +57,7 @@
         <PenLine class="h-4 w-4" />
       </button>
       <button
-        :class="{'bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
+        :class="{'bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
                 'hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50': !selected,
                 'w-12' : hover && !editing}"
         class="flex w-0 h-12 justify-center items-center flex-shrink-0 transition-colors"
@@ -83,7 +83,7 @@
         <Check class="h-4 w-4" />
       </button>
       <button
-        :class="{'bg-zinc-200 hover:bg-zinc-100 text-black' : selected,
+        :class="{'bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
                 'hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50': !selected,
                 'w-12' : hover && !editing}"
         class="flex w-0 h-12 justify-center items-center flex-shrink-0 transition-colors"

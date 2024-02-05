@@ -63,12 +63,10 @@
             <CollapsibleContent>
               <ProfileButton
                 v-for="(profile, index) in tagProfiles" :key="profile.id" v-model="tagProfiles[index]"
-                class="border-0 border-b"
                 :selected="store.selectedProfile?.id === profile.id"
                 @select="store.selectProfile(profile.id); showProfileList=false"
                 @duplicate="store.duplicateProfile(profile.id)"
                 @delete="store.deleteProfile(profile.id)" />
-              <Separator />
             </CollapsibleContent>
           </Collapsible>
         </div>
