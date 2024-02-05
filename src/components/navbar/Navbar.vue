@@ -25,7 +25,7 @@
       </div>
       <div class="flex gap-2">
         <MenubarMenu>
-          <MenubarTrigger v-t="'navbar.device.title'" class="app-titlebar-button text-muted-foreground" />
+          <MenubarTrigger v-t="'navbar.device.title'" class="app-titlebar-button" />
           <MenubarContent>
             <!-- TODO: Switch keyboard shortcut icons based on platform -->
             <MenubarItem>
@@ -48,24 +48,40 @@
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
+        <MenubarButton class="app-titlebar-button" @click="electron.openExternal('https://discord.gg/jgRd77YN5T')">
+          Community
+        </MenubarButton>
         <MenubarMenu>
-          <MenubarTrigger
-            class="app-titlebar-button text-muted-foreground"
-            @click="electron.openExternal('https://discord.gg/jgRd77YN5T')">Community
-          </MenubarTrigger>
-        </MenubarMenu>
-        <MenubarMenu>
-          <MenubarTrigger class="app-titlebar-button text-muted-foreground">Help</MenubarTrigger>
+          <MenubarTrigger class="app-titlebar-button">Help</MenubarTrigger>
+          <MenubarContent>
+            <!-- TODO: Switch keyboard shortcut icons based on platform -->
+            <MenubarItem>
+              {{ $t('navbar.device.disconnect') }}
+              <MenubarShortcut>⌘D</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem>{{ $t('navbar.device.about') }}</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>{{ $t('navbar.device.preferences') }}</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>{{ $t('navbar.device.export') }}
+              <MenubarShortcut>⌘E</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem>{{ $t('navbar.device.import') }}
+              <MenubarShortcut>⌘I</MenubarShortcut>
+            </MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>{{ $t('navbar.device.quit') }}
+              <MenubarShortcut>⌘Q</MenubarShortcut>
+            </MenubarItem>
+          </MenubarContent>
         </MenubarMenu>
       </div>
       <div class="grow" />
-      <MenubarMenu>
-        <MenubarTrigger
-          class="app-titlebar-button text-muted-foreground border-2"
-          @click="store.setConnected(!store.connected)">
-          {{ store.connected ? 'Disconnect' : 'Connect' }}
-        </MenubarTrigger>
-      </MenubarMenu>
+      <MenubarButton
+        class="app-titlebar-button border-2"
+        @click="store.setConnected(!store.connected)">
+        {{ store.connected ? 'Disconnect' : 'Connect' }}
+      </MenubarButton>
       <div v-if="!isMacOS" class="flex h-full">
         <button
           v-if="minimizable"
@@ -91,18 +107,19 @@
 <script setup>
 import {
   Menubar,
-  MenubarMenu,
-  MenubarShortcut,
-  MenubarSeparator,
-  MenubarItem,
-  MenubarTrigger,
   MenubarContent,
-} from '@/components/ui/menubar/index.js'
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from '@/components/ui/menubar'
 import ScrambleText from '@/components/common/ScrambleText.vue'
-import { X, Square, Minus } from 'lucide-vue-next'
+import { Minus, Square, X } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
 import { Separator } from '@/components/ui/separator'
 import { useStore } from '@/store'
+import MenubarButton from '@/components/navbar/MenubarButton.vue'
 
 const store = useStore()
 
