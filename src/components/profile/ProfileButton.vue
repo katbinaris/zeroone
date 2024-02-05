@@ -1,8 +1,7 @@
 <template>
   <div
-    class="h-12 flex overflow-hidden rounded-lg m-2"
-    :class="{'border border-zinc-100 bg-zinc-300': selected}"
-    @mouseenter="hover=true" @mouseleave="hover=false">
+    class="h-12 flex overflow-hidden rounded-lg m-2 group"
+    :class="{'border border-zinc-100 bg-zinc-300': selected}">
     <form
       v-if="nameEditable && editing"
       class="flex-1 flex h-full text-left whitespace-nowrap overflow-hidden"
@@ -11,7 +10,7 @@
       <input
         ref="profileNameInput" v-model="nameInput"
         onfocus="this.select()" :placeholder="$t('profiles.name_placeholder')"
-        class="flex-1 pl-6 h-full rounded-r-lg text-sm bg-transparent focus-visible:ring-0 focus-visible:outline-none min-w-0 transition-all"
+        class="flex-1 pl-4 h-full rounded-r-lg text-sm bg-transparent focus-visible:ring-0 focus-visible:outline-none min-w-0 transition-all"
         :class="{'font-semibold bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
         'hover:bg-zinc-900 bg-opacity-50 text-muted-foreground': !selected}"
         @blur="onNameInputBlur">
@@ -30,12 +29,12 @@
       'hover:bg-zinc-900 bg-opacity-50 text-muted-foreground': !selected}"
       class="flex-1 h-12 rounded-r-lg text-left text-sm whitespace-nowrap overflow-hidden text-ellipsis pr-4 transition-all"
       @click="!editing && $emit('select') && $refs.profileTitle.scramble()">
-      <span class="ml-4 w-4 mr-2" :class="{'ml-4': !draggable}">
+      <span class="ml-2 w-4 mr-2" :class="{'ml-2': !draggable}">
         <GripHorizontal
           v-if="draggable"
           :class="{'text-zinc-600': selected,
-        'text-muted-foreground': !selected}"
-          class="mb-0.5 h-4 w-4 inline-block" />
+          'text-muted-foreground': !selected}"
+          class="mb-0.5 h-4 w-4 opacity-0 group-hover:opacity-100 inline-block transition-all" />
       </span>
       <ScrambleText
         ref="profileTitle"
@@ -44,15 +43,14 @@
         :text="profile.name" />
       <span
         v-if="showId"
-        class="text-xs text-zinc-600"
-        :class="{'hidden': hover}"> UID:{{ profile.id }}</span>
+        class="text-xs text-zinc-600 group-hover:hidden"> UID:{{ profile.id }}</span>
     </button>
     <template v-if="!confirmDelete">
       <button
         v-if="nameEditable"
         :class="{'bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
                 'hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50': !selected,
-                'w-12' : hover && !editing}"
+                'group-hover:w-12' : !editing}"
         class="flex w-0 h-12 rounded-l-lg justify-center items-center flex-shrink-0 transition-all"
         @click="startEditing">
         <PenLine class="h-4 w-4" />
@@ -60,16 +58,16 @@
       <button
         :class="{'bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
                 'hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50': !selected,
-                'w-12' : hover && !editing,
+                'group-hover:w-12' : !editing,
                 'rounded-l-lg': !nameEditable}"
         class="flex w-0 h-12 justify-center items-center flex-shrink-0 transition-all"
         @click="$emit('duplicate')">
         <Copy class="h-4 w-4" />
       </button>
       <button
-        :class="{'bg-orange-600 hover:bg-orange-500 text-black' : selected,
+        :class="{'bg-orange-700 hover:bg-orange-600 text-black' : selected,
                 'hover:bg-opacity-100 bg-orange-900 text-zinc-100 bg-opacity-50': !selected,
-                'w-12' : hover && !editing}"
+                'group-hover:w-12' : !editing}"
         class="flex w-0 h-12 justify-center items-center flex-shrink-0 transition-all"
         @click="confirmDelete=true">
         <Trash2 class="h-4 w-4" />
@@ -79,7 +77,7 @@
       <button
         :class="{'bg-orange-600 hover:bg-orange-500 text-black' : selected,
                 'hover:bg-opacity-100 bg-orange-900 text-zinc-100 bg-opacity-50': !selected,
-                'w-12' : hover && !editing}"
+                'group-hover:w-12' : !editing}"
         class="flex w-0 h-12 justify-center items-center flex-shrink-0 transition-all"
         @click="$emit('delete', profile.id)">
         <Check class="h-4 w-4" />
@@ -87,7 +85,7 @@
       <button
         :class="{'bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
                 'hover:bg-opacity-100 bg-zinc-900 text-zinc-100 bg-opacity-50': !selected,
-                'w-12' : hover && !editing}"
+                'group-hover:w-12' : !editing}"
         class="flex w-0 h-12 justify-center items-center flex-shrink-0 transition-all"
         @click="confirmDelete=false">
         <X class="h-4 w-4" />
@@ -133,7 +131,7 @@ const props = defineProps({
   draggable: {
     // Not implemented yet
     type: Boolean,
-    default: false,
+    default: true,
   },
 })
 
@@ -155,7 +153,5 @@ const nameInput = ref(profile.value.name)
 const editing = ref(props.initEditing)
 
 const confirmDelete = ref(false)
-
-const hover = ref(false)
 
 </script>
