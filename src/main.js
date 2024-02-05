@@ -30,6 +30,7 @@ const createWindow = () => {
     backgroundColor: '#000',
     icon: path.join(__dirname, `/assets/favicon.png`),
     webPreferences: {
+      devTools: !app.isPackaged,
       preload: path.join(__dirname, 'preload.js'),
       zoomFactor: zoomFactor,
     },
