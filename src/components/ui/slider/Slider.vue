@@ -43,7 +43,7 @@ const emits = defineEmits(['update:modelValue', 'valueCommit'])
       <SliderRange class="absolute h-1.5 bg-primary rounded-full" />
     </SliderTrack>
     <SliderThumb
-      class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 outline outline-zinc-100 bg-zinc-300 transition-all duration-75 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
+      class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 border border-zinc-100 bg-zinc-300 transition-all duration-75 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
       style="box-shadow: -3px 0 15px 0 rgba(0,0,0,0.6)">
       <MoreHorizontal class="h-full" />
     </SliderThumb>

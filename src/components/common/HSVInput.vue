@@ -87,7 +87,7 @@
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
             style="background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 154, 0, 1) 10%, rgba(208, 222, 33, 1) 20%, rgba(79, 220, 74, 1) 30%, rgba(63, 218, 216, 1) 40%, rgba(47, 201, 226, 1) 50%, rgba(28, 127, 238, 1) 60%, rgba(95, 21, 242, 1) 70%, rgba(186, 12, 248, 1) 80%, rgba(251, 7, 217, 1) 90%, rgba(255, 0, 0, 1) 100%)" />
           <SliderThumb
-            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 outline outline-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
+            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 border border-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
             style="box-shadow: -3px 0 15px 0 rgba(0,0,0,0.6)">
             <MoreHorizontal class="h-full" />
           </SliderThumb>
@@ -101,7 +101,7 @@
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
             :style="{background: `linear-gradient(90deg, hsl(0, 0%, ${saturationSliderColor.lightness()}%) 0%, hsl(${saturationSliderColor.hue()}, 100%, ${saturationSliderColor.lightness()}%) 100%)`}" />
           <SliderThumb
-            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 outline outline-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
+            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 border border-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
             style="box-shadow: -3px 0 15px 0 rgba(0,0,0,0.6)">
             <MoreHorizontal class="h-full" />
           </SliderThumb>
@@ -115,7 +115,7 @@
             class="relative h-2.5 w-full grow overflow-hidden rounded-full border-2 border-zinc-900"
             :style="{background: `linear-gradient(90deg, black, ${valueSliderColor.hex()} 100%`}" />
           <SliderThumb
-            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 outline outline-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
+            class="flex h-6 w-8 rounded-[8px] hover:bg-zinc-200 border border-zinc-100 bg-zinc-300 focus-visible:outline-none focus-visible:ring-1 cursor-pointer focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-zinc-600 justify-center items-center"
             style="box-shadow: -3px 0 15px 0 rgba(0,0,0,0.6)">
             <MoreHorizontal class="h-full" />
           </SliderThumb>

@@ -26,3 +26,9 @@ body {
 ::-webkit-scrollbar-track { /* Background */
     background: var(--scrollbar-background);
 }
+
+::selection {
+    background: #c66936;
+    color: black;
+    text-shadow: none;
+}
