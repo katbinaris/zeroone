@@ -3,10 +3,12 @@ import Axios from 'axios'
 import schema from '@/data/profileSchema.json'
 import Ajv from 'ajv'
 import WIP from '@/components/WIP.vue'
-import MappingConfig from '@/components/old/MappingConfig.vue'
 import KnobFeedbackConfig from '@/components/config/knob/KnobFeedbackConfig.vue'
 import KnobLightConfig from '@/components/config/knob/KnobLightConfig.vue'
 import KeyLightConfig from '@/components/config/keys/KeyLightConfig.vue'
+import KnobMappingConfig from '@/components/config/knob/KnobMappingConfig.vue'
+import KeyMappingConfig from '@/components/config/keys/KeyMappingConfig.vue'
+import { shallowRef } from 'vue'
 
 const ajv = new Ajv()
 
@@ -22,17 +24,17 @@ export const useStore = defineStore('main', {
       configPages: {
         knob: {
           mapping: {
-            titleKey: 'config_options.mapping_configuration.title', component: MappingConfig,
+            titleKey: 'config_options.mapping_configuration.title', component: shallowRef(KnobMappingConfig),
           }, feedback: {
-            titleKey: 'config_options.feedback_designer.title', component: KnobFeedbackConfig,
+            titleKey: 'config_options.feedback_designer.title', component: shallowRef(KnobFeedbackConfig),
           }, lighting: {
-            titleKey: 'config_options.light_designer.title', component: KnobLightConfig,
+            titleKey: 'config_options.light_designer.title', component: shallowRef(KnobLightConfig),
           },
         }, key: {
           mapping: {
-            titleKey: 'config_options.mapping_configuration.title', component: MappingConfig,
+            titleKey: 'config_options.mapping_configuration.title', component: shallowRef(KeyMappingConfig),
           }, lighting: {
-            titleKey: 'config_options.light_designer.title', component: KeyLightConfig,
+            titleKey: 'config_options.light_designer.title', component: shallowRef(KeyLightConfig),
           },
         },
       },

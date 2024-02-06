@@ -3,22 +3,27 @@
     <div
       class="bg-contain bg-top bg-no-repeat h-full w-full relative"
       :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.3) 95%, black), url(${RenderNano})`}">
-      <div v-if="store.connected" class="px-10 h-12 flex justify-between items-center">
-        <h2>Nano_D++</h2>
-        <div class="font-mono text-sm">
-          <span class="text-muted-foreground">Firmware: </span>
-          <ScrambleText text="v1.3.2a" />
+      <Transition name="fade">
+        <div v-if="store.connected" class="px-10 h-12 flex justify-between items-center">
+          <h2>Nano_D++</h2>
+          <div class="font-mono text-sm">
+            <span class="text-muted-foreground">Firmware: </span>
+            <ScrambleText text="v1.3.2a" />
+          </div>
         </div>
-      </div>
-      <DeviceLEDRing
-        v-if="store.connected" :value="barValue"
-        class="absolute h-[66%] top-[12.5%] left-0 right-0 mx-auto" />
+      </Transition>
+      <Transition name="fade">
+        <DeviceLEDRing
+          v-if="store.connected" :value="barValue"
+          class="absolute h-[66%] top-[12.5%] left-0 right-0 mx-auto" />
+      </Transition>
+
       <div
         class="rounded-full aspect-square absolute h-[30%] top-[30.5%] left-0 right-0 mx-auto flex flex-col justify-center items-center overflow-hidden"
         style="background: linear-gradient(45deg, black 30%, #252525 50%, #232323 60%, black)">
         <div
           v-if="store.connected"
-          class="flex flex-col items-center text-center pb-2 mix-blend-screen">
+          class="absolute flex flex-col items-center text-center pb-2 mix-blend-screen">
           <img :src="LogoMidi" alt="midi-logo" class="opacity-50 h-4">
           <h2 class="font-pixellg text-5xl">{{ parseInt(value) }}</h2>
           <div class="font-pixelsm text-md">HIGH PASS</div>
@@ -44,11 +49,13 @@
         :class="{'outline outline-white': store.selectedFeature==='knob',
         'hover:outline outline-zinc-400': store.selectedFeature!=='knob'}"
         @click="store.selectConfigFeature('knob')" />
-      <DeviceKeys
-        v-if="store.connected"
-        class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
-        :selected="store.selectedFeature === 'key' && store.selectedKey"
-        @select="store.selectKey" />
+      <Transition name="fade-slow">
+        <DeviceKeys
+          v-if="store.connected"
+          class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
+          :selected="store.selectedFeature === 'key' && store.selectedKey"
+          @select="store.selectKey" />
+      </Transition>
     </div>
   </div>
 </template>
@@ -94,6 +101,7 @@ const offlineTexts = [
 
 let offlineTextIndex = 0
 const nextOfflineText = () => {
+  console.log('nextOfflineText', offlineText.value)
   if (offlineText.value === '') {
     offlineText.value = offlineTexts[offlineTextIndex]
     offlineTextIndex = (offlineTextIndex + 1) % offlineTexts.length
@@ -108,3 +116,21 @@ onMounted(() => {
   animateValue()
 })
 </script>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 500ms ease;
+}
+
+.fade-slow-enter-active,
+.fade-slow-leave-active {
+  transition: opacity 1000ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to,
+.fade-slow-enter-from,
+.fade-slow-leave-to {
+  opacity: 0;
+}
+</style>
