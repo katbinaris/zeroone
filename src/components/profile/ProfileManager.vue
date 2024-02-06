@@ -4,7 +4,7 @@
       <div
         class="w-full h-12 px-4 flex items-center justify-between flex-nowrap text-nowrap bg-zinc-900">
         <button class="flex items-center" @click="showProfileConfig=false">
-          <component :is="showProfileConfig ? ArrowLeft : List" class="w-5 h-full mr-1" />
+          <component :is="showProfileConfig ? ArrowLeft : List" class="w-5 h-full mr-1 shrink-0" />
           <span class="font-heading mr-2">
             <ScrambleText :text="showProfileConfig ? store.selectedProfile?.name : $t('profiles.title')" />
             <ScrambleText
@@ -41,8 +41,10 @@
       </div>
       <Separator />
     </div>
-    <div class="grow relative">
-      <div class="grow overflow-y-auto">
+    <div class="grow overflow-y-auto relative">
+      <div
+        v-if="renderProfileList"
+        class="absolute w-full">
         <div v-if="filteredProfiles.length === 0">
           <div class="flex flex-col items-center justify-center h-32">
             <ScrambleText
@@ -53,7 +55,7 @@
         <div v-else>
           <Collapsible
             v-for="(category, categoryIndex) in store.profileCategories" :key="categoryIndex"
-            v-model:open="collapse[index]"
+            v-model:open="collapse[categoryIndex]"
             :default-open="true">
             <!-- TODO: Make profile groups computed instead defining them of using v-for -->
             <CollapsibleTrigger
@@ -86,9 +88,7 @@
         </div>
       </div>
       <Transition name="slide">
-        <div
-          v-if="showProfileConfig"
-          class="grow overflow-y-auto absolute top-0 h-full bg-zinc-950 transition-transform">
+        <div v-if="showProfileConfig" class="absolute bg-zinc-950">
           <ProfileConfig />
         </div>
       </Transition>
@@ -119,13 +119,18 @@ const store = useStore()
 const filter = ref('')
 const collapse = ref({})
 
-const showProfileConfig = ref(true)
+const showProfileConfig = ref(false)
 const renderProfileConfig = ref(showProfileConfig.value)
+const renderProfileList = ref(!showProfileConfig.value)
 
 watch(showProfileConfig, value => {
   if (value) {
     renderProfileConfig.value = true
+    setTimeout(() => {
+      renderProfileList.value = false
+    }, 300)
   } else {
+    renderProfileList.value = true
     setTimeout(() => {
       renderProfileConfig.value = false
     }, 300)
@@ -184,7 +189,7 @@ const dragOptions = {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 300ms ease-out;
+  transition: transform 150ms ease;
 }
 
 .slide-enter-active {

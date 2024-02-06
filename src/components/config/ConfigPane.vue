@@ -15,7 +15,7 @@
       </div>
     </template>
     <template v-else>
-      <div class="flex flex-1 justify-center items-center text-muted-foreground pb-16">
+      <div class="flex grow justify-center items-center text-muted-foreground pb-16">
         <ChevronLeft class="h-5 mb-0.5 inline-block" />
         <ScrambleText
           scramble-on-mount

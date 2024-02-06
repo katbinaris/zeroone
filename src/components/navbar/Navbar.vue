@@ -48,7 +48,7 @@
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
-        <MenubarButton class="app-titlebar-button" @click="electron.openExternal('https://discord.gg/jgRd77YN5T')">
+        <MenubarButton class="app-titlebar-button" @click="electron?.openExternal('https://discord.gg/jgRd77YN5T')">
           Community
         </MenubarButton>
         <MenubarMenu>
@@ -86,18 +86,18 @@
         <button
           v-if="minimizable"
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="electron.minimizeWindow">
+          @click="electron?.minimizeWindow">
           <Minus class="h-5 w-5" />
         </button>
         <button
           v-if="maximizable"
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="electron.toggleMaximizeWindow">
+          @click="electron?.toggleMaximizeWindow">
           <Square class="h-3.5 w-3.5 mr-0.5" />
         </button>
         <button
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="electron.closeWindow">
+          @click="electron?.closeWindow">
           <X class="h-5 w-5 mr-0.5" />
         </button>
       </div>
@@ -128,7 +128,7 @@ const maximizable = ref(false)
 
 const { electron } = window
 
-const isMacOS = electron.platform === 'darwin'
+const isMacOS = electron?.platform === 'darwin'
 const zoomFactor = ref(1)
 
 onMounted(() => {

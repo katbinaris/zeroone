@@ -60,13 +60,14 @@ export const useStore = defineStore('main', {
       category.profiles.splice(index, 1)
     },
     duplicateProfile(profileId) {
-      const originalProfile = this.profiles.find(p => p.id === profileId)
-      const newProfile = JSON.parse(JSON.stringify(originalProfile))
-      newProfile.id = this.newProfileId(originalProfile.id)
-      newProfile.name = this.newProfileName(originalProfile.name)
-      const category = this.categories.find(c => c.profiles.find(p => p.id === profileId))
-      category.profiles.push(newProfile)
-      return newProfile.id
+      const profile = this.profiles.find(p => p.id === profileId)
+      const newProfile = JSON.parse(JSON.stringify(profile))
+      newProfile.id = this.newProfileId(profile.id)
+      newProfile.name = this.newProfileName(profile.name)
+      const category = this.profileCategories.find(c => c.profiles.find(p => p.id === profileId))
+      const index = category.profiles.findIndex(p => p.id === profileId)
+      category.profiles.splice(index + 1, 0, newProfile)
+      this.selectProfile(newProfile.id)
     },
     moveProfile(profileId, oldIndex, newIndex) {
       // Find the profile category, then swap the profiles at the old and new indices
