@@ -88,7 +88,7 @@
         </div>
       </div>
       <Transition name="slide">
-        <div v-if="showProfileConfig" class="absolute bg-zinc-950">
+        <div v-if="showProfileConfig" class="absolute bg-zinc-950 h-full">
           <ProfileConfig />
         </div>
       </Transition>
