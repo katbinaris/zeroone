@@ -1,16 +1,19 @@
 <template>
   <div class="p-2 border-solid border-0 border-b">
     <div class="flex rounded-lg overflow-hidden border border-zinc-800">
-      <TabSelectButton
-        v-for="(option, key) in options" :key="key"
-        :ref="(el) => buttons[key] = el"
-        :title="$t(option.titleKey)"
-        :icon="option.icon" :selected="model===key"
-        @select="model=key">
-        <template v-if="$slots[key]" #replace>
-          <slot :name="key" />
-        </template>
-      </TabSelectButton>
+      <TransitionGroup name="flex">
+        <TabSelectButton
+          v-for="(option, key) in options" :key="key"
+          :ref="(el) => buttons[key] = el"
+          :title="$t(option.titleKey)"
+          :icon="option.icon" :selected="model===key"
+          class="min-w-0 overflow-hidden"
+          @select="model=key">
+          <template v-if="$slots[key]" #replace>
+            <slot :name="key" />
+          </template>
+        </TabSelectButton>
+      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -74,3 +77,14 @@ defineProps({
   },
 })
 </script>
+<style scoped>
+.flex-enter-active,
+.flex-leave-active {
+  transition: flex-grow 75ms;
+}
+
+.flex-enter-from,
+.flex-leave-to {
+  flex-grow: 0.000001;
+}
+</style>

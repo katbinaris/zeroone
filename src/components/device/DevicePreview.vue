@@ -53,7 +53,7 @@
         <DeviceKeys
           v-if="store.connected"
           class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
-          :selected="store.selectedFeature === 'key' && store.selectedKey"
+          :selected="store.selectedFeature === 'key' ? store.selectedKey : ''"
           @select="store.selectKey" />
       </Transition>
     </div>

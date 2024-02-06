@@ -57,6 +57,9 @@
                 v-bind="dragOptions"
                 @change="(event)=>onProfileDrop(event, categoryIndex)"
               >
+                <div v-if="category.profiles.length === 0">
+                  HELLO THERE!
+                </div>
                 <template #item="{ element }">
                   <ProfileButton
                     :key="element.id"

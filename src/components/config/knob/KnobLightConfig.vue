@@ -1,10 +1,10 @@
 <template>
-  <ConfigSection title="Ring Light" :icon-component="Lightbulb">
+  <ConfigSection title="Ring Colors" :icon-component="Palette">
     <PaletteInput v-model="ringColors" />
   </ConfigSection>
 </template>
 <script setup>
-import { Lightbulb } from 'lucide-vue-next'
+import { Palette } from 'lucide-vue-next'
 import ConfigSection from '@/components/common/ConfigSection.vue'
 import PaletteInput from '@/components/common/PaletteInput.vue'
 import Color from 'color'
