@@ -7,7 +7,7 @@
       v-if="nameEditable && editing"
       class="flex-1 flex h-full text-left whitespace-nowrap overflow-hidden"
       :class="{'bg-zinc-300' : selected}"
-      @submit.prevent="profile.name = nameInput; editing=false">
+      @submit.prevent="store.renameProfile(profile.id, nameInput); editing=false">
       <input
         ref="profileNameInput" v-model="nameInput"
         onfocus="this.select()" :placeholder="$t('profiles.name_placeholder')"
@@ -30,7 +30,7 @@
       'hover:bg-zinc-900 bg-opacity-50 text-muted-foreground': !selected}"
       class="flex-1 h-12 rounded-r-lg text-left text-sm whitespace-nowrap overflow-hidden text-ellipsis pr-4 transition-all"
       @click="!editing && $emit('select') && $refs.profileTitle.scramble()">
-      <span class="ml-2 w-4 mr-2" :class="{'ml-2': !draggable}">
+      <span class="ml-2 w-4 mr-2 cursor-grab" :class="{'ml-2': !draggable}">
         <GripHorizontal
           v-if="draggable"
           :class="{'text-zinc-600': selected,
@@ -98,21 +98,23 @@
 import { Check, Copy, PenLine, Trash2, X, GripHorizontal } from 'lucide-vue-next'
 import ScrambleText from '@/components/common/ScrambleText.vue'
 import { nextTick, ref } from 'vue'
+import { useStore } from '@/store'
+
+const store = useStore()
 
 defineEmits(['select', 'duplicate', 'delete'])
 
 const nameSubmitButton = ref(null)
 
-const profile = defineModel({
-  type: Object,
-  required: true,
-  default: () => ({
-    id: '1234',
-    name: 'Profile Name',
-  }),
-})
-
 const props = defineProps({
+  profile: {
+    type: Object,
+    default: () => ({
+      id: '1234',
+      name: 'Profile Name',
+    }),
+    required: true,
+  },
   selected: {
     type: Boolean,
     default: false,
@@ -149,7 +151,7 @@ function onNameInputBlur(e) {
 
 const profileNameInput = ref(null)
 
-const nameInput = ref(profile.value.name)
+const nameInput = ref(props.profile.name)
 
 const editing = ref(props.initEditing)
 

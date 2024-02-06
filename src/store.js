@@ -13,7 +13,7 @@ const ajv = new Ajv()
 export const useStore = defineStore('main', {
   state: () => {
     return {
-      profiles: [],
+      profileCategories: [],
       selectedProfileId: null,
       connected: false,
       selectedFeature: 'knob',
@@ -22,108 +22,97 @@ export const useStore = defineStore('main', {
       configPages: {
         knob: {
           mapping: {
-            titleKey: 'config_options.mapping_configuration.title',
-            component: MappingConfig,
+            titleKey: 'config_options.mapping_configuration.title', component: MappingConfig,
+          }, feedback: {
+            titleKey: 'config_options.feedback_designer.title', component: KnobFeedbackConfig,
+          }, lighting: {
+            titleKey: 'config_options.light_designer.title', component: KnobLightConfig,
           },
-          feedback: {
-            titleKey: 'config_options.feedback_designer.title',
-            component: KnobFeedbackConfig,
-          },
-          lighting: {
-            titleKey: 'config_options.light_designer.title',
-            component: KnobLightConfig,
-          },
-        },
-        key: {
+        }, key: {
           mapping: {
-            titleKey: 'config_options.mapping_configuration.title',
-            component: MappingConfig,
-          },
-          lighting: {
-            titleKey: 'config_options.light_designer.title',
-            component: KeyLightConfig,
+            titleKey: 'config_options.mapping_configuration.title', component: MappingConfig,
+          }, lighting: {
+            titleKey: 'config_options.light_designer.title', component: KeyLightConfig,
           },
         },
       },
     }
-  },
-  getters:
-    {
-      profileIds: (state) => state.profiles.map(p => p.id),
-      selectedProfile: (state) => state.profiles.find(p => p.id === state.selectedProfileId),
-      currentConfigComponent: (state) => state.configPages[state.selectedFeature][state.currentConfigPage]?.component || WIP,
-      currentConfigPages: (state) => state.configPages[state.selectedFeature] || {},
-    }
-  ,
-  actions: {
+  }, getters: {
+    profiles: (state) => state.profileCategories.flatMap(c => c.profiles),
+    profileIds: (state) => state.profiles.map(p => p.id),
+    selectedProfileCategory: (state) => state.profileCategories.find(c => c.profiles.find(p => p.id === state.selectedProfileId)),
+    selectedProfile: (state) => state.profiles.find(p => p.id === state.selectedProfileId),
+    currentConfigComponent: (state) => state.configPages[state.selectedFeature][state.currentConfigPage]?.component || WIP,
+    currentConfigPages: (state) => state.configPages[state.selectedFeature] || {},
+  }, actions: {
     selectProfile(id) {
       if (!this.profileIds.includes(id)) return false
       this.selectedProfileId = id
       return true
-    }
-    ,
-    addProfile() {
-      console.log('addProfile is not implemented')
-    }
-    ,
-    duplicateProfile(id) {
-      const originalProfile = this.profiles.find(p => p.id === id)
+    }, addProfile(profile, categoryIndex, newIndex) {
+      const category = this.profileCategories[categoryIndex]
+      category.profiles.splice(newIndex, 0, profile)
+    }, removeProfile(profileId) {
+      const category = this.profileCategories.find(c => c.profiles.find(p => p.id === profileId))
+      const index = category.profiles.findIndex(p => p.id === profileId)
+      category.profiles.splice(index, 1)
+    }, duplicateProfile(profileId) {
+      const originalProfile = this.profiles.find(p => p.id === profileId)
       const newProfile = JSON.parse(JSON.stringify(originalProfile))
       newProfile.id = this.newProfileId(originalProfile.id)
       newProfile.name = this.newProfileName(originalProfile.name)
-      this.profiles.push(newProfile)
-      this.selectedProfileId = newProfile.id
+      const category = this.categories.find(c => c.profiles.find(p => p.id === profileId))
+      category.profiles.push(newProfile)
       return newProfile.id
-    }
-    ,
-    deleteProfile(id) {
-      const index = this.profiles.findIndex(p => p.id === id)
-      if (index >= 0) {
-        this.profiles.splice(index, 1)
-        if (this.selectedProfileId === id) {
-          this.selectedProfileId = this.profiles[0]?.id || null
-        }
-        return true
-      }
-      return false
-    }
-    ,
-    fetchProfiles() {
-      Axios.get('http://localhost:3001/profiles').then((res) => {
-        const profiles = res.data
-        console.log(profiles)
+    }, moveProfile(profileId, oldIndex, newIndex) {
+      // Find the profile category, then swap the profiles at the old and new indices
+      const category = this.profileCategories.find(c => c.profiles.find(p => p.id === profileId))
+      const tmpProfile = category.profiles[newIndex]
+      category.profiles[newIndex] = category.profiles[oldIndex]
+      category.profiles[newIndex] = tmpProfile
+    }, changeProfileCategory(profileId, newCategoryIndex, newIndex) {
+      const profile = this.profiles.find(p => p.id === profileId)
+      const oldCategory = this.profileCategories.find(c => c.profiles.find(p => p.id === profileId))
+      const newCategory = this.profileCategories[newCategoryIndex]
+      oldCategory.profiles = oldCategory.profiles.filter(p => p.id !== profileId)
+      newCategory.profiles.splice(newIndex, 0, profile)
+    }, renameProfile(profileId, newName) {
+      const profile = this.profiles.find(p => p.id === profileId)
+      profile.name = newName
+    }, fetchProfiles() {
+      Axios.get('http://localhost:3001/categories').then((res) => {
+        const categories = res.data
+        console.log(categories)
         const ids = new Set()
         const validate = ajv.compile(schema)
         this.$patch({
-          profiles: profiles.filter((profile) => {
-            if (!validate(profile)) {
-              console.error('Failed to validate profile: ' + profile.name, validate.errors)
-              return false
-            }
-            if (ids.has(profile.id)) {
-              console.error('Duplicate profile id: ' + profile.id + ' for profile: ' + profile.name)
-              return false
-            }
-            ids.add(profile.id)
-            return true
-          }),
-          //selectedProfileId: profiles[0]?.id || null,
+          profileCategories: categories.map((category) => ({
+            name: category.name, profiles: category.profiles.filter((profile) => {
+              // TODO: Validation seems to be broken right now
+              if (!validate(profile)) {
+                console.error('Failed to validate profile: ' + profile.name, validate.errors)
+                return false
+              }
+              if (ids.has(profile.id)) {
+                console.error('Duplicate profile id: ' + profile.id + ' for profile: ' + profile.name)
+                return false
+              }
+              ids.add(profile.id)
+              return true
+            }),
+          })), selectedProfileId: categories[0]?.profiles[0]?.id || null,
         })
       }).catch((err) => {
         console.error(err)
       })
-    }
-    ,
-    newProfileName(originalName = '') {
+    }, newProfileName(originalName = '') {
       let name = originalName
       let i = 1
       while (this.profiles.find(p => p.name === name)) {
         name = `${originalName} (${i++})`
       }
       return name
-    }
-    ,
-    newProfileId(originalId = '') {
+    }, newProfileId(originalId = '') {
       let id = originalId
       if (originalId) {
         do {
@@ -135,21 +124,15 @@ export const useStore = defineStore('main', {
         } while (this.profileIds.includes(id))
       }
       return id
-    }
-    ,
-    selectConfigFeature(feature) {
+    }, selectConfigFeature(feature) {
       this.selectedFeature = feature
-      if (!this.currentConfigPages[this.currentConfigPage])
-        this.setCurrentConfigPage('mapping')
-    },
-    selectKey(key) {
+      if (!this.currentConfigPages[this.currentConfigPage]) this.setCurrentConfigPage('mapping')
+    }, selectKey(key) {
       this.selectedKey = key
       this.selectConfigFeature('key')
-    },
-    setCurrentConfigPage(page) {
+    }, setCurrentConfigPage(page) {
       this.currentConfigPage = page
-    },
-    setConnected(connected) {
+    }, setConnected(connected) {
       this.connected = connected
     },
   },

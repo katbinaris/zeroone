@@ -52,23 +52,35 @@
         </div>
         <div v-else>
           <Collapsible
-            v-for="[profileTag, tagProfiles] in filteredProfilesByTag" :key="profileTag"
-            v-model:open="collapse[profileTag]"
+            v-for="(category, categoryIndex) in store.profileCategories" :key="categoryIndex"
+            v-model:open="collapse[index]"
             :default-open="true">
             <!-- TODO: Make profile groups computed instead defining them of using v-for -->
             <CollapsibleTrigger
               class="w-full h-12 py-2 text-left text-muted-foreground text-sm bg-zinc-900 border-0 border-b">
               <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
-              {{ profileTag }}<span class="font-heading text-sm text-zinc-600"> ({{ tagProfiles.length }})</span>
+              {{ category.name }}<span class="font-heading text-sm text-zinc-600"> ({{ category.profiles?.length || 0
+              }})</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
+              <draggable
+                :list="category.profiles"
+                group="profiles"
+                item-key="name"
+                v-bind="dragOptions"
+                @change="(event)=>onProfileDrop(event, categoryIndex)"
+              >
+                <template #item="{ element }">
+                  <ProfileButton
+                    :key="element.id"
+                    :profile="element"
+                    :selected="store.selectedProfile?.id === element.id"
+                    @select="store.selectProfile(element.id); showProfileList=false"
+                    @duplicate="store.duplicateProfile(element.id)"
+                    @delete="store.removeProfile(element.id)" />
+                </template>
+              </draggable>
               <!-- TODO: Insert draggable component here -->
-              <ProfileButton
-                v-for="(profile, index) in tagProfiles" :key="profile.id" v-model="tagProfiles[index]"
-                :selected="store.selectedProfile?.id === profile.id"
-                @select="store.selectProfile(profile.id); showProfileList=false"
-                @duplicate="store.duplicateProfile(profile.id)"
-                @delete="store.deleteProfile(profile.id)" />
             </CollapsibleContent>
           </Collapsible>
         </div>
@@ -88,6 +100,7 @@ import ScrambleText from '@/components/common/ScrambleText.vue'
 import { useStore } from '@/store.js'
 import ProfileButton from '@/components/profile/ProfileButton.vue'
 import ProfileConfig from '@/components/profile/ProfileConfig.vue'
+import draggable from 'vuedraggable'
 
 defineProps({
   showFilter: {
@@ -128,6 +141,25 @@ const filteredProfilesByTag = computed(() => {
   })
   return map
 })
+
+const onProfileDrop = (event, categoryIndex) => {
+  if (event.moved) {
+    const profile = event.moved.element
+    const oldIndex = event.moved.oldIndex
+    const newIndex = event.moved.newIndex
+    store.moveProfile(profile.id, oldIndex, newIndex)
+  }
+  if (event.added) {
+    const profile = event.added.element
+    const newIndex = event.added.newIndex
+    store.changeProfileCategory(profile.id, categoryIndex, newIndex)
+  }
+}
+
+const dragOptions = {
+  group: 'profiles',
+  animation: 150,
+}
 
 </script>
 <style scoped>
