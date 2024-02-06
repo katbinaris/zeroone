@@ -3,15 +3,20 @@
     class="px-4 py-2"
     :style="{background: `linear-gradient(180deg, ${options[currentOption].color.hex()+'11'}, ${options[currentOption].color.hex()+'30'} 25%, ${options[currentOption].color.hex()+'30'} 40%, transparent 60%`}">
     <div
-      class="flex font-heading rounded-t-lg overflow-hidden border-x border-t border-zinc-800 bg-zinc-900">
+      class="flex font-heading rounded-t-lg overflow-hidden border-t border-x border-zinc-800 bg-zinc-900">
       <button
         v-for="(option, key) in options" :key="key"
-        class="flex-1 pt-2 items-center text-center rounded-lg"
+        class="flex-1 py-2 items-center text-center rounded-t-lg min-w-0"
         :class="currentOption!==key ? 'hover:bg-zinc-800 text-muted-foreground' : 'text-black bg-zinc-300 hover:bg-zinc-200'"
         @click="currentOption = key">
         {{ $t(option.titleKey) }}
-        <span class="flex h-4 w-full mt-2" :style="{background: option.color.hex()}" />
       </button>
+    </div>
+    <div class="flex border-x border-zinc-800 overflow-hidden">
+      <button
+        v-for="(option, key) in options" :key="key" class="flex-1 h-4"
+        :class="{ 'color-tab': currentOption === key}"
+        :style="{background: option.color.hex()}" @click="currentOption = key" />
     </div>
     <HSVInput v-model="options[currentOption].color" class="relative z-20" />
   </div>
@@ -19,9 +24,11 @@
 <script setup>
 import HSVInput from '@/components/common/HSVInput.vue'
 import Color from 'color'
-import { onBeforeMount, reactive, ref } from 'vue'
+import { computed, onBeforeMount, reactive, ref } from 'vue'
 
 const currentOption = ref(null)
+
+const currentColorHex = computed(() => options[currentOption.value].color.hex())
 
 const model = defineModel({
   type: Object,
@@ -49,3 +56,38 @@ onBeforeMount(() => {
 })
 
 </script>
+<style scoped>
+.color-tab {
+  position: relative;
+  --rounded: var(--radius);
+}
+
+.color-tab:before,
+.color-tab:after {
+  position: absolute;
+  bottom: -1px;
+  width: var(--rounded);
+  height: var(--rounded);
+  content: " ";
+}
+
+.color-tab:before {
+  left: calc(var(--rounded) * -1);
+  border-bottom-right-radius: var(--rounded);
+  border-width: 0 1px 1px 0;
+  box-shadow: calc(var(--rounded) / 4) calc(var(--rounded) / 4) 0 v-bind('currentColorHex');
+  z-index: 1;
+}
+
+.color-tab:after {
+  right: calc(var(--rounded) * -1);
+  border-bottom-left-radius: var(--rounded);
+  border-width: 0 0 1px 1px;
+  box-shadow: calc(var(--rounded) / 4 * -1) calc(var(--rounded) / 4) 0 v-bind('currentColorHex');
+  z-index: 1;
+}
+
+.color-tab:after, .color-tab:before {
+  border: none;
+}
+</style>
