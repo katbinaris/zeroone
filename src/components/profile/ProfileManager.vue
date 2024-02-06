@@ -3,12 +3,12 @@
     <div>
       <div
         class="w-full h-12 px-4 flex items-center justify-between flex-nowrap text-nowrap bg-zinc-900">
-        <button class="flex items-center" @click="showProfileList=true">
-          <component :is="showProfileList ? List : ArrowLeft" class="w-5 h-full mr-1" />
+        <button class="flex items-center" @click="showProfileConfig=false">
+          <component :is="showProfileConfig ? ArrowLeft : List" class="w-5 h-full mr-1" />
           <span class="font-heading mr-2">
-            <ScrambleText :text="showProfileList ? $t('profiles.title') : store.selectedProfile?.name" />
+            <ScrambleText :text="showProfileConfig ? store.selectedProfile?.name : $t('profiles.title')" />
             <ScrambleText
-              v-if="showProfileList" class="text-sm text-zinc-600"
+              v-if="!showProfileConfig" class="text-sm text-zinc-600"
               scramble-on-mount
               :fill-interval="20"
               :delay="500"
@@ -16,7 +16,7 @@
           </span>
         </button>
         <button
-          v-if="showProfileList"
+          v-if="!showProfileConfig"
           class="bg-zinc-200 text-black hover:bg-zinc-100 rounded-full aspect-square h-7 flex justify-center items-center"
           @click="store.addProfile">
           <Plus class="h-4" />
@@ -24,24 +24,24 @@
       </div>
       <Separator />
     </div>
-    <template v-if="showProfileList">
-      <div v-if="showFilter">
-        <div class="flex w-full h-12 items-center">
-          <label for="filter" class="flex h-full items-center cursor-text">
-            <Search class="ml-4 mr-2 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
-          </label>
-          <input
-            id="filter"
-            v-model="filter"
-            :placeholder="$t('profiles.filter_placeholder')"
-            class="grow h-full bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0">
-          <button
-            class="h-full flex text-zinc-200 bg-zinc-900 justify-center items-center aspect-square border-solid border-0 border-l hover:bg-zinc-800">
-            <Plus />
-          </button>
-        </div>
-        <Separator />
+    <div v-if="showFilter">
+      <div class="flex w-full h-12 items-center">
+        <label for="filter" class="flex h-full items-center cursor-text">
+          <Search class="ml-4 mr-2 mb-0.5 h-4 w-4 shrink-0 opacity-50 float-left" />
+        </label>
+        <input
+          id="filter"
+          v-model="filter"
+          :placeholder="$t('profiles.filter_placeholder')"
+          class="grow h-full bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0">
+        <button
+          class="h-full flex text-zinc-200 bg-zinc-900 justify-center items-center aspect-square border-solid border-0 border-l hover:bg-zinc-800">
+          <Plus />
+        </button>
       </div>
+      <Separator />
+    </div>
+    <div class="grow relative">
       <div class="grow overflow-y-auto">
         <div v-if="filteredProfiles.length === 0">
           <div class="flex flex-col items-center justify-center h-32">
@@ -75,7 +75,7 @@
                     :key="element.id"
                     :profile="element"
                     :selected="store.selectedProfile?.id === element.id"
-                    @select="store.selectProfile(element.id); showProfileList=false"
+                    @select="store.selectProfile(element.id); showProfileConfig=true"
                     @duplicate="store.duplicateProfile(element.id)"
                     @delete="store.removeProfile(element.id)" />
                 </template>
@@ -85,16 +85,20 @@
           </Collapsible>
         </div>
       </div>
-    </template>
-    <div v-else class="grow overflow-y-auto">
-      <ProfileConfig />
+      <Transition name="slide">
+        <div
+          v-if="showProfileConfig"
+          class="grow overflow-y-auto absolute top-0 h-full bg-zinc-950 transition-transform">
+          <ProfileConfig />
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
 <script setup>
 import { Separator } from '@/components/ui/separator'
 import { ChevronRight, Plus, Search, ArrowLeft, List } from 'lucide-vue-next'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import ScrambleText from '@/components/common/ScrambleText.vue'
 import { useStore } from '@/store.js'
@@ -115,7 +119,18 @@ const store = useStore()
 const filter = ref('')
 const collapse = ref({})
 
-const showProfileList = ref(true)
+const showProfileConfig = ref(true)
+const renderProfileConfig = ref(showProfileConfig.value)
+
+watch(showProfileConfig, value => {
+  if (value) {
+    renderProfileConfig.value = true
+  } else {
+    setTimeout(() => {
+      renderProfileConfig.value = false
+    }, 300)
+  }
+})
 
 const filteredProfiles = computed(() => {
   if (!filter.value) {
@@ -165,5 +180,19 @@ const dragOptions = {
 <style scoped>
 [data-state=open] > .chevrot {
   transform: rotate(90deg);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 300ms ease-out;
+}
+
+.slide-enter-active {
+  transition-delay: 150ms;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%);
 }
 </style>

@@ -49,14 +49,17 @@ export const useStore = defineStore('main', {
       if (!this.profileIds.includes(id)) return false
       this.selectedProfileId = id
       return true
-    }, addProfile(profile, categoryIndex, newIndex) {
+    },
+    addProfile(profile, categoryIndex, newIndex) {
       const category = this.profileCategories[categoryIndex]
       category.profiles.splice(newIndex, 0, profile)
-    }, removeProfile(profileId) {
+    },
+    removeProfile(profileId) {
       const category = this.profileCategories.find(c => c.profiles.find(p => p.id === profileId))
       const index = category.profiles.findIndex(p => p.id === profileId)
       category.profiles.splice(index, 1)
-    }, duplicateProfile(profileId) {
+    },
+    duplicateProfile(profileId) {
       const originalProfile = this.profiles.find(p => p.id === profileId)
       const newProfile = JSON.parse(JSON.stringify(originalProfile))
       newProfile.id = this.newProfileId(originalProfile.id)
@@ -64,22 +67,26 @@ export const useStore = defineStore('main', {
       const category = this.categories.find(c => c.profiles.find(p => p.id === profileId))
       category.profiles.push(newProfile)
       return newProfile.id
-    }, moveProfile(profileId, oldIndex, newIndex) {
+    },
+    moveProfile(profileId, oldIndex, newIndex) {
       // Find the profile category, then swap the profiles at the old and new indices
       const category = this.profileCategories.find(c => c.profiles.find(p => p.id === profileId))
       const tmpProfile = category.profiles[newIndex]
       category.profiles[newIndex] = category.profiles[oldIndex]
       category.profiles[newIndex] = tmpProfile
-    }, changeProfileCategory(profileId, newCategoryIndex, newIndex) {
+    },
+    changeProfileCategory(profileId, newCategoryIndex, newIndex) {
       const profile = this.profiles.find(p => p.id === profileId)
       const oldCategory = this.profileCategories.find(c => c.profiles.find(p => p.id === profileId))
       const newCategory = this.profileCategories[newCategoryIndex]
       oldCategory.profiles = oldCategory.profiles.filter(p => p.id !== profileId)
       newCategory.profiles.splice(newIndex, 0, profile)
-    }, renameProfile(profileId, newName) {
+    },
+    renameProfile(profileId, newName) {
       const profile = this.profiles.find(p => p.id === profileId)
       profile.name = newName
-    }, fetchProfiles() {
+    },
+    fetchProfiles() {
       Axios.get('http://localhost:3001/categories').then((res) => {
         const categories = res.data
         console.log(categories)
@@ -105,14 +112,16 @@ export const useStore = defineStore('main', {
       }).catch((err) => {
         console.error(err)
       })
-    }, newProfileName(originalName = '') {
+    },
+    newProfileName(originalName = '') {
       let name = originalName
       let i = 1
       while (this.profiles.find(p => p.name === name)) {
         name = `${originalName} (${i++})`
       }
       return name
-    }, newProfileId(originalId = '') {
+    },
+    newProfileId(originalId = '') {
       let id = originalId
       if (originalId) {
         do {
@@ -124,15 +133,19 @@ export const useStore = defineStore('main', {
         } while (this.profileIds.includes(id))
       }
       return id
-    }, selectConfigFeature(feature) {
+    },
+    selectConfigFeature(feature) {
       this.selectedFeature = feature
       if (!this.currentConfigPages[this.currentConfigPage]) this.setCurrentConfigPage('mapping')
-    }, selectKey(key) {
+    },
+    selectKey(key) {
       this.selectedKey = key
       this.selectConfigFeature('key')
-    }, setCurrentConfigPage(page) {
+    },
+    setCurrentConfigPage(page) {
       this.currentConfigPage = page
-    }, setConnected(connected) {
+    },
+    setConnected(connected) {
       this.connected = connected
     },
   },
