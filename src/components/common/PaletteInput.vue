@@ -6,7 +6,7 @@
       class="flex font-heading rounded-t-lg overflow-hidden border-t border-x border-zinc-800 bg-zinc-900">
       <button
         v-for="(option, key) in options" :key="key"
-        class="flex-1 py-2 items-center text-center rounded-t-lg min-w-0"
+        class="flex-1 py-2 items-center text-center rounded-t-lg min-w-0 transition-colors"
         :class="currentOption!==key ? 'hover:bg-zinc-800 text-muted-foreground' : 'text-black bg-zinc-300 hover:bg-zinc-200'"
         @click="currentOption = key">
         {{ $t(option.titleKey) }}

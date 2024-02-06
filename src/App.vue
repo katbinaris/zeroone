@@ -27,7 +27,7 @@ store.fetchProfiles()
         <Transition name="slide-right">
           <ConfigPane
             v-if="store.connected"
-            class="flex-1 flex flex-col border-solid border-0 border-l bg-zinc-900 bg-opacity-50" />
+            class="flex-1 max-w-full flex flex-col border-solid border-0 border-l bg-zinc-900 bg-opacity-50" />
         </Transition>
       </div>
     </div>
