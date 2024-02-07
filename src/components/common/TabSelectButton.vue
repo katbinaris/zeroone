@@ -12,7 +12,7 @@
         :src="icon" :alt="title"
         class="h-16"
         :class="{'invert': selected}">
-      <ScrambleText ref="title" :resize="false" class="text-xs text-wrap" :text="title" />
+      <ScrambleText ref="title" :resize="false" class="text-xs text-wrap line-clamp-2 text-ellipsis overflow-hidden" :text="title" />
     </template>
   </button>
 </template>
