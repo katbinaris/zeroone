@@ -38,7 +38,12 @@ store.fetchProfiles()
 .slide-left-leave-active,
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition: transform 500ms ease;
+  transition: transform 700ms ease;
+}
+
+.slide-left-enter-active,
+.slide-right-enter-active {
+  transition-delay: 500ms;
 }
 
 .slide-left-enter-from,
