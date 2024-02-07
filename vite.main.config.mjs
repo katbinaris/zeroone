@@ -1,4 +1,5 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
+import eslint from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config
 export default defineConfig({
@@ -8,4 +9,10 @@ export default defineConfig({
     conditions: ['node'],
     mainFields: ['module', 'jsnext:main', 'jsnext'],
   },
-});
+  plugins: [
+    eslint({
+      cache: true,
+      failOnError: false,
+    }),
+  ],
+})

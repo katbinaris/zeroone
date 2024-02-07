@@ -16,7 +16,7 @@
           ::
           <ScrambleText
             ref="zerooneSubtitle"
-            text="Haptics Configurator" scramble-on-mount :scramble-amount="1" :fill-interval="35"
+            text="Configuration Suite" scramble-on-mount :scramble-amount="1" :fill-interval="35"
             :replace-interval="40" />
         </h2>
       </div>

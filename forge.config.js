@@ -43,6 +43,10 @@ module.exports = {
             name: 'main_window',
             config: 'vite.renderer.config.mjs',
           },
+          {
+            name: 'loading_window',
+            config: 'vite.loading.config.mjs',
+          }
         ],
       },
     },

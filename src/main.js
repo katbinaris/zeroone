@@ -11,13 +11,16 @@ if (ess) {
   app.quit()
 }
 
+const splashTime = 6000
+
 const zoomFactor = 1
 const width = 1111
 const height = 666
 
-const createWindow = () => {
+const createMainWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    show: false,
     width: width,
     height: height,
     titleBarStyle: 'hidden',
@@ -34,7 +37,6 @@ const createWindow = () => {
       devTools: !app.isPackaged,
       preload: path.join(__dirname, 'preload.js'),
       zoomFactor: zoomFactor,
-      enableRemoteModule: true,
     },
   })
 
@@ -54,12 +56,52 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL)
+    mainWindow.loadURL(`${MAIN_WINDOW_VITE_DEV_SERVER_URL}/index.html`)
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
   }
 
   return mainWindow
+}
+
+const createLoadingWindow = (mainWindow) => {
+  const loadingWindow = new BrowserWindow({
+    show: false,
+    width: 400,
+    height: 600,
+    transparent: true,
+    frame: false,
+    center: true,
+    webPreferences: {
+      devTools: !app.isPackaged,
+    },
+  })
+  const startTime = Date.now()
+  let loading = true
+  let loadingTimeout
+  loadingWindow.once('show', () => {
+    mainWindow.webContents.once('ready-to-show', () => {
+      loadingTimeout = setTimeout(() => {
+        loading = false
+        mainWindow.show()
+        loadingWindow.close()
+      }, Math.max(0, splashTime - (Date.now() - startTime)))
+    })
+  })
+  loadingWindow.once('closed', () => {
+    if (loading) {
+      clearTimeout(loadingTimeout)
+      mainWindow.close()
+    }
+  })
+  loadingWindow.once('ready-to-show', () => {
+    loadingWindow.show()
+  })
+  if (LOADING_WINDOW_VITE_DEV_SERVER_URL) {
+    loadingWindow.loadURL(`${LOADING_WINDOW_VITE_DEV_SERVER_URL}/loading.html`)
+  } else {
+    loadingWindow.loadFile(path.join(__dirname, `../renderer/${LOADING_WINDOW_VITE_NAME}/loading.html`))
+  }
 }
 
 // This method will be called when Electron has finished
@@ -71,7 +113,8 @@ app.whenReady().then(() => {
   ipcMain.handle('nanodevices:disconnect', nanodevices.disconnect)
   ipcMain.handle('nano:get', nano.get)
   ipcMain.handle('nano:set', nano.set)
-  const mainWindow = createWindow()
+  const mainWindow = createMainWindow()
+  createLoadingWindow(mainWindow)
   ipcMain.on('electron:minimizeWindow', () => mainWindow.minimize())
   ipcMain.on('electron:toggleMaximizeWindow', () => {
     if (mainWindow.isMaximized()) {
@@ -109,7 +152,10 @@ app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
+    const mainWindow = createMainWindow()
+    mainWindow.once('ready-to-show', () => {
+      mainWindow.show()
+    })
   }
 })
 
