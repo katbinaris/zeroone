@@ -11,7 +11,10 @@ if (ess) {
   app.quit()
 }
 
-const splashTime = 6000
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
+// Minimum time to show the splash screen, in milliseconds
+const splashTime = isDevelopment ? 500 : 3000
 
 const zoomFactor = 1
 const width = 1111
@@ -34,14 +37,14 @@ const createMainWindow = () => {
     backgroundColor: '#000',
     icon: path.join(__dirname, `/assets/favicon.png`),
     webPreferences: {
-      devTools: !app.isPackaged,
+      devTools: isDevelopment,
       preload: path.join(__dirname, 'preload.js'),
       zoomFactor: zoomFactor,
     },
   })
 
   mainWindow.setAspectRatio(width / height)
-  mainWindow.webContents.on('did-finish-load', () => {
+  mainWindow.webContents.on('dom-ready', () => {
     mainWindow.webContents.setZoomFactor(zoomFactor)
   })
   mainWindow.on('resize', () => {
@@ -73,14 +76,14 @@ const createLoadingWindow = (mainWindow) => {
     frame: false,
     center: true,
     webPreferences: {
-      devTools: !app.isPackaged,
+      devTools: isDevelopment,
     },
   })
   const startTime = Date.now()
   let loading = true
   let loadingTimeout
   loadingWindow.once('show', () => {
-    mainWindow.webContents.once('ready-to-show', () => {
+    mainWindow.webContents.once('did-finish-load', () => {
       loadingTimeout = setTimeout(() => {
         loading = false
         mainWindow.show()
@@ -94,7 +97,7 @@ const createLoadingWindow = (mainWindow) => {
       mainWindow.close()
     }
   })
-  loadingWindow.once('ready-to-show', () => {
+  loadingWindow.webContents.once('did-finish-load', () => {
     loadingWindow.show()
   })
   if (LOADING_WINDOW_VITE_DEV_SERVER_URL) {
@@ -153,7 +156,7 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     const mainWindow = createMainWindow()
-    mainWindow.once('ready-to-show', () => {
+    mainWindow.webContents.once('did-finish-load', () => {
       mainWindow.show()
     })
   }
