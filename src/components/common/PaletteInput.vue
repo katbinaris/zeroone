@@ -7,7 +7,7 @@
       <button
         v-for="(option, key) in options" :key="key"
         class="flex-1 py-2 items-center text-center rounded-t-lg min-w-0 transition-colors"
-        :class="currentOption!==key ? 'hover:bg-zinc-800 text-muted-foreground' : 'text-black bg-zinc-300 hover:bg-zinc-200'"
+        :class="currentOption!==key ? 'hover:bg-zinc-800 text-muted-foreground mx-[1px]' : 'text-black bg-zinc-300 hover:bg-zinc-200 border-x border-t border-zinc-100'"
         @click="currentOption = key">
         {{ $t(option.titleKey) }}
       </button>

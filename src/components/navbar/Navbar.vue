@@ -93,7 +93,8 @@
           v-if="maximizable"
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
           @click="electron?.toggleMaximizeWindow">
-          <Square class="h-3.5 w-3.5 mr-0.5" />
+          <Copy v-if="isMaximized" class="h-4 w-4" />
+          <Square v-else class="h-3.5 w-3.5 mr-0.5" />
         </button>
         <button
           class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
@@ -115,7 +116,7 @@ import {
   MenubarTrigger,
 } from '@/components/ui/menubar'
 import ScrambleText from '@/components/common/ScrambleText.vue'
-import { Minus, Square, X } from 'lucide-vue-next'
+import { Minus, Square, Copy, X } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
 import { Separator } from '@/components/ui/separator'
 import { useStore } from '@/store'
@@ -124,7 +125,9 @@ import MenubarButton from '@/components/navbar/MenubarButton.vue'
 const store = useStore()
 
 const minimizable = ref(true)
-const maximizable = ref(false)
+const maximizable = ref(true)
+
+const isMaximized = ref(false)
 
 const { electron } = window
 
@@ -134,6 +137,14 @@ const zoomFactor = ref(1)
 onMounted(() => {
   window.addEventListener('resize', () => {
     zoomFactor.value = window.outerWidth / window.innerWidth
+  })
+  electron.onMaximized((maximized) => {
+    console.log(maximized)
+    isMaximized.value = true
+  })
+
+  electron.onUnmaximized(() => {
+    isMaximized.value = false
   })
 })
 

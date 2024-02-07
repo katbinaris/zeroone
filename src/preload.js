@@ -37,14 +37,12 @@ contextBridge.exposeInMainWorld('nanodevice', {
   },
 })
 
-//window.maximize = () => remote.BrowserWindow.getFocusedWindow().maximize()
-//window.maximize = () => remote.BrowserWindow.getFocusedWindow().minimize()
-window.funnyThing = 'This is a funny thing!'
-
 contextBridge.exposeInMainWorld('electron', {
   platform: process.platform,
   minimizeWindow: () => ipcRenderer.send('electron:minimizeWindow'),
   toggleMaximizeWindow: () => ipcRenderer.send('electron:toggleMaximizeWindow'),
   closeWindow: () => ipcRenderer.send('electron:closeWindow'),
   openExternal: (url) => ipcRenderer.send('electron:openExternal', url),
+  onMaximized: (callback) => ipcRenderer.on('electron:maximized', callback),
+  onUnmaximized: (callback) => ipcRenderer.on('electron:unmaximized', callback),
 })

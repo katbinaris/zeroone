@@ -105,7 +105,6 @@ const offlineTexts = [
 
 let offlineTextIndex = 0
 const nextOfflineText = () => {
-  console.log('nextOfflineText', offlineText.value)
   if (offlineText.value === '') {
     offlineText.value = offlineTexts[offlineTextIndex]
     offlineTextIndex = (offlineTextIndex + 1) % offlineTexts.length

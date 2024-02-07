@@ -25,7 +25,7 @@ const createWindow = () => {
     resizable: true,
     minWidth: width / 3,
     minHeight: height / 3,
-    maximizable: false,
+    maximizable: true,
     fullscreenable: false,
     center: true,
     backgroundColor: '#000',
@@ -44,6 +44,12 @@ const createWindow = () => {
   })
   mainWindow.on('resize', () => {
     mainWindow.webContents.setZoomFactor(zoomFactor * mainWindow.getSize()[0] / width)
+  })
+  mainWindow.on('maximize', () => {
+    mainWindow.webContents.send('electron:maximized')
+  })
+  mainWindow.on('unmaximize', () => {
+    mainWindow.webContents.send('electron:unmaximized')
   })
 
   // and load the index.html of the app.
