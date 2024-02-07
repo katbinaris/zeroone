@@ -1,9 +1,9 @@
 <template>
   <div
-    class="px-4 py-2"
+    class="pt-2"
     :style="{background: `linear-gradient(180deg, ${options[currentOption].color.hex()+'11'}, ${options[currentOption].color.hex()+'30'} 25%, ${options[currentOption].color.hex()+'30'} 40%, transparent 60%`}">
     <div
-      class="flex font-heading rounded-t-lg overflow-hidden border-t border-x border-zinc-800 bg-zinc-900">
+      class="mx-2 flex font-heading rounded-t-lg overflow-hidden border-t border-x border-zinc-800 bg-zinc-900">
       <button
         v-for="(option, key) in options" :key="key"
         class="flex-1 py-2 items-center text-center rounded-t-lg min-w-0 transition-colors"
@@ -12,13 +12,13 @@
         {{ $t(option.titleKey) }}
       </button>
     </div>
-    <div class="flex border-x border-zinc-800 overflow-hidden">
+    <div class="mx-2 flex border-x border-zinc-800 overflow-hidden">
       <button
-        v-for="(option, key) in options" :key="key" class="flex-1 h-4"
+        v-for="(option, key) in options" :key="key" class="flex-1 h-6"
         :class="{ 'color-tab': currentOption === key}"
         :style="{background: option.color.hex()}" @click="currentOption = key" />
     </div>
-    <HSVInput v-model="options[currentOption].color" class="relative z-20" />
+    <HSVInput v-model="options[currentOption].color" />
   </div>
 </template>
 <script setup>
