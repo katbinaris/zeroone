@@ -4,7 +4,7 @@
       <div v-if="isMacOS" :style="{width: 80 / zoomFactor + 'px'}" />
       <div class="flex items-center">
         <h1
-          class="text-2xl min-w-32 app-titlebar-button text-zinc-100"
+          class="text-2xl min-w-32   app-titlebar-button text-zinc-100 text-nowrap"
           @click="$refs.zerooneTitle.scramble(1,100,0); $refs.zerooneSubtitle.scramble(1,75,30)">
           <ScrambleText
             ref="zerooneTitle"
@@ -12,7 +12,7 @@
             :replace-interval="100"
           />
         </h1>
-        <h2 class="text-sm min-w-[188px] text-muted-foreground font-mono">
+        <h2 class="text-sm min-w-[188px] text-muted-foreground font-mono text-nowrap">
           ::
           <ScrambleText
             ref="zerooneSubtitle"
@@ -25,16 +25,27 @@
       </div>
       <div class="flex gap-2">
         <MenubarMenu>
-          <MenubarTrigger v-t="'navbar.device.title'" class="app-titlebar-button" />
+          <MenubarTrigger class="app-titlebar-button">
+            <template v-if="store.multipleDevicesConnected">
+              Devices<span class="text-zinc-600">&nbsp;(2)</span>
+            </template>
+            <template v-else>
+              Device
+            </template>
+          </MenubarTrigger>
           <MenubarContent>
             <!-- TODO: Switch keyboard shortcut icons based on platform -->
             <MenubarItem>
-              {{ $t('navbar.device.disconnect') }}
+              {{ store.connected ? $t('navbar.device.disconnect') : $t('navbar.device.connect') }}
               <MenubarShortcut>⌘D</MenubarShortcut>
             </MenubarItem>
-            <MenubarItem>{{ $t('navbar.device.about') }}</MenubarItem>
+            <MenubarItem v-if="store.multipleDevicesConnected">Next Device
+              <MenubarShortcut>⌘N</MenubarShortcut>
+            </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>{{ $t('navbar.device.preferences') }}</MenubarItem>
+            <MenubarItem>{{ $t('navbar.device.preferences') }}
+              <MenubarShortcut>⌘,</MenubarShortcut>
+            </MenubarItem>
             <MenubarSeparator />
             <MenubarItem>{{ $t('navbar.device.export') }}
               <MenubarShortcut>⌘E</MenubarShortcut>
@@ -54,25 +65,16 @@
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">Help</MenubarTrigger>
           <MenubarContent>
-            <!-- TODO: Switch keyboard shortcut icons based on platform -->
-            <MenubarItem>
-              {{ $t('navbar.device.disconnect') }}
-              <MenubarShortcut>⌘D</MenubarShortcut>
-            </MenubarItem>
-            <MenubarItem>{{ $t('navbar.device.about') }}</MenubarItem>
+            <MenubarItem>Help?</MenubarItem>
+            <MenubarItem>HELP!</MenubarItem>
+            <MenubarItem>HEEEELLLP!!!</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>{{ $t('navbar.device.preferences') }}</MenubarItem>
+            <MenubarItem>Aaah!!!</MenubarItem>
+            <MenubarItem>AAAAAaaaaaahh!!!</MenubarItem>
+            <MenubarItem>AAAAAAAAAAAAAaaaaaargh!!!</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>{{ $t('navbar.device.export') }}
-              <MenubarShortcut>⌘E</MenubarShortcut>
-            </MenubarItem>
-            <MenubarItem>{{ $t('navbar.device.import') }}
-              <MenubarShortcut>⌘I</MenubarShortcut>
-            </MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem>{{ $t('navbar.device.quit') }}
-              <MenubarShortcut>⌘Q</MenubarShortcut>
-            </MenubarItem>
+            <MenubarItem>Contact Support</MenubarItem>
+            <MenubarItem>Report a Bug</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </div>

@@ -18,6 +18,7 @@ export const useStore = defineStore('main', {
       profileCategories: [],
       selectedProfileId: null,
       connected: false,
+      connectedDevices: ['test1', 'test2'],
       selectedFeature: 'knob',
       selectedKey: 'a',
       currentConfigPage: 'mapping',
@@ -46,6 +47,7 @@ export const useStore = defineStore('main', {
     selectedProfile: (state) => state.profiles.find(p => p.id === state.selectedProfileId),
     currentConfigComponent: (state) => state.configPages[state.selectedFeature][state.currentConfigPage]?.component || WIP,
     currentConfigPages: (state) => state.configPages[state.selectedFeature] || {},
+    multipleDevicesConnected: (state) => state.connectedDevices.length > 1,
   }, actions: {
     selectProfile(id) {
       if (!this.profileIds.includes(id)) return false

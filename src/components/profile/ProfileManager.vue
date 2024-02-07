@@ -18,7 +18,7 @@
         <Transition name="fade">
           <button
             v-if="!showProfileConfig"
-            class="bg-zinc-200 text-black hover:bg-zinc-100 rounded-full aspect-square h-7 flex justify-center items-center"
+            class="bg-zinc-200 text-black hover:bg-zinc-100 rounded-lg h-8 aspect-square flex justify-center items-center"
             @click="store.addProfile">
             <Plus class="h-4" />
           </button>
