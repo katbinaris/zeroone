@@ -34,7 +34,7 @@ const createMainWindow = () => {
     maximizable: true,
     fullscreenable: false,
     center: true,
-    backgroundColor: '#000',
+    backgroundColor: 'black',
     icon: path.join(__dirname, `/assets/favicon.png`),
     webPreferences: {
       devTools: isDevelopment,
@@ -72,9 +72,13 @@ const createLoadingWindow = (mainWindow) => {
     show: false,
     width: 400,
     height: 600,
+    resizable: false,
+    fullscreenable: false,
+    maximizable: false,
     transparent: true,
     frame: false,
     center: true,
+    backgroundColor: 'black',
     webPreferences: {
       devTools: isDevelopment,
     },
@@ -87,6 +91,7 @@ const createLoadingWindow = (mainWindow) => {
       loadingTimeout = setTimeout(() => {
         loading = false
         mainWindow.show()
+        mainWindow.focus()
         loadingWindow.close()
       }, Math.max(0, splashTime - (Date.now() - startTime)))
     })
@@ -99,6 +104,7 @@ const createLoadingWindow = (mainWindow) => {
   })
   loadingWindow.webContents.once('did-finish-load', () => {
     loadingWindow.show()
+    loadingWindow.focus()
   })
   if (LOADING_WINDOW_VITE_DEV_SERVER_URL) {
     loadingWindow.loadURL(`${LOADING_WINDOW_VITE_DEV_SERVER_URL}/loading.html`)
