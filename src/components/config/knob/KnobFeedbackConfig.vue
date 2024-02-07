@@ -48,6 +48,7 @@ import CdIcon from '@/assets/icons/iconCoarseDetents.svg'
 import VfIcon from '@/assets/icons/iconViscousRotation.svg'
 import RcIcon from '@/assets/icons/iconReturnToCenter.svg'
 import SteppedSlider from '@/components/common/SteppedSlider.vue'
+import { Separator } from '@/components/ui/separator'
 
 const feedbackType = ref('fineDetents') // TODO: replace with actual value
 

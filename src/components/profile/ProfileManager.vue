@@ -50,30 +50,32 @@
               }})</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <draggable
-                :list="category.profiles"
-                group="profiles"
-                item-key="name"
-                :animation="150"
-                direction="vertical"
-                @start="drag = true"
-                @end="drag = false"
-                @change="(event)=>onProfileDrop(event, categoryIndex)">
-                <template v-if="category.profiles.length === 0" #header>
-                  <div class="flex h-12 justify-center items-center hideable-header">
-                    <MoreHorizontal class="w-4 text-zinc-600" />
-                  </div>
-                </template>
-                <template #item="{ element }">
-                  <ProfileButton
-                    :key="element.id"
-                    :profile="element"
-                    :selected="store.selectedProfile?.id === element.id"
-                    @select="store.selectProfile(element.id); showProfileConfig=true"
-                    @duplicate="store.duplicateProfile(element.id)"
-                    @delete="store.removeProfile(element.id)" />
-                </template>
-              </draggable>
+              <TransitionGroup>
+                <draggable
+                  key="draggable"
+                  item-key="id"
+                  :list="category.profiles"
+                  v-bind="dragOptions"
+                  @start="drag = true"
+                  @end="drag = false"
+                  @change="(event)=>onProfileDrop(event, categoryIndex)">
+                  <template v-if="category.profiles.length === 0" #header>
+                    <div class="flex h-12 justify-center items-center hideable-header">
+                      <MoreHorizontal class="w-4 text-zinc-600" />
+                    </div>
+                  </template>
+                  <template #item="{ element }">
+                    <div :key="element.name">
+                      <ProfileButton
+                        :profile="element"
+                        :selected="store.selectedProfile?.id === element.id"
+                        @select="store.selectProfile(element.id); showProfileConfig=true"
+                        @duplicate="store.duplicateProfile(element.id)"
+                        @delete="store.removeProfile(element.id)" />
+                    </div>
+                  </template>
+                </draggable>
+              </TransitionGroup>
             </CollapsibleContent>
           </Collapsible>
         </div>
@@ -102,6 +104,13 @@ defineProps({
     type: Boolean,
     default: false,
   },
+})
+
+const dragOptions = ref({
+  group: 'profiles',
+  ghostClass: 'ghost',
+  animation: 150,
+  direction: 'vertical',
 })
 
 const maxProfiles = 32
@@ -195,6 +204,10 @@ const onProfileDrop = (event, categoryIndex) => {
 
 .fade-enter-from,
 .fade-leave-to {
+  opacity: 0;
+}
+
+.sortable-drag {
   opacity: 0;
 }
 

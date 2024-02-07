@@ -41,7 +41,7 @@
 <script setup>
 import { AudioLines, AudioWaveform, GaugeCircle } from 'lucide-vue-next'
 import ConfigSection from '@/components/common/ConfigSection.vue'
-import Color from 'color'
+import { Separator } from '@/components/ui/separator'
 import { ref } from 'vue'
 import TabSelect from '@/components/common/TabSelect.vue'
 import FdIcon from '@/assets/icons/iconFineDetents.svg'

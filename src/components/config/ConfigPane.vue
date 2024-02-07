@@ -6,8 +6,8 @@
         v-model="configPage"
         :options="configPages"
         class="p-2 border solid border-b">
-        <template v-for="(page, key) in configPages" #[key]>
-          {{ $t(page.titleKey) }}
+        <template v-for="(page, key) in configPages" #[key] :key="key">
+          <ScrambleText ref="title" :text="$t(page.titleKey)" />
         </template>
       </TabSelect>
       <div class="grow overflow-y-auto">
