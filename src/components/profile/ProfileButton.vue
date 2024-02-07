@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-12 flex overflow-hidden rounded-lg m-2 group"
+    class="h-12 flex overflow-hidden rounded-lg m-2 group transition-all"
     :class="{'border border-zinc-100 bg-zinc-300': selected,
     'border border-transparent hover:border-zinc-900': !selected}">
     <form

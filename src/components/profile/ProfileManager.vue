@@ -54,12 +54,16 @@
                 :list="category.profiles"
                 group="profiles"
                 item-key="name"
-                v-bind="dragOptions"
-                @change="(event)=>onProfileDrop(event, categoryIndex)"
-              >
-                <div v-if="category.profiles.length === 0">
-                  HELLO THERE!
-                </div>
+                :animation="150"
+                direction="vertical"
+                @start="drag = true"
+                @end="drag = false"
+                @change="(event)=>onProfileDrop(event, categoryIndex)">
+                <template v-if="category.profiles.length === 0" #header>
+                  <div class="flex h-12 justify-center items-center hideable-header">
+                    <MoreHorizontal class="w-4 text-zinc-600" />
+                  </div>
+                </template>
                 <template #item="{ element }">
                   <ProfileButton
                     :key="element.id"
@@ -70,7 +74,6 @@
                     @delete="store.removeProfile(element.id)" />
                 </template>
               </draggable>
-              <!-- TODO: Insert draggable component here -->
             </CollapsibleContent>
           </Collapsible>
         </div>
@@ -85,7 +88,7 @@
 </template>
 <script setup>
 import { Separator } from '@/components/ui/separator'
-import { ChevronRight, Plus, ArrowLeft, List } from 'lucide-vue-next'
+import { ChevronRight, Plus, ArrowLeft, List, MoreHorizontal } from 'lucide-vue-next'
 import { ref, watch } from 'vue'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import ScrambleText from '@/components/common/ScrambleText.vue'
@@ -104,12 +107,13 @@ defineProps({
 const maxProfiles = 32
 
 const store = useStore()
-const filter = ref('')
 const collapse = ref({})
 
 const showProfileConfig = ref(false)
 const renderProfileConfig = ref(showProfileConfig.value)
 const renderProfileList = ref(!showProfileConfig.value)
+
+const drag = ref(false)
 
 watch(showProfileConfig, value => {
   if (value) {
@@ -164,11 +168,6 @@ const onProfileDrop = (event, categoryIndex) => {
   }
 }
 
-const dragOptions = {
-  group: 'profiles',
-  animation: 150,
-}
-
 </script>
 <style scoped>
 [data-state=open] > .chevrot {
@@ -177,7 +176,11 @@ const dragOptions = {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 150ms ease;
+  transition: transform 300ms ease;
+}
+
+.slide-enter-active {
+  transition-delay: 150ms;
 }
 
 .slide-enter-from,
@@ -193,5 +196,13 @@ const dragOptions = {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.hideable-header:not(:only-child) {
+  display: none;
+}
+
+.hideable-header:only-child {
+  display: flex;
 }
 </style>
