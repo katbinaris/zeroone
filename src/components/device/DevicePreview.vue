@@ -2,7 +2,8 @@
   <div class="aspect-[800/1100]">
     <div
       class="bg-contain bg-top bg-no-repeat h-full w-full relative"
-      :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.3) 95%, black), url(${RenderNano})`}">
+      :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.25) 12%, rgba(0,0,0,0.35) 95%, black), url(${previewDeviceImage})`,
+      backgroundBlendMode: 'multiply'}">
       <Transition name="fade">
         <div v-if="store.connected" class="px-10 h-12 flex justify-between items-center">
           <h2>
@@ -56,7 +57,7 @@
       <Transition name="fade-delayed">
         <DeviceKeys
           v-if="store.connected"
-          class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
+          class="absolute w-[72.7%] top-[77.5%] gap-[2.2%] left-0 right-0 mx-auto"
           :selected="store.selectedFeature === 'key' ? store.selectedKey : ''"
           @select="store.selectKey" />
       </Transition>
@@ -64,7 +65,8 @@
   </div>
 </template>
 <script setup>
-import RenderNano from '@/assets/images/renderNano.png'
+import RenderNanoOne from '@/assets/images/renderNanoOneTransparent.png'
+import RenderNanoZero from '@/assets/images/renderNanoZeroTransparent.png'
 import LogoMidi from '@/assets/logos/logoMidi.svg'
 import DeviceBar from '@/components/device/DeviceBar.vue'
 import { useStore } from '@/store'
@@ -79,6 +81,13 @@ const value = ref(69)
 const barValue = computed(() => value.value / 127 * 100)
 
 const store = useStore()
+
+const previewDeviceImages = {
+  nanoOne: RenderNanoOne,
+  nanoZero: RenderNanoZero,
+}
+
+const previewDeviceImage = computed(() => previewDeviceImages[store.previewDeviceModel || 'nanoOne'])
 
 const targetValue = ref(69)
 const animateValue = () => {

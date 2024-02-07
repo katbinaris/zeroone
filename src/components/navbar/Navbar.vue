@@ -43,6 +43,10 @@
               <MenubarShortcut>⌘N</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
+            <MenubarItem @click="store.switchPreviewDeviceModel">
+              Skin: {{ previewDeviceNames[store.previewDeviceModel || 'nanoOne'] }}
+            </MenubarItem>
+            <MenubarSeparator />
             <MenubarItem>{{ $t('navbar.device.preferences') }}
               <MenubarShortcut>⌘,</MenubarShortcut>
             </MenubarItem>
@@ -135,6 +139,11 @@ const { electron } = window
 
 const isMacOS = electron?.platform === 'darwin'
 const zoomFactor = ref(1)
+
+const previewDeviceNames = ref({
+  nanoOne: 'One',
+  nanoZero: 'Zero',
+})
 
 onMounted(() => {
   window.addEventListener('resize', () => {

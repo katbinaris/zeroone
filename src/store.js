@@ -39,6 +39,7 @@ export const useStore = defineStore('main', {
           },
         },
       },
+      previewDeviceModel: 'nanoOne',
     }
   }, getters: {
     profiles: (state) => state.profileCategories.flatMap(c => c.profiles),
@@ -152,6 +153,9 @@ export const useStore = defineStore('main', {
     },
     setConnected(connected) {
       this.connected = connected
+    },
+    switchPreviewDeviceModel() {
+      this.previewDeviceModel = this.previewDeviceModel === 'nanoOne' ? 'nanoZero' : 'nanoOne'
     },
   },
 })

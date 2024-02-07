@@ -8,7 +8,7 @@
     <div class="flex justify-center">
       <div
         class="flex bg-cover mb-6 w-72 aspect-square"
-        style="background-image: url(../../assets/icons/xl-bg-ico.svg)">
+        style="background-image: url(../../assets/old/xl-bg-ico.svg)">
         <div class="flex flex-col w-full justify-center m-9 rounded-full overflow-hidden">
           <div class="self-center w-8 mb-1 opacity-50">
             <img src="../../assets/logos/logoMidi.svg" alt="midi-logo">
@@ -27,5 +27,5 @@
 </template>
 <script setup>
 import DeviceBar from '@/components/device/DeviceBar.vue'
-import DeviceBackground from '@/assets/icons/xl-bg-ico.svg'
+import DeviceBackground from '@/assets/old/xl-bg-ico.svg'
 </script>
