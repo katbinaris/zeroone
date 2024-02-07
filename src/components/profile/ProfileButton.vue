@@ -1,8 +1,9 @@
 <template>
   <div
-    class="h-12 flex overflow-hidden rounded-lg m-2 group transition-all"
+    class="h-12 flex overflow-hidden rounded-lg m-2 transition-all"
     :class="{'border border-zinc-100 bg-zinc-300': selected,
-    'border border-transparent hover:border-zinc-900': !selected}">
+    'border border-transparent hover:border-zinc-900': !selected,
+    'group': showHoverButtons}">
     <form
       v-if="nameEditable && editing"
       class="flex-1 flex h-full text-left whitespace-nowrap overflow-hidden"
@@ -24,6 +25,7 @@
         <Check class="h-4 w-4" />
       </button>
     </form>
+    <!-- TODO: Make hover buttons use Transition(Group) and v-if directive -->
     <button
       v-else
       :class="{'font-semibold bg-zinc-300 hover:bg-zinc-200 text-black' : selected,
@@ -133,6 +135,10 @@ const props = defineProps({
   },
   draggable: {
     // Not implemented yet
+    type: Boolean,
+    default: true,
+  },
+  showHoverButtons: {
     type: Boolean,
     default: true,
   },

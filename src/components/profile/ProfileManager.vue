@@ -68,6 +68,7 @@
                     <div :key="element.name">
                       <ProfileButton
                         :profile="element"
+                        :show-hover-buttons="!drag"
                         :selected="store.selectedProfile?.id === element.id"
                         @select="store.selectProfile(element.id); showProfileConfig=true"
                         @duplicate="store.duplicateProfile(element.id)"
