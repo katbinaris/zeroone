@@ -5,14 +5,16 @@
       :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.3) 95%, black), url(${RenderNano})`}">
       <Transition name="fade">
         <div v-if="store.connected" class="px-10 h-12 flex justify-between items-center">
-          <h2>Nano_D++</h2>
+          <h2>
+            <ScrambleText :delay="100" scramble-on-mount :fill-interval="50" :replace-interval="50" text="Nano_D++" />
+          </h2>
           <div class="font-mono text-sm">
             <span class="text-muted-foreground">Firmware: </span>
-            <ScrambleText text="v1.3.2a" />
+            <ScrambleText :delay="100" scramble-on-mount :fill-interval="50" :replace-interval="50" text="v1.3.2a" />
           </div>
         </div>
       </Transition>
-      <Transition name="fade">
+      <Transition name="fade-delayed">
         <DeviceLEDRing
           v-if="store.connected" :value="barValue"
           class="absolute h-[66%] top-[12.5%] left-0 right-0 mx-auto" />
@@ -43,13 +45,15 @@
             @finish="nextOfflineText" />
         </div>
       </div>
-      <button
-        v-if="store.connected"
-        class="rounded-full outline-2 absolute h-[41.5%] top-[24.5%] aspect-square left-0 right-0 mx-auto transition-all"
-        :class="{'outline outline-white': store.selectedFeature==='knob',
+      <Transition name="fade-delayed">
+        <button
+          v-if="store.connected"
+          class="rounded-full outline-2 absolute h-[41.5%] top-[24.5%] aspect-square left-0 right-0 mx-auto transition-all"
+          :class="{'outline outline-white': store.selectedFeature==='knob',
         'hover:outline outline-zinc-400': store.selectedFeature!=='knob'}"
-        @click="store.selectConfigFeature('knob')" />
-      <Transition name="fade-slow">
+          @click="store.selectConfigFeature('knob')" />
+      </Transition>
+      <Transition name="fade-delayed">
         <DeviceKeys
           v-if="store.connected"
           class="absolute w-[72.7%] top-[77.2%] gap-[2.8%] left-0 right-0 mx-auto"
@@ -123,14 +127,23 @@ onMounted(() => {
 }
 
 .fade-slow-enter-active,
-.fade-slow-leave-active {
+.fade-slow-leave-active,
+.fade-delayed-enter-active,
+.fade-delayed-leave-active {
   transition: opacity 1000ms ease;
+}
+
+.fade-delayed-enter-active,
+.fade-slow-enter-active {
+  transition-delay: 150ms;
 }
 
 .fade-enter-from,
 .fade-leave-to,
 .fade-slow-enter-from,
-.fade-slow-leave-to {
+.fade-slow-leave-to,
+.fade-delayed-enter-from,
+.fade-delayed-leave-to {
   opacity: 0;
 }
 </style>
