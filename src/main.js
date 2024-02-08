@@ -14,7 +14,7 @@ if (ess) {
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Minimum time to show the splash screen, in milliseconds
-const splashTime = isDevelopment ? 40000 : 40000
+const splashTime = isDevelopment ? 4000 : 4000
 const loadingWindowWidth = 800 / 2
 const loadingWindowHeight = 1100 / 2
 
@@ -74,7 +74,7 @@ const createLoadingWindow = (mainWindow) => {
     show: false,
     width: loadingWindowWidth,
     height: loadingWindowHeight,
-    resizable: true,
+    resizable: false,
     fullscreenable: false,
     maximizable: false,
     transparent: true,
@@ -89,7 +89,6 @@ const createLoadingWindow = (mainWindow) => {
   let loadingTimeout
   loadingWindow.once('show', () => {
     mainWindow.webContents.once('did-finish-load', () => {
-      return
       loadingTimeout = setTimeout(() => {
         mainWindow.show()
         mainWindow.focus()
