@@ -14,23 +14,25 @@ if (ess) {
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Minimum time to show the splash screen, in milliseconds
-const splashTime = isDevelopment ? 500 : 3000
+const splashTime = isDevelopment ? 40000 : 40000
+const loadingWindowWidth = 800 / 2
+const loadingWindowHeight = 1100 / 2
 
 const zoomFactor = 1
-const width = 1111
-const height = 666
+const mainWindowWidth = 1111
+const mainWindowHeight = 666
 
 const createMainWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     show: false,
-    width: width,
-    height: height,
+    width: mainWindowWidth,
+    height: mainWindowHeight,
     titleBarStyle: 'hidden',
     trafficLightPosition: { x: 10, y: 10 },
     resizable: true,
-    minWidth: width / 3,
-    minHeight: height / 3,
+    minWidth: mainWindowWidth / 3,
+    minHeight: mainWindowHeight / 3,
     maximizable: true,
     fullscreenable: false,
     center: true,
@@ -43,12 +45,12 @@ const createMainWindow = () => {
     },
   })
 
-  mainWindow.setAspectRatio(width / height)
+  mainWindow.setAspectRatio(mainWindowWidth / mainWindowHeight)
   mainWindow.webContents.on('dom-ready', () => {
     mainWindow.webContents.setZoomFactor(zoomFactor)
   })
   mainWindow.on('resize', () => {
-    mainWindow.webContents.setZoomFactor(zoomFactor * mainWindow.getSize()[0] / width)
+    mainWindow.webContents.setZoomFactor(zoomFactor * mainWindow.getSize()[0] / mainWindowWidth)
   })
   mainWindow.on('maximize', () => {
     mainWindow.webContents.send('electron:maximized')
@@ -70,9 +72,9 @@ const createMainWindow = () => {
 const createLoadingWindow = (mainWindow) => {
   const loadingWindow = new BrowserWindow({
     show: false,
-    width: 400,
-    height: 600,
-    resizable: false,
+    width: loadingWindowWidth,
+    height: loadingWindowHeight,
+    resizable: true,
     fullscreenable: false,
     maximizable: false,
     transparent: true,
@@ -84,12 +86,11 @@ const createLoadingWindow = (mainWindow) => {
     },
   })
   const startTime = Date.now()
-  let loading = true
   let loadingTimeout
   loadingWindow.once('show', () => {
     mainWindow.webContents.once('did-finish-load', () => {
+      return
       loadingTimeout = setTimeout(() => {
-        loading = false
         mainWindow.show()
         mainWindow.focus()
         loadingWindow.close()
@@ -97,7 +98,7 @@ const createLoadingWindow = (mainWindow) => {
     })
   })
   loadingWindow.once('closed', () => {
-    if (loading) {
+    if (!mainWindow.isVisible()) {
       clearTimeout(loadingTimeout)
       mainWindow.close()
     }
