@@ -87,14 +87,12 @@ const createLoadingWindow = (mainWindow) => {
   })
   const startTime = Date.now()
   let loadingTimeout
-  loadingWindow.once('show', () => {
-    mainWindow.webContents.once('did-finish-load', () => {
-      loadingTimeout = setTimeout(() => {
-        mainWindow.show()
-        mainWindow.focus()
-        loadingWindow.close()
-      }, Math.max(0, splashTime - (Date.now() - startTime)))
-    })
+  mainWindow.webContents.once('did-finish-load', () => {
+    loadingTimeout = setTimeout(() => {
+      mainWindow.show()
+      mainWindow.focus()
+      loadingWindow.close()
+    }, Math.max(0, splashTime - (Date.now() - startTime)))
   })
   loadingWindow.once('closed', () => {
     if (!mainWindow.isVisible()) {
