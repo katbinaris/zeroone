@@ -95,7 +95,7 @@ const createLoadingWindow = (mainWindow) => {
     }, Math.max(0, splashTime - (Date.now() - startTime)))
   })
   loadingWindow.once('closed', () => {
-    if (!mainWindow.isVisible()) {
+    if (!mainWindow.isFocusable()) {
       clearTimeout(loadingTimeout)
       mainWindow.close()
     }
