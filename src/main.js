@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, shell } from 'electron'
+import { app, BrowserWindow, globalShortcut, shell, Menu, MenuItem } from 'electron'
 import path from 'path'
 import ess from 'electron-squirrel-startup'
 import { ipcMain } from 'electron'
@@ -21,6 +21,19 @@ const loadingWindowHeight = 1100 / 2
 const zoomFactor = 1
 const mainWindowWidth = 1111
 const mainWindowHeight = 666
+
+const appMenu = {
+  device: {
+    label: 'Device',
+    submenu: {
+      connect: { label: 'Connect', shortcut: 'CmdOrCtrl+D' },
+      nextDevice: { label: 'Next Device', shortcut: 'CmdOrCtrl+N' },
+      export: { label: 'Export Settings', shortcut: 'CmdOrCtrl+E' },
+      import: { label: 'Import Settings', shortcut: 'CmdOrCtrl+I' },
+      quit: { label: 'Quit', shortcut: 'CmdOrCtrl+Q', action: () => app.quit() },
+    },
+  },
+}
 
 const createMainWindow = () => {
   // Create the browser window.
@@ -144,6 +157,24 @@ app.whenReady().then(() => {
     console.log('Value received', value)
     mainWindow.webContents.send('nano-onvalue', value)
   })
+  const menu = new Menu()
+  for (const menuItem of Object.values(appMenu)) {
+    menu.append(new MenuItem({
+      label: menuItem.label,
+      submenu: Object.entries(menuItem.submenu).map(([key, subMenuItem]) => {
+        return {
+          label: subMenuItem.label,
+          accelerator: subMenuItem.shortcut,
+          click: subMenuItem.action || (() => {
+            mainWindow.webContents.send('electron:menu', key)
+          }),
+        }
+      }),
+    }))
+  }
+
+  Menu.setApplicationMenu(menu)
+  mainWindow.webContents.openDevTools()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -183,6 +214,7 @@ app.on('browser-window-focus', () => {
     ...ZOOM_OUT_SHORTCUTS,
     ...ZOOM_RESET_SHORTCUTS,
   ], () => {
+    // https://www.youtube.com/watch?v=8An2SxNFvmU
   })
 })
 

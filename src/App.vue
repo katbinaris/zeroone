@@ -5,7 +5,15 @@ import ConfigPane from '@/components/config/ConfigPane.vue'
 import Navbar from '@/components/navbar/Navbar.vue'
 import { useStore } from '@/store'
 
+const { electron } = window
 const store = useStore()
+
+electron.onMenu((key) => {
+  console.log('menu', key)
+  if(key==='connect') {
+    store.setConnected(!store.connected)
+  }
+})
 
 store.fetchProfiles()
 

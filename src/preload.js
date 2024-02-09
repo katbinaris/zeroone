@@ -45,4 +45,7 @@ contextBridge.exposeInMainWorld('electron', {
   openExternal: (url) => ipcRenderer.send('electron:openExternal', url),
   onMaximized: (callback) => ipcRenderer.on('electron:maximized', callback),
   onUnmaximized: (callback) => ipcRenderer.on('electron:unmaximized', callback),
+  onMenu: (callback) => ipcRenderer.on('electron:menu', (event, key) => {
+    callback(key)
+  }),
 })
