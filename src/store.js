@@ -40,6 +40,7 @@ export const useStore = defineStore('main', {
         },
       },
       previewDeviceModel: 'nanoOne',
+      screenOrientation: 90,
     }
   }, getters: {
     profiles: (state) => state.profileCategories.flatMap(c => c.profiles),
@@ -156,6 +157,9 @@ export const useStore = defineStore('main', {
     },
     switchPreviewDeviceModel() {
       this.previewDeviceModel = this.previewDeviceModel === 'nanoOne' ? 'nanoZero' : 'nanoOne'
+    },
+    cycleScreenOrientation() {
+      this.screenOrientation = (this.screenOrientation + 90) % 360
     },
   },
 })

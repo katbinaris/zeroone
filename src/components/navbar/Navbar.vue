@@ -43,12 +43,12 @@
               <MenubarShortcut>⌘N</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem @click="store.switchPreviewDeviceModel">
-              Skin: {{ previewDeviceNames[store.previewDeviceModel || 'nanoOne'] }}
+            <MenubarItem @click.prevent="store.cycleScreenOrientation">
+              Orientation: {{ store.screenOrientation }}°
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>{{ $t('navbar.device.preferences') }}
-              <MenubarShortcut>⌘,</MenubarShortcut>
+            <MenubarItem @click="store.switchPreviewDeviceModel">
+              Skin: {{ previewDeviceNames[store.previewDeviceModel || 'nanoOne'] }}
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem>{{ $t('navbar.device.export') }}
