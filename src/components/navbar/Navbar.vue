@@ -46,11 +46,13 @@
             <MenubarItem class="flex justify-between" @click="store.cycleScreenOrientation">
               <p>Orientation:&nbsp;</p>
               <p>{{ store.screenOrientation }}°</p>
+              <MenubarShortcut>⌘R</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem class="flex justify-between" @click="store.switchPreviewDeviceModel">
               <p>Skin:&nbsp;</p>
               <p>{{ previewDeviceNames[store.previewDeviceModel || 'nanoOne'] }}</p>
+              <MenubarShortcut>⌘S</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem>{{ $t('navbar.device.export') }}

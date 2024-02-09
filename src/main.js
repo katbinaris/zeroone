@@ -28,6 +28,8 @@ const appMenu = {
     submenu: {
       connect: { label: 'Connect', shortcut: 'CmdOrCtrl+D' },
       nextDevice: { label: 'Next Device', shortcut: 'CmdOrCtrl+N' },
+      orientation: { label: 'Orientation', shortcut: 'CmdOrCtrl+R' },
+      skin: { label: 'Skin', shortcut: 'CmdOrCtrl+S' },
       export: { label: 'Export Settings', shortcut: 'CmdOrCtrl+E' },
       import: { label: 'Import Settings', shortcut: 'CmdOrCtrl+I' },
       quit: { label: 'Quit', shortcut: 'CmdOrCtrl+Q', action: () => app.quit() },

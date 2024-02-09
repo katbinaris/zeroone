@@ -8,10 +8,16 @@ import { useStore } from '@/store'
 const { electron } = window
 const store = useStore()
 
+const menuActions = {
+  connect: () => store.setConnected(!store.connected),
+  orientation: () => store.cycleScreenOrientation(),
+  skin: () => store.switchPreviewDeviceModel(),
+}
+
 electron.onMenu((key) => {
   console.log('menu', key)
-  if(key==='connect') {
-    store.setConnected(!store.connected)
+  if (menuActions[key]) {
+    menuActions[key]()
   }
 })
 
