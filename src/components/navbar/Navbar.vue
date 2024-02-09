@@ -43,12 +43,14 @@
               <MenubarShortcut>⌘N</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem @click.prevent="store.cycleScreenOrientation">
-              Orientation: {{ store.screenOrientation }}°
+            <MenubarItem class="flex justify-between" @click.prevent="store.cycleScreenOrientation">
+              <p>Orientation: </p>
+              <p>{{ store.screenOrientation }}°</p>
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem @click="store.switchPreviewDeviceModel">
-              Skin: {{ previewDeviceNames[store.previewDeviceModel || 'nanoOne'] }}
+            <MenubarItem class="flex justify-between" @click="store.switchPreviewDeviceModel">
+              <p>Skin: </p>
+              <p>{{ previewDeviceNames[store.previewDeviceModel || 'nanoOne'] }}</p>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem>{{ $t('navbar.device.export') }}
