@@ -84,6 +84,10 @@
               <p>v0.1</p>
             </MenubarItem>
             <MenubarItem>Contact Support</MenubarItem>
+            <template v-if="electron.isDevelopment">
+              <MenubarSeparator />
+              <MenubarItem @click="electron.openDevTools">Open Dev Tools</MenubarItem>
+            </template>
           </MenubarContent>
         </MenubarMenu>
       </div>

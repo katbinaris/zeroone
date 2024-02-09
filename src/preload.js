@@ -39,6 +39,7 @@ contextBridge.exposeInMainWorld('nanodevice', {
 
 contextBridge.exposeInMainWorld('electron', {
   platform: process.platform,
+  isDevelopment: process.env.NODE_ENV !== 'production',
   minimizeWindow: () => ipcRenderer.send('electron:minimizeWindow'),
   toggleMaximizeWindow: () => ipcRenderer.send('electron:toggleMaximizeWindow'),
   closeWindow: () => ipcRenderer.send('electron:closeWindow'),
@@ -48,4 +49,5 @@ contextBridge.exposeInMainWorld('electron', {
   onMenu: (callback) => ipcRenderer.on('electron:menu', (event, key) => {
     callback(key)
   }),
+  openDevTools: () => ipcRenderer.send('electron:openDevTools'),
 })

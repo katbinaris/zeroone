@@ -147,6 +147,7 @@ app.whenReady().then(() => {
   })
   ipcMain.on('electron:closeWindow', () => mainWindow.close())
   ipcMain.on('electron:openExternal', (_event, url) => shell.openExternal(url))
+  ipcMain.on('electron:openDevTools', () => mainWindow.webContents.openDevTools())
   nanodevices.onAttach((device) => {
     console.log('Attached device', device)
     mainWindow.webContents.send('nanodevice-attached', device)
@@ -174,9 +175,21 @@ app.whenReady().then(() => {
       }),
     }))
   }
+  if (isDevelopment) {
+    menu.append(new MenuItem({
+      label: 'Debug',
+      submenu: [
+        {
+          label: 'Open DevTools',
+          accelerator: 'CmdOrCtrl+Shift+I',
+          click: () => mainWindow.webContents.openDevTools(),
+        },
+      ],
+    }))
+  }
 
   Menu.setApplicationMenu(menu)
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
