@@ -82,6 +82,11 @@ export const useStore = defineStore('main', {
       category.profiles[newIndex] = category.profiles[oldIndex]
       category.profiles[newIndex] = tmpProfile
     },
+    moveProfileCategory(categoryName, oldIndex, newIndex) {
+      const tmpCategory = this.profileCategories[newIndex]
+      this.profileCategories[newIndex] = this.profileCategories[oldIndex]
+      this.profileCategories[newIndex] = tmpCategory
+    },
     changeProfileCategory(profileId, newCategoryIndex, newIndex) {
       const profile = this.profiles.find(p => p.id === profileId)
       const oldCategory = this.profileCategories.find(c => c.profiles.find(p => p.id === profileId))

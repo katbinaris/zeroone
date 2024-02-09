@@ -52,47 +52,60 @@
           </div>
         </div>
         <div v-else>
-          <Collapsible
-            v-for="(category, categoryIndex) in store.profileCategories" :key="categoryIndex"
-            v-model:open="collapse[categoryIndex]"
-            :default-open="true">
-            <!-- TODO: Make profile groups computed instead defining them of using v-for -->
-            <CollapsibleTrigger
-              class="w-full h-12 py-2 text-left text-muted-foreground text-sm bg-zinc-900 border-0 border-b">
-              <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
-              {{ category.name }}<span class="font-heading text-sm text-zinc-600"> ({{ category.profiles?.length || 0
-              }})</span>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <TransitionGroup>
-                <draggable
-                  key="draggable"
-                  item-key="id"
-                  :list="category.profiles"
-                  v-bind="dragOptions"
-                  @start="drag = true"
-                  @end="drag = false"
-                  @change="(event)=>onProfileDrop(event, categoryIndex)">
-                  <template v-if="category.profiles.length === 0" #header>
-                    <div class="flex h-12 justify-center items-center hideable-header">
-                      <MoreHorizontal class="w-4 text-zinc-600" />
-                    </div>
-                  </template>
-                  <template #item="{ element }">
-                    <div :key="element.name">
-                      <ProfileButton
-                        :profile="element"
-                        :show-hover-buttons="!drag"
-                        :selected="store.selectedProfile?.id === element.id"
-                        @select="store.selectProfile(element.id); showProfileConfig=true"
-                        @duplicate="store.duplicateProfile(element.id)"
-                        @delete="store.removeProfile(element.id)" />
-                    </div>
-                  </template>
-                </draggable>
-              </TransitionGroup>
-            </CollapsibleContent>
-          </Collapsible>
+          <draggable
+            key="categoriesDraggable"
+            group="profileCategories"
+            item-key="name"
+            :list="store.profileCategories"
+            v-bind="dragOptions"
+            @start="drag = true"
+            @end="drag = false"
+            @change="onCategoryDrop">
+            <template #item="dragCategory">
+              <Collapsible
+                v-model:open="collapse[dragCategory.index]"
+                :default-open="true">
+                <!-- TODO: Make profile groups computed instead defining them of using v-for -->
+                <CollapsibleTrigger
+                  class="w-full h-12 py-2 text-left text-muted-foreground text-sm bg-zinc-900 border-0 border-b">
+                  <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
+                  {{ dragCategory.element.name }}<span
+                  class="font-heading text-sm text-zinc-600"> ({{ dragCategory.element.profiles?.length || 0
+                  }})</span>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <TransitionGroup>
+                    <draggable
+                      key="profilesDraggable"
+                      group="profiles"
+                      item-key="id"
+                      :list="dragCategory.element.profiles"
+                      v-bind="dragOptions"
+                      @start="drag = true"
+                      @end="drag = false"
+                      @change="(event)=>onProfileDrop(event, dragCategory.index)">
+                      <template v-if="dragCategory.element.profiles.length === 0" #header>
+                        <div class="flex h-12 justify-center items-center hideable-header">
+                          <MoreHorizontal class="w-4 text-zinc-600" />
+                        </div>
+                      </template>
+                      <template #item="dragProfile">
+                        <div :key="dragProfile.element.name">
+                          <ProfileButton
+                            :profile="dragProfile.element"
+                            :show-hover-buttons="!drag"
+                            :selected="store.selectedProfile?.id === dragProfile.element.id"
+                            @select="store.selectProfile(dragProfile.element.id); showProfileConfig=true"
+                            @duplicate="store.duplicateProfile(dragProfile.element.id)"
+                            @delete="store.removeProfile(dragProfile.element.id)" />
+                        </div>
+                      </template>
+                    </draggable>
+                  </TransitionGroup>
+                </CollapsibleContent>
+              </Collapsible>
+            </template>
+          </draggable>
         </div>
       </div>
       <Transition name="slide">
@@ -123,7 +136,6 @@ defineProps({
 })
 
 const dragOptions = ref({
-  group: 'profiles',
   ghostClass: 'ghost',
   animation: 150,
   direction: 'vertical',
@@ -178,6 +190,15 @@ watch(showProfileConfig, value => {
 //   })
 //   return map
 // })
+
+const onCategoryDrop = (event) => {
+  if (event.moved) {
+    const category = event.moved.element
+    const oldIndex = event.moved.oldIndex
+    const newIndex = event.moved.newIndex
+    store.moveProfileCategory(category.name, oldIndex, newIndex)
+  }
+}
 
 const onProfileDrop = (event, categoryIndex) => {
   if (event.moved) {
