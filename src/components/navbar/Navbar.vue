@@ -44,12 +44,12 @@
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem class="flex justify-between" @click="store.cycleScreenOrientation">
-              <p>Orientation: </p>
+              <p>Orientation:&nbsp;</p>
               <p>{{ store.screenOrientation }}°</p>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem class="flex justify-between" @click="store.switchPreviewDeviceModel">
-              <p>Skin: </p>
+              <p>Skin:&nbsp;</p>
               <p>{{ previewDeviceNames[store.previewDeviceModel || 'nanoOne'] }}</p>
             </MenubarItem>
             <MenubarSeparator />
@@ -71,8 +71,16 @@
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">Help</MenubarTrigger>
           <MenubarContent>
+            <MenubarItem>Software Source</MenubarItem>
+            <MenubarItem>Hardware Source</MenubarItem>
+            <MenubarSeparator />
             <MenubarItem>Report Software Issue</MenubarItem>
             <MenubarItem>Report Hardware Issue</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem class="flex justify-between">
+              <p>Software Version:&nbsp;</p>
+              <p>v0.1</p>
+            </MenubarItem>
             <MenubarItem>Contact Support</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
