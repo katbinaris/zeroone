@@ -5,7 +5,7 @@
         v-if="showTabs"
         v-model="configPage"
         :options="configPages"
-        class="p-2 border solid border-b">
+        class="p-2 border solid border-b bg-zinc-900">
         <template v-for="(page, key) in configPages" #[key] :key="key">
           <ScrambleText ref="title" :text="$t(page.titleKey)" />
         </template>
