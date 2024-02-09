@@ -63,7 +63,7 @@
             @change="onCategoryDrop">
             <template #item="dragCategory">
               <Collapsible
-                v-model:open="collapse[dragCategory.index]"
+                v-model:open="collapse[dragCategory.element.name]"
                 :default-open="true">
                 <!-- TODO: Make profile groups computed instead defining them of using v-for -->
                 <CollapsibleTrigger
