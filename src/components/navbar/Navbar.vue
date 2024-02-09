@@ -35,7 +35,7 @@
           </MenubarTrigger>
           <MenubarContent>
             <!-- TODO: Switch keyboard shortcut icons based on platform -->
-            <MenubarItem>
+            <MenubarItem @click="store.setConnected(!store.connected)">
               {{ store.connected ? $t('navbar.device.disconnect') : $t('navbar.device.connect') }}
               <MenubarShortcut>⌘D</MenubarShortcut>
             </MenubarItem>
@@ -71,21 +71,15 @@
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">Help</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem>Help?</MenubarItem>
-            <MenubarItem>HELP!</MenubarItem>
-            <MenubarItem>HEEEELLLP!!!</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem>Aaah!!!</MenubarItem>
-            <MenubarItem>AAAAAaaaaaahh!!!</MenubarItem>
-            <MenubarItem>AAAAAAAAAAAAAaaaaaargh!!!</MenubarItem>
-            <MenubarSeparator />
+            <MenubarItem>Report Software Issue</MenubarItem>
+            <MenubarItem>Report Hardware Issue</MenubarItem>
             <MenubarItem>Contact Support</MenubarItem>
-            <MenubarItem>Report a Bug</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </div>
       <div class="grow" />
       <MenubarButton
+        v-if="showDisconnectButton"
         class="app-titlebar-button border-2"
         @click="store.setConnected(!store.connected)">
         {{ store.connected ? 'Disconnect' : 'Connect' }}
@@ -134,6 +128,7 @@ const store = useStore()
 
 const minimizable = ref(true)
 const maximizable = ref(true)
+const showDisconnectButton = ref(false)
 
 const isMaximized = ref(false)
 
