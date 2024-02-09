@@ -90,8 +90,8 @@
       "about": "About Device",
       "connect": "Connect",
       "disconnect": "Disconnect",
-      "export": "Export Profiles",
-      "import": "Import Profiles",
+      "export": "Export Settings",
+      "import": "Import Settings",
       "preferences": "Preferences",
       "quit": "Quit",
       "title": "Device"

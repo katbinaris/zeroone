@@ -43,7 +43,7 @@
               <MenubarShortcut>⌘N</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem class="flex justify-between" @click.prevent="store.cycleScreenOrientation">
+            <MenubarItem class="flex justify-between" @click="store.cycleScreenOrientation">
               <p>Orientation: </p>
               <p>{{ store.screenOrientation }}°</p>
             </MenubarItem>

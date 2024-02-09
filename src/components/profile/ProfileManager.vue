@@ -3,7 +3,9 @@
     <div>
       <div
         class="w-full h-12 px-4 flex items-center justify-between flex-nowrap text-nowrap bg-zinc-900">
-        <button class="flex flex-1 items-center h-full min-w-0 font-heading" @click="showProfileConfig=store.selectedProfile && !showProfileConfig">
+        <button
+          class="flex flex-1 items-center h-full min-w-0 font-heading"
+          @click="showProfileConfig=store.selectedProfile && !showProfileConfig">
           <component :is="showProfileConfig ? ArrowLeft : List" class="w-5 h-full mr-1 shrink-0" />
           <ScrambleText
             :text="showProfileConfig ? store.selectedProfile?.name : $t('profiles.title')"
@@ -15,14 +17,26 @@
             :delay="500"
             :text="`(${store.profiles.length}/${ maxProfiles})`" />
         </button>
-        <Transition name="fade">
-          <button
-            v-if="!showProfileConfig"
-            class="bg-zinc-200 text-black hover:bg-zinc-100 rounded-lg h-8 aspect-square flex justify-center items-center"
-            @click="store.addProfile">
-            <Plus class="h-4" />
-          </button>
-        </Transition>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Transition name="fade">
+              <button
+                v-if="!showProfileConfig"
+                class="bg-zinc-200 text-black hover:bg-zinc-100 rounded-lg h-8 aspect-square flex justify-center items-center"
+                @click="store.addProfile">
+                <Plus class="h-4" />
+              </button>
+            </Transition>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Category
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <Separator />
     </div>
@@ -99,6 +113,7 @@ import { useStore } from '@/store.js'
 import ProfileButton from '@/components/profile/ProfileButton.vue'
 import ProfileConfig from '@/components/profile/ProfileConfig.vue'
 import draggable from 'vuedraggable'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 defineProps({
   showFilter: {
