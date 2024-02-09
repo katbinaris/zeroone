@@ -147,7 +147,7 @@ app.whenReady().then(() => {
   })
   ipcMain.on('electron:closeWindow', () => mainWindow.close())
   ipcMain.on('electron:openExternal', (_event, url) => shell.openExternal(url))
-  ipcMain.on('electron:openDevTools', () => mainWindow.webContents.openDevTools())
+  ipcMain.on('electron:openDevTools', () => mainWindow.webContents.toggleDevTools())
   nanodevices.onAttach((device) => {
     console.log('Attached device', device)
     mainWindow.webContents.send('nanodevice-attached', device)
@@ -180,9 +180,9 @@ app.whenReady().then(() => {
       label: 'Debug',
       submenu: [
         {
-          label: 'Open DevTools',
+          label: 'Developer Tools',
           accelerator: 'CmdOrCtrl+Shift+I',
-          click: () => mainWindow.webContents.openDevTools(),
+          click: () => mainWindow.webContents.toggleDevTools(),
         },
       ],
     }))
