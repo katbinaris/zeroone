@@ -87,6 +87,7 @@
             <template v-if="electron?.isDevelopment">
               <MenubarSeparator />
               <MenubarItem @click="electron?.openDevTools">Developer Tools</MenubarItem>
+              <MenubarItem @click="electron?.reload">Reload</MenubarItem>
             </template>
           </MenubarContent>
         </MenubarMenu>

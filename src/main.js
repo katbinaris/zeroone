@@ -148,6 +148,7 @@ app.whenReady().then(() => {
   ipcMain.on('electron:closeWindow', () => mainWindow.close())
   ipcMain.on('electron:openExternal', (_event, url) => shell.openExternal(url))
   ipcMain.on('electron:openDevTools', () => mainWindow.webContents.toggleDevTools())
+  ipcMain.on('electron:reload', () => mainWindow.webContents.reloadIgnoringCache())
   nanodevices.onAttach((device) => {
     console.log('Attached device', device)
     mainWindow.webContents.send('nanodevice-attached', device)

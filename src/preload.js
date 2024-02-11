@@ -50,4 +50,5 @@ contextBridge.exposeInMainWorld('electron', {
     callback(key)
   }),
   openDevTools: () => ipcRenderer.send('electron:openDevTools'),
+  reload: () => ipcRenderer.send('electron:reload'),
 })
