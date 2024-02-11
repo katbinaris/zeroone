@@ -80,8 +80,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['JetbrainsMono', 'sans-serif'],
-        heading: ['ProtoMono', 'sans-serif'],
+        sans: ['JetbrainsMono', 'monospace', 'sans-serif'],
+        heading: ['ProtoMono', 'monospace', 'sans-serif'],
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',

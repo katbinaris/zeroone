@@ -77,16 +77,16 @@
 
     @font-face {
         font-family: 'ProtoMono';
-        src: url(fonts/ProtoMono-Regular.ttf);
+        src: url(fonts/ProtoMono-Regular.ttf), local('monospace');
     }
     @font-face {
         font-family: 'RenoMono';
-        src: url(fonts/RenoMono.otf);
+        src: url(fonts/RenoMono.otf), local('monospace');
     }
 
     @font-face {
         font-family: 'JetBrainsMono';
-        src: url(fonts/JetBrainsMono[wght].ttf);
+        src: url(fonts/JetBrainsMono[wght].ttf), local('monospace');
     }
 
     @font-face {
@@ -100,11 +100,11 @@
     }
 
     .font-pixellg {
-        font-family: 'PixelLg';
+        font-family: 'PixelLg', monospace, sans-serif;
     }
 
     .font-pixelsm {
-        font-family: 'PixelSm';
+        font-family: 'PixelSm', monospace, sans-serif;
     }
 
     .font-size-gui-extra {
