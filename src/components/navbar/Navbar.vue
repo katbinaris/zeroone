@@ -84,9 +84,9 @@
               <p>v0.1</p>
             </MenubarItem>
             <MenubarItem>Contact Support</MenubarItem>
-            <template v-if="electron.isDevelopment">
+            <template v-if="electron?.isDevelopment">
               <MenubarSeparator />
-              <MenubarItem @click="electron.openDevTools">Developer Tools</MenubarItem>
+              <MenubarItem @click="electron?.openDevTools">Developer Tools</MenubarItem>
             </template>
           </MenubarContent>
         </MenubarMenu>
@@ -160,12 +160,12 @@ onMounted(() => {
   window.addEventListener('resize', () => {
     zoomFactor.value = window.outerWidth / window.innerWidth
   })
-  electron.onMaximized((maximized) => {
+  electron?.onMaximized((maximized) => {
     console.log(maximized)
     isMaximized.value = true
   })
 
-  electron.onUnmaximized(() => {
+  electron?.onUnmaximized(() => {
     isMaximized.value = false
   })
 })

@@ -14,7 +14,7 @@ const menuActions = {
   skin: () => store.switchPreviewDeviceModel(),
 }
 
-electron.onMenu((key) => {
+electron?.onMenu((key) => {
   console.log('menu', key)
   if (menuActions[key]) {
     menuActions[key]()
