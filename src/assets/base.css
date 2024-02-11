@@ -91,12 +91,12 @@
 
     @font-face {
         font-family: 'PixelLg';
-        src: url(fonts/SG12.ttf);
+        src: url(fonts/SG12.ttf), local('monospace');
     }
 
     @font-face {
         font-family: 'PixelSm';
-        src: url(fonts/andina.ttf);
+        src: url(fonts/andina.ttf), local('monospace');
     }
 
     .font-pixellg {
