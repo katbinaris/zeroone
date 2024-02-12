@@ -24,27 +24,30 @@
       <div
         class="rounded-full aspect-square absolute h-[30%] top-[30.5%] left-0 right-0 mx-auto flex flex-col justify-center items-center overflow-hidden"
         style="background: linear-gradient(45deg, black 30%, #252525 50%, #232323 60%, black)">
-        <div
-          v-if="store.connected"
-          class="absolute flex flex-col items-center text-center pb-2 mix-blend-screen">
-          <img :src="LogoMidi" alt="midi-logo" class="opacity-50 h-4">
-          <h2 class="font-pixellg text-5xl">{{ parseInt(value) }}</h2>
-          <div class="font-pixelsm text-md">HIGH PASS</div>
-          <DeviceBar v-model="barValue" :count="30" :width="120" />
-          <span class="w-36 font-pixelsm text-[7pt] text-muted-foreground uppercase">
+        <TransitionGroup name="fade-display">
+          <div
+            v-if="store.connected"
+            class="absolute flex flex-col items-center text-center pb-2 mix-blend-screen">
+            <img :src="LogoMidi" alt="midi-logo" class="opacity-50 h-4">
+            <h2 class="font-pixellg text-5xl">{{ parseInt(value) }}</h2>
+            <div class="font-pixelsm text-md">HIGH PASS</div>
+            <DeviceBar v-model="barValue" :count="30" :width="120" />
+            <span class="w-36 font-pixelsm text-[7pt] text-muted-foreground uppercase">
             KORG MINILOGUE HIGH PASS FILTER 0-127
           </span>
-        </div>
-        <div v-else class="flex flex-col items-center text-center mix-blend-screen">
-          <ScrambleText
-            :text="offlineText"
-            character-set="_()*=0011"
-            scramble-on-mount
-            :fill-interval="50"
-            :replace-interval="50"
-            class="uppercase font-pixelsm text-[7pt] text-muted-foreground"
-            @finish="nextOfflineText" />
-        </div>
+          </div>
+          <div v-else class="flex flex-col items-center text-center mix-blend-screen">
+            <ScrambleText
+              :text="offlineText"
+              character-set="_()*=0011"
+              scramble-on-mount
+              :delay="1000"
+              :fill-interval="50"
+              :replace-interval="50"
+              class="uppercase font-pixelsm text-[7pt] text-muted-foreground"
+              @finish="nextOfflineText" />
+          </div>
+        </TransitionGroup>
       </div>
       <Transition name="fade-delayed">
         <button
@@ -146,12 +149,23 @@ onMounted(() => {
   transition-delay: 150ms;
 }
 
+.fade-display-enter-active,
+.fade-display-leave-active {
+  transition: opacity 500ms ease;
+}
+
+.fade-display-enter-active {
+  transition-delay: 1000ms;
+}
+
 .fade-enter-from,
 .fade-leave-to,
 .fade-slow-enter-from,
 .fade-slow-leave-to,
 .fade-delayed-enter-from,
-.fade-delayed-leave-to {
+.fade-delayed-leave-to,
+.fade-display-enter-from,
+.fade-display-leave-to {
   opacity: 0;
 }
 </style>
