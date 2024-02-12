@@ -27,7 +27,7 @@
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">
             <template v-if="store.multipleDevicesConnected">
-              Devices<span class="text-zinc-600">&nbsp;(2)</span>
+              Devices<span class="text-zinc-500">&nbsp;(2)</span>
             </template>
             <template v-else>
               Device

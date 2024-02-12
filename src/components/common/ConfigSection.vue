@@ -6,7 +6,7 @@
         :class="{'cursor-pointer hover:bg-zinc-800': showToggle}"
         @click="toggle = !toggle">
         <component :is="iconComponent" v-if="iconComponent" class="h-4 w-4 mr-2" />
-        <h2 class="text-sm py-4">{{ title }}</h2>
+        <h2 class="text-sm py-4">{{ title }}<slot name="title"/></h2>
         <Switch
           v-if="showToggle" :checked="toggle"
           class="ml-auto" @click.stop="toggle=!toggle" />
