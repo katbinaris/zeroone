@@ -3,39 +3,26 @@
 
 const { contextBridge, ipcRenderer } = require('electron')
 
-
 // expose an API to choose available devices
 contextBridge.exposeInMainWorld('nanodevices', {
-  list() {
-    ipcRenderer.invoke('nanodevices:list')
+  list_devices() {
+    ipcRenderer.invoke('nanodevices:list_devices');
   },
-  connect(devicename) {
-    ipcRenderer.invoke('nanodevices:connect', devicename)
+  connect(deviceid) {
+    ipcRenderer.invoke('nanodevices:connect', deviceid);
   },
-  disconnect() {
-    ipcRenderer.invoke('nanodevices:disconnect')
+  disconnect(deviceid) {
+    ipcRenderer.invoke('nanodevices:disconnect', deviceid);
   },
-  on_device_attached(listener) {
-    ipcRenderer.on('nanodevice-attached', (_event, value) => listener(value))
-  },
-  on_device_detached(listener) {
-    ipcRenderer.on('nanodevice-detached', (_event, value) => listener(value))
-  },
-})
+  on(eventid_filter, callback) {
+    ipcRenderer.on('nanodevices:event', (_event, eventid, deviceid, ...data) => {
+      if (eventid_filter=="*" || eventid_filter==eventid) {
+        callback(eventid, deviceid, ...data);
+      }
+    });
+  }
+});
 
-
-// expose an API to communicate with the nano device
-contextBridge.exposeInMainWorld('nanodevice', {
-  get_value(pid, tid, vid) {
-    ipcRenderer.invoke('nano:get', pid, tid, vid)
-  },
-  set_value(pid, tid, vid, value) {
-    ipcRenderer.invoke('nano:set', pid, tid, vid, value)
-  },
-  on_value(listener) {
-    ipcRenderer.on('nano-onvalue', (_event, value) => listener(value))
-  },
-})
 
 contextBridge.exposeInMainWorld('electron', {
   platform: process.platform,
@@ -47,8 +34,8 @@ contextBridge.exposeInMainWorld('electron', {
   onMaximized: (callback) => ipcRenderer.on('electron:maximized', callback),
   onUnmaximized: (callback) => ipcRenderer.on('electron:unmaximized', callback),
   onMenu: (callback) => ipcRenderer.on('electron:menu', (event, key) => {
-    callback(key)
+    callback(key);
   }),
   openDevTools: () => ipcRenderer.send('electron:openDevTools'),
   reload: () => ipcRenderer.send('electron:reload'),
-})
+});

@@ -3,8 +3,6 @@ import path from 'path'
 import ess from 'electron-squirrel-startup'
 import { ipcMain } from 'electron'
 import nanodevices from './backend/nanodevices.js'
-import nano from './backend/nano.js'
-
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (ess) {
@@ -130,11 +128,10 @@ const createLoadingWindow = (mainWindow) => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  ipcMain.handle('nanodevices:list', nanodevices.list)
+  ipcMain.handle('nanodevices:list_devices', nanodevices.list_devices)
   ipcMain.handle('nanodevices:connect', nanodevices.connect)
   ipcMain.handle('nanodevices:disconnect', nanodevices.disconnect)
-  ipcMain.handle('nano:get', nano.get)
-  ipcMain.handle('nano:set', nano.set)
+  ipcMain.handle('nanodevices:send', nanodevices.send)
   const mainWindow = createMainWindow()
   createLoadingWindow(mainWindow)
   ipcMain.on('electron:minimizeWindow', () => mainWindow.minimize())
@@ -149,17 +146,33 @@ app.whenReady().then(() => {
   ipcMain.on('electron:openExternal', (_event, url) => shell.openExternal(url))
   ipcMain.on('electron:openDevTools', () => mainWindow.webContents.toggleDevTools())
   ipcMain.on('electron:reload', () => mainWindow.webContents.reloadIgnoringCache())
-  nanodevices.onAttach((device) => {
-    console.log('Attached device', device)
-    mainWindow.webContents.send('nanodevice-attached', device)
-  })
-  nanodevices.onDetach((device) => {
-    console.log('Detached device', device)
-    mainWindow.webContents.send('nanodevice-detached', device)
-  })
-  nano.onValueReceived((value) => {
-    console.log('Value received', value)
-    mainWindow.webContents.send('nano-onvalue', value)
+  // nanodevices.on('nanodevices:device-attached', (evt, device) => { // TODO cumbersome, is there a shorthand line nanodevice-* ?
+  //   console.log('Attached device', device)
+  //   mainWindow.webContents.send('nanodevices:device-attached', device)
+  // })
+  // nanodevices.on('nanodevices:device-detached', (device) => {
+  //   console.log('Detached device', device)
+  //   mainWindow.webContents.send('nanodevices:device-detached', device)
+  // })
+  // nanodevices.on('nanodevices:connected', (device) => {
+  //   console.log('Connected device', device)
+  //   mainWindow.webContents.send('nanodevices:connected', device)
+  // })
+  // nanodevices.on('nanodevices:disconnected', (device) => {
+  //   console.log('Disconnected device', device)
+  //   mainWindow.webContents.send('nanodevices:disconnected', device)
+  // })
+  // nanodevices.on('nanodevices:error', (device, error) => {
+  //   console.log('Error on device', device, error)
+  //   mainWindow.webContents.send('nanodevices:error', device, error)
+  // })
+  // nanodevices.on('nanodevices:update', (deviceid, jsonstr) => {
+  //   console.log('Nano update', jsonstr)
+  //   mainWindow.webContents.send('nanodevices:update', deviceid, jsonstr)
+  // })
+  nanodevices.on('nanodevices:event', (eventid, deviceid, ...data) => {
+    console.log('Nano event', eventid, deviceid, data)
+    mainWindow.webContents.send('nanodevices:event', eventid, deviceid, ...data)
   })
   const menu = new Menu()
   for (const menuItem of Object.values(appMenu)) {
