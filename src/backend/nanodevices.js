@@ -1,45 +1,47 @@
 import { SerialPort } from 'serialport';
+import { EventEmitter } from 'events';
 
-
-const NANO_PRODUCT_ID = '7523';
-const NANO_VENDOR_ID = '1a86';
+// JTAG interface, TODO: change me!
+const NANO_PRODUCT_ID = '1001';
+const NANO_VENDOR_ID = '303a';
 const NANO_BAUD_RATE = 115200;
 
 
-const nanodevices = {
-
-    all_nano_devices: {},
-    connected_nano_devices: {},
+class NanoDevices extends EventEmitter {
+    all_nano_devices = {};
+    connected_nano_devices = {};
 
     _list() {
-        let p = new Promise();
-        SerialPort.list().then((ports, err) => {
-            if (err) {
-                p.reject(err); // TODO format for errors?
-            }
-            else {
-                console.log('ports', ports)
-                let found_nano_devices = []
-                for (let port of ports) {
-                    if (port.productId === NANO_PRODUCT_ID && port.vendorId === NANO_VENDOR_ID) {
-                        found_nano_devices.push(port.serialNumber);
-                        if (this.all_nano_devices[port.serialNumber] === undefined) {
-                            this.all_nano_devices[port.serialNumber] = port;
-                            this.emit('nanodevices:device-attached', { id: port.serialNumber });
+        let p = new Promise((resolve, reject) => {
+            SerialPort.list().then((ports, err) => {
+                if (err) {
+                    reject(err); // TODO format for errors?
+                }
+                else {
+                    let found_nano_devices = []
+                    for (let port of ports) {
+                        if (port.productId === NANO_PRODUCT_ID && port.vendorId === NANO_VENDOR_ID) {
+                            found_nano_devices.push(port.serialNumber);
+                            if (this.all_nano_devices[port.serialNumber] === undefined) {
+                                this.all_nano_devices[port.serialNumber] = port;
+                                this.emit('nanodevices:device-attached', port.serialNumber);
+                                console.log('attached', port.serialNumber);
+                            }
+                        }
+                    }
+                    resolve(found_nano_devices);
+                    for (let serialNumber in this.all_nano_devices) {
+                        if (found_nano_devices.indexOf(serialNumber) === -1) {
+                            delete this.all_nano_devices[serialNumber];
+                            this.emit('nanodevices:device-detached', serialNumber);
+                            console.log('detached', serialNumber);
                         }
                     }
                 }
-                p.resolve(found_nano_devices);
-                for (let serialNumber in this.all_nano_devices) {
-                    if (found_nano_devices.indexOf(serialNumber) === -1) {
-                        delete this.all_nano_devices[serialNumber];
-                        this.emit('nanodevices:device-detached', { id: serialNumber });
-                    }
-                }
-            }
-        })
+            });
+        });
         return p;
-    },
+    };
 
 
     _handle_data(connected_port, data) {
@@ -51,7 +53,7 @@ const nanodevices = {
             }
             connected_port.data = lines[lines.length - 1];
         }
-    },
+    };
 
 
     list_devices() {
@@ -60,8 +62,9 @@ const nanodevices = {
             if (value.serialNumber)
                 result.push(key);
         }
+        console.log('list_devices', result);
         return result;
-    },
+    };
 
 
     async send(deviceid, jsonstr) {
@@ -73,7 +76,7 @@ const nanodevices = {
             connected_port.port.write(jsonstr+'\n');
             return Promise.resolve();
         }
-    },
+    };
 
 
     async connect(deviceid) {
@@ -86,19 +89,19 @@ const nanodevices = {
             let port = new SerialPort(nano_device.path, { baudRate: NANO_BAUD_RATE, autoOpen: false });
             port.on('error', (err) => {
                 // forward error to FE
-                this.emit('nanodevices:error', { id: nano_device.serialNumber }, err);
+                this.emit('nanodevices:error', nano_device.serialNumber, err);
             });
             port.on('close', (err) => {
                 if (err && err.disconnected) {
                     // forward close to FE
-                    this.emit('nanodevices:disconnected', { id: nano_device.serialNumber });
+                    this.emit('nanodevices:disconnected', nano_device.serialNumber);
                 }
                 delete this.connected_nano_devices[nano_device.serialNumber];
             });
             port.on('open', () => {
                 p.resolve(nano_device.serialNumber);
                 this.connected_nano_devices[nano_device.serialNumber] = { port: port, data: '' };
-                this.emit('nanodevices:connected', { id: nano_device.serialNumber });
+                this.emit('nanodevices:connected', nano_device.serialNumber);
             });
             port.on('data', (data) => {
                 let connected_port = this.connected_nano_devices[nano_device.serialNumber];
@@ -111,7 +114,7 @@ const nanodevices = {
             });
         }
         return p;
-    },
+    };
 
 
     disconnect(deviceid) {
@@ -130,8 +133,10 @@ const nanodevices = {
             }
         }
         return p;
-    }
+    };
 
 };
+
+const nanodevices = new NanoDevices();
 
 export default nanodevices;

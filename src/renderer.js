@@ -53,6 +53,7 @@ app.config.globalProperties.window = window
 app.mount('#app')
 
 
-window.nanodevices.on('*', (eventid, deviceid, ...data) => {
-  console.log(eventid, deviceid, data)
+window.nanodevices.on_event("*", (eventid, deviceid, ...data) => {
+  console.log("Event on window ", eventid, deviceid, data)
 });
+window.nanodevices.list_devices();

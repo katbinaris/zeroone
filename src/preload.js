@@ -14,8 +14,10 @@ contextBridge.exposeInMainWorld('nanodevices', {
   disconnect(deviceid) {
     ipcRenderer.invoke('nanodevices:disconnect', deviceid);
   },
-  on(eventid_filter, callback) {
+  on_event(eventid_filter, callback) {
+    console.log("attaching filter for ", eventid_filter);
     ipcRenderer.on('nanodevices:event', (_event, eventid, deviceid, ...data) => {
+      console.log("Event in ipcRenderer ", eventid, deviceid, data);
       if (eventid_filter=="*" || eventid_filter==eventid) {
         callback(eventid, deviceid, ...data);
       }

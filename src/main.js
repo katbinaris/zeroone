@@ -128,7 +128,7 @@ const createLoadingWindow = (mainWindow) => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  ipcMain.handle('nanodevices:list_devices', nanodevices.list_devices)
+  ipcMain.handle('nanodevices:list_devices', ()=>nanodevices.list_devices())
   ipcMain.handle('nanodevices:connect', nanodevices.connect)
   ipcMain.handle('nanodevices:disconnect', nanodevices.disconnect)
   ipcMain.handle('nanodevices:send', nanodevices.send)
@@ -146,33 +146,29 @@ app.whenReady().then(() => {
   ipcMain.on('electron:openExternal', (_event, url) => shell.openExternal(url))
   ipcMain.on('electron:openDevTools', () => mainWindow.webContents.toggleDevTools())
   ipcMain.on('electron:reload', () => mainWindow.webContents.reloadIgnoringCache())
-  // nanodevices.on('nanodevices:device-attached', (evt, device) => { // TODO cumbersome, is there a shorthand line nanodevice-* ?
-  //   console.log('Attached device', device)
-  //   mainWindow.webContents.send('nanodevices:device-attached', device)
-  // })
-  // nanodevices.on('nanodevices:device-detached', (device) => {
-  //   console.log('Detached device', device)
-  //   mainWindow.webContents.send('nanodevices:device-detached', device)
-  // })
-  // nanodevices.on('nanodevices:connected', (device) => {
-  //   console.log('Connected device', device)
-  //   mainWindow.webContents.send('nanodevices:connected', device)
-  // })
-  // nanodevices.on('nanodevices:disconnected', (device) => {
-  //   console.log('Disconnected device', device)
-  //   mainWindow.webContents.send('nanodevices:disconnected', device)
-  // })
-  // nanodevices.on('nanodevices:error', (device, error) => {
-  //   console.log('Error on device', device, error)
-  //   mainWindow.webContents.send('nanodevices:error', device, error)
-  // })
-  // nanodevices.on('nanodevices:update', (deviceid, jsonstr) => {
-  //   console.log('Nano update', jsonstr)
-  //   mainWindow.webContents.send('nanodevices:update', deviceid, jsonstr)
-  // })
-  nanodevices.on('nanodevices:event', (eventid, deviceid, ...data) => {
-    console.log('Nano event', eventid, deviceid, data)
-    mainWindow.webContents.send('nanodevices:event', eventid, deviceid, ...data)
+  nanodevices.on('nanodevices:device-attached', (deviceid, ...data) => {
+    console.log('Attached event', deviceid, data)
+    mainWindow.webContents.send('nanodevices:event', 'device-attached', deviceid, ...data)
+  })
+  nanodevices.on('nanodevices:device-detached', (deviceid, ...data) => {
+    console.log('Detached event', deviceid, data)
+    mainWindow.webContents.send('nanodevices:event', 'device-detached', deviceid, ...data)
+  })
+  nanodevices.on('nanodevices:device-error', (deviceid, ...data) => {
+    console.log('Error event', deviceid, data)
+    mainWindow.webContents.send('nanodevices:event', 'device-error', deviceid, ...data)
+  })
+  nanodevices.on('nanodevices:connected', (deviceid, ...data) => {
+    console.log('Connected event', deviceid, data)
+    mainWindow.webContents.send('nanodevices:event', 'connected', deviceid, ...data)
+  })
+  nanodevices.on('nanodevices:disconnected', (deviceid, ...data) => {
+    console.log('Disconnected event', deviceid, data)
+    mainWindow.webContents.send('nanodevices:event', 'disconnected', deviceid, ...data)
+  })
+  nanodevices.on('nanodevices:update', (deviceid, ...data) => {
+    console.log('Update event', deviceid, data)
+    mainWindow.webContents.send('nanodevices:event', 'update', deviceid, ...data)
   })
   const menu = new Menu()
   for (const menuItem of Object.values(appMenu)) {
@@ -204,6 +200,7 @@ app.whenReady().then(() => {
 
   Menu.setApplicationMenu(menu)
   //mainWindow.webContents.openDevTools()
+  setInterval(()=>nanodevices._list(), 1000)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
