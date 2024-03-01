@@ -1,23 +1,38 @@
 <template>
-  <div class="flex app-titlebar">
-    <Menubar class="w-full h-14 rounded-none bg-zinc-900 justify-between text-muted-foreground font-mono px-3">
-      <div v-if="isMacOS" :style="{width: 80 / zoomFactor + 'px'}" />
+  <div class="app-titlebar flex">
+    <Menubar
+      class="h-14 w-full justify-between rounded-none bg-zinc-900 px-3 font-mono text-muted-foreground"
+    >
+      <div v-if="isMacOS" :style="{ width: 80 / zoomFactor + 'px' }" />
       <div class="flex items-center">
         <h1
-          class="text-2xl min-w-32   app-titlebar-button text-zinc-100 text-nowrap"
-          @click="$refs.zerooneTitle.scramble(1,100,0); $refs.zerooneSubtitle.scramble(1,75,30)">
+          class="app-titlebar-button min-w-32 text-nowrap text-2xl text-zinc-100"
+          @click="
+            () => {
+              $refs.zerooneTitle.scramble(1, 100, 0)
+              $refs.zerooneSubtitle.scramble(1, 75, 30)
+            }
+          "
+        >
           <ScrambleText
             ref="zerooneTitle"
-            text=" ZERO/ONE" scramble-on-mount :scramble-amount="1" :fill-interval="100"
+            text=" ZERO/ONE"
+            scramble-on-mount
+            :scramble-amount="1"
+            :fill-interval="100"
             :replace-interval="100"
           />
         </h1>
-        <h2 class="text-sm min-w-[188px] text-muted-foreground font-mono text-nowrap">
+        <h2 class="min-w-[188px] text-nowrap font-mono text-sm text-muted-foreground">
           ::
           <ScrambleText
             ref="zerooneSubtitle"
-            text="Configuration Suite" scramble-on-mount :scramble-amount="1" :fill-interval="35"
-            :replace-interval="40" />
+            text="Configuration Suite"
+            scramble-on-mount
+            :scramble-amount="1"
+            :fill-interval="35"
+            :replace-interval="40"
+          />
         </h2>
       </div>
       <div class="h-8 px-2">
@@ -26,12 +41,10 @@
       <div class="flex gap-2">
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">
-            <template v-if="store.numAttachedDevices!==1">
-              Devices<span class="text-zinc-500">&nbsp;({{ ""+store.numAttachedDevices }})</span>
+            <template v-if="store.numAttachedDevices !== 1">
+              Devices<span class="text-zinc-500">&nbsp;({{ '' + store.numAttachedDevices }})</span>
             </template>
-            <template v-else>
-              Device
-            </template>
+            <template v-else> Device </template>
           </MenubarTrigger>
           <MenubarContent>
             <!-- TODO: Switch keyboard shortcut icons based on platform -->
@@ -39,7 +52,8 @@
               {{ store.connected ? $t('navbar.device.disconnect') : $t('navbar.device.connect') }}
               <MenubarShortcut>⌘D</MenubarShortcut>
             </MenubarItem>
-            <MenubarItem v-if="store.multipleDevicesConnected">Next Device
+            <MenubarItem v-if="store.multipleDevicesConnected"
+              >Next Device
               <MenubarShortcut>⌘N</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
@@ -55,19 +69,25 @@
               <MenubarShortcut>⌘S</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>{{ $t('navbar.device.export') }}
+            <MenubarItem
+              >{{ $t('navbar.device.export') }}
               <MenubarShortcut>⌘E</MenubarShortcut>
             </MenubarItem>
-            <MenubarItem>{{ $t('navbar.device.import') }}
+            <MenubarItem
+              >{{ $t('navbar.device.import') }}
               <MenubarShortcut>⌘I</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>{{ $t('navbar.device.quit') }}
+            <MenubarItem
+              >{{ $t('navbar.device.quit') }}
               <MenubarShortcut>⌘Q</MenubarShortcut>
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
-        <MenubarButton class="app-titlebar-button" @click="electron?.openExternal('https://discord.gg/jgRd77YN5T')">
+        <MenubarButton
+          class="app-titlebar-button"
+          @click="electron?.openExternal('https://discord.gg/jgRd77YN5T')"
+        >
           Community
         </MenubarButton>
         <MenubarMenu>
@@ -96,27 +116,31 @@
       <MenubarButton
         v-if="showDisconnectButton"
         class="app-titlebar-button border-2"
-        @click="store.setConnected(!store.connected)">
+        @click="store.setConnected(!store.connected)"
+      >
         {{ store.connected ? 'Disconnect' : 'Connect' }}
       </MenubarButton>
       <div v-if="!isMacOS" class="flex h-full">
         <button
           v-if="minimizable"
-          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="electron?.minimizeWindow">
-          <Minus class="h-5 w-5" />
+          class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
+          @click="electron?.minimizeWindow"
+        >
+          <Minus class="size-5" />
         </button>
         <button
           v-if="maximizable"
-          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="electron?.toggleMaximizeWindow">
-          <Copy v-if="isMaximized" class="h-4 w-4" />
-          <Square v-else class="h-3.5 w-3.5 mr-0.5" />
+          class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
+          @click="electron?.toggleMaximizeWindow"
+        >
+          <Copy v-if="isMaximized" class="size-4" />
+          <Square v-else class="mr-0.5 size-3.5" />
         </button>
         <button
-          class="grow flex justify-center items-center app-titlebar-button hover:text-white px-2"
-          @click="electron?.closeWindow">
-          <X class="h-5 w-5 mr-0.5" />
+          class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
+          @click="electron?.closeWindow"
+        >
+          <X class="mr-0.5 size-5" />
         </button>
       </div>
     </Menubar>
@@ -130,7 +154,7 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarShortcut,
-  MenubarTrigger,
+  MenubarTrigger
 } from '@renderer/components/ui/menubar'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { Minus, Square, Copy, X } from 'lucide-vue-next'
@@ -154,7 +178,7 @@ const zoomFactor = ref(1)
 
 const previewDeviceNames = ref({
   nanoOne: 'One',
-  nanoZero: 'Zero',
+  nanoZero: 'Zero'
 })
 
 onMounted(() => {
@@ -170,11 +194,9 @@ onMounted(() => {
     isMaximized.value = false
   })
 })
-
 </script>
 <style scoped>
 .app-titlebar {
-  -webkit-user-select: none;
   -webkit-app-region: drag;
 }
 

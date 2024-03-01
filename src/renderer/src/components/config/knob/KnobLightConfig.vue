@@ -13,15 +13,15 @@ import { ref } from 'vue'
 const ringColors = ref({
   primary: {
     titleKey: 'config_options.light_designer.primary_color',
-    color: Color('#8f9af2'),
+    color: Color('#8f9af2')
   },
   secondary: {
     titleKey: 'config_options.light_designer.secondary_color',
-    color: Color('#c06300'),
+    color: Color('#c06300')
   },
   pointer: {
     titleKey: 'config_options.light_designer.pointer_color',
-    color: Color('#ffa346'),
-  },
+    color: Color('#ffa346')
+  }
 })
 </script>

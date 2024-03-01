@@ -1,14 +1,17 @@
 <template>
-  <div class="p-2 border-solid border-0 border-b">
-    <div class="flex rounded-lg overflow-hidden border border-zinc-800">
+  <div class="border-0 border-b border-solid p-2">
+    <div class="flex overflow-hidden rounded-lg border border-zinc-800">
       <TransitionGroup name="flex">
         <TabSelectButton
-          v-for="(option, key) in options" :key="key"
-          :ref="(el) => buttons[key] = el"
+          v-for="(option, key) in options"
+          :key="key"
+          :ref="(el) => (buttons[key] = el)"
           :title="$t(option.titleKey)"
-          :icon="option.icon" :selected="model===key"
+          :icon="option.icon"
+          :selected="model === key"
           class="min-w-0 overflow-hidden"
-          @select="model=key">
+          @select="model = key"
+        >
           <template v-if="$slots[key]" #replace>
             <slot :name="key" />
           </template>
@@ -24,7 +27,7 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const model = defineModel({
   type: String,
-  default: 'a',
+  default: 'a'
 })
 
 const buttons = ref({})
@@ -35,7 +38,7 @@ const backgroundStyle = ref({
   top: '0',
   left: '0',
   width: '0',
-  height: '0',
+  height: '0'
 })
 
 const updateBackgroundStyle = () => {
@@ -45,7 +48,7 @@ const updateBackgroundStyle = () => {
       top: `${selected.$el.offsetTop}px`,
       left: `${selected.$el.offsetLeft}px`,
       width: `${selected.$el.offsetWidth}px`,
-      height: `${selected.$el.offsetHeight}px`,
+      height: `${selected.$el.offsetHeight}px`
     }
   }
 }
@@ -72,9 +75,9 @@ defineProps({
     default: () => ({
       a: { titleKey: 'Option A', icon: CircleDot },
       b: { titleKey: 'Option B', icon: CircleDot },
-      c: { titleKey: 'Option C', icon: CircleDot },
-    }),
-  },
+      c: { titleKey: 'Option C', icon: CircleDot }
+    })
+  }
 })
 </script>
 <style scoped>

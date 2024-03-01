@@ -13,11 +13,11 @@ import { ref } from 'vue'
 const keyColors = ref({
   default: {
     titleKey: 'default',
-    color: Color('#4f25ef'),
+    color: Color('#4f25ef')
   },
   pressed: {
     titleKey: 'pressed',
-    color: Color('#d0078f'),
-  },
+    color: Color('#d0078f')
+  }
 })
 </script>

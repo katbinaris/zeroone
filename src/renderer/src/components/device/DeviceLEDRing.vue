@@ -2,19 +2,25 @@
   <svg :viewBox="`0 0 ${size} ${size}`" filter="url(#blur)">
     <filter id="blur" color-interpolation-filters="sRGB">
       <feGaussianBlur
-        v-for="index in blurSteps" :key="index" in="SourceGraphic" :stdDeviation="blur*index"
-        :result="index" />
+        v-for="index in blurSteps"
+        :key="index"
+        in="SourceGraphic"
+        :stdDeviation="blur * index"
+        :result="index"
+      />
       <feMerge result="blurMerge">
         <feMergeNode v-for="index in blurSteps" :key="index" :in="index" />
       </feMerge>
     </filter>
     <circle
-      v-for="index in ledCount" :key="index"
-      :transform="`rotate(${index/ledCount*360} ${size/2} ${size/2})`"
+      v-for="index in ledCount"
+      :key="index"
+      :transform="`rotate(${(index / ledCount) * 360} ${size / 2} ${size / 2})`"
       :r="ledRadius"
-      :cx="size/2"
+      :cx="size / 2"
       :cy="padding + ledRadius"
-      :fill="leds[index-1]?.hex()" />
+      :fill="leds[index - 1]?.hex()"
+    />
   </svg>
 </template>
 <script setup>
@@ -24,8 +30,8 @@ import Color from 'color'
 const props = defineProps({
   value: {
     type: Number,
-    default: 0,
-  },
+    default: 0
+  }
 })
 
 const leds = ref(Array(60).fill(Color()))
@@ -43,7 +49,7 @@ let interval = null
 
 onMounted(() => {
   interval = setInterval(() => {
-    const valueIndex = Math.floor(props.value / 100 * ledCount.value)
+    const valueIndex = Math.floor((props.value / 100) * ledCount.value)
     leds.value.forEach((color, index) => {
       const distance = Math.abs(index - valueIndex) % ledCount.value
       if (distance < 1) {

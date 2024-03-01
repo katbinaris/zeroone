@@ -46,23 +46,23 @@ window.nanodevices.on_event('update', (evt, deviceid, data) => {
 window.nanodevices.list_devices().then((devs) => store.init_devices(devs))
 </script>
 <template>
-  <main class="select-none w-screen h-screen flex flex-col">
+  <main class="flex h-screen w-screen select-none flex-col">
     <Navbar class="flex-none" />
-    <div class="flex-1 min-h-0 flex flex-row justify-center">
-      <div class="basis-1/3 min-w-60 flex-1 flex overflow-hidden">
+    <div class="flex min-h-0 flex-1 flex-row justify-center">
+      <div class="flex min-w-60 flex-1 basis-1/3 overflow-hidden">
         <Transition name="slide-left">
           <ProfileManager
             v-if="store.connected"
-            class="flex-1 max-w-full flex flex-col border-solid border-0 border-r bg-zinc-900 bg-opacity-50"
+            class="flex max-w-full flex-1 flex-col border-0 border-r border-solid bg-zinc-900/50"
           />
         </Transition>
       </div>
-      <DevicePreview class="basis-1/3 flex-col flex" />
-      <div class="basis-2/5 flex-1 flex overflow-hidden">
+      <DevicePreview class="flex basis-1/3 flex-col" />
+      <div class="flex flex-1 basis-2/5 overflow-hidden">
         <Transition name="slide-right">
           <ConfigPane
             v-if="store.connected"
-            class="flex-1 max-w-full flex flex-col border-solid border-0 border-l bg-zinc-900 bg-opacity-50"
+            class="flex max-w-full flex-1 flex-col border-0 border-l border-solid bg-zinc-900/50"
           />
         </Transition>
       </div>

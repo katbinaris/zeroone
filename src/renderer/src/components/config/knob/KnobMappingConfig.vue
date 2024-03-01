@@ -1,7 +1,7 @@
 <template>
   <ConfigSection title="Knob Mapping" :icon-component="PlusCircle">
-    <div class="px-8 my-4">
-      <span class="text-sm text-muted-foreground font-mono">Control:</span>
+    <div class="my-4 px-8">
+      <span class="font-mono text-sm text-muted-foreground">Control:</span>
       <Popover v-model:open="open">
         <PopoverTrigger as-child>
           <Button
@@ -9,18 +9,17 @@
             variant="outline"
             role="combobox"
             :aria-expanded="open"
-            class="my-2 w-full justify-between">
+            class="my-2 w-full justify-between"
+          >
             <ScrambleText :text="value ? knobMappingOptions[value] : 'Select an action...'" />
-            <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent class="p-0" :style="{width: $refs.comboboxButton?.$el.offsetWidth}">
+        <PopoverContent class="p-0" :style="{ width: $refs.comboboxButton?.$el.offsetWidth }">
           <Command>
             <CommandInput class="h-9" placeholder="Search actions..." />
             <CommandEmpty>
-              <ScrambleText
-                scramble-on-mount
-                text="No actions found." />
+              <ScrambleText scramble-on-mount text="No actions found." />
             </CommandEmpty>
             <CommandList>
               <CommandGroup>
@@ -28,13 +27,17 @@
                   v-for="(action, key) in knobMappingOptions"
                   :key="key"
                   :value="action"
-                  @select="() => {
-                    value = key
-                    open = false
-                  }">
+                  @select="
+                    () => {
+                      value = key
+                      open = false
+                    }
+                  "
+                >
                   {{ action }}
                   <Check
-                    :class="cn('ml-auto h-4 w-4',value === key ? 'opacity-100' : 'opacity-0')" />
+                    :class="cn('ml-auto h-4 w-4', value === key ? 'opacity-100' : 'opacity-0')"
+                  />
                 </CommandItem>
               </CommandGroup>
             </CommandList>
@@ -51,7 +54,14 @@ import ConfigSection from '@renderer/components/common/ConfigSection.vue'
 import WIP from '@renderer/components/WIP.vue'
 import { Popover, PopoverTrigger, PopoverContent } from '@renderer/components/ui/popover'
 import { Button } from '@renderer/components/ui/button'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@renderer/components/ui/command'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList
+} from '@renderer/components/ui/command'
 import { ref } from 'vue'
 import { cn } from '@renderer/lib/utils'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
@@ -62,7 +72,7 @@ const knobMappingOptions = ref({
   controlOsc: 'Control an OSC Value',
   controlVolume: 'Control your OS Volume',
   moveMouse: 'Move the Mouse',
-  scrollMouse: 'Scroll the Mouse',
+  scrollMouse: 'Scroll the Mouse'
 })
 
 const comboboxButton = ref(null)

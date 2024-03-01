@@ -11,40 +11,40 @@ function playClick() {
 const props = defineProps({
   text: {
     type: String,
-    default: '',
+    default: ''
   },
   characterSet: {
     type: String,
-    default: 'x01_-/',
+    default: 'x01_-/'
   },
   scrambleOnHover: {
     type: Boolean,
-    default: false,
+    default: false
   },
   fillInterval: {
     type: Number,
-    default: 0,
+    default: 0
   },
   scrambleAmount: {
     type: Number,
-    default: 1,
+    default: 1
   },
   replaceInterval: {
     type: Number,
-    default: 15,
+    default: 15
   },
   scrambleOnMount: {
     type: Boolean,
-    default: false,
+    default: false
   },
   resize: {
     type: Boolean,
-    default: true,
+    default: true
   },
   delay: {
     type: Number,
-    default: 0,
-  },
+    default: 0
+  }
 })
 
 const content = ref('')
@@ -67,27 +67,38 @@ function replaceContent(text = props.text, replaceInterval = props.replaceInterv
     }
     if (indices.length > 0) {
       const index = indices[Math.floor(Math.random() * indices.length)]
-      content.value = content.value.substring(0, index) + text.charAt(index) + content.value.substring(index + 1)
+      content.value =
+        content.value.substring(0, index) + text.charAt(index) + content.value.substring(index + 1)
     } else if (content.value.length < text.length) {
       content.value += text.charAt(content.value.length)
     } else {
       content.value = content.value.substring(0, content.value.length - 1)
     }
     //playClick()
-    setTimeout(() => {
-      replaceContent(text, replaceInterval, steps + 1)
-    }, replaceInterval * (1 + Math.random()))
+    setTimeout(
+      () => {
+        replaceContent(text, replaceInterval, steps + 1)
+      },
+      replaceInterval * (1 + Math.random())
+    )
   } else {
     emit('finish')
   }
 }
 
-function scramble(scrambleAmount = props.scrambleAmount, replaceInterval = props.replaceInterval, fillInterval = props.fillInterval, characterSet = props.characterSet, text = props.text, fillText = props.text) {
+function scramble(
+  scrambleAmount = props.scrambleAmount,
+  replaceInterval = props.replaceInterval,
+  fillInterval = props.fillInterval,
+  characterSet = props.characterSet,
+  text = props.text,
+  fillText = props.text
+) {
   content.value = ''
-  const spec = props.resize && (Math.random() > 0.99)
+  const spec = props.resize && Math.random() > 0.99
   let i = 0
   const specChars = atob('S09TUk8tRUFTVEVSRUdH')
-  const fillContent = function() {
+  const fillContent = function () {
     if (content.value.length < text.length) {
       const char = fillText.charAt(content.value.length) || ''
       if (spec) {
@@ -127,16 +138,18 @@ onMounted(() => {
   }
 })
 
-watch(() => props.text, () => {
-  if (content.value === '') {
-    scramble()
-  } else {
-    replaceContent()
+watch(
+  () => props.text,
+  () => {
+    if (content.value === '') {
+      scramble()
+    } else {
+      replaceContent()
+    }
   }
-})
+)
 </script>
 
 <template>
   <span @mouseenter="scrambleOnHover && scramble">{{ content }}</span>
-
 </template>

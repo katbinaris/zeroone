@@ -2,53 +2,56 @@
   <div>
     <div>
       <div
-        class="w-full h-12 px-4 flex items-center justify-between flex-nowrap text-nowrap bg-zinc-900">
+        class="flex h-12 w-full flex-nowrap items-center justify-between text-nowrap bg-zinc-900 px-4"
+      >
         <button
-          class="flex flex-1 items-center h-full min-w-0 font-heading"
-          @click="showProfileConfig=store.selectedProfile && !showProfileConfig">
-          <component :is="showProfileConfig ? ArrowLeft : List" class="w-5 h-full mr-1 shrink-0" />
+          class="font-heading flex h-full min-w-0 flex-1 items-center"
+          @click="showProfileConfig = store.selectedProfile && !showProfileConfig"
+        >
+          <component :is="showProfileConfig ? ArrowLeft : List" class="mr-1 h-full w-5 shrink-0" />
           <ScrambleText
             :text="showProfileConfig ? store.selectedProfile?.name : $t('profiles.title')"
-            class="text-ellipsis overflow-hidden min-w-0" />
+            class="min-w-0 overflow-hidden text-ellipsis"
+          />
           <ScrambleText
-            v-if="!showProfileConfig" class="text-sm text-zinc-600 text-ellipsis overflow-hidden min-w-0"
+            v-if="!showProfileConfig"
+            class="min-w-0 overflow-hidden text-ellipsis text-sm text-zinc-600"
             scramble-on-mount
             :fill-interval="20"
             :delay="500"
-            :text="`(${store.profiles.length}/${ maxProfiles})`" />
+            :text="`(${store.profiles.length}/${maxProfiles})`"
+          />
         </button>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Transition name="fade">
               <button
                 v-if="!showProfileConfig"
-                class="bg-zinc-300 text-black hover:bg-zinc-200 border border-zinc-100 rounded-lg h-8 aspect-square flex justify-center items-center"
-                @click="store.addProfile">
+                class="flex aspect-square h-8 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-300 text-black hover:bg-zinc-200"
+                @click="store.addProfile"
+              >
                 <Plus class="h-4" />
               </button>
             </Transition>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
-              Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Category
-            </DropdownMenuItem>
+            <DropdownMenuItem> Profile </DropdownMenuItem>
+            <DropdownMenuItem> Category </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
       <Separator />
     </div>
-    <div class="grow overflow-y-auto relative">
-      <div
-        v-if="renderProfileList"
-        class="absolute w-full">
+    <div class="relative grow overflow-y-auto">
+      <div v-if="renderProfileList" class="absolute w-full">
         <div v-if="store.profiles.length === 0">
-          <div class="flex flex-col items-center justify-center h-32">
+          <div class="flex h-32 flex-col items-center justify-center">
             <ScrambleText
-              scramble-on-mount :fill-interval="5" class="text-sm text-muted-foreground"
-              :text="$t('profiles.not_found')" />
+              scramble-on-mount
+              :fill-interval="5"
+              class="text-sm text-muted-foreground"
+              :text="$t('profiles.not_found')"
+            />
           </div>
         </div>
         <div v-else>
@@ -60,18 +63,21 @@
             v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
-            @change="onCategoryDrop">
+            @change="onCategoryDrop"
+          >
             <template #item="dragCategory">
-              <Collapsible
-                v-model:open="collapse[dragCategory.element.name]"
-                :default-open="true">
+              <Collapsible v-model:open="collapse[dragCategory.element.name]" :default-open="true">
                 <!-- TODO: Make profile groups computed instead defining them of using v-for -->
                 <CollapsibleTrigger
-                  class="w-full h-12 py-2 text-left text-muted-foreground text-sm bg-zinc-900 border-0 border-b">
-                  <ChevronRight class="chevrot h-4 w-4 mb-0.5 ml-4 inline-block transition-transform" />
-                  {{ dragCategory.element.name }}<span
-                  class="font-heading text-sm text-zinc-600"> ({{ dragCategory.element.profiles?.length || 0
-                  }})</span>
+                  class="h-12 w-full border-0 border-b bg-zinc-900 py-2 text-left text-sm text-muted-foreground"
+                >
+                  <ChevronRight
+                    class="chevrot mb-0.5 ml-4 inline-block size-4 transition-transform"
+                  />
+                  {{ dragCategory.element.name
+                  }}<span class="font-heading text-sm text-zinc-600">
+                    ({{ dragCategory.element.profiles?.length || 0 }})</span
+                  >
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <TransitionGroup>
@@ -83,9 +89,10 @@
                       v-bind="dragOptions"
                       @start="drag = true"
                       @end="drag = false"
-                      @change="(event)=>onProfileDrop(event, dragCategory.index)">
+                      @change="(event) => onProfileDrop(event, dragCategory.index)"
+                    >
                       <template v-if="dragCategory.element.profiles.length === 0" #header>
-                        <div class="flex h-12 justify-center items-center hideable-header">
+                        <div class="hideable-header flex h-12 items-center justify-center">
                           <MoreHorizontal class="w-4 text-zinc-600" />
                         </div>
                       </template>
@@ -95,9 +102,15 @@
                             :profile="dragProfile.element"
                             :show-hover-buttons="!drag"
                             :selected="store.selectedProfile?.id === dragProfile.element.id"
-                            @select="store.selectProfile(dragProfile.element.id); showProfileConfig=true"
+                            @select="
+                              () => {
+                                store.selectProfile(dragProfile.element.id)
+                                showProfileConfig = true
+                              }
+                            "
                             @duplicate="store.duplicateProfile(dragProfile.element.id)"
-                            @delete="store.removeProfile(dragProfile.element.id)" />
+                            @delete="store.removeProfile(dragProfile.element.id)"
+                          />
                         </div>
                       </template>
                     </draggable>
@@ -109,7 +122,7 @@
         </div>
       </div>
       <Transition name="slide">
-        <div v-if="showProfileConfig" class="absolute bg-[#101013] h-full">
+        <div v-if="showProfileConfig" class="absolute h-full bg-[#101013]">
           <ProfileConfig />
         </div>
       </Transition>
@@ -120,25 +133,34 @@
 import { Separator } from '@renderer/components/ui/separator'
 import { ChevronRight, Plus, ArrowLeft, List, MoreHorizontal } from 'lucide-vue-next'
 import { ref, watch } from 'vue'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@renderer/components/ui/collapsible'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from '@renderer/components/ui/collapsible'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { useStore } from '@renderer/store'
 import ProfileButton from '@renderer/components/profile/ProfileButton.vue'
 import ProfileConfig from '@renderer/components/profile/ProfileConfig.vue'
 import draggable from 'vuedraggable'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@renderer/components/ui/dropdown-menu'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@renderer/components/ui/dropdown-menu'
 
 defineProps({
   showFilter: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 const dragOptions = ref({
   ghostClass: 'ghost',
   animation: 150,
-  direction: 'vertical',
+  direction: 'vertical'
 })
 
 const maxProfiles = 32
@@ -152,7 +174,7 @@ const renderProfileList = ref(!showProfileConfig.value)
 
 const drag = ref(false)
 
-watch(showProfileConfig, value => {
+watch(showProfileConfig, (value) => {
   if (value) {
     renderProfileConfig.value = true
     setTimeout(() => {
@@ -213,10 +235,9 @@ const onProfileDrop = (event, categoryIndex) => {
     store.changeProfileCategory(profile.id, categoryIndex, newIndex)
   }
 }
-
 </script>
 <style scoped>
-[data-state=open] > .chevrot {
+[data-state='open'] > .chevrot {
   transform: rotate(90deg);
 }
 

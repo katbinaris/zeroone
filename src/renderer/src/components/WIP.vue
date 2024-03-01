@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-wip w-full text-center p-8 text-zinc-600">
-    <span class="bg-black font-heading p-1">WORK IN PROGRESS</span>
+  <div class="bg-wip w-full p-8 text-center text-zinc-600">
+    <span class="font-heading bg-black p-1">WORK IN PROGRESS</span>
   </div>
 </template>
 

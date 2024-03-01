@@ -1,40 +1,59 @@
 <template>
   <div class="aspect-[800/1100]">
     <div
-      class="bg-contain bg-top bg-no-repeat h-full w-full relative"
-      :style="{backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.25) 12%, rgba(0,0,0,0.35) 95%, black), url(${previewDeviceImage})`,
-      backgroundBlendMode: 'multiply'}">
+      class="relative size-full bg-contain bg-top bg-no-repeat"
+      :style="{
+        backgroundImage: `linear-gradient(to bottom, black, rgba(0,0,0,0.25) 12%, rgba(0,0,0,0.35) 95%, black), url(${previewDeviceImage})`,
+        backgroundBlendMode: 'multiply'
+      }"
+    >
       <Transition name="fade">
-        <div v-if="store.connected" class="px-10 h-12 flex justify-between items-center">
+        <div v-if="store.connected" class="flex h-12 items-center justify-between px-10">
           <h2>
-            <ScrambleText :delay="100" scramble-on-mount :fill-interval="50" :replace-interval="50" text="Nano_D++" />
+            <ScrambleText
+              :delay="100"
+              scramble-on-mount
+              :fill-interval="50"
+              :replace-interval="50"
+              text="Nano_D++"
+            />
           </h2>
           <div class="font-mono text-sm">
             <span class="text-muted-foreground">Firmware: </span>
-            <ScrambleText :delay="100" scramble-on-mount :fill-interval="50" :replace-interval="50" text="v1.3.2a" />
+            <ScrambleText
+              :delay="100"
+              scramble-on-mount
+              :fill-interval="50"
+              :replace-interval="50"
+              text="v1.3.2a"
+            />
           </div>
         </div>
       </Transition>
       <Transition name="fade-delayed">
         <DeviceLEDRing
-          v-if="store.connected" :value="barValue"
-          class="absolute h-[66%] top-[12.5%] left-0 right-0 mx-auto" />
+          v-if="store.connected"
+          :value="barValue"
+          class="absolute inset-x-0 top-[12.5%] mx-auto h-[66%]"
+        />
       </Transition>
 
       <div
-        class="rounded-full aspect-square absolute h-[30%] top-[30.5%] left-0 right-0 mx-auto flex flex-col justify-center items-center overflow-hidden"
-        style="background: linear-gradient(45deg, black 30%, #252525 50%, #232323 60%, black)">
+        class="absolute inset-x-0 top-[30.5%] mx-auto flex aspect-square h-[30%] flex-col items-center justify-center overflow-hidden rounded-full"
+        style="background: linear-gradient(45deg, black 30%, #252525 50%, #232323 60%, black)"
+      >
         <TransitionGroup name="fade-display">
           <div
             v-if="store.connected"
-            class="absolute flex flex-col items-center text-center pb-2 mix-blend-screen">
-            <img :src="LogoMidi" alt="midi-logo" class="opacity-50 h-4">
+            class="absolute flex flex-col items-center pb-2 text-center mix-blend-screen"
+          >
+            <img :src="LogoMidi" alt="midi-logo" class="h-4 opacity-50" />
             <h2 class="font-pixellg text-5xl">{{ parseInt(value) }}</h2>
             <div class="font-pixelsm text-md">HIGH PASS</div>
             <DeviceBar v-model="barValue" :count="30" :width="120" />
-            <span class="w-36 font-pixelsm text-[7pt] text-muted-foreground uppercase">
-            KORG MINILOGUE HIGH PASS FILTER 0-127
-          </span>
+            <span class="font-pixelsm w-36 text-[7pt] uppercase text-muted-foreground">
+              KORG MINILOGUE HIGH PASS FILTER 0-127
+            </span>
           </div>
           <div v-else class="flex flex-col items-center text-center mix-blend-screen">
             <ScrambleText
@@ -44,25 +63,30 @@
               :delay="1000"
               :fill-interval="50"
               :replace-interval="50"
-              class="uppercase font-pixelsm text-[7pt] text-muted-foreground"
-              @finish="nextOfflineText" />
+              class="font-pixelsm text-[7pt] uppercase text-muted-foreground"
+              @finish="nextOfflineText"
+            />
           </div>
         </TransitionGroup>
       </div>
       <Transition name="fade-delayed">
         <button
           v-if="store.connected"
-          class="rounded-full outline-2 absolute h-[41.5%] top-[24.5%] aspect-square left-0 right-0 mx-auto transition-all"
-          :class="{'outline outline-white': store.selectedFeature==='knob',
-        'hover:outline outline-zinc-400': store.selectedFeature!=='knob'}"
-          @click="store.selectConfigFeature('knob')" />
+          class="absolute inset-x-0 top-[24.5%] mx-auto aspect-square h-[41.5%] rounded-full outline-2 transition-all"
+          :class="{
+            'outline outline-white': store.selectedFeature === 'knob',
+            'outline-zinc-400 hover:outline': store.selectedFeature !== 'knob'
+          }"
+          @click="store.selectConfigFeature('knob')"
+        />
       </Transition>
       <Transition name="fade-delayed">
         <DeviceKeys
           v-if="store.connected"
-          class="absolute w-[72.7%] top-[77.5%] gap-[2.2%] left-0 right-0 mx-auto"
+          class="absolute inset-x-0 top-[77.5%] mx-auto w-[72.7%] gap-[2.2%]"
           :selected="store.selectedFeature === 'key' ? store.selectedKey : ''"
-          @select="store.selectKey" />
+          @select="store.selectKey"
+        />
       </Transition>
     </div>
   </div>
@@ -81,16 +105,18 @@ import DeviceKeys from '@renderer/components/device/DeviceKeys.vue'
 
 const value = ref(69)
 
-const barValue = computed(() => value.value / 127 * 100)
+const barValue = computed(() => (value.value / 127) * 100)
 
 const store = useStore()
 
 const previewDeviceImages = {
   nanoOne: RenderNanoOne,
-  nanoZero: RenderNanoZero,
+  nanoZero: RenderNanoZero
 }
 
-const previewDeviceImage = computed(() => previewDeviceImages[store.previewDeviceModel || 'nanoOne'])
+const previewDeviceImage = computed(
+  () => previewDeviceImages[store.previewDeviceModel || 'nanoOne']
+)
 
 const targetValue = ref(69)
 const animateValue = () => {
@@ -112,7 +138,7 @@ const offlineTexts = [
   'AWAITING CONNECTION',
   'DEVICE OFFLINE',
   'NAP TIME',
-  'NO DEVICE CONNECTED',
+  'NO DEVICE CONNECTED'
 ]
 
 let offlineTextIndex = 0
