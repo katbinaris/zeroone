@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+ 
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+ 
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+ 
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+ 
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+ 
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --ring: 240 10% 3.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+ 
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+ 
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+      @apply border-border;
+  }
+
+  @font-face {
+      font-family: 'ProtoMono';
+      src: url(fonts/ProtoMono-Regular.ttf), local('monospace');
+  }
+  @font-face {
+      font-family: 'RenoMono';
+      src: url(fonts/RenoMono.otf), local('monospace');
+  }
+
+  @font-face {
+      font-family: 'JetBrainsMono';
+      src: url(fonts/JetBrainsMono[wght].ttf), local('monospace');
+  }
+
+  @font-face {
+      font-family: 'PixelLg';
+      src: url(fonts/SG12.ttf), local('monospace');
+  }
+
+  @font-face {
+      font-family: 'PixelSm';
+      src: url(fonts/andina.ttf), local('monospace');
+  }
+
+  .font-default {
+      font-family: 'JetBrainsMono', monospace, sans-serif;
+  }
+
+  .font-pixellg {
+      font-family: 'PixelLg', monospace, sans-serif;
+  }
+
+  .font-pixelsm {
+      font-family: 'PixelSm', monospace, sans-serif;
+  }
+
+  .font-size-gui-extra {
+      font-size: 48px;
+  }
+
+  .font-heading {
+      font-family: 'ProtoMono', monospace, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+      @apply font-heading;
+  }
+
+  body {
+      @apply font-default bg-background text-foreground;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.5em;
+    height: 0.5em;
+  }
+
+  ::-webkit-scrollbar-thumb { /* Foreground */
+    background: var(--scrollbar-foreground);
+  }
+
+  ::-webkit-scrollbar-track { /* Background */
+    background: var(--scrollbar-background);
+  }
+
+  ::selection {
+    background: #c66936;
+    color: black;
+    text-shadow: none;
+  }
+}
