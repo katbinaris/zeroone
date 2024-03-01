@@ -272,24 +272,3 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
-
-// Disable pinch zoom
-app.commandLine.appendSwitch('disable-pinch')
-
-// Disable zoom shortcuts
-const ZOOM_IN_SHORTCUTS = ['CmdOrCtrl+numadd', 'CmdOrCtrl+Plus']
-const ZOOM_OUT_SHORTCUTS = ['CmdOrCtrl+numsub', 'CmdOrCtrl+-']
-const ZOOM_RESET_SHORTCUTS = ['CmdOrCtrl+num0', 'CmdOrCtrl+0']
-
-app.on('browser-window-focus', () => {
-  globalShortcut.registerAll(
-    [...ZOOM_IN_SHORTCUTS, ...ZOOM_OUT_SHORTCUTS, ...ZOOM_RESET_SHORTCUTS],
-    () => {
-      // https://www.youtube.com/watch?v=8An2SxNFvmU
-    }
-  )
-})
-
-app.on('browser-window-blur', () => {
-  globalShortcut.unregisterAll()
-})
