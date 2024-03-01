@@ -27,7 +27,6 @@
     "@radix-icons/vue": "^1.0.0",
     "@vueuse/core": "^10.9.0",
     "ajv": "^8.12.0",
-    "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "color": "^4.2.3",
@@ -40,7 +39,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "vue-i18n": "^9.10.1",
-    "vuedraggable": "^2.24.3"
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",
