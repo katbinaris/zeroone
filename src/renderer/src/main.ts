@@ -22,9 +22,4 @@ app.use(i18n)
 
 app.config.globalProperties.window = window
 
-// TODO remove this
-window.nanodevices.on_event('*', (eventid, deviceid, ...data) => {
-  console.log('Event on window ', eventid, deviceid, data)
-})
-
 app.mount('#app')

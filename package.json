@@ -30,6 +30,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "color": "^4.2.3",
+    "electron-typescript-ipc": "^3.0.0",
     "electron-updater": "^6.1.7",
     "gsap": "^3.12.5",
     "lucide-vue-next": "^0.344.0",

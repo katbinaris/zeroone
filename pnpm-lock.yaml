@@ -32,6 +32,9 @@ dependencies:
   color:
     specifier: ^4.2.3
     version: 4.2.3
+  electron-typescript-ipc:
+    specifier: ^3.0.0
+    version: 3.0.0
   electron-updater:
     specifier: ^6.1.7
     version: 6.1.8
@@ -2281,6 +2284,10 @@ packages:
   /electron-to-chromium@1.4.689:
     resolution: {integrity: sha512-GatzRKnGPS1go29ep25reM94xxd1Wj8ritU0yRhCJ/tr1Bg8gKnm6R9O/yPOhGQBoLMZ9ezfrpghNaTw97C/PQ==}
     dev: true
+
+  /electron-typescript-ipc@3.0.0:
+    resolution: {integrity: sha512-YnM2AeUOvZSSxRyieugwBVhyQ1iPcU8vTsCEcn+URf8yv2U0mm8OrsIkrkGQFvM/shl8vUqc1dTW2bLPMBmsUw==}
+    dev: false
 
   /electron-updater@6.1.8:
     resolution: {integrity: sha512-hhOTfaFAd6wRHAfUaBhnAOYc+ymSGCWJLtFkw4xJqOvtpHmIdNHnXDV9m1MHC+A6q08Abx4Ykgyz/R5DGKNAMQ==}

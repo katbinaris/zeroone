@@ -1,61 +1,70 @@
-import { contextBridge, ipcRenderer } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
+import { contextBridge, createIpcRenderer, GetApiType } from 'electron-typescript-ipc'
 
-// Custom APIs for renderer
-const api = {}
-
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
-if (process.contextIsolated) {
-  try {
-    // expose an API to choose available devices
-    contextBridge.exposeInMainWorld('nanodevices', {
-      list_devices() {
-        return ipcRenderer.invoke('nanodevices:list_devices')
-      },
-      connect(deviceid) {
-        return ipcRenderer.invoke('nanodevices:connect', deviceid)
-      },
-      disconnect(deviceid) {
-        return ipcRenderer.invoke('nanodevices:disconnect', deviceid)
-      },
-      on_event(eventid_filter, callback) {
-        console.log('attaching filter for ', eventid_filter)
-        ipcRenderer.on('nanodevices:event', (_event, eventid, deviceid, ...data) => {
-          console.log('Event in ipcRenderer ', eventid, deviceid, data)
-          if (eventid_filter == '*' || eventid_filter == eventid) {
-            callback(eventid, deviceid, ...data)
-          }
-        })
-      },
-      send(deviceid, jsonstr) {
-        return ipcRenderer.invoke('nanodevices:send', deviceid, jsonstr)
-      }
-    })
-
-    contextBridge.exposeInMainWorld('electron', {
-      platform: process.platform,
-      isDevelopment: process.env.NODE_ENV !== 'production',
-      minimizeWindow: () => ipcRenderer.send('electron:minimizeWindow'),
-      toggleMaximizeWindow: () => ipcRenderer.send('electron:toggleMaximizeWindow'),
-      closeWindow: () => ipcRenderer.send('electron:closeWindow'),
-      openExternal: (url) => ipcRenderer.send('electron:openExternal', url),
-      onMaximized: (callback) => ipcRenderer.on('electron:maximized', callback),
-      onUnmaximized: (callback) => ipcRenderer.on('electron:unmaximized', callback),
-      onMenu: (callback) =>
-        ipcRenderer.on('electron:menu', (event, key) => {
-          callback(key)
-        }),
-      openDevTools: () => ipcRenderer.send('electron:openDevTools'),
-      reload: () => ipcRenderer.send('electron:reload')
-    })
-  } catch (error) {
-    console.error(error)
+export type API = GetApiType<
+  {
+    // Invoke
+    list_devices: () => Promise<void>
+    connect: (deviceid: string) => Promise<void>
+    disconnect: (deviceid: string) => Promise<void>
+    send: (deviceid: string, jsonstr: string) => Promise<void>
+    platform: NodeJS.Platform
+    isDevelopment: boolean
+    minimizeWindow: void
+    toggleMaximizeWindow: void
+    closeWindow: void
+    openExternal: (url: string) => void
+    openDevTools: void
+    reload: void
+  },
+  {
+    // On
+    on_event: (
+      eventid_filter: string,
+      callback: (eventid: string, deviceid: string, ...data: any[]) => void
+    ) => void
+    onMaximized: (callback: () => void) => void
+    onUnmaximized: (callback: () => void) => void
+    onMenu: (callback: (key: string) => void) => void
   }
-} else {
-  // @ts-ignore (define in dts)
-  window.electron = electronAPI
-  // @ts-ignore (define in dts)
-  window.api = api
+>
+
+const ipcRenderer = createIpcRenderer<API>()
+
+const api: API = {
+  invoke: {
+    async list_devices() {
+      return await ipcRenderer.invoke('nanodevices:list_devices')
+    },
+    async connect(deviceid) {
+      return await ipcRenderer.invoke('nanodevices:connect', deviceid)
+    },
+    async disconnect(deviceid) {
+      return await ipcRenderer.invoke('nanodevices:disconnect', deviceid)
+    },
+    async send(deviceid, jsonstr) {
+      return await ipcRenderer.invoke('nanodevices:send', deviceid, jsonstr)
+    },
+    platform: process.platform,
+    isDevelopment: process.env.NODE_ENV !== 'production',
+    minimizeWindow: ipcRenderer.send('electron:minimizeWindow'),
+    toggleMaximizeWindow: ipcRenderer.send('electron:toggleMaximizeWindow'),
+    closeWindow: ipcRenderer.send('electron:closeWindow'),
+    openExternal: (url) => ipcRenderer.send('electron:openExternal', url),
+    openDevTools: ipcRenderer.send('electron:openDevTools'),
+    reload: ipcRenderer.send('electron:reload')
+  },
+  on: {
+    on_event: (listener) => ipcRenderer.on('nanodevices:event', listener),
+    onMaximized: (listener) => ipcRenderer.on('electron:maximized', listener),
+    onUnmaximized: (listener) => ipcRenderer.on('electron:unmaximized', listener),
+    onMenu: (listener) => ipcRenderer.on('electron:menu', listener)
+  }
+}
+
+contextBridge.exposeInMainWorld('electron', api)
+
+declare global {
+  interface Window {
+    electron: API
+  }
 }
