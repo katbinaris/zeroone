@@ -4,6 +4,7 @@ import DevicePreview from '@/components/device/DevicePreview.vue'
 import ConfigPane from '@/components/config/ConfigPane.vue'
 import Navbar from '@/components/navbar/Navbar.vue'
 import { useStore } from '@/store'
+import { useMessageHandlers } from '@/device'
 
 const { electron } = window
 const store = useStore()
@@ -21,7 +22,18 @@ electron?.onMenu((key) => {
   }
 })
 
-store.fetchProfiles()
+store.fetchProfiles() // TODO remove me!
+
+// handle device events
+const handlers = useMessageHandlers(store)
+window.nanodevices.on_event('device-attached', (evt, deviceid, data) => store.device_attached(deviceid))
+window.nanodevices.on_event('device-detached', (evt, deviceid, data) => store.device_detached(deviceid))
+window.nanodevices.on_event('device-error', (evt, deviceid, data) => { /* TODO handle connection errors */ })
+window.nanodevices.on_event('connected', (evt, deviceid, data) => store.device_connected(deviceid))
+window.nanodevices.on_event('disconnected', (evt, deviceid, data) => store.device_disconnected(deviceid))
+window.nanodevices.on_event('update', (evt, deviceid, data) => { handlers.handle_message(data) })
+// get list of the currently attached devices
+window.nanodevices.list_devices().then((devs)=>store.init_devices(devs))
 
 </script>
 <template>

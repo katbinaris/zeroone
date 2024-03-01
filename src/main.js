@@ -129,7 +129,7 @@ const createLoadingWindow = (mainWindow) => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   ipcMain.handle('nanodevices:list_devices', ()=>nanodevices.list_devices())
-  ipcMain.handle('nanodevices:connect', nanodevices.connect)
+  ipcMain.handle('nanodevices:connect', (event, deviceid)=>nanodevices.connect(deviceid))
   ipcMain.handle('nanodevices:disconnect', nanodevices.disconnect)
   ipcMain.handle('nanodevices:send', nanodevices.send)
   const mainWindow = createMainWindow()

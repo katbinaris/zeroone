@@ -6,13 +6,13 @@ const { contextBridge, ipcRenderer } = require('electron')
 // expose an API to choose available devices
 contextBridge.exposeInMainWorld('nanodevices', {
   list_devices() {
-    ipcRenderer.invoke('nanodevices:list_devices');
+    return ipcRenderer.invoke('nanodevices:list_devices');
   },
   connect(deviceid) {
-    ipcRenderer.invoke('nanodevices:connect', deviceid);
+    return ipcRenderer.invoke('nanodevices:connect', deviceid);
   },
   disconnect(deviceid) {
-    ipcRenderer.invoke('nanodevices:disconnect', deviceid);
+    return ipcRenderer.invoke('nanodevices:disconnect', deviceid);
   },
   on_event(eventid_filter, callback) {
     console.log("attaching filter for ", eventid_filter);
@@ -21,7 +21,10 @@ contextBridge.exposeInMainWorld('nanodevices', {
       if (eventid_filter=="*" || eventid_filter==eventid) {
         callback(eventid, deviceid, ...data);
       }
-    });
+    });    
+  },
+  send(deviceid, jsonstr) {
+    return ipcRenderer.invoke('nanodevices:send', deviceid, jsonstr);
   }
 });
 

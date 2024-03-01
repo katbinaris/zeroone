@@ -15,9 +15,11 @@ const ajv = new Ajv()
 export const useStore = defineStore('main', {
   state: () => {
     return {
+      devices: {},
+      connected: false, // TODO make into getter
+      connectedId: null,
       profileCategories: [],
       selectedProfileId: null,
-      connected: false,
       connectedDevices: ['test1', 'test2'],
       selectedFeature: 'knob',
       selectedKey: 'a',
@@ -41,6 +43,13 @@ export const useStore = defineStore('main', {
       },
       previewDeviceModel: 'nanoOne',
       screenOrientation: 90,
+
+      // device state as received from the device
+      keyState: "abcd",
+      turns: 0,
+      angle: 0,
+      velocity: 0,
+      last_event: 0
     }
   }, getters: {
     profiles: (state) => state.profileCategories.flatMap(c => c.profiles),
@@ -50,6 +59,8 @@ export const useStore = defineStore('main', {
     currentConfigComponent: (state) => state.configPages[state.selectedFeature][state.currentConfigPage]?.component || WIP,
     currentConfigPages: (state) => state.configPages[state.selectedFeature] || {},
     multipleDevicesConnected: (state) => state.connectedDevices.length > 1,
+    numAttachedDevices: (state) => Object.keys(state.devices).length,
+    // connected: (state) => state.connectedId !== null,
   }, actions: {
     selectProfile(id) {
       if (!this.profileIds.includes(id)) return false
@@ -166,6 +177,76 @@ export const useStore = defineStore('main', {
     cycleScreenOrientation() {
       this.screenOrientation = (this.screenOrientation + 90) % 360
     },
+
+
+    // devices, device attachment, connection, and disconnection
+    init_devices(ids) {
+      console.log("Initializing devices: ", ids);
+      for (let id of ids)
+          this.update_devices(id, true);
+      if (Object.keys(this.devices).length == 1) {
+          // TODO auto-connect to the device
+          let deviceid = Object.keys(this.devices)[0];
+          console.log("Auto-connecting to device ", deviceid);
+          window.nanodevices.connect(deviceid);
+      }
+    },
+    update_devices(deviceid, attached) {
+      if (attached) {
+          if (!this.devices.hasOwnProperty(deviceid))
+          this.devices[deviceid] = { serialNumber: deviceid, connected: false };
+      }
+      else {
+          if (this.devices.hasOwnProperty(deviceid))
+              delete this.devices[deviceid]; // TODO maybe mark as detached instead of deleting? then we can remember its name, etc...
+      }
+    },
+    device_attached(deviceid) {
+      this.update_devices(deviceid, true);
+      if (Object.keys(this.devices).length == 1) {
+          // TODO auto-connect to the device
+          console.log("Auto-connecting to device ", deviceid);
+          window.nanodevices.connect(deviceid);
+      }
+    },
+    device_detached(deviceid) {
+      if (this.devices[deviceid].connected) {
+          // detached event arrived before disconnected event?
+          this.devices[deviceid].connected = false;
+          this.connected = false;
+      }
+      this.update_devices(deviceid, false);
+    },
+    device_connected(deviceid) {
+      this.devices[deviceid].connected = true;
+      this.connected = true;
+      this.connectedId = deviceid;
+      // TODO load profiles from device
+    },
+    device_disconnected(deviceid) {
+      this.devices[deviceid].connected = false;
+      this.connected = false;
+      this.connectedId = null;
+      // TODO switch UI to disconnected state
+    },
+  
+    // device events
+    update_knob_position(turns, angle, velocity) {
+      this.turns = turns;
+      this.angle = angle;
+      this.velocity = velocity;
+      this.last_event = Date.now();
+    },
+    update_keystate(keystate) {
+      this.keyState = keystate;
+      this.last_event = Date.now();
+    },
+
+    // settings changes
+    update_device_name(name) {
+      this.devices[this.connectedId].name = name;
+    },
+
   },
 })
 

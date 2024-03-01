@@ -26,8 +26,8 @@
       <div class="flex gap-2">
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">
-            <template v-if="store.multipleDevicesConnected">
-              Devices<span class="text-zinc-500">&nbsp;(2)</span>
+            <template v-if="store.numAttachedDevices!==1">
+              Devices<span class="text-zinc-500">&nbsp;({{ ""+store.numAttachedDevices }})</span>
             </template>
             <template v-else>
               Device
