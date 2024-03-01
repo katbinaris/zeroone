@@ -1,7 +1,6 @@
 import { createPinia, defineStore } from 'pinia'
-import Axios from 'axios'
-import schema from '@renderer/data/profileSchema.json'
-import Ajv from 'ajv'
+// import schema from '@renderer/data/profileSchema.json' // see below
+// import Ajv from 'ajv' // see below
 import WIP from '@renderer/components/WIP.vue'
 import KnobFeedbackConfig from '@renderer/components/config/knob/KnobFeedbackConfig.vue'
 import KnobLightConfig from '@renderer/components/config/knob/KnobLightConfig.vue'
@@ -9,8 +8,9 @@ import KeyLightConfig from '@renderer/components/config/keys/KeyLightConfig.vue'
 import KnobMappingConfig from '@renderer/components/config/knob/KnobMappingConfig.vue'
 import KeyMappingConfig from '@renderer/components/config/keys/KeyMappingConfig.vue'
 import { shallowRef } from 'vue'
+import mockData from '@renderer/data/nanoConfig.json'
 
-const ajv = new Ajv()
+// const ajv = new Ajv() // see below
 
 export const useStore = defineStore('main', {
   state: () => {
@@ -131,37 +131,30 @@ export const useStore = defineStore('main', {
       profile.name = newName
     },
     fetchProfiles() {
-      Axios.get('http://localhost:3001/categories')
-        .then((res) => {
-          const categories = res.data
-          console.log(categories)
-          const ids = new Set()
-          const validate = ajv.compile(schema)
-          this.$patch({
-            profileCategories: categories.map((category) => ({
-              name: category.name,
-              profiles: category.profiles.filter((profile) => {
-                // TODO: Validation seems to be broken right now
-                if (!validate(profile)) {
-                  console.error('Failed to validate profile: ' + profile.name, validate.errors)
-                  return false
-                }
-                if (ids.has(profile.id)) {
-                  console.error(
-                    'Duplicate profile id: ' + profile.id + ' for profile: ' + profile.name
-                  )
-                  return false
-                }
-                ids.add(profile.id)
-                return true
-              })
-            })),
-            selectedProfileId: categories[0]?.profiles[0]?.id || null
+      const categories = mockData.categories
+      console.log(categories)
+      const ids = new Set()
+      // const validate = ajv.compile(schema) // see below
+      this.$patch({
+        profileCategories: categories.map((category) => ({
+          name: category.name,
+          profiles: category.profiles.filter((profile) => {
+            // Ajv validation requires unsafe-eval CSP, let's not do that
+            // TODO: Remove ajv validation completely or compile schema at build time
+            // if (!validate(profile)) {
+            //   console.error('Failed to validate profile: ' + profile.name, validate.errors)
+            //   return false
+            // }
+            if (ids.has(profile.id)) {
+              console.error('Duplicate profile id: ' + profile.id + ' for profile: ' + profile.name)
+              return false
+            }
+            ids.add(profile.id)
+            return true
           })
-        })
-        .catch((err) => {
-          console.error(err)
-        })
+        })),
+        selectedProfileId: categories[0]?.profiles[0]?.id || null
+      })
     },
     newProfileName(originalName = '') {
       let name = originalName
