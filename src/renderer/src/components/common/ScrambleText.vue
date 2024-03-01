@@ -1,12 +1,5 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import click from '@renderer/assets/sounds/click.mp3'
-
-function playClick() {
-  const audio = new Audio(click)
-  audio.volume = 0.01 * (1 + Math.random() * 0.75 - 0.375)
-  audio.play()
-}
 
 const props = defineProps({
   text: {
@@ -74,7 +67,6 @@ function replaceContent(text = props.text, replaceInterval = props.replaceInterv
     } else {
       content.value = content.value.substring(0, content.value.length - 1)
     }
-    //playClick()
     setTimeout(
       () => {
         replaceContent(text, replaceInterval, steps + 1)
