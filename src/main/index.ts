@@ -4,10 +4,8 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import nanodevices from './backend/nanodevices'
 
-const isDevelopment = process.env.NODE_ENV !== 'production' // TODO: Replace with is.dev
-
 // Minimum time to show the splash screen, in milliseconds
-const splashTime = isDevelopment ? 4000 : 4000
+const splashTime = is.dev ? 4000 : 4000
 const loadingWindowWidth = 800 / 2
 const loadingWindowHeight = 1100 / 2
 
@@ -79,9 +77,9 @@ const createMainWindow = () => {
     fullscreenable: false,
     center: true,
     backgroundColor: 'black',
-    icon: join(__dirname, `/assets/favicon.png`), // TODO: Fix icon path
+    ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      devTools: isDevelopment,
+      devTools: is.dev,
       preload: join(__dirname, '../preload/index.js'),
       zoomFactor: zoomFactor,
       sandbox: false
@@ -125,8 +123,9 @@ const createLoadingWindow = (mainWindow) => {
     frame: false,
     center: true,
     backgroundColor: 'black',
+    ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      devTools: isDevelopment,
+      devTools: is.dev,
       sandbox: false
     }
   })
@@ -152,18 +151,10 @@ const createLoadingWindow = (mainWindow) => {
     loadingWindow.show()
     loadingWindow.focus()
   })
-  // if (LOADING_WINDOW_VITE_DEV_SERVER_URL) {
-  //   loadingWindow.loadURL(`${LOADING_WINDOW_VITE_DEV_SERVER_URL}/loading.html`)
-  // } else {
-  //   loadingWindow.loadFile(
-  //     path.join(__dirname, `../renderer/${LOADING_WINDOW_VITE_NAME}/loading.html`)
-  //   )
-  // }
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    // TODO: Fix: load the loading window, not the main window
-    loadingWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    loadingWindow.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/loading.html`)
   } else {
     loadingWindow.loadFile(join(__dirname, '../renderer/loading.html'))
   }
@@ -244,7 +235,7 @@ app.whenReady().then(() => {
       })
     )
   }
-  if (isDevelopment) {
+  if (is.dev) {
     menu.append(
       new MenuItem({
         label: 'Debug',
