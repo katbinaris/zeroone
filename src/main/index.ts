@@ -5,7 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import nanodevices from './backend/nanodevices'
 
 // Minimum time to show the splash screen, in milliseconds
-const splashTime = is.dev ? 4000 : 4000
+const splashTime = is.dev ? 5000 : 5000
 const loadingWindowWidth = 800 / 2
 const loadingWindowHeight = 1100 / 2
 

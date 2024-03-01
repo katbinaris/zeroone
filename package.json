@@ -1,9 +1,9 @@
 {
   "name": "zeroone",
   "version": "1.0.0",
-  "description": "An Electron application with Vue and TypeScript",
+  "description": "Configuration Suite for Binaris Devices",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "katbinaris",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
