@@ -28,7 +28,7 @@ class NanoDevices extends EventEmitter {
                             if (this.all_nano_devices[port.serialNumber] === undefined) {
                                 this.all_nano_devices[port.serialNumber] = port;
                                 this.emit('nanodevices:device-attached', port.serialNumber);
-                                console.log('attached', port.serialNumber);
+                                //console.log('attached', port.serialNumber);
                             }
                         }
                     }
@@ -37,7 +37,7 @@ class NanoDevices extends EventEmitter {
                         if (found_nano_devices.indexOf(serialNumber) === -1) {
                             delete this.all_nano_devices[serialNumber];
                             this.emit('nanodevices:device-detached', serialNumber);
-                            console.log('detached', serialNumber);
+                            //console.log('detached', serialNumber);
                         }
                     }
                 }
@@ -70,7 +70,7 @@ class NanoDevices extends EventEmitter {
             if (value.serialNumber)
                 result.push(key);
         }
-        console.log('list_devices', result);
+        //console.log('list_devices', result);
         return result;
     };
 
@@ -95,7 +95,6 @@ class NanoDevices extends EventEmitter {
                 reject('Device not attached');
             }
             else {
-                console.log('nano_device', nano_device);
                 let port = new SerialPort({ path: nano_device.path, baudRate: NANO_BAUD_RATE, autoOpen: false });
                 port.on('error', (err) => {
                     // forward error to FE
