@@ -8,21 +8,19 @@ const NANO_VENDOR_ID = '303A'
 const NANO_BAUD_RATE = 115200
 
 class NanoDevices extends EventEmitter {
-  constructor() {
-    super()
-    this.all_nano_devices = {}
-    this.connected_nano_devices = {}
-  }
+  all_nano_devices: { [key: string]: PortInfo } = {}
+  connected_nano_devices: { [key: string]: { port: SerialPort; data: string } } = {}
 
   _list() {
-    const p = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       SerialPort.list()
         .then((ports: PortInfo[]) => {
-          const found_nano_devices = []
+          const found_nano_devices: string[] = []
           for (const port of ports) {
             if (
               port.productId?.toUpperCase() === NANO_PRODUCT_ID &&
-              port.vendorId?.toUpperCase() === NANO_VENDOR_ID
+              port.vendorId?.toUpperCase() === NANO_VENDOR_ID &&
+              port.serialNumber
             ) {
               found_nano_devices.push(port.serialNumber)
               if (this.all_nano_devices[port.serialNumber] === undefined) {
@@ -45,7 +43,6 @@ class NanoDevices extends EventEmitter {
           reject(error)
         })
     })
-    return p
   }
 
   _handle_data(connected_port, data) {
@@ -65,7 +62,7 @@ class NanoDevices extends EventEmitter {
   }
 
   list_devices() {
-    const result = []
+    const result: string[] = []
     for (const [key, value] of Object.entries(this.all_nano_devices)) {
       if (value.serialNumber) result.push(key)
     }
@@ -84,9 +81,8 @@ class NanoDevices extends EventEmitter {
   }
 
   async connect(deviceid) {
-    const nanodevices = this
-    const p = new Promise((resolve, reject) => {
-      const nano_device = nanodevices.all_nano_devices[deviceid]
+    return new Promise((resolve, reject) => {
+      const nano_device = this.all_nano_devices[deviceid]
       if (nano_device === undefined) {
         reject('Device not attached')
       } else {
@@ -98,23 +94,23 @@ class NanoDevices extends EventEmitter {
         })
         port.on('error', (err) => {
           // forward error to FE
-          nanodevices.emit('nanodevices:error', nano_device.serialNumber, err)
+          this.emit('nanodevices:error', nano_device.serialNumber, err)
         })
         port.on('close', (err) => {
           if (err && err.disconnected) {
             // forward close to FE
-            nanodevices.emit('nanodevices:disconnected', nano_device.serialNumber)
+            this.emit('nanodevices:disconnected', nano_device.serialNumber)
           }
-          delete nanodevices.connected_nano_devices[nano_device.serialNumber]
+          delete this.connected_nano_devices[nano_device.serialNumber!]
         })
         port.on('open', () => {
           resolve(nano_device.serialNumber)
-          nanodevices.connected_nano_devices[nano_device.serialNumber] = { port: port, data: '' }
-          nanodevices.emit('nanodevices:connected', nano_device.serialNumber)
+          this.connected_nano_devices[nano_device.serialNumber!] = { port: port, data: '' }
+          this.emit('nanodevices:connected', nano_device.serialNumber)
         })
         port.on('data', (data) => {
-          const connected_port = nanodevices.connected_nano_devices[nano_device.serialNumber]
-          nanodevices._handle_data(connected_port, data)
+          const connected_port = this.connected_nano_devices[nano_device.serialNumber!]
+          this._handle_data(connected_port, data)
         })
         port.open((err) => {
           if (err) {
@@ -123,17 +119,15 @@ class NanoDevices extends EventEmitter {
         })
       }
     })
-    return p
   }
 
   disconnect(deviceid) {
-    const nanodevices = this
-    const p = new Promise((resolve, reject) => {
-      const nano_device = nanodevices.all_nano_devices[deviceid]
+    return new Promise((resolve, reject) => {
+      const nano_device = this.all_nano_devices[deviceid]
       if (nano_device === undefined) {
         reject('Device not attached')
       } else {
-        if (nanodevices.connected_nano_devices[nano_device.serialNumber] === undefined) {
+        if (this.connected_nano_devices[nano_device.serialNumber!] === undefined) {
           reject('Device not connected')
         } else {
           nano_device.close()
@@ -141,7 +135,6 @@ class NanoDevices extends EventEmitter {
         }
       }
     })
-    return p
   }
 }
 
