@@ -25,6 +25,7 @@
     "@electron-toolkit/utils": "^3.0.0",
     "@intlify/unplugin-vue-i18n": "^2.0.0",
     "@radix-icons/vue": "^1.0.0",
+    "@serialport/bindings-cpp": "^12.0.1",
     "@vueuse/core": "^10.9.0",
     "ajv": "^8.12.0",
     "class-variance-authority": "^0.7.0",
