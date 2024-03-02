@@ -50,7 +50,7 @@ export const useStore = defineStore('main', {
           }
         }
       },
-      previewDeviceModel: 'nanoOne',
+      previewDeviceModel: localStorage.getItem('previewDeviceModel') || 'nanoOne',
       screenOrientation: 90,
 
       // device state as received from the device
@@ -197,6 +197,7 @@ export const useStore = defineStore('main', {
     },
     switchPreviewDeviceModel() {
       this.previewDeviceModel = this.previewDeviceModel === 'nanoOne' ? 'nanoZero' : 'nanoOne'
+      localStorage.setItem('previewDeviceModel', this.previewDeviceModel)
     },
     cycleScreenOrientation() {
       this.screenOrientation = (this.screenOrientation + 90) % 360
