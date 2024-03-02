@@ -1,6 +1,9 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "Vue.vscode-typescript-vue-plugin"
+    "Vue.volar",
+    "kamikillerto.vscode-colorize",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag"
   ]
 }
