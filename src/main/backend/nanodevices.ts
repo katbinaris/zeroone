@@ -9,7 +9,7 @@ const NANO_BAUD_RATE = 115200
 
 class NanoDevices extends EventEmitter {
   all_nano_devices: { [key: string]: PortInfo } = {}
-  connected_nano_devices: { [key: string]: { port: SerialPort; data: string } } = {}
+  connected_nano_devices: { [key: string]: { port: SerialPort } } = {}
 
   _list() {
     return new Promise((resolve, reject) => {
@@ -105,7 +105,7 @@ class NanoDevices extends EventEmitter {
         })
         port.on('open', () => {
           resolve(nano_device.serialNumber)
-          this.connected_nano_devices[nano_device.serialNumber!] = { port: port, data: '' }
+          this.connected_nano_devices[nano_device.serialNumber!] = { port: port }
           this.emit('nanodevices:connected', nano_device.serialNumber)
         })
         port.on('data', (data) => {

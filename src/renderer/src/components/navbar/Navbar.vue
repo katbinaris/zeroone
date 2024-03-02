@@ -86,7 +86,7 @@
         </MenubarMenu>
         <MenubarButton
           class="app-titlebar-button"
-          @click="electron?.openExternal('https://discord.gg/jgRd77YN5T')"
+          @click="electronAPI.openExternal('https://discord.gg/jgRd77YN5T')"
         >
           Community
         </MenubarButton>
@@ -104,10 +104,10 @@
               <p>v0.1</p>
             </MenubarItem>
             <MenubarItem>Contact Support</MenubarItem>
-            <template v-if="electron?.isDevelopment">
+            <template v-if="electronAPI.isDevelopment">
               <MenubarSeparator />
-              <MenubarItem @click="electron?.openDevTools">Developer Tools</MenubarItem>
-              <MenubarItem @click="electron?.reload">Reload</MenubarItem>
+              <MenubarItem @click="electronAPI.openDevTools">Developer Tools</MenubarItem>
+              <MenubarItem @click="electronAPI.reload">Reload</MenubarItem>
             </template>
           </MenubarContent>
         </MenubarMenu>
@@ -124,21 +124,21 @@
         <button
           v-if="minimizable"
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electron?.minimizeWindow"
+          @click="electronAPI.minimizeWindow"
         >
           <Minus class="size-5" />
         </button>
         <button
           v-if="maximizable"
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electron?.toggleMaximizeWindow"
+          @click="electronAPI.toggleMaximizeWindow"
         >
           <Copy v-if="isMaximized" class="size-4" />
           <Square v-else class="mr-0.5 size-3.5" />
         </button>
         <button
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electron?.closeWindow"
+          @click="electronAPI.closeWindow"
         >
           <X class="mr-0.5 size-5" />
         </button>
@@ -171,9 +171,9 @@ const showDisconnectButton = ref(false)
 
 const isMaximized = ref(false)
 
-const { electron } = window
+const { electronAPI } = window
 
-const isMacOS = electron?.platform === 'darwin'
+const isMacOS = electronAPI.platform === 'darwin'
 const zoomFactor = ref(1)
 
 const previewDeviceNames = ref({
@@ -185,12 +185,12 @@ onMounted(() => {
   window.addEventListener('resize', () => {
     zoomFactor.value = window.outerWidth / window.innerWidth
   })
-  electron?.onMaximized((maximized) => {
+  electronAPI.onMaximized((maximized) => {
     console.log(maximized)
     isMaximized.value = true
   })
 
-  electron?.onUnmaximized(() => {
+  electronAPI.onUnmaximized(() => {
     isMaximized.value = false
   })
 })

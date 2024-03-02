@@ -211,7 +211,7 @@ export const useStore = defineStore('main', {
         // TODO auto-connect to the device
         const deviceid = Object.keys(this.devices)[0]
         console.log('Auto-connecting to device ', deviceid)
-        window.nanodevices.connect(deviceid)
+        window.nanoDevicesAPI.connect(deviceid)
       }
     },
     update_devices(deviceid, attached) {
@@ -227,7 +227,7 @@ export const useStore = defineStore('main', {
       if (Object.keys(this.devices).length == 1) {
         // TODO auto-connect to the device
         console.log('Auto-connecting to device ', deviceid)
-        window.nanodevices.connect(deviceid)
+        window.nanoDevicesAPI.connect(deviceid)
       }
     },
     device_detached(deviceid) {

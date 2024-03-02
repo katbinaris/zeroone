@@ -20,10 +20,8 @@ const app = createApp(App)
 app.use(pinia)
 app.use(i18n)
 
-app.config.globalProperties.window = window
-
 // TODO remove this
-window.nanodevices.on_event('*', (eventid, deviceid, ...data) => {
+window.nanoDevicesAPI.on_event('*', (eventid, deviceid, ...data) => {
   console.log('Event on window ', eventid, deviceid, data)
 })
 
