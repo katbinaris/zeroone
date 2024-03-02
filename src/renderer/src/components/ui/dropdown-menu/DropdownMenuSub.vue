@@ -3,7 +3,7 @@ import {
   DropdownMenuSub,
   type DropdownMenuSubEmits,
   type DropdownMenuSubProps,
-  useForwardPropsEmits,
+  useForwardPropsEmits
 } from 'radix-vue'
 
 const props = defineProps<DropdownMenuSubProps>()
