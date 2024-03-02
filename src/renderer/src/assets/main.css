@@ -34,6 +34,9 @@
     --ring: 240 10% 3.9%;
  
     --radius: 0.5rem;
+
+    --scrollbar-foreground: rgb(39 39 42);
+    --scrollbar-background: transparent;
   }
  
   .dark {
