@@ -4,14 +4,9 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import nanodevices from './backend/nanodevices'
 
-// Minimum time to show the splash screen, in milliseconds
-const splashTime = is.dev ? 5000 : 5000
-const loadingWindowWidth = 800 / 2
-const loadingWindowHeight = 1100 / 2
-
 const zoomFactor = 1
-const mainWindowWidth = 1111
-const mainWindowHeight = 666
+const windowWidth = 1111
+const windowHeight = 666
 
 const appMenu = {
   device: {
@@ -32,13 +27,13 @@ const createMainWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     show: false,
-    width: mainWindowWidth,
-    height: mainWindowHeight,
+    width: windowWidth,
+    height: windowHeight,
     titleBarStyle: 'hidden',
     trafficLightPosition: { x: 10, y: 10 },
     resizable: true,
-    minWidth: mainWindowWidth / 3,
-    minHeight: mainWindowHeight / 3,
+    minWidth: windowWidth / 3,
+    minHeight: windowHeight / 3,
     maximizable: true,
     fullscreenable: false,
     center: true,
@@ -52,12 +47,12 @@ const createMainWindow = () => {
     }
   })
 
-  mainWindow.setAspectRatio(mainWindowWidth / mainWindowHeight)
+  mainWindow.setAspectRatio(windowWidth / windowHeight)
   mainWindow.webContents.on('dom-ready', () => {
     mainWindow.webContents.setZoomFactor(zoomFactor)
   })
   mainWindow.on('resize', () => {
-    mainWindow.webContents.setZoomFactor((zoomFactor * mainWindow.getSize()[0]) / mainWindowWidth)
+    mainWindow.webContents.setZoomFactor((zoomFactor * mainWindow.getSize()[0]) / windowWidth)
   })
   mainWindow.on('maximize', () => {
     mainWindow.webContents.send('electron:maximized')
@@ -79,56 +74,11 @@ const createMainWindow = () => {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 
-  return mainWindow
-}
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
 
-const createLoadingWindow = (mainWindow) => {
-  const loadingWindow = new BrowserWindow({
-    show: false,
-    width: loadingWindowWidth,
-    height: loadingWindowHeight,
-    resizable: false,
-    fullscreenable: false,
-    maximizable: false,
-    transparent: true,
-    frame: false,
-    center: true,
-    backgroundColor: 'black',
-    ...(process.platform === 'linux' ? { icon } : {}),
-    webPreferences: {
-      devTools: is.dev,
-      sandbox: false
-    }
-  })
-  const startTime = Date.now()
-  let loadingTimeout
-  mainWindow.webContents.once('did-finish-load', () => {
-    loadingTimeout = setTimeout(
-      () => {
-        mainWindow.show()
-        mainWindow.focus()
-        loadingWindow.close()
-      },
-      Math.max(0, splashTime - (Date.now() - startTime))
-    )
-  })
-  loadingWindow.once('closed', () => {
-    if (!mainWindow.isFocusable()) {
-      clearTimeout(loadingTimeout)
-      mainWindow.close()
-    }
-  })
-  loadingWindow.webContents.once('did-finish-load', () => {
-    loadingWindow.show()
-    loadingWindow.focus()
-  })
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    loadingWindow.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/loading.html`)
-  } else {
-    loadingWindow.loadFile(join(__dirname, '../renderer/loading.html'))
-  }
+  return mainWindow
 }
 
 // This method will be called when Electron has finished
@@ -150,7 +100,6 @@ app.whenReady().then(() => {
   ipcMain.handle('nanodevices:disconnect', nanodevices.disconnect)
   ipcMain.handle('nanodevices:send', nanodevices.send)
   const mainWindow = createMainWindow()
-  createLoadingWindow(mainWindow)
   ipcMain.on('electron:minimizeWindow', () => mainWindow.minimize())
   ipcMain.on('electron:toggleMaximizeWindow', () => {
     if (mainWindow.isMaximized()) {
