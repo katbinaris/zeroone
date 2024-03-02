@@ -1,9 +1,10 @@
 import { SerialPort } from 'serialport'
+import { PortInfo } from '@serialport/bindings-interface'
 import { EventEmitter } from 'events'
 
 // JTAG interface, TODO: change me!
 const NANO_PRODUCT_ID = '1001'
-const NANO_VENDOR_ID = '303a'
+const NANO_VENDOR_ID = '303A'
 const NANO_BAUD_RATE = 115200
 
 class NanoDevices extends EventEmitter {
@@ -15,13 +16,14 @@ class NanoDevices extends EventEmitter {
 
   _list() {
     const p = new Promise((resolve, reject) => {
-      SerialPort.list().then((ports, err) => {
-        if (err) {
-          reject(err) // TODO format for errors?
-        } else {
+      SerialPort.list()
+        .then((ports: PortInfo[]) => {
           const found_nano_devices = []
           for (const port of ports) {
-            if (port.productId === NANO_PRODUCT_ID && port.vendorId === NANO_VENDOR_ID) {
+            if (
+              port.productId?.toUpperCase() === NANO_PRODUCT_ID &&
+              port.vendorId?.toUpperCase() === NANO_VENDOR_ID
+            ) {
               found_nano_devices.push(port.serialNumber)
               if (this.all_nano_devices[port.serialNumber] === undefined) {
                 this.all_nano_devices[port.serialNumber] = port
@@ -38,8 +40,10 @@ class NanoDevices extends EventEmitter {
               console.log('detached', serialNumber)
             }
           }
-        }
-      })
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
     return p
   }
