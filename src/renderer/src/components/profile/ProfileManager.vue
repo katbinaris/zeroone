@@ -69,7 +69,7 @@
               <Collapsible v-model:open="collapse[dragCategory.element.name]" :default-open="true">
                 <!-- TODO: Make profile groups computed instead defining them of using v-for -->
                 <CollapsibleTrigger
-                  class="h-12 w-full border-0 border-b bg-zinc-900 py-2 text-left text-sm text-muted-foreground"
+                  class="group h-12 w-full border-0 border-b bg-zinc-900 py-2 text-left text-sm text-muted-foreground"
                 >
                   <ChevronRight
                     class="chevrot mb-0.5 ml-4 inline-block size-4 transition-transform"
@@ -78,6 +78,9 @@
                   }}<span class="font-heading text-sm text-zinc-600">
                     ({{ dragCategory.element.profiles?.length || 0 }})</span
                   >
+                  <span class="float-right mx-4 w-4 cursor-grab text-zinc-600">
+                    <GripHorizontal class="mb-0.5 inline-block size-4" />
+                  </span>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <TransitionGroup>
@@ -131,7 +134,14 @@
 </template>
 <script setup>
 import { Separator } from '@renderer/components/ui/separator'
-import { ChevronRight, Plus, ArrowLeft, List, MoreHorizontal } from 'lucide-vue-next'
+import {
+  ChevronRight,
+  Plus,
+  ArrowLeft,
+  List,
+  MoreHorizontal,
+  GripHorizontal
+} from 'lucide-vue-next'
 import { ref, watch } from 'vue'
 import {
   Collapsible,
