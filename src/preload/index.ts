@@ -20,8 +20,8 @@ contextBridge.exposeInMainWorld('nanoDevicesAPI', {
       }
     })
   },
-  send(deviceid, jsonstr) {
-    return ipcRenderer.invoke('nanodevices:send', deviceid, jsonstr)
+  send(deviceid, obj) {
+    return ipcRenderer.invoke('nanodevices:send', deviceid, JSON.stringify(obj))
   }
 })
 
