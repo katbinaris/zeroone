@@ -93,17 +93,36 @@
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">Help</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem>Software Source</MenubarItem>
-            <MenubarItem>Hardware Source</MenubarItem>
+            <MenubarItem @click="electronAPI.openExternal('https://github.com/katbinaris/zeroone')"
+              >Software Source</MenubarItem
+            >
+            <MenubarItem
+              @click="electronAPI.openExternal('https://github.com/katbinaris/NanoD_RatchetH1')"
+              >Firmware Source</MenubarItem
+            >
+            <MenubarItem
+              @click="electronAPI.openExternal('https://github.com/katbinaris/Nano_D_PlusPlus')"
+              >Hardware Source</MenubarItem
+            >
             <MenubarSeparator />
-            <MenubarItem>Report Software Issue</MenubarItem>
-            <MenubarItem>Report Hardware Issue</MenubarItem>
+            <MenubarItem
+              @click="electronAPI.openExternal('https://github.com/katbinaris/zeroone/issues/new')"
+              >Report Software Issue</MenubarItem
+            >
+            <MenubarItem
+              @click="
+                electronAPI.openExternal('https://github.com/katbinaris/NanoD_RatchetH1/issues/new')
+              "
+              >Report Device Issue</MenubarItem
+            >
             <MenubarSeparator />
             <MenubarItem class="flex justify-between">
               <p>Software Version:&nbsp;</p>
               <p>v0.1</p>
             </MenubarItem>
-            <MenubarItem>Contact Support</MenubarItem>
+            <MenubarItem @click="electronAPI.openExternal('https://discord.gg/jgRd77YN5T')"
+              >Contact Support</MenubarItem
+            >
             <template v-if="electronAPI.isDevelopment">
               <MenubarSeparator />
               <MenubarItem @click="electronAPI.openDevTools">Developer Tools</MenubarItem>
