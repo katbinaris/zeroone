@@ -91,8 +91,8 @@
                       @end="drag = false"
                       @change="(event) => onProfileDrop(event, dragCategory.index)"
                     >
-                      <template v-if="dragCategory.element.profiles.length === 0" #header>
-                        <div class="hideable-header flex h-12 items-center justify-center">
+                      <template #header>
+                        <div class="hideable-header m-2 flex h-12 items-center justify-center">
                           <MoreHorizontal class="w-4 text-zinc-600" />
                         </div>
                       </template>
