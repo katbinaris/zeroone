@@ -53,7 +53,7 @@ class NanoDevices extends EventEmitter {
         if (lines[i].length > 0) {
           if (lines[i].startsWith('{'))
             // if its a json object
-            this.emit('nanodevices:update', connected_port.serialNumber, lines[i])
+            this.emit('nanodevices:update', connected_port.port.serialNumber, lines[i])
           else console.log('Device: ' + lines[i]) // otherwise just log it
         }
       }
@@ -104,9 +104,9 @@ class NanoDevices extends EventEmitter {
           delete this.connected_nano_devices[nano_device.serialNumber!]
         })
         port.on('open', () => {
-          resolve(nano_device.serialNumber)
           this.connected_nano_devices[nano_device.serialNumber!] = { port: port }
           this.emit('nanodevices:connected', nano_device.serialNumber)
+          resolve(nano_device.serialNumber)
         })
         port.on('data', (data) => {
           const connected_port = this.connected_nano_devices[nano_device.serialNumber!]
