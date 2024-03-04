@@ -12,6 +12,8 @@ import mockData from '@renderer/data/nanoConfig.json'
 
 // const ajv = new Ajv() // see below
 
+const { nanoDevicesAPI } = window
+
 export const useStore = defineStore('main', {
   state: () => {
     return {
@@ -202,6 +204,18 @@ export const useStore = defineStore('main', {
     cycleScreenOrientation() {
       this.screenOrientation = (this.screenOrientation + 90) % 360
     },
+    setKeyDefaultColor(color) {
+      // this.selectedProfile.keys[this.selectedKey].default = color
+      const props = {}
+      props[`button${this.selectedKey.toUpperCase()}Idle`] = color.rgbNumber()
+      nanoDevicesAPI.send(this.connectedId, { p: { name: 'Default Profile', ...props } })
+    },
+    setKeyPressedColor(color) {
+      // this.selectedProfile.keys[this.selectedKey].pressed = color
+      const props = {}
+      props[`button${this.selectedKey.toUpperCase()}Press`] = color.rgbNumber()
+      nanoDevicesAPI.send(this.connectedId, { p: { name: 'Default Profile', ...props } })
+    },
 
     // devices, device attachment, connection, and disconnection
     init_devices(ids) {
@@ -244,7 +258,7 @@ export const useStore = defineStore('main', {
       this.connectedId = deviceid
       // TODO load profiles from device
       // nanoDevicesAPI.send(deviceid, { profiles: "#all" }) // request profiles
-      // "Default Profile", for now, is the only profile after the device 
+      // "Default Profile", for now, is the only profile after the device
       // starts up, so it is also the current (eg. 'selected') profile
       // nanoDevicesAPI.send(deviceid, { p: "Default Profile" }) // request Default Profile
 

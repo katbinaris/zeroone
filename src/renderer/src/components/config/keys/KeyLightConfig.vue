@@ -8,7 +8,10 @@ import { Palette } from 'lucide-vue-next'
 import ConfigSection from '@renderer/components/common/ConfigSection.vue'
 import PaletteInput from '@renderer/components/common/PaletteInput.vue'
 import Color from 'color'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useStore } from '@renderer/store'
+
+const store = useStore()
 
 const keyColors = ref({
   default: {
@@ -20,4 +23,13 @@ const keyColors = ref({
     color: Color('#d0078f')
   }
 })
+
+watch(
+  keyColors,
+  (newVal) => {
+    store.setKeyDefaultColor(newVal.default.color)
+    store.setKeyPressedColor(newVal.pressed.color)
+  },
+  { deep: true }
+)
 </script>

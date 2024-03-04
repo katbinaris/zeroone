@@ -45,7 +45,7 @@ class NanoDevices extends EventEmitter {
     })
   }
 
-  _handle_data(connected_port, data) {
+  _handle_data(connected_port, data, serialNumber) {
     connected_port.data += data
     const lines = connected_port.data.split('\n')
     if (lines.length > 1) {
@@ -53,7 +53,7 @@ class NanoDevices extends EventEmitter {
         if (lines[i].length > 0) {
           if (lines[i].startsWith('{'))
             // if its a json object
-            this.emit('nanodevices:update', connected_port.port.serialNumber, lines[i])
+            this.emit('nanodevices:update', serialNumber, lines[i])
           else console.log('Device: ' + lines[i]) // otherwise just log it
         }
       }
@@ -110,7 +110,7 @@ class NanoDevices extends EventEmitter {
         })
         port.on('data', (data) => {
           const connected_port = this.connected_nano_devices[nano_device.serialNumber!]
-          this._handle_data(connected_port, data)
+          this._handle_data(connected_port, data, nano_device.serialNumber)
         })
         port.open((err) => {
           if (err) {

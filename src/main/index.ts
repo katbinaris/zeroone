@@ -97,8 +97,8 @@ app.whenReady().then(() => {
 
   ipcMain.handle('nanodevices:list_devices', () => nanodevices.list_devices())
   ipcMain.handle('nanodevices:connect', (event, deviceid) => nanodevices.connect(deviceid))
-  ipcMain.handle('nanodevices:disconnect', nanodevices.disconnect)
-  ipcMain.handle('nanodevices:send', nanodevices.send)
+  ipcMain.handle('nanodevices:disconnect', () => nanodevices.disconnect)
+  ipcMain.handle('nanodevices:send', (event, ...data) => nanodevices.send(data[0], data[1]))
   const mainWindow = createMainWindow()
   ipcMain.on('electron:minimizeWindow', () => mainWindow.minimize())
   ipcMain.on('electron:toggleMaximizeWindow', () => {
