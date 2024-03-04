@@ -243,6 +243,13 @@ export const useStore = defineStore('main', {
       this.connected = true
       this.connectedId = deviceid
       // TODO load profiles from device
+      // nanoDevicesAPI.send({ profiles: "#all" }) // request profiles
+      // "Default Profile", for now, is the only profile after the device 
+      // starts up, so it is also the current (eg. 'selected') profile
+      // nanoDevicesAPI.send({ p: "Default Profile" }) // request Default Profile
+
+      // TODO maybe you want to request all the profiles right now?
+      // or only on demand?
     },
     device_disconnected(deviceid) {
       this.devices[deviceid].connected = false
