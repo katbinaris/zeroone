@@ -49,7 +49,7 @@
         'bg-zinc-300 font-semibold text-black hover:bg-zinc-200': selected,
         'text-muted-foreground hover:bg-zinc-900': !selected
       }"
-      class="h-12 flex-1 truncate rounded-lg pr-4 text-left text-sm transition-all"
+      class="flex-1 truncate rounded-lg pr-4 text-left text-sm transition-all"
       @click="!editing && $emit('select') && $refs.profileTitle.scramble()"
     >
       <span class="mx-2 w-4 cursor-grab" :class="{ 'ml-2': !draggable }">
@@ -75,9 +75,9 @@
         :class="{
           'bg-zinc-300 text-black hover:bg-zinc-200': selected,
           'text-zinc-100 hover:bg-zinc-900': !selected,
-          'group-hover:w-12': !editing
+          'group-focus-within:w-12 group-hover:w-12': !editing
         }"
-        class="flex h-12 w-0 shrink-0 items-center justify-center rounded-lg transition-all"
+        class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
         @click="startEditing"
       >
         <PenLine class="size-4" />
@@ -86,10 +86,10 @@
         :class="{
           'bg-zinc-300 text-black hover:bg-zinc-200': selected,
           'text-zinc-100 hover:bg-zinc-900': !selected,
-          'group-hover:w-12': !editing,
+          'group-focus-within:w-12 group-hover:w-12': !editing,
           'rounded-l-lg': !nameEditable
         }"
-        class="flex h-12 w-0 shrink-0 items-center justify-center rounded-lg transition-all"
+        class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
         @click="$emit('duplicate')"
       >
         <Copy class="size-4" />
@@ -98,9 +98,9 @@
         :class="{
           'bg-orange-700 text-black hover:bg-orange-600': selected,
           'bg-orange-900/50 text-zinc-100 hover:bg-orange-900': !selected,
-          'group-hover:w-12': !editing
+          'group-focus-within:w-12 group-hover:w-12': !editing
         }"
-        class="flex h-12 w-0 shrink-0 items-center justify-center rounded-lg transition-all"
+        class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
         @click="confirmDelete = true"
       >
         <Trash2 class="size-4" />
@@ -111,9 +111,9 @@
         :class="{
           'bg-orange-600 text-black hover:bg-orange-500': selected,
           'bg-orange-900/50 text-zinc-100 hover:bg-orange-900': !selected,
-          'group-hover:w-12': !editing
+          'group-focus-within:w-12 group-hover:w-12': !editing
         }"
-        class="flex h-12 w-0 shrink-0 items-center justify-center rounded-lg transition-all"
+        class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
         @click="$emit('delete', profile.id)"
       >
         <Check class="size-4" />
@@ -122,9 +122,9 @@
         :class="{
           'bg-zinc-300 text-black hover:bg-zinc-200': selected,
           'text-zinc-100 hover:bg-zinc-900': !selected,
-          'group-hover:w-12': !editing
+          'group-focus-within:w-12 group-hover:w-12': !editing
         }"
-        class="flex h-12 w-0 shrink-0 items-center justify-center rounded-lg transition-all"
+        class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
         @click="confirmDelete = false"
       >
         <X class="size-4" />
