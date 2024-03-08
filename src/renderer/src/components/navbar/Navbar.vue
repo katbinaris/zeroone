@@ -132,6 +132,20 @@
         </MenubarMenu>
       </div>
       <div class="grow" />
+      <div class="flex items-center gap-2 px-2">
+        <div v-if="numberOfChanges" class="text-sm">
+          <PenLine class="inline-block h-4" />{{ numberOfChanges }} Changes
+        </div>
+        <MenubarButton class="app-titlebar-button border-2"> Revert </MenubarButton>
+        <MenubarButton
+          :class="{
+            'bg-zinc-200 text-zinc-950 hover:bg-zinc-100 hover:text-zinc-950': numberOfChanges
+          }"
+          class="app-titlebar-button border-2"
+        >
+          Save
+        </MenubarButton>
+      </div>
       <MenubarButton
         v-if="showDisconnectButton"
         class="app-titlebar-button border-2"
@@ -176,7 +190,7 @@ import {
   MenubarTrigger
 } from '@renderer/components/ui/menubar'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
-import { Minus, Square, Copy, X } from 'lucide-vue-next'
+import { Minus, Square, Copy, X, PenLine } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
 import { Separator } from '@renderer/components/ui/separator'
 import { useStore } from '@renderer/store'
@@ -194,6 +208,8 @@ const { electronAPI } = window
 
 const isMacOS = electronAPI.platform === 'darwin'
 const zoomFactor = ref(1)
+
+const numberOfChanges = ref(27)
 
 const previewDeviceNames = ref({
   nanoOne: 'One',
