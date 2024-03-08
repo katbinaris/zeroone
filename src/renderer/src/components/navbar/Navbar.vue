@@ -138,10 +138,12 @@
         </div>
         <MenubarButton class="app-titlebar-button border-2"> Revert </MenubarButton>
         <MenubarButton
-          :class="{
-            'bg-zinc-200 text-zinc-950 hover:bg-zinc-100 hover:text-zinc-950': numberOfChanges
-          }"
-          class="app-titlebar-button border-2"
+          :class="
+            numberOfChanges
+              ? 'border border-zinc-100 bg-zinc-300 text-zinc-950 hover:bg-zinc-200 hover:text-zinc-950'
+              : 'border-2'
+          "
+          class="app-titlebar-button"
         >
           Save
         </MenubarButton>
