@@ -7,7 +7,7 @@
         @click="toggle = !toggle"
       >
         <component :is="iconComponent" v-if="iconComponent" class="mr-2 size-4" />
-        <h2 class="py-4 text-sm">{{ title }}<slot name="title" /></h2>
+        <h2 class="flex flex-1 items-center py-4 text-sm">{{ title }}<slot name="title" /></h2>
         <Switch
           v-if="showToggle"
           :checked="toggle"

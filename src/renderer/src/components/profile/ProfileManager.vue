@@ -61,6 +61,7 @@
             item-key="name"
             :list="store.profileCategories"
             v-bind="dragOptions"
+            handle=".category-handle"
             @start="drag = true"
             @end="drag = false"
             @change="onCategoryDrop"
@@ -79,45 +80,44 @@
                     ({{ dragCategory.element.profiles?.length || 0 }})</span
                   >
                   <span class="float-right mx-4 w-4 cursor-grab text-zinc-600">
-                    <GripHorizontal class="mb-0.5 inline-block size-4" />
+                    <GripHorizontal class="category-handle mb-0.5 inline-block size-4" />
                   </span>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <TransitionGroup>
-                    <draggable
-                      key="profilesDraggable"
-                      group="profiles"
-                      item-key="id"
-                      :list="dragCategory.element.profiles"
-                      v-bind="dragOptions"
-                      @start="drag = true"
-                      @end="drag = false"
-                      @change="(event) => onProfileDrop(event, dragCategory.index)"
-                    >
-                      <template #header>
-                        <div class="hideable-header m-2 flex h-12 items-center justify-center">
-                          <MoreHorizontal class="w-4 text-zinc-600" />
-                        </div>
-                      </template>
-                      <template #item="dragProfile">
-                        <div :key="dragProfile.element.name">
-                          <ProfileButton
-                            :profile="dragProfile.element"
-                            :show-hover-buttons="!drag"
-                            :selected="store.selectedProfile?.id === dragProfile.element.id"
-                            @select="
-                              () => {
-                                store.selectProfile(dragProfile.element.id)
-                                showProfileConfig = true
-                              }
-                            "
-                            @duplicate="store.duplicateProfile(dragProfile.element.id)"
-                            @delete="store.removeProfile(dragProfile.element.id)"
-                          />
-                        </div>
-                      </template>
-                    </draggable>
-                  </TransitionGroup>
+                  <draggable
+                    key="profilesDraggable"
+                    group="profiles"
+                    item-key="id"
+                    :list="dragCategory.element.profiles"
+                    v-bind="dragOptions"
+                    handle=".profile-handle"
+                    @start="drag = true"
+                    @end="drag = false"
+                    @change="(event) => onProfileDrop(event, dragCategory.index)"
+                  >
+                    <template #header>
+                      <div class="hideable-header m-2 flex h-12 items-center justify-center">
+                        <MoreHorizontal class="w-4 text-zinc-600" />
+                      </div>
+                    </template>
+                    <template #item="dragProfile">
+                      <div :key="dragProfile.element.name">
+                        <ProfileButton
+                          :profile="dragProfile.element"
+                          :show-hover-buttons="!drag"
+                          :selected="store.selectedProfile?.id === dragProfile.element.id"
+                          @select="
+                            () => {
+                              store.selectProfile(dragProfile.element.id)
+                              showProfileConfig = true
+                            }
+                          "
+                          @duplicate="store.duplicateProfile(dragProfile.element.id)"
+                          @delete="store.removeProfile(dragProfile.element.id)"
+                        />
+                      </div>
+                    </template>
+                  </draggable>
                 </CollapsibleContent>
               </Collapsible>
             </template>

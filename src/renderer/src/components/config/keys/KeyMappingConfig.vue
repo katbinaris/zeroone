@@ -1,92 +1,62 @@
 <template>
-  <ConfigSection title="Key Mapping" :icon-component="PlusSquare">
-    <template #title
-      ><span class="text-zinc-500"> ({{ store.selectedKey }})</span></template
+  <ConfigSection :title="`${store.selectedKey} Pressed`" :icon-component="PanelBottomClose">
+    <template #title>
+      <span class="text-zinc-500">&nbsp;({{ actionsPressed.length }})</span></template
     >
-    <div class="my-4 px-8">
-      <span class="font-mono text-sm text-muted-foreground">Action:</span>
-      <Popover v-model:open="open">
-        <PopoverTrigger as-child>
-          <Button
-            ref="comboboxButton"
-            variant="outline"
-            role="combobox"
-            :aria-expanded="open"
-            class="my-2 w-full justify-between"
-          >
-            <ScrambleText :text="value ? actionOptions[value] : 'Select an action...'" />
-            <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent class="p-0" :style="{ width: $refs.comboboxButton?.$el.offsetWidth }">
-          <Command>
-            <CommandInput class="h-9" placeholder="Search actions..." />
-            <CommandEmpty>
-              <ScrambleText scramble-on-mount text="No actions found." />
-            </CommandEmpty>
-            <CommandList>
-              <CommandGroup>
-                <CommandItem
-                  v-for="(action, key) in actionOptions"
-                  :key="key"
-                  :value="action"
-                  @select="
-                    () => {
-                      value = key
-                      open = false
-                    }
-                  "
-                >
-                  {{ action }}
-                  <Check
-                    :class="cn('ml-auto h-4 w-4', value === key ? 'opacity-100' : 'opacity-0')"
-                  />
-                </CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
-    </div>
-    <WIP />
+    <ActionGroup :actions="actionsPressed" class="p-2" />
+  </ConfigSection>
+  <ConfigSection :title="`${store.selectedKey} Released`" :icon-component="PanelBottomOpen">
+    <template #title>
+      <span class="text-zinc-500">&nbsp;({{ actionsReleased.length }})</span></template
+    >
+    <ActionGroup :actions="actionsReleased" class="p-2" />
+  </ConfigSection>
+  <ConfigSection :title="`${store.selectedKey} Held`" :icon-component="Clock2">
+    <template #title>
+      <span class="text-zinc-500">&nbsp;({{ actionsHeld.length }})</span></template
+    >
+    <ActionGroup :actions="actionsHeld" class="p-2" />
   </ConfigSection>
 </template>
 <script setup>
-import { PlusSquare, ChevronsUpDown, Check } from 'lucide-vue-next'
+import { PanelBottomClose, PanelBottomOpen, Clock2 } from 'lucide-vue-next'
 import ConfigSection from '@renderer/components/common/ConfigSection.vue'
-import WIP from '@renderer/components/WIP.vue'
-import { Popover, PopoverTrigger, PopoverContent } from '@renderer/components/ui/popover'
-import { Button } from '@renderer/components/ui/button'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList
-} from '@renderer/components/ui/command'
-import { ref } from 'vue'
-import { cn } from '@renderer/lib/utils'
-import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { useStore } from '@renderer/store'
+import { ref } from 'vue'
+import ActionGroup from '../actions/ActionGroup.vue'
 
 const store = useStore()
-
-const actionOptions = ref({
-  sendKey: 'Press Key or Combination',
-  sendString: 'Type a String',
-  sendMouse: 'Move, Scroll or Click',
-  sendGamepad: 'Send a Gamepad Input',
-  sendMidi: 'Send a MIDI Message',
-  sendOsc: 'Send an OSC Message',
-  sendSerial: 'Send a Serial Message',
-  controlMedia: 'Control Media Playback',
-  controlSystem: 'Control your OS',
-  runProgram: 'Start a Program'
-})
-
-const comboboxButton = ref(null)
-
-const open = ref(false)
-const value = ref('')
+const actionsPressed = ref([
+  {
+    id: '1'
+  },
+  {
+    id: '2'
+  },
+  {
+    id: '3'
+  }
+])
+const actionsReleased = ref([
+  {
+    id: '4'
+  },
+  {
+    id: '5'
+  },
+  {
+    id: '6'
+  }
+])
+const actionsHeld = ref([
+  {
+    id: '7'
+  },
+  {
+    id: '8'
+  },
+  {
+    id: '9'
+  }
+])
 </script>

@@ -3,7 +3,7 @@
     class="m-2 flex h-12 overflow-hidden rounded-lg transition-all"
     :class="{
       'border border-zinc-100 bg-zinc-300': selected,
-      'border border-transparent bg-zinc-900/30 hover:border-zinc-900': !selected,
+      'border border-zinc-800/50 bg-zinc-900/30': !selected,
       group: showHoverButtons
     }"
   >
@@ -26,7 +26,7 @@
         class="h-full min-w-0 flex-1 rounded-lg bg-transparent pl-8 text-sm transition-all focus-visible:outline-none focus-visible:ring-0"
         :class="{
           'bg-zinc-300 font-semibold text-black hover:bg-zinc-200': selected,
-          'text-muted-foreground hover:bg-zinc-900': !selected
+          'text-muted-foreground hover:bg-zinc-800': !selected
         }"
         @blur="onNameInputBlur"
       />
@@ -35,7 +35,7 @@
         type="submit"
         :class="{
           'bg-zinc-300 text-black hover:bg-zinc-200': selected,
-          'text-zinc-100 hover:bg-zinc-900': !selected
+          'text-zinc-100 hover:bg-zinc-800': !selected
         }"
         class="flex aspect-square h-full shrink-0 items-center justify-center rounded-lg transition-all"
       >
@@ -47,7 +47,7 @@
       v-else
       :class="{
         'bg-zinc-300 font-semibold text-black hover:bg-zinc-200': selected,
-        'text-muted-foreground hover:bg-zinc-900': !selected
+        'text-muted-foreground hover:bg-zinc-800': !selected
       }"
       class="flex-1 truncate rounded-lg pr-4 text-left text-sm transition-all"
       @click="!editing && $emit('select') && $refs.profileTitle.scramble()"
@@ -56,7 +56,7 @@
         <GripHorizontal
           v-if="draggable"
           :class="{ 'text-zinc-600': selected, 'text-muted-foreground': !selected }"
-          class="mb-0.5 inline-block size-4 opacity-0 transition-all group-hover:opacity-100"
+          class="profile-handle mb-0.5 inline-block size-4 opacity-0 transition-all group-hover:opacity-100"
         />
       </span>
       <ScrambleText
@@ -74,7 +74,7 @@
         v-if="nameEditable"
         :class="{
           'bg-zinc-300 text-black hover:bg-zinc-200': selected,
-          'text-zinc-100 hover:bg-zinc-900': !selected,
+          'text-zinc-100 hover:bg-zinc-800': !selected,
           'group-focus-within:w-12 group-hover:w-12': !editing
         }"
         class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
@@ -85,7 +85,7 @@
       <button
         :class="{
           'bg-zinc-300 text-black hover:bg-zinc-200': selected,
-          'text-zinc-100 hover:bg-zinc-900': !selected,
+          'text-zinc-100 hover:bg-zinc-800': !selected,
           'group-focus-within:w-12 group-hover:w-12': !editing,
           'rounded-l-lg': !nameEditable
         }"
@@ -121,7 +121,7 @@
       <button
         :class="{
           'bg-zinc-300 text-black hover:bg-zinc-200': selected,
-          'text-zinc-100 hover:bg-zinc-900': !selected,
+          'text-zinc-100 hover:bg-zinc-800': !selected,
           'group-focus-within:w-12 group-hover:w-12': !editing
         }"
         class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
