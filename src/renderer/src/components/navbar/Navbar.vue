@@ -132,22 +132,24 @@
         </MenubarMenu>
       </div>
       <div class="grow" />
-      <div class="flex items-center gap-2 px-2">
-        <div v-if="numberOfChanges" class="text-sm">
-          <PenLine class="inline-block h-4" />{{ numberOfChanges }} Changes
+      <Transition name="fade">
+        <div v-if="store.connected" class="flex items-center gap-2 px-2">
+          <div v-if="numberOfChanges" class="text-sm">
+            <PenLine class="inline-block h-4" />{{ numberOfChanges }} Changes
+          </div>
+          <MenubarButton class="app-titlebar-button border-2"> Revert </MenubarButton>
+          <MenubarButton
+            :class="
+              numberOfChanges
+                ? 'border border-zinc-100 bg-zinc-300 text-zinc-950 hover:bg-zinc-200 hover:text-zinc-950'
+                : 'border-2'
+            "
+            class="app-titlebar-button"
+          >
+            Save
+          </MenubarButton>
         </div>
-        <MenubarButton class="app-titlebar-button border-2"> Revert </MenubarButton>
-        <MenubarButton
-          :class="
-            numberOfChanges
-              ? 'border border-zinc-100 bg-zinc-300 text-zinc-950 hover:bg-zinc-200 hover:text-zinc-950'
-              : 'border-2'
-          "
-          class="app-titlebar-button"
-        >
-          Save
-        </MenubarButton>
-      </div>
+      </Transition>
       <MenubarButton
         v-if="showDisconnectButton"
         class="app-titlebar-button border-2"
@@ -239,5 +241,17 @@ onMounted(() => {
 
 .app-titlebar-button {
   -webkit-app-region: no-drag;
+}
+.fade-enter-active {
+  transition: transform 500ms ease;
+  transition-delay: 1000ms;
+}
+.fade-leave-active {
+  transition: transform 250ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  transform: translateY(-3.5rem);
 }
 </style>
