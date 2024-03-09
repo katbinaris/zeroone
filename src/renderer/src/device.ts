@@ -24,16 +24,17 @@ export const useMessageHandlers = function (store) {
         // TODO remove
         console.log('Device present, idle since: ', message.idle)
       }
+      // Moved these two up from handle_event_message
+      // Event messages don't include the event key atm, so handle_event_message was never called
+      if (message.hasOwnProperty('ks')) {
+        store.update_keystates(message.ks)
+      }
+      if (message.hasOwnProperty('a')) {
+        store.update_knob_position(message.t, message.a, message.v)
+      }
     },
 
-    handle_event_message: (event) => {
-      if (event.ks) {
-        store.update_keystates(event.ks)
-      }
-      if (event.hasOwnProperty('a')) {
-        store.update_knob_position(event.t, event.a, event.v)
-      }
-    },
+    handle_event_message: (event) => {},
 
     handle_profile_message: (profile) => {
       // TODO update profile

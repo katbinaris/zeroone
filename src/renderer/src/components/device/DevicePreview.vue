@@ -48,9 +48,9 @@
             class="absolute flex flex-col items-center pb-2 text-center mix-blend-screen"
           >
             <img :src="LogoMidi" alt="midi-logo" class="h-4 opacity-50" />
-            <h2 class="font-pixellg text-5xl">{{ parseInt(value) }}</h2>
+            <h2 class="font-pixellg text-5xl">{{ parseInt(barValue - store.turns * 100) }}</h2>
             <div class="font-pixelsm text-md">HIGH PASS</div>
-            <DeviceBar v-model="barValue" :count="30" :width="120" />
+            <DeviceBar :value="barValue" :count="30" :width="120" />
             <span class="font-pixelsm w-36 text-[7pt] uppercase text-muted-foreground">
               KORG MINILOGUE HIGH PASS FILTER 0-127
             </span>
@@ -98,16 +98,13 @@ import LogoMidi from '@renderer/assets/logos/logoMidi.svg'
 import DeviceBar from '@renderer/components/device/DeviceBar.vue'
 import { useStore } from '@renderer/store'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import DeviceLEDRing from '@renderer/components/device/DeviceLEDRing.vue'
-import gsap from 'gsap'
 import DeviceKeys from '@renderer/components/device/DeviceKeys.vue'
 
-const value = ref(69)
-
-const barValue = computed(() => (value.value / 127) * 100)
-
 const store = useStore()
+
+const barValue = computed(() => 100 - (store.angle / Math.PI / 2) * 100)
 
 const previewDeviceImages = {
   nanoOne: RenderNanoOne,
@@ -117,13 +114,6 @@ const previewDeviceImages = {
 const previewDeviceImage = computed(
   () => previewDeviceImages[store.previewDeviceModel || 'nanoOne']
 )
-
-const targetValue = ref(69)
-const animateValue = () => {
-  targetValue.value = Math.floor(Math.random() * 127)
-  gsap.to(value, { duration: 1, value: targetValue.value, ease: 'power2.inOut' })
-  setTimeout(animateValue, 1500 + Math.random() * 2000)
-}
 
 const offlineText = ref('NO DEVICE CONNECTED')
 const offlineTexts = [
@@ -152,10 +142,6 @@ const nextOfflineText = () => {
     }, 3500)
   }
 }
-
-onMounted(() => {
-  animateValue()
-})
 </script>
 <style scoped>
 .fade-enter-active,

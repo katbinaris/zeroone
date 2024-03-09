@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const model = defineModel({ type: Number, default: 60 })
 
@@ -8,7 +8,8 @@ const bar = ref(null)
 const props = defineProps({
   width: { type: Number, default: 160 },
   count: { type: Number, default: 40 },
-  gapWidth: { type: Number, default: 2 }
+  gapWidth: { type: Number, default: 2 },
+  value: { type: Number, default: 0 }
 })
 
 const rectWidth = computed(() => {
@@ -35,6 +36,10 @@ function onMouseUp() {
   window.removeEventListener('mousemove', onMouseMove)
   window.removeEventListener('mouseup', onMouseUp)
 }
+
+watch(props.value, (value) => {
+  model.value = value
+})
 </script>
 
 <template>
