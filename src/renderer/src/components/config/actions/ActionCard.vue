@@ -7,48 +7,67 @@
       <span class="float-end mx-2 w-4 cursor-grab">
         <GripHorizontal class="action-handle mb-0.5 inline-block size-4 text-zinc-600" />
       </span>
-      <Popover v-model:open="open">
-        <PopoverTrigger as-child>
+      <div class="flex items-center gap-2">
+        <Popover v-model:open="open">
+          <PopoverTrigger as-child>
+            <Button
+              ref="comboboxButton"
+              variant="outline"
+              role="combobox"
+              :aria-expanded="open"
+              class="my-2 w-full justify-between"
+            >
+              <ScrambleText :text="value ? actionOptions[value].label : 'Select an action...'" />
+              <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent class="p-0" :style="{ width: `${width * 1.125}px` }">
+            <Command>
+              <CommandInput class="h-9" placeholder="Search actions..." />
+              <CommandEmpty>
+                <ScrambleText scramble-on-mount text="No actions found." />
+              </CommandEmpty>
+              <CommandList>
+                <CommandGroup>
+                  <CommandItem
+                    v-for="(action, key) in actionOptions"
+                    :key="key"
+                    :value="action"
+                    @select="
+                      () => {
+                        value = key
+                        open = false
+                      }
+                    "
+                  >
+                    {{ action.label }}
+                    <Check
+                      :class="cn('ml-auto h-4 w-4', value === key ? 'opacity-100' : 'opacity-0')"
+                    />
+                  </CommandItem>
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        <Button
+          v-if="!confirmDelete"
+          class="aspect-square border border-zinc-800 bg-transparent p-1 text-muted-foreground hover:bg-orange-900 hover:text-zinc-100"
+          @click="confirmDelete = true"
+          ><Trash2 class="size-4"
+        /></Button>
+        <template v-else>
           <Button
-            ref="comboboxButton"
-            variant="outline"
-            role="combobox"
-            :aria-expanded="open"
-            class="my-2 w-full justify-between"
-          >
-            <ScrambleText :text="value ? actionOptions[value].label : 'Select an action...'" />
-            <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent class="p-0" :style="{ width: `${width * 1.125}px` }">
-          <Command>
-            <CommandInput class="h-9" placeholder="Search actions..." />
-            <CommandEmpty>
-              <ScrambleText scramble-on-mount text="No actions found." />
-            </CommandEmpty>
-            <CommandList>
-              <CommandGroup>
-                <CommandItem
-                  v-for="(action, key) in actionOptions"
-                  :key="key"
-                  :value="action"
-                  @select="
-                    () => {
-                      value = key
-                      open = false
-                    }
-                  "
-                >
-                  {{ action.label }}
-                  <Check
-                    :class="cn('ml-auto h-4 w-4', value === key ? 'opacity-100' : 'opacity-0')"
-                  />
-                </CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
+            class="aspect-square bg-orange-950 p-1 text-zinc-200 hover:bg-orange-900 hover:text-zinc-100"
+            ><Check class="size-4"
+          /></Button>
+          <Button
+            class="aspect-square border border-zinc-800 bg-transparent p-1 text-zinc-200 hover:bg-zinc-800 hover:text-zinc-100"
+            @click="confirmDelete = false"
+            ><X class="size-4"
+          /></Button>
+        </template>
+      </div>
     </div>
     <Separator />
     <component :is="actionOptions[value]?.component ? actionOptions[value]?.component : WIP" />
@@ -73,7 +92,7 @@ import { cn } from '@renderer/lib/utils'
 import SendKeyAction from '@renderer/components/config/actions/SendKeyAction.vue'
 import SendStringAction from '@renderer/components/config/actions/SendStringAction.vue'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
-import { ChevronsUpDown, Check, GripHorizontal } from 'lucide-vue-next'
+import { ChevronsUpDown, Check, GripHorizontal, Trash2, X } from 'lucide-vue-next'
 import { useElementSize } from '@vueuse/core'
 
 defineProps({
@@ -102,4 +121,5 @@ const { width } = useElementSize(comboboxButton)
 
 const open = ref(false)
 const value = ref('')
+const confirmDelete = ref(false)
 </script>
