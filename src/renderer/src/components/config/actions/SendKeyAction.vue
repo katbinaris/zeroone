@@ -7,8 +7,8 @@
       >⬤
       {{ isCapturing ? 'Capturing Keyboard Input' : 'Capture Keyboard Input' }}
     </Button>
-    <div class="mt-6 text-center font-mono text-sm text-muted-foreground">
-      Key: {{ lastEvent?.key }} | Code: {{ lastEvent?.keyCode }}
+    <div v-if="lastEvent" class="mt-6 text-center font-mono text-sm text-muted-foreground">
+      Key: {{ lastEvent?.key }} | Code: {{ lastEvent?.keyCode }} | Type: {{ lastEvent?.type }}
     </div>
   </div>
 </template>
@@ -17,10 +17,7 @@ import { Button } from '@renderer/components/ui/button'
 import { ref, Ref } from 'vue'
 
 const isCapturing = ref(false)
-const keydownListener = (e: KeyboardEvent) => {
-  lastEvent.value = e
-}
-const keyupListener = (e: KeyboardEvent) => {
+const listener = (e: KeyboardEvent) => {
   lastEvent.value = e
 }
 
@@ -28,11 +25,11 @@ const toggleCapture = () => {
   isCapturing.value = !isCapturing.value
   // TODO: Do this in the main process
   if (isCapturing.value) {
-    window.addEventListener('keydown', keydownListener)
-    window.addEventListener('keyup', keyupListener)
+    window.addEventListener('keydown', listener)
+    window.addEventListener('keyup', listener)
   } else {
-    window.removeEventListener('keydown', keydownListener)
-    window.removeEventListener('keyup', keyupListener)
+    window.removeEventListener('keydown', listener)
+    window.removeEventListener('keyup', listener)
   }
 }
 const lastEvent: Ref<KeyboardEvent | null> = ref(null)
