@@ -23,7 +23,7 @@ import { PanelBottomClose, PanelBottomOpen, Clock2 } from 'lucide-vue-next'
 import ConfigSection from '@renderer/components/common/ConfigSection.vue'
 import { useStore } from '@renderer/store'
 import { ref } from 'vue'
-import ActionGroup from '../actions/ActionGroup.vue'
+import ActionGroup from '@renderer/components/config/actions/ActionGroup.vue'
 
 const store = useStore()
 const actionsPressed = ref([

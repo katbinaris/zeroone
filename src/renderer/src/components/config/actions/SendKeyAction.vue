@@ -2,7 +2,7 @@
   <div class="flex flex-col p-4">
     <Button
       class="flex-1"
-      :class="{ 'bg-orange-600 hover:bg-orange-500': isCapturing }"
+      :class="{ 'bg-orange-700 hover:bg-orange-600': isCapturing }"
       @click="toggleCapture"
       >⬤
       {{ isCapturing ? 'Capturing Keyboard Input' : 'Capture Keyboard Input' }}

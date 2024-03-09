@@ -1,6 +1,6 @@
 <template>
   <Collapsible v-model:open="collapse" :default-open="true">
-    <div class="flex h-12 w-full bg-zinc-900">
+    <div class="flex h-12 w-full border-b border-zinc-800 bg-zinc-900 hover:bg-zinc-800">
       <div
         class="flex flex-1 items-center px-4"
         :class="{ 'cursor-pointer hover:bg-zinc-800': showToggle }"
@@ -17,7 +17,7 @@
       </div>
       <CollapsibleTrigger
         v-if="foldable"
-        class="flex aspect-square h-12 items-center justify-center hover:bg-zinc-800"
+        class="flex aspect-square h-12 items-center justify-center"
       >
         <ChevronLeft class="chevrot mt-0.5 size-4 text-muted-foreground transition-transform" />
       </CollapsibleTrigger>

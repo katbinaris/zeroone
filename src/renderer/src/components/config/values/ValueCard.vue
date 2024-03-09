@@ -2,10 +2,10 @@
   <div class="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50">
     <div class="p-4">
       <span class="font-mono text-sm text-muted-foreground"
-        >Action{{ actionIndex ? ` ${actionIndex}` : '' }}:</span
+        >Value{{ valueIndex ? ` ${valueIndex}` : '' }}:</span
       >
       <span class="float-end mx-2 w-4 cursor-grab">
-        <GripHorizontal class="action-handle mb-0.5 inline-block size-4 text-zinc-600" />
+        <GripHorizontal class="value-handle mb-0.5 inline-block size-4 text-zinc-600" />
       </span>
       <div class="flex items-center gap-2">
         <Popover v-model:open="open">
@@ -19,25 +19,23 @@
             >
               <ScrambleText
                 class="overflow-hidden text-ellipsis text-nowrap"
-                :text="
-                  inputValue ? actionTypeOptions[inputValue].label : 'Select an action type...'
-                "
+                :text="inputValue ? valueTypeOptions[inputValue].label : 'Select a value type...'"
               />
               <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent class="p-0" :style="{ width: `${width + 35}px` }">
             <Command>
-              <CommandInput class="h-9" placeholder="Search action types..." />
+              <CommandInput class="h-9" placeholder="Search value types..." />
               <CommandEmpty>
-                <ScrambleText scramble-on-mount text="No action types found." />
+                <ScrambleText scramble-on-mount text="No value types found." />
               </CommandEmpty>
               <CommandList>
                 <CommandGroup>
                   <CommandItem
-                    v-for="(actionType, key) in actionTypeOptions"
+                    v-for="(valueType, key) in valueTypeOptions"
                     :key="key"
-                    :value="actionType"
+                    :value="valueType"
                     @select="
                       () => {
                         inputValue = key
@@ -45,7 +43,7 @@
                       }
                     "
                   >
-                    {{ actionType.label }}
+                    {{ valueType.label }}
                     <Check
                       :class="
                         cn('ml-auto h-4 w-4', inputValue === key ? 'opacity-100' : 'opacity-0')
@@ -75,12 +73,29 @@
           /></Button>
         </template>
       </div>
+      <span class="font-mono text-sm text-muted-foreground">Conditions:</span>
+      <div class="flex gap-2 py-2">
+        <Button
+          v-for="(condition, key) in conditions"
+          :key="key"
+          class="font-heading flex flex-1 basis-1/4 items-center justify-center"
+          :class="{
+            'border border-zinc-200 bg-zinc-300': condition === true,
+            'border border-zinc-800 bg-transparent text-muted-foreground hover:border-zinc-700 hover:bg-zinc-800 hover:text-zinc-300':
+              condition === false
+          }"
+          @click="cycleCondition(key)"
+        >
+          <span class="mr-0.5">{{ key.toUpperCase() }}:</span>
+          <PanelBottomClose v-if="condition === true" class="size-4" />
+          <PanelBottomOpen v-else-if="condition === false" class="size-4" />
+          <HelpCircle v-else class="size-4" />
+        </Button>
+      </div>
     </div>
     <Separator />
     <component
-      :is="
-        actionTypeOptions[inputValue]?.component ? actionTypeOptions[inputValue]?.component : WIP
-      "
+      :is="valueTypeOptions[inputValue]?.component ? valueTypeOptions[inputValue]?.component : WIP"
     />
   </div>
 </template>
@@ -100,29 +115,49 @@ import {
 } from '@renderer/components/ui/command'
 import { ref } from 'vue'
 import { cn } from '@renderer/lib/utils'
-import SendKeyAction from '@renderer/components/config/actions/SendKeyAction.vue'
-import SendStringAction from '@renderer/components/config/actions/SendStringAction.vue'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
-import { ChevronsUpDown, Check, GripHorizontal, Trash2, X } from 'lucide-vue-next'
+import {
+  ChevronsUpDown,
+  Check,
+  GripHorizontal,
+  Trash2,
+  X,
+  PanelBottomClose,
+  PanelBottomOpen,
+  HelpCircle
+} from 'lucide-vue-next'
 import { useElementSize } from '@vueuse/core'
+import TriggerActionsValue from '@renderer/components/config/values/TriggerActionsValue.vue'
 
 defineProps({
-  actionIndex: {
+  valueIndex: {
     type: Number,
     required: false
   }
 })
 
-const actionTypeOptions = ref({
-  sendKey: { label: 'Press Key or Combination', component: SendKeyAction },
-  sendString: { label: 'Type a String', component: SendStringAction },
-  sendMouse: { label: 'Move, Scroll or Click', component: 'SendMouseAction' },
-  sendGamepad: { label: 'Send a Gamepad Input', component: 'SendGamepadAction' },
-  sendMidi: { label: 'Send a MIDI Message', component: 'SendMidiAction' },
-  sendOsc: { label: 'Send an OSC Message', component: 'SendOscAction' },
-  sendSerial: { label: 'Send a Serial Message', component: 'SendSerialAction' },
-  changeProfile: { label: 'Change Device Profile', component: 'ChangeProfileAction' }
+const valueTypeOptions = ref({
+  controlMouse: { label: 'Move or Scroll the Mouse', component: 'ControlMouseValue' },
+  controlGamepad: { label: 'Control a Gamepad Axis', component: 'ControlGamepadValue' },
+  controlMidi: { label: 'Control a MIDI Value', component: 'ControlMidiValue' },
+  controlOsc: { label: 'Control an OSC Value', component: 'ControlOscValue' },
+  controlSerial: { label: 'Control a Value over Serial', component: 'ControlSerialValue' },
+  controlProfile: { label: 'Switch Device Profiles', component: 'ControlProfileValue' },
+  triggerActions: { label: 'Trigger Actions on Rotation', component: TriggerActionsValue }
 })
+
+const conditions = ref({
+  a: true,
+  b: false,
+  c: false,
+  d: false
+})
+
+const cycleCondition = (key: string) => {
+  const condition = conditions.value[key]
+  if (condition === true) conditions.value[key] = false
+  else conditions.value[key] = true
+}
 
 const comboboxButton = ref(null)
 const { width } = useElementSize(comboboxButton)

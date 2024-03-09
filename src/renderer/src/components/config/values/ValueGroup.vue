@@ -1,35 +1,35 @@
 <template>
-  <div class="flex flex-col" :class="{ 'gap-2': actions.length }">
+  <div class="flex flex-col" :class="{ 'gap-2': values.length }">
     <draggable
-      key="actionsDraggable"
+      key="valuesDraggable"
       class="flex flex-col gap-2"
-      group="keyActions"
+      group="knobValues"
       item-key="id"
-      handle=".action-handle"
-      :list="actions"
+      handle=".value-handle"
+      :list="values"
       v-bind="dragOptions"
     >
-      <template #item="dragAction">
-        <div :key="dragAction.element.id">
-          <ActionCard :action-index="dragAction.index + 1" />
+      <template #item="dragValue">
+        <div :key="dragValue.element.id">
+          <ValueCard :value-index="dragValue.index + 1" />
         </div>
       </template>
     </draggable>
     <button
       class="flex flex-1 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/50 p-2 text-sm text-muted-foreground hover:bg-zinc-800 hover:text-zinc-200"
     >
-      <Plus class="mr-2" /> Add an action
+      <Plus class="mr-2" /> Add a value
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
-import ActionCard from '@renderer/components/config/actions/ActionCard.vue'
+import ValueCard from '@renderer/components/config/values/ValueCard.vue'
 import draggable from 'vuedraggable'
 import { ref } from 'vue'
 defineProps({
-  actions: {
+  values: {
     type: Array,
     required: true
   }
