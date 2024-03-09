@@ -145,6 +145,7 @@
                 : 'border-2'
             "
             class="app-titlebar-button"
+            @click="nanoDevicesAPI.save(store.connectedId)"
           >
             Save
           </MenubarButton>
@@ -208,7 +209,7 @@ const showDisconnectButton = ref(false)
 
 const isMaximized = ref(false)
 
-const { electronAPI } = window
+const { electronAPI, nanoDevicesAPI } = window
 
 const isMacOS = electronAPI.platform === 'darwin'
 const zoomFactor = ref(1)

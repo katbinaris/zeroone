@@ -7,6 +7,7 @@ export interface INanoDevicesAPI {
     callback: (eventid: string, deviceid: string, data: any) => void
   ): void
   send(deviceid: string, jsonstr: string): Promise<void>
+  save(deviceid: string): Promise<void>
 }
 
 export interface IElectronAPI {

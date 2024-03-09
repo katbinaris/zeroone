@@ -14,6 +14,14 @@ import mockData from '@renderer/data/nanoConfig.json'
 
 const { nanoDevicesAPI } = window
 
+// TODO: Define Profile type
+
+// TODO: Define Device type
+
+// TODO: Define Key type
+
+// TODO: Define ProfileCategory type
+
 export const useStore = defineStore('main', {
   state: () => {
     return {
