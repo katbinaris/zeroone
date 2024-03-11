@@ -7,7 +7,7 @@ const NANO_PRODUCT_ID = '1001'
 const NANO_VENDOR_ID = '303A'
 const NANO_BAUD_RATE = 115200
 
-class NanoDevices extends EventEmitter {
+class NanoSerialApi extends EventEmitter {
   all_nano_devices: { [key: string]: PortInfo } = {}
   connected_nano_devices: { [key: string]: { port: SerialPort } } = {}
 
@@ -25,7 +25,7 @@ class NanoDevices extends EventEmitter {
               found_nano_devices.push(port.serialNumber)
               if (this.all_nano_devices[port.serialNumber] === undefined) {
                 this.all_nano_devices[port.serialNumber] = port
-                this.emit('nanodevices:device-attached', port.serialNumber)
+                this.emit('nanoSerialApi:device-attached', port.serialNumber)
                 console.log('attached', port.serialNumber)
               }
             }
@@ -34,7 +34,7 @@ class NanoDevices extends EventEmitter {
           for (const serialNumber in this.all_nano_devices) {
             if (found_nano_devices.indexOf(serialNumber) === -1) {
               delete this.all_nano_devices[serialNumber]
-              this.emit('nanodevices:device-detached', serialNumber)
+              this.emit('nanoSerialApi:device-detached', serialNumber)
               console.log('detached', serialNumber)
             }
           }
@@ -53,7 +53,7 @@ class NanoDevices extends EventEmitter {
         if (lines[i].length > 0) {
           if (lines[i].startsWith('{'))
             // if its a json object
-            this.emit('nanodevices:update', serialNumber, lines[i])
+            this.emit('nanoSerialApi:update', serialNumber, lines[i])
           else console.log('Device: ' + lines[i]) // otherwise just log it
         }
       }
@@ -94,18 +94,18 @@ class NanoDevices extends EventEmitter {
         })
         port.on('error', (err) => {
           // forward error to FE
-          this.emit('nanodevices:error', nano_device.serialNumber, err)
+          this.emit('nanoSerialApi:error', nano_device.serialNumber, err)
         })
         port.on('close', (err) => {
           if (err && err.disconnected) {
             // forward close to FE
-            this.emit('nanodevices:disconnected', nano_device.serialNumber)
+            this.emit('nanoSerialApi:disconnected', nano_device.serialNumber)
           }
           delete this.connected_nano_devices[nano_device.serialNumber!]
         })
         port.on('open', () => {
           this.connected_nano_devices[nano_device.serialNumber!] = { port: port }
-          this.emit('nanodevices:connected', nano_device.serialNumber)
+          this.emit('nanoSerialApi:connected', nano_device.serialNumber)
           resolve(nano_device.serialNumber)
         })
         port.on('data', (data) => {
@@ -138,6 +138,6 @@ class NanoDevices extends EventEmitter {
   }
 }
 
-const nanodevices = new NanoDevices()
+const nanoSerialApi = new NanoSerialApi()
 
-export default nanodevices
+export default nanoSerialApi

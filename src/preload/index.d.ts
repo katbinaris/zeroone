@@ -1,4 +1,4 @@
-export interface INanoDevicesAPI {
+export interface INanoSerialApi {
   list_devices(): Promise<string[]>
   connect(deviceid: string): Promise<string>
   disconnect(deviceid: string): Promise<string>
@@ -10,7 +10,7 @@ export interface INanoDevicesAPI {
   save(deviceid: string): Promise<void>
 }
 
-export interface IElectronAPI {
+export interface IElectronApi {
   platform: NodeJS.Platform
   isDevelopment: boolean
   minimizeWindow: () => void
@@ -26,7 +26,7 @@ export interface IElectronAPI {
 
 declare global {
   interface Window {
-    nanoDevicesAPI: INanoDevicesAPI
-    electronAPI: IElectronAPI
+    nanoSerialApi: INanoSerialApi
+    electronApi: IElectronApi
   }
 }

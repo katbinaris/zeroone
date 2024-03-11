@@ -1,19 +1,19 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
 // expose an API to choose available devices
-contextBridge.exposeInMainWorld('nanoDevicesAPI', {
+contextBridge.exposeInMainWorld('nanoSerialApi', {
   list_devices() {
-    return ipcRenderer.invoke('nanodevices:list_devices')
+    return ipcRenderer.invoke('nanoSerialApi:list_devices')
   },
   connect(deviceid) {
-    return ipcRenderer.invoke('nanodevices:connect', deviceid)
+    return ipcRenderer.invoke('nanoSerialApi:connect', deviceid)
   },
   disconnect(deviceid) {
-    return ipcRenderer.invoke('nanodevices:disconnect', deviceid)
+    return ipcRenderer.invoke('nanoSerialApi:disconnect', deviceid)
   },
   on_event(eventid_filter, callback) {
     //console.log('attaching filter for ', eventid_filter)
-    ipcRenderer.on('nanodevices:event', (_event, eventid, deviceid, ...data) => {
+    ipcRenderer.on('nanoSerialApi:event', (_event, eventid, deviceid, ...data) => {
       //console.log('Event in ipcRenderer ', eventid, deviceid, data)
       if (eventid_filter == '*' || eventid_filter == eventid) {
         callback(eventid, deviceid, ...data)
@@ -21,14 +21,14 @@ contextBridge.exposeInMainWorld('nanoDevicesAPI', {
     })
   },
   send(deviceid, obj) {
-    return ipcRenderer.invoke('nanodevices:send', deviceid, JSON.stringify(obj))
+    return ipcRenderer.invoke('nanoSerialApi:send', deviceid, JSON.stringify(obj))
   },
   save(deviceid) {
-    return ipcRenderer.invoke('nanodevices:send', deviceid, JSON.stringify({ save: true }))
+    return ipcRenderer.invoke('nanoSerialApi:send', deviceid, JSON.stringify({ save: true }))
   }
 })
 
-contextBridge.exposeInMainWorld('electronAPI', {
+contextBridge.exposeInMainWorld('electronApi', {
   platform: process.platform,
   isDevelopment: process.env.NODE_ENV !== 'production',
   minimizeWindow: () => ipcRenderer.send('electron:minimizeWindow'),

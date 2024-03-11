@@ -6,7 +6,7 @@ import Navbar from '@renderer/components/navbar/Navbar.vue'
 import { useStore } from '@renderer/store'
 import { useMessageHandlers } from '@renderer/device'
 
-const { electronAPI, nanoDevicesAPI } = window
+const { electronApi, nanoSerialApi } = window
 const store = useStore()
 
 const menuActions = {
@@ -15,7 +15,7 @@ const menuActions = {
   skin: () => store.switchPreviewDeviceModel()
 }
 
-electronAPI.onMenu((key) => {
+electronApi.onMenu((key) => {
   console.log('menu', key)
   if (menuActions[key]) {
     menuActions[key]()
@@ -26,20 +26,18 @@ store.fetchProfiles() // TODO remove me!
 
 // handle device events
 const handlers = useMessageHandlers(store)
-nanoDevicesAPI.on_event('device-attached', (evt, deviceid, data) => store.device_attached(deviceid))
-nanoDevicesAPI.on_event('device-detached', (evt, deviceid, data) => store.device_detached(deviceid))
-nanoDevicesAPI.on_event('device-error', (evt, deviceid, data) => {
+nanoSerialApi.on_event('device-attached', (evt, deviceid, data) => store.device_attached(deviceid))
+nanoSerialApi.on_event('device-detached', (evt, deviceid, data) => store.device_detached(deviceid))
+nanoSerialApi.on_event('device-error', (evt, deviceid, data) => {
   /* TODO handle connection errors */
 })
-nanoDevicesAPI.on_event('connected', (evt, deviceid, data) => store.device_connected(deviceid))
-nanoDevicesAPI.on_event('disconnected', (evt, deviceid, data) =>
-  store.device_disconnected(deviceid)
-)
-nanoDevicesAPI.on_event('update', (evt, deviceid, data) => {
+nanoSerialApi.on_event('connected', (evt, deviceid, data) => store.device_connected(deviceid))
+nanoSerialApi.on_event('disconnected', (evt, deviceid, data) => store.device_disconnected(deviceid))
+nanoSerialApi.on_event('update', (evt, deviceid, data) => {
   handlers.handle_message(data)
 })
 // get list of the currently attached devices
-nanoDevicesAPI.list_devices().then((devs) => store.init_devices(devs))
+nanoSerialApi.list_devices().then((devs) => store.init_devices(devs))
 </script>
 <template>
   <main class="flex h-screen w-screen select-none flex-col">

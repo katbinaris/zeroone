@@ -86,32 +86,32 @@
         </MenubarMenu>
         <MenubarButton
           class="app-titlebar-button"
-          @click="electronAPI.openExternal('https://discord.gg/jgRd77YN5T')"
+          @click="electronApi.openExternal('https://discord.gg/jgRd77YN5T')"
         >
           Community
         </MenubarButton>
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">Help</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem @click="electronAPI.openExternal('https://github.com/katbinaris/zeroone')"
+            <MenubarItem @click="electronApi.openExternal('https://github.com/katbinaris/zeroone')"
               >Software Source</MenubarItem
             >
             <MenubarItem
-              @click="electronAPI.openExternal('https://github.com/katbinaris/NanoD_RatchetH1')"
+              @click="electronApi.openExternal('https://github.com/katbinaris/NanoD_RatchetH1')"
               >Firmware Source</MenubarItem
             >
             <MenubarItem
-              @click="electronAPI.openExternal('https://github.com/katbinaris/Nano_D_PlusPlus')"
+              @click="electronApi.openExternal('https://github.com/katbinaris/Nano_D_PlusPlus')"
               >Hardware Source</MenubarItem
             >
             <MenubarSeparator />
             <MenubarItem
-              @click="electronAPI.openExternal('https://github.com/katbinaris/zeroone/issues/new')"
+              @click="electronApi.openExternal('https://github.com/katbinaris/zeroone/issues/new')"
               >Report Software Issue</MenubarItem
             >
             <MenubarItem
               @click="
-                electronAPI.openExternal('https://github.com/katbinaris/NanoD_RatchetH1/issues/new')
+                electronApi.openExternal('https://github.com/katbinaris/NanoD_RatchetH1/issues/new')
               "
               >Report Device Issue</MenubarItem
             >
@@ -120,13 +120,13 @@
               <p>Software Version:&nbsp;</p>
               <p>v0.1</p>
             </MenubarItem>
-            <MenubarItem @click="electronAPI.openExternal('https://discord.gg/jgRd77YN5T')"
+            <MenubarItem @click="electronApi.openExternal('https://discord.gg/jgRd77YN5T')"
               >Contact Support</MenubarItem
             >
-            <template v-if="electronAPI.isDevelopment">
+            <template v-if="electronApi.isDevelopment">
               <MenubarSeparator />
-              <MenubarItem @click="electronAPI.openDevTools">Developer Tools</MenubarItem>
-              <MenubarItem @click="electronAPI.reload">Reload</MenubarItem>
+              <MenubarItem @click="electronApi.openDevTools">Developer Tools</MenubarItem>
+              <MenubarItem @click="electronApi.reload">Reload</MenubarItem>
             </template>
           </MenubarContent>
         </MenubarMenu>
@@ -145,7 +145,7 @@
                 : 'border-2'
             "
             class="app-titlebar-button"
-            @click="nanoDevicesAPI.save(store.connectedId)"
+            @click="nanoSerialApi.save(store.connectedId)"
           >
             Save
           </MenubarButton>
@@ -162,21 +162,21 @@
         <button
           v-if="minimizable"
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electronAPI.minimizeWindow"
+          @click="electronApi.minimizeWindow"
         >
           <Minus class="size-5" />
         </button>
         <button
           v-if="maximizable"
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electronAPI.toggleMaximizeWindow"
+          @click="electronApi.toggleMaximizeWindow"
         >
           <Copy v-if="isMaximized" class="size-4" />
           <Square v-else class="mr-0.5 size-3.5" />
         </button>
         <button
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electronAPI.closeWindow"
+          @click="electronApi.closeWindow"
         >
           <X class="mr-0.5 size-5" />
         </button>
@@ -209,9 +209,9 @@ const showDisconnectButton = ref(false)
 
 const isMaximized = ref(false)
 
-const { electronAPI, nanoDevicesAPI } = window
+const { electronApi, nanoSerialApi } = window
 
-const isMacOS = electronAPI.platform === 'darwin'
+const isMacOS = electronApi.platform === 'darwin'
 const zoomFactor = ref(1)
 
 const numberOfChanges = ref(27)
@@ -225,12 +225,12 @@ onMounted(() => {
   window.addEventListener('resize', () => {
     zoomFactor.value = window.outerWidth / window.innerWidth
   })
-  electronAPI.onMaximized((maximized) => {
+  electronApi.onMaximized((maximized) => {
     console.log(maximized)
     isMaximized.value = true
   })
 
-  electronAPI.onUnmaximized(() => {
+  electronApi.onUnmaximized(() => {
     isMaximized.value = false
   })
 })

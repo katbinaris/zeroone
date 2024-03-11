@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain, Menu, MenuItem } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import nanodevices from './backend/nanodevices'
+import nanoSerialApi from './nanoSerialApi'
 
 const zoomFactor = 1
 const windowWidth = 1111
@@ -95,10 +95,10 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcMain.handle('nanodevices:list_devices', () => nanodevices.list_devices())
-  ipcMain.handle('nanodevices:connect', (event, deviceid) => nanodevices.connect(deviceid))
-  ipcMain.handle('nanodevices:disconnect', () => nanodevices.disconnect)
-  ipcMain.handle('nanodevices:send', (event, ...data) => nanodevices.send(data[0], data[1]))
+  ipcMain.handle('nanoSerialApi:list_devices', () => nanoSerialApi.list_devices())
+  ipcMain.handle('nanoSerialApi:connect', (event, deviceid) => nanoSerialApi.connect(deviceid))
+  ipcMain.handle('nanoSerialApi:disconnect', () => nanoSerialApi.disconnect)
+  ipcMain.handle('nanoSerialApi:send', (event, ...data) => nanoSerialApi.send(data[0], data[1]))
   const mainWindow = createMainWindow()
   ipcMain.on('electron:minimizeWindow', () => mainWindow.minimize())
   ipcMain.on('electron:toggleMaximizeWindow', () => {
@@ -112,29 +112,29 @@ app.whenReady().then(() => {
   ipcMain.on('electron:openExternal', (_event, url) => shell.openExternal(url))
   ipcMain.on('electron:openDevTools', () => mainWindow.webContents.toggleDevTools())
   ipcMain.on('electron:reload', () => mainWindow.webContents.reloadIgnoringCache())
-  nanodevices.on('nanodevices:device-attached', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:device-attached', (deviceid, ...data) => {
     console.log('Attached event', deviceid, data)
-    mainWindow.webContents.send('nanodevices:event', 'device-attached', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'device-attached', deviceid, ...data)
   })
-  nanodevices.on('nanodevices:device-detached', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:device-detached', (deviceid, ...data) => {
     console.log('Detached event', deviceid, data)
-    mainWindow.webContents.send('nanodevices:event', 'device-detached', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'device-detached', deviceid, ...data)
   })
-  nanodevices.on('nanodevices:device-error', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:device-error', (deviceid, ...data) => {
     console.log('Error event', deviceid, data)
-    mainWindow.webContents.send('nanodevices:event', 'device-error', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'device-error', deviceid, ...data)
   })
-  nanodevices.on('nanodevices:connected', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:connected', (deviceid, ...data) => {
     console.log('Connected event', deviceid, data)
-    mainWindow.webContents.send('nanodevices:event', 'connected', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'connected', deviceid, ...data)
   })
-  nanodevices.on('nanodevices:disconnected', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:disconnected', (deviceid, ...data) => {
     console.log('Disconnected event', deviceid, data)
-    mainWindow.webContents.send('nanodevices:event', 'disconnected', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'disconnected', deviceid, ...data)
   })
-  nanodevices.on('nanodevices:update', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:update', (deviceid, ...data) => {
     console.log('Update event', deviceid, data)
-    mainWindow.webContents.send('nanodevices:event', 'update', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'update', deviceid, ...data)
   })
   const menu = new Menu()
   for (const menuItem of Object.values(appMenu)) {
@@ -172,7 +172,7 @@ app.whenReady().then(() => {
 
   Menu.setApplicationMenu(menu)
   //mainWindow.webContents.openDevTools()
-  setInterval(() => nanodevices._list(), 1000)
+  setInterval(() => nanoSerialApi._list(), 1000)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

@@ -12,7 +12,7 @@ import mockData from '@renderer/data/nanoConfig.json'
 
 // const ajv = new Ajv() // see below
 
-const { nanoDevicesAPI } = window
+const { nanoSerialApi } = window
 
 // TODO: Define Profile type
 
@@ -216,13 +216,13 @@ export const useStore = defineStore('main', {
       // this.selectedProfile.keys[this.selectedKey].default = color
       const props = {}
       props[`button${this.selectedKey.toUpperCase()}Idle`] = color.rgbNumber()
-      nanoDevicesAPI.send(this.connectedId, { p: { name: 'Default Profile', ...props } })
+      nanoSerialApi.send(this.connectedId, { p: { name: 'Default Profile', ...props } })
     },
     setKeyPressedColor(color) {
       // this.selectedProfile.keys[this.selectedKey].pressed = color
       const props = {}
       props[`button${this.selectedKey.toUpperCase()}Press`] = color.rgbNumber()
-      nanoDevicesAPI.send(this.connectedId, { p: { name: 'Default Profile', ...props } })
+      nanoSerialApi.send(this.connectedId, { p: { name: 'Default Profile', ...props } })
     },
 
     // devices, device attachment, connection, and disconnection
@@ -233,7 +233,7 @@ export const useStore = defineStore('main', {
         // TODO auto-connect to the device
         const deviceid = Object.keys(this.devices)[0]
         console.log('Auto-connecting to device ', deviceid)
-        window.nanoDevicesAPI.connect(deviceid)
+        window.nanoSerialApi.connect(deviceid)
       }
     },
     update_devices(deviceid, attached) {
@@ -249,7 +249,7 @@ export const useStore = defineStore('main', {
       if (Object.keys(this.devices).length == 1) {
         // TODO auto-connect to the device
         console.log('Auto-connecting to device ', deviceid)
-        window.nanoDevicesAPI.connect(deviceid)
+        window.nanoSerialApi.connect(deviceid)
       }
     },
     device_detached(deviceid) {
@@ -265,10 +265,10 @@ export const useStore = defineStore('main', {
       this.connected = true
       this.connectedId = deviceid
       // TODO load profiles from device
-      // nanoDevicesAPI.send(deviceid, { profiles: "#all" }) // request profiles
+      // nanoSerialApi.send(deviceid, { profiles: "#all" }) // request profiles
       // "Default Profile", for now, is the only profile after the device
       // starts up, so it is also the current (eg. 'selected') profile
-      // nanoDevicesAPI.send(deviceid, { p: "Default Profile" }) // request Default Profile
+      // nanoSerialApi.send(deviceid, { p: "Default Profile" }) // request Default Profile
 
       // TODO maybe you want to request all the profiles right now?
       // or only on demand?
