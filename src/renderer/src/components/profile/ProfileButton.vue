@@ -13,7 +13,7 @@
       :class="{ 'bg-zinc-300': selected }"
       @submit.prevent="
         () => {
-          $emit('rename', { profile: profile.name, name: nameInput })
+          $emit('rename', profile.name, nameInput)
           editing = false
         }
       "
@@ -90,7 +90,7 @@
           'rounded-l-lg': !nameEditable
         }"
         class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
-        @click="$emit('duplicate')"
+        @click="$emit('duplicate', profile.name, profile)"
       >
         <Copy class="size-4" />
       </button>
@@ -114,7 +114,7 @@
           'group-focus-within:w-12 group-hover:w-12': !editing
         }"
         class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
-        @click="$emit('delete', profile.id)"
+        @click="$emit('delete', profile.name)"
       >
         <Check class="size-4" />
       </button>

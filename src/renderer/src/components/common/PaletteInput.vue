@@ -32,40 +32,45 @@
         @click="currentOption = key"
       />
     </div>
-    <HSVInput v-model="options[currentOption].color" />
+    <HSVInput
+      :color="options[currentOption].color"
+      @input="(color) => $emit('input', currentOption, color)"
+    />
   </div>
 </template>
 <script setup>
 import HSVInput from '@renderer/components/common/HSVInput.vue'
 import Color from 'color'
-import { computed, onBeforeMount, reactive, ref } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
+
+defineEmits(['input'])
 
 const currentOption = ref(null)
 
-const currentColorHex = computed(() => options[currentOption.value].color.hex())
+const currentColorHex = computed(() => props.options[currentOption.value].color.hex())
 
-const model = defineModel({
-  type: Object,
-  default: () => ({
-    one: {
-      titleKey: 'One',
-      color: Color('#ff0000')
-    },
-    two: {
-      titleKey: 'Two',
-      color: Color('#00ff00')
-    },
-    three: {
-      titleKey: 'Three',
-      color: Color('#0000ff')
-    }
-  })
+const props = defineProps({
+  options: {
+    type: Object,
+    default: () => ({
+      one: {
+        titleKey: 'One',
+        color: Color('#ff0000')
+      },
+      two: {
+        titleKey: 'Two',
+        color: Color('#00ff00')
+      },
+      three: {
+        titleKey: 'Three',
+        color: Color('#0000ff')
+      }
+    })
+  }
 })
 
-const options = reactive(model.value)
-
 onBeforeMount(() => {
-  if (currentOption.value === null) currentOption.value = Object.keys(options)[0]
+  if (currentOption.value === null) currentOption.value = Object.keys(props.options)[0]
 })
 </script>
 <style scoped>

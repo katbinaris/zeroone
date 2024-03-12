@@ -67,7 +67,7 @@ export const useDeviceStore = defineStore('device', {
       state.currentProfileName
         ? state.profiles.find((profile) => profile.name === state.currentProfileName)
         : null,
-    profileTags: (state) => state.profiles.map((profile) => profile.profileTag),
+    profileTags: (state) => [...new Set(state.profiles.map((profile) => profile.profileTag))],
     profilesByTag: (state) =>
       state.profiles.reduce((acc, profile) => {
         if (!acc[profile.profileTag]) {
@@ -75,7 +75,11 @@ export const useDeviceStore = defineStore('device', {
         }
         acc[profile.profileTag].push(profile)
         return acc
-      }, {})
+      }, {}),
+    keyColor: (state) => (key: string, pressed: boolean) => {
+      const propertyName = `button${key.toUpperCase()}${pressed ? 'Press' : 'Idle'}`
+      return state.currentProfile ? state.currentProfile[propertyName] : 0
+    }
   },
   actions: {
     setAttachedDeviceIds(deviceIds: string[]) {
@@ -103,9 +107,13 @@ export const useDeviceStore = defineStore('device', {
         this.profiles.push(profile)
       }
       if (updateDevice) {
+        const newProfile = JSON.parse(JSON.stringify(profile))
+        delete newProfile.name
+        console.log('Sending new profile:', newProfile)
+        console.log('with name', profile.name)
         nanoIpc.send(
           this.currentDeviceId!,
-          JSON.stringify({ profile: profile.name, updates: profile })
+          JSON.stringify({ profile: profile.name, updates: newProfile })
         )
       }
     },
@@ -121,6 +129,17 @@ export const useDeviceStore = defineStore('device', {
             this.currentDeviceId!,
             JSON.stringify({ profile: oldName, updates: { name: newName } })
           )
+        }
+      }
+    },
+    duplicateProfile(profileName: string, updateDevice: boolean = true) {
+      const profile = this.profiles.find((p) => p.name === profileName)
+      if (profile) {
+        const newProfile = JSON.parse(JSON.stringify(profile))
+        newProfile.name = profileName + ' Copy'
+        this.addProfile(newProfile, updateDevice)
+        if (this.currentProfileName === profileName) {
+          this.selectProfile(newProfile.name, updateDevice)
         }
       }
     },
@@ -170,6 +189,16 @@ export const useDeviceStore = defineStore('device', {
     },
     setAngle(angle: number) {
       this.angle = angle
+    },
+    setKeyColor(key: string, pressed: boolean, color: number, updateDevice: boolean = true) {
+      const propertyName = `button${key.toUpperCase()}${pressed ? 'Press' : 'Idle'}`
+      this.currentProfile![propertyName] = color
+      if (updateDevice) {
+        nanoIpc.send(
+          this.currentDeviceId!,
+          JSON.stringify({ profile: this.currentProfileName, updates: { [propertyName]: color } })
+        )
+      }
     }
   }
 })

@@ -19,7 +19,7 @@
             scramble-on-mount
             :fill-interval="20"
             :delay="500"
-            :text="`(${deviceStore.profileNames.length}/${maxProfiles})`"
+            :text="`(${deviceStore.profiles.length}/${maxProfiles})`"
           />
         </button>
         <DropdownMenu>
@@ -44,7 +44,7 @@
     </div>
     <div class="relative grow overflow-y-auto">
       <div v-if="renderProfileList" class="absolute w-full">
-        <div v-if="deviceStore.profileNames.length === 0">
+        <div v-if="deviceStore.profiles.length === 0">
           <div class="flex h-32 flex-col items-center justify-center">
             <ScrambleText
               scramble-on-mount
@@ -114,14 +114,18 @@
                             }
                           "
                           @rename="
-                            (event) => {
-                              deviceStore.renameProfile(event.profile, event.name)
-                              if (deviceStore.currentProfileName === event.profile) {
-                                deviceStore.selectProfile(event.name)
+                            (oldName, newName) => {
+                              deviceStore.renameProfile(oldName, newName)
+                              if (deviceStore.currentProfileName === oldName) {
+                                deviceStore.selectProfile(newName)
                               }
                             }
                           "
-                          @duplicate="console.log('Duplicate profile not implemented!')"
+                          @duplicate="
+                            (originalName, profile) => {
+                              deviceStore.duplicateProfile(originalName, profile)
+                            }
+                          "
                           @delete="console.log('Delete profile not implemented!')"
                         />
                       </div>
