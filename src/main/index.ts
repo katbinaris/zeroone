@@ -121,29 +121,29 @@ app.whenReady().then(() => {
   ipcMain.on('electron:openExternal', (_event, url) => shell.openExternal(url))
   ipcMain.on('electron:openDevTools', () => mainWindow.webContents.toggleDevTools())
   ipcMain.on('electron:reload', () => mainWindow.webContents.reloadIgnoringCache())
-  nanoSerialApi.on('nanoSerialApi:device-attached', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:device-attached', (deviceid, data) => {
     console.log('Attached event', deviceid, data)
-    mainWindow.webContents.send('nanoSerialApi:event', 'device-attached', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'device-attached', deviceid, data)
   })
-  nanoSerialApi.on('nanoSerialApi:device-detached', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:device-detached', (deviceid, data) => {
     console.log('Detached event', deviceid, data)
-    mainWindow.webContents.send('nanoSerialApi:event', 'device-detached', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'device-detached', deviceid, data)
   })
-  nanoSerialApi.on('nanoSerialApi:device-error', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:device-error', (deviceid, data) => {
     console.log('Error event', deviceid, data)
-    mainWindow.webContents.send('nanoSerialApi:event', 'device-error', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'device-error', deviceid, data)
   })
-  nanoSerialApi.on('nanoSerialApi:connected', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:connected', (deviceid, data) => {
     console.log('Connected event', deviceid, data)
-    mainWindow.webContents.send('nanoSerialApi:event', 'connected', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'connected', deviceid, data)
   })
-  nanoSerialApi.on('nanoSerialApi:disconnected', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:disconnected', (deviceid, data) => {
     console.log('Disconnected event', deviceid, data)
-    mainWindow.webContents.send('nanoSerialApi:event', 'disconnected', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'disconnected', deviceid, data)
   })
-  nanoSerialApi.on('nanoSerialApi:update', (deviceid, ...data) => {
+  nanoSerialApi.on('nanoSerialApi:update', (deviceid, data) => {
     console.log('Update event', deviceid, data)
-    mainWindow.webContents.send('nanoSerialApi:event', 'update', deviceid, ...data)
+    mainWindow.webContents.send('nanoSerialApi:event', 'update', deviceid, data)
   })
   const menu = new Menu()
   for (const menuItem of Object.values(appMenu)) {

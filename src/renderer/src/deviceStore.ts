@@ -36,6 +36,12 @@ interface Profile {
   guiEnable: boolean
 }
 
+interface UpdateData {
+  a: number | undefined
+  t: number | undefined
+  v: number | undefined
+}
+
 const { nanoIpc } = window
 
 export const useDeviceStore = defineStore('device', {
@@ -118,8 +124,14 @@ export const initializeDevices = () => {
   const deviceStore = useDeviceStore()
 
   // register event handlers
-  nanoIpc.on((eventid, deviceid, ...data) => {
-    console.log('Received event', eventid, deviceid, data)
+  nanoIpc.on((eventid, deviceid, dataString) => {
+    console.log('Received event', eventid, deviceid, dataString)
+    let update: UpdateData = {} as UpdateData
+    try {
+      update = JSON.parse(dataString) as UpdateData
+    } catch (e) {
+      console.error(e)
+    }
     if (eventid === 'device-attached') {
       deviceStore.attachDevice(deviceid)
       if (deviceStore.attachedDeviceIds.length === 1) {
@@ -129,15 +141,15 @@ export const initializeDevices = () => {
     if (eventid === 'device-detached') {
       deviceStore.detachDevice(deviceid)
     }
-    if (eventid === 'device-connected') {
+    if (eventid === 'connected') {
       deviceStore.connectDevice(deviceid, false)
     }
-    if (eventid === 'device-disconnected') {
+    if (eventid === 'disconnected') {
       deviceStore.disconnectDevice(deviceid, false)
     }
     if (eventid === 'update') {
-      if ('a' in data) {
-        deviceStore.setAngle(data.a as number)
+      if (update.a) {
+        deviceStore.setAngle(update.a)
       }
     }
   })

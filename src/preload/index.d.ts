@@ -2,7 +2,7 @@ export interface INanoSerialApi {
   listAttachedDevices(): Promise<string[]>
   connect(deviceid: string): Promise<string>
   disconnect(deviceid: string): Promise<string>
-  on(callback: (eventid: string, deviceid: string, data: any) => void): void
+  on(callback: (eventid: string, deviceid: string, data: string) => void): void
   send(deviceid: string, jsonstr: string): Promise<void>
   save(deviceid: string): Promise<void>
 }

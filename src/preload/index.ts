@@ -12,8 +12,8 @@ contextBridge.exposeInMainWorld('nanoIpc', {
     return ipcRenderer.invoke('nanoSerialApi:disconnect', deviceid)
   },
   on(callback) {
-    ipcRenderer.on('nanoSerialApi:event', (_event, eventid, deviceid, ...data) => {
-      callback(eventid, deviceid, ...data)
+    ipcRenderer.on('nanoSerialApi:event', (_event, eventid, deviceid, data) => {
+      callback(eventid, deviceid, data)
     })
   },
   send(deviceid, obj) {
