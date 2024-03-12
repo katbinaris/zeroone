@@ -3,10 +3,13 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import nanoSerialApi from './nanoSerialApi'
+import installExtension from 'electron-devtools-installer'
 
 const zoomFactor = 1
 const windowWidth = 1111
 const windowHeight = 666
+
+const VUE_DEVTOOLS = 'nhdogjmejiglipccpnnnanhbledajbpd'
 
 const appMenu = {
   device: {
@@ -87,6 +90,12 @@ const createMainWindow = () => {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('ZERO/ONE')
+
+  if (is.dev) {
+    installExtension(VUE_DEVTOOLS)
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log('An error occurred: ', err))
+  }
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
