@@ -107,7 +107,9 @@ app.whenReady().then(() => {
   ipcMain.handle('nanoSerialApi:list_devices', () => nanoSerialApi.list_devices())
   ipcMain.handle('nanoSerialApi:connect', (event, deviceid) => nanoSerialApi.connect(deviceid))
   ipcMain.handle('nanoSerialApi:disconnect', () => nanoSerialApi.disconnect)
-  ipcMain.handle('nanoSerialApi:send', (event, ...data) => nanoSerialApi.send(data[0], data[1]))
+  ipcMain.handle('nanoSerialApi:send', (event, ...data) =>
+    nanoSerialApi.send(data[0], JSON.parse(data[1]))
+  )
   const mainWindow = createMainWindow()
   ipcMain.on('electron:minimizeWindow', () => mainWindow.minimize())
   ipcMain.on('electron:toggleMaximizeWindow', () => {

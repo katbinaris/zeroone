@@ -40,6 +40,9 @@ interface UpdateData {
   a: number | undefined
   t: number | undefined
   v: number | undefined
+  profiles: string[] | undefined
+  current: string | undefined
+  profile: Profile | undefined
 }
 
 const { nanoIpc } = window
@@ -67,7 +70,10 @@ export const useDeviceStore = defineStore('device', {
     profileTags: (state) => state.profiles.map((profile) => profile.profileTag),
     profilesByTag: (state) =>
       state.profiles.reduce((acc, profile) => {
-        acc[profile.profileTag] = profile
+        if (!acc[profile.profileTag]) {
+          acc[profile.profileTag] = []
+        }
+        acc[profile.profileTag].push(profile)
         return acc
       }, {})
   },
@@ -80,22 +86,49 @@ export const useDeviceStore = defineStore('device', {
         this.attachedDeviceIds.push(deviceId)
       }
     },
+    addProfile(profile: Profile, updateDevice: boolean = true) {
+      if (!this.profileNames.includes(profile.name)) {
+        this.profileNames.push(profile.name)
+      }
+      const existingProfile = this.profiles.find((p) => p.name === profile.name)
+      if (existingProfile) {
+        Object.assign(existingProfile, profile)
+      } else {
+        this.profiles.push(profile)
+      }
+      if (updateDevice) {
+        nanoIpc.send(
+          this.currentDeviceId!,
+          JSON.stringify({ profile: profile.name, updates: profile })
+        )
+      }
+    },
     detachDevice(deviceId: string) {
       const index = this.attachedDeviceIds.indexOf(deviceId)
       if (index !== -1) {
         this.attachedDeviceIds.splice(index, 1)
       }
     },
-    connectDevice(deviceId: string, updateDevice: boolean = true) {
-      this.currentDeviceId = deviceId
-      if (updateDevice) {
-        nanoIpc.connect(deviceId)
+    connectDevice(deviceId: string | undefined = undefined, updateDevice: boolean = true) {
+      if (deviceId) {
+        this.currentDeviceId = deviceId
+        if (updateDevice) {
+          nanoIpc.connect(deviceId)
+        }
+      } else if (this.attachedDeviceIds.length > 0) {
+        this.connectDevice(this.attachedDeviceIds[0])
       }
     },
     disconnectDevice(deviceId: string, updateDevice: boolean = true) {
       this.currentDeviceId = null
       if (updateDevice) {
         nanoIpc.disconnect(deviceId)
+      }
+    },
+    setProfileNames(profileNames: string[], updateDevice: boolean = true) {
+      this.profileNames = profileNames
+      if (updateDevice) {
+        nanoIpc.send(this.currentDeviceId!, JSON.stringify({ profiles: profileNames }))
       }
     },
     setCurrentProfile(profileName: string, updateDevice: boolean = true) {
@@ -126,12 +159,6 @@ export const initializeDevices = () => {
   // register event handlers
   nanoIpc.on((eventid, deviceid, dataString) => {
     console.log('Received event', eventid, deviceid, dataString)
-    let update: UpdateData = {} as UpdateData
-    try {
-      update = JSON.parse(dataString) as UpdateData
-    } catch (e) {
-      console.error(e)
-    }
     if (eventid === 'device-attached') {
       deviceStore.attachDevice(deviceid)
       if (deviceStore.attachedDeviceIds.length === 1) {
@@ -143,13 +170,35 @@ export const initializeDevices = () => {
     }
     if (eventid === 'connected') {
       deviceStore.connectDevice(deviceid, false)
+      nanoIpc.send(deviceid, JSON.stringify({ profiles: '#all' }))
     }
     if (eventid === 'disconnected') {
       deviceStore.disconnectDevice(deviceid, false)
     }
     if (eventid === 'update') {
+      let update: UpdateData = {} as UpdateData
+      if (dataString) {
+        try {
+          update = JSON.parse(dataString) as UpdateData
+        } catch (e) {
+          console.error(e)
+        }
+      }
       if (update.a) {
         deviceStore.setAngle(update.a)
+      }
+      if (update.profiles) {
+        deviceStore.setProfileNames(update.profiles, false)
+        for (const profileName of update.profiles) {
+          console.log('Requesting profile', profileName)
+          nanoIpc.send(deviceid, JSON.stringify({ profile: profileName }))
+        }
+      }
+      if (update.current) {
+        deviceStore.setCurrentProfile(update.current, false)
+      }
+      if (update.profile) {
+        deviceStore.addProfile(update.profile, false)
       }
     }
   })
@@ -157,7 +206,7 @@ export const initializeDevices = () => {
   // get initial device list
   nanoIpc.listAttachedDevices().then((deviceIds) => {
     deviceStore.setAttachedDeviceIds(deviceIds)
-    if (deviceIds.length > 0) {
+    if (!deviceStore.connected && deviceIds.length > 0) {
       nanoIpc.connect(deviceIds[0])
     }
   })

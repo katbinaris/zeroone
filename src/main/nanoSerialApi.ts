@@ -75,6 +75,7 @@ class NanoSerialApi extends EventEmitter {
     if (connected_port === undefined) {
       return Promise.reject('Device not connected')
     } else {
+      console.log('Sending:', jsonstr)
       connected_port.port.write(jsonstr + '\n')
       return Promise.resolve()
     }
