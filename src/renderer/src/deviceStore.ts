@@ -36,14 +36,14 @@ interface Profile {
   guiEnable: boolean
 }
 
-const { nanoSerialApi } = window
+const { nanoIpc } = window
 
 export const useDeviceStore = defineStore('device', {
   state: () => ({
     attachedDeviceIds: [] as string[], // list of attached device ids
     currentDeviceId: null as string | null, // id of the current device
     profileNames: [] as string[], // list of profile names
-    profiles: {} as Record<string, Profile>, // map of profiles by name
+    profiles: [] as Profile[], // list of profiles
     currentProfileName: null as string | null, // name of the current profile
     orientation: 0 as number, // orientation of the device
     dirtyState: false as boolean, // whether the device state has changed
@@ -55,22 +55,47 @@ export const useDeviceStore = defineStore('device', {
   getters: {
     connected: (state) => state.currentDeviceId !== null,
     currentProfile: (state) =>
-      state.currentProfileName ? state.profiles[state.currentProfileName] : null
+      state.currentProfileName
+        ? state.profiles.find((profile) => profile.name === state.currentProfileName)
+        : null,
+    profileTags: (state) => state.profiles.map((profile) => profile.profileTag),
+    profilesByTag: (state) =>
+      state.profiles.reduce((acc, profile) => {
+        acc[profile.profileTag] = profile
+        return acc
+      }, {})
   },
   actions: {
     setAttachedDeviceIds(deviceIds: string[]) {
       this.attachedDeviceIds = deviceIds
     },
-    setConnected(connected: boolean) {
-      // TODO: This is here for compatibility, but it should be removed
-      // Real connect calls would need to know the last device id
-      // Maybe that should be stored here
-      // Then connect connects to the last device id of falls back to the first
+    attachDevice(deviceId: string) {
+      if (!this.attachedDeviceIds.includes(deviceId)) {
+        this.attachedDeviceIds.push(deviceId)
+      }
+    },
+    detachDevice(deviceId: string) {
+      const index = this.attachedDeviceIds.indexOf(deviceId)
+      if (index !== -1) {
+        this.attachedDeviceIds.splice(index, 1)
+      }
+    },
+    connectDevice(deviceId: string, updateDevice: boolean = true) {
+      this.currentDeviceId = deviceId
+      if (updateDevice) {
+        nanoIpc.connect(deviceId)
+      }
+    },
+    disconnectDevice(deviceId: string, updateDevice: boolean = true) {
+      this.currentDeviceId = null
+      if (updateDevice) {
+        nanoIpc.disconnect(deviceId)
+      }
     },
     setCurrentProfile(profileName: string, updateDevice: boolean = true) {
       this.currentProfileName = profileName
       if (updateDevice) {
-        nanoSerialApi.send(this.currentDeviceId!, JSON.stringify({ current: profileName }))
+        nanoIpc.send(this.currentDeviceId!, JSON.stringify({ current: profileName }))
       }
     },
     setOrientation(orientation: number, updateDevice: boolean = true) {
@@ -82,6 +107,101 @@ export const useDeviceStore = defineStore('device', {
     },
     cycleOrientation() {
       this.setOrientation((this.orientation + 90) % 360)
+    },
+    setAngle(angle: number) {
+      this.angle = angle
     }
   }
 })
+
+export const initializeDevices = () => {
+  const deviceStore = useDeviceStore()
+
+  // register event handlers
+  nanoIpc.on((eventid, deviceid, ...data) => {
+    console.log('Received event', eventid, deviceid, data)
+    if (eventid === 'device-attached') {
+      deviceStore.attachDevice(deviceid)
+      if (deviceStore.attachedDeviceIds.length === 1) {
+        deviceStore.connectDevice(deviceid)
+      }
+    }
+    if (eventid === 'device-detached') {
+      deviceStore.detachDevice(deviceid)
+    }
+    if (eventid === 'device-connected') {
+      deviceStore.connectDevice(deviceid, false)
+    }
+    if (eventid === 'device-disconnected') {
+      deviceStore.disconnectDevice(deviceid, false)
+    }
+    if (eventid === 'update') {
+      if ('a' in data) {
+        deviceStore.setAngle(data.a as number)
+      }
+    }
+  })
+
+  // get initial device list
+  nanoIpc.listAttachedDevices().then((deviceIds) => {
+    deviceStore.setAttachedDeviceIds(deviceIds)
+    if (deviceIds.length > 0) {
+      nanoIpc.connect(deviceIds[0])
+    }
+  })
+}
+
+// // devices, device attachment, connection, and disconnection
+// init_devices(ids) {
+//   console.log('Initializing devices: ', ids)
+//   for (const id of ids) this.update_devices(id, true)
+//   if (Object.keys(this.devices).length == 1) {
+//     // TODO auto-connect to the device
+//     const deviceid = Object.keys(this.devices)[0]
+//     console.log('Auto-connecting to device ', deviceid)
+//     window.nanoIpc.connect(deviceid)
+//   }
+// },
+// update_devices(deviceid, attached) {
+//   if (attached) {
+//     if (!this.devices.hasOwnProperty(deviceid))
+//       this.devices[deviceid] = { serialNumber: deviceid, connected: false }
+//   } else {
+//     if (this.devices.hasOwnProperty(deviceid)) delete this.devices[deviceid] // TODO maybe mark as detached instead of deleting? then we can remember its name, etc...
+//   }
+// },
+// device_attached(deviceid) {
+//   this.update_devices(deviceid, true)
+//   if (Object.keys(this.devices).length == 1) {
+//     // TODO auto-connect to the device
+//     console.log('Auto-connecting to device ', deviceid)
+//     window.nanoIpc.connect(deviceid)
+//   }
+// },
+// device_detached(deviceid) {
+//   if (this.devices[deviceid].connected) {
+//     // detached event arrived before disconnected event?
+//     this.devices[deviceid].connected = false
+//     this.connected = false
+//   }
+//   this.update_devices(deviceid, false)
+// },
+// device_connected(deviceid) {
+//   this.devices[deviceid].connected = true
+//   this.connected = true
+//   this.connectedId = deviceid
+//   // TODO load profiles from device
+//   // nanoIpc.send(deviceid, { profiles: "#all" }) // request profiles
+//   // "Default Profile", for now, is the only profile after the device
+//   // starts up, so it is also the current (eg. 'selected') profile
+//   // nanoIpc.send(deviceid, { p: "Default Profile" }) // request Default Profile
+
+//   // TODO maybe you want to request all the profiles right now?
+//   // or only on demand?
+// },
+// device_disconnected(deviceid) {
+//   this.devices[deviceid].connected = false
+//   this.connected = false
+//   this.connectedId = null
+//   // TODO switch UI to disconnected state
+// },

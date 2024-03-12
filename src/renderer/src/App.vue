@@ -3,9 +3,10 @@ import ProfileManager from '@renderer/components/profile/ProfileManager.vue'
 import DevicePreview from '@renderer/components/device/DevicePreview.vue'
 import ConfigPane from '@renderer/components/config/ConfigPane.vue'
 import Navbar from '@renderer/components/navbar/Navbar.vue'
-import { useDeviceStore } from '@renderer/deviceStore'
+import { useDeviceStore, initializeDevices } from '@renderer/deviceStore'
 
 const deviceStore = useDeviceStore()
+initializeDevices()
 
 // const menuActions = {
 //   connect: () => store.setConnected(!store.connected),
@@ -13,7 +14,7 @@ const deviceStore = useDeviceStore()
 //   skin: () => store.switchPreviewDeviceModel()
 // }
 
-// electronApi.onMenu((key) => {
+// appIpc.onMenu((key) => {
 //   console.log('menu', key)
 //   if (menuActions[key]) {
 //     menuActions[key]()
@@ -24,18 +25,18 @@ const deviceStore = useDeviceStore()
 
 // handle device events
 // const handlers = useMessageHandlers(store)
-// nanoSerialApi.on_event('device-attached', (evt, deviceid, data) => store.device_attached(deviceid))
-// nanoSerialApi.on_event('device-detached', (evt, deviceid, data) => store.device_detached(deviceid))
-// nanoSerialApi.on_event('device-error', (evt, deviceid, data) => {
+// nanoIpc.on_event('device-attached', (evt, deviceid, data) => store.device_attached(deviceid))
+// nanoIpc.on_event('device-detached', (evt, deviceid, data) => store.device_detached(deviceid))
+// nanoIpc.on_event('device-error', (evt, deviceid, data) => {
 //   /* TODO handle connection errors */
 // })
-// nanoSerialApi.on_event('connected', (evt, deviceid, data) => store.device_connected(deviceid))
-// nanoSerialApi.on_event('disconnected', (evt, deviceid, data) => store.device_disconnected(deviceid))
-// nanoSerialApi.on_event('update', (evt, deviceid, data) => {
+// nanoIpc.on_event('connected', (evt, deviceid, data) => store.device_connected(deviceid))
+// nanoIpc.on_event('disconnected', (evt, deviceid, data) => store.device_disconnected(deviceid))
+// nanoIpc.on_event('update', (evt, deviceid, data) => {
 //   handlers.handle_message(data)
 // })
 // // get list of the currently attached devices
-// nanoSerialApi.list_devices().then((devs) => store.init_devices(devs))
+// nanoIpc.list_devices().then((devs) => store.init_devices(devs))
 </script>
 <template>
   <main class="flex h-screen w-screen select-none flex-col">

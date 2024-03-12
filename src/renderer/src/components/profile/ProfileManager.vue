@@ -58,8 +58,7 @@
           <draggable
             key="categoriesDraggable"
             group="profileCategories"
-            item-key="name"
-            :list="deviceStore.profileCategories"
+            :list="deviceStore.profileTags"
             v-bind="dragOptions"
             handle=".category-handle"
             @start="drag = true"
@@ -67,7 +66,7 @@
             @change="onCategoryDrop"
           >
             <template #item="dragCategory">
-              <Collapsible v-model:open="collapse[dragCategory.element.name]" :default-open="true">
+              <Collapsible v-model:open="collapse[dragCategory.element]" :default-open="true">
                 <!-- TODO: Make profile groups computed instead defining them of using v-for -->
                 <CollapsibleTrigger
                   class="group h-12 w-full border-0 border-b bg-zinc-900 py-2 text-left text-sm text-muted-foreground"
@@ -75,9 +74,9 @@
                   <ChevronRight
                     class="chevrot mb-0.5 ml-4 inline-block size-4 transition-transform"
                   />
-                  {{ dragCategory.element.name
+                  {{ dragCategory.element
                   }}<span class="font-heading text-sm text-zinc-600">
-                    ({{ dragCategory.element.profiles?.length || 0 }})</span
+                    ({{ deviceStore.profilesByTag[dragCategory.element].length || 0 }})</span
                   >
                   <span class="float-right mx-4 w-4 cursor-grab text-zinc-600">
                     <GripHorizontal class="category-handle mb-0.5 inline-block size-4" />
@@ -88,7 +87,7 @@
                     key="profilesDraggable"
                     group="profiles"
                     item-key="id"
-                    :list="dragCategory.element.profiles"
+                    :list="deviceStore.profilesByTag[dragCategory.element]"
                     v-bind="dragOptions"
                     handle=".profile-handle"
                     @start="drag = true"

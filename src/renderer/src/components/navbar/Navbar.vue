@@ -90,32 +90,32 @@
         </MenubarMenu>
         <MenubarButton
           class="app-titlebar-button"
-          @click="electronApi.openExternal('https://discord.gg/jgRd77YN5T')"
+          @click="appIpc.openExternal('https://discord.gg/jgRd77YN5T')"
         >
           Community
         </MenubarButton>
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">Help</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem @click="electronApi.openExternal('https://github.com/katbinaris/zeroone')"
+            <MenubarItem @click="appIpc.openExternal('https://github.com/katbinaris/zeroone')"
               >Software Source</MenubarItem
             >
             <MenubarItem
-              @click="electronApi.openExternal('https://github.com/katbinaris/NanoD_RatchetH1')"
+              @click="appIpc.openExternal('https://github.com/katbinaris/NanoD_RatchetH1')"
               >Firmware Source</MenubarItem
             >
             <MenubarItem
-              @click="electronApi.openExternal('https://github.com/katbinaris/Nano_D_PlusPlus')"
+              @click="appIpc.openExternal('https://github.com/katbinaris/Nano_D_PlusPlus')"
               >Hardware Source</MenubarItem
             >
             <MenubarSeparator />
             <MenubarItem
-              @click="electronApi.openExternal('https://github.com/katbinaris/zeroone/issues/new')"
+              @click="appIpc.openExternal('https://github.com/katbinaris/zeroone/issues/new')"
               >Report Software Issue</MenubarItem
             >
             <MenubarItem
               @click="
-                electronApi.openExternal('https://github.com/katbinaris/NanoD_RatchetH1/issues/new')
+                appIpc.openExternal('https://github.com/katbinaris/NanoD_RatchetH1/issues/new')
               "
               >Report Device Issue</MenubarItem
             >
@@ -124,13 +124,13 @@
               <p>Software Version:&nbsp;</p>
               <p>v0.1</p>
             </MenubarItem>
-            <MenubarItem @click="electronApi.openExternal('https://discord.gg/jgRd77YN5T')"
+            <MenubarItem @click="appIpc.openExternal('https://discord.gg/jgRd77YN5T')"
               >Contact Support</MenubarItem
             >
-            <template v-if="electronApi.isDevelopment">
+            <template v-if="appIpc.isDevelopment">
               <MenubarSeparator />
-              <MenubarItem @click="electronApi.openDevTools">Developer Tools</MenubarItem>
-              <MenubarItem @click="electronApi.reload">Reload</MenubarItem>
+              <MenubarItem @click="appIpc.openDevTools">Developer Tools</MenubarItem>
+              <MenubarItem @click="appIpc.reload">Reload</MenubarItem>
             </template>
           </MenubarContent>
         </MenubarMenu>
@@ -166,21 +166,21 @@
         <button
           v-if="minimizable"
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electronApi.minimizeWindow"
+          @click="appIpc.minimizeWindow"
         >
           <Minus class="size-5" />
         </button>
         <button
           v-if="maximizable"
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electronApi.toggleMaximizeWindow"
+          @click="appIpc.toggleMaximizeWindow"
         >
           <Copy v-if="isMaximized" class="size-4" />
           <Square v-else class="mr-0.5 size-3.5" />
         </button>
         <button
           class="app-titlebar-button flex grow items-center justify-center px-2 hover:text-white"
-          @click="electronApi.closeWindow"
+          @click="appIpc.closeWindow"
         >
           <X class="mr-0.5 size-5" />
         </button>
@@ -215,9 +215,9 @@ const showDisconnectButton = ref(false)
 
 const isMaximized = ref(false)
 
-const { electronApi } = window
+const { appIpc } = window
 
-const isMacOS = electronApi.platform === 'darwin'
+const isMacOS = appIpc.platform === 'darwin'
 const zoomFactor = ref(1)
 
 const numberOfChanges = ref(27)
@@ -231,12 +231,12 @@ onMounted(() => {
   window.addEventListener('resize', () => {
     zoomFactor.value = window.outerWidth / window.innerWidth
   })
-  electronApi.onMaximized((maximized) => {
+  appIpc.onMaximized((maximized) => {
     console.log(maximized)
     isMaximized.value = true
   })
 
-  electronApi.onUnmaximized(() => {
+  appIpc.onUnmaximized(() => {
     isMaximized.value = false
   })
 })

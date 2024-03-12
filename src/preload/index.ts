@@ -1,8 +1,8 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
 // expose an API to choose available devices
-contextBridge.exposeInMainWorld('nanoSerialApi', {
-  listConnectedDevices() {
+contextBridge.exposeInMainWorld('nanoIpc', {
+  listAttachedDevices() {
     return ipcRenderer.invoke('nanoSerialApi:list_devices')
   },
   connect(deviceid) {
@@ -21,7 +21,7 @@ contextBridge.exposeInMainWorld('nanoSerialApi', {
   }
 })
 
-contextBridge.exposeInMainWorld('electronApi', {
+contextBridge.exposeInMainWorld('appIpc', {
   platform: process.platform,
   isDevelopment: process.env.NODE_ENV !== 'production',
   minimizeWindow: () => ipcRenderer.send('electron:minimizeWindow'),

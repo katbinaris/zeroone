@@ -1,11 +1,8 @@
 export interface INanoSerialApi {
-  list_devices(): Promise<string[]>
+  listAttachedDevices(): Promise<string[]>
   connect(deviceid: string): Promise<string>
   disconnect(deviceid: string): Promise<string>
-  on_event(
-    eventid_filter: string,
-    callback: (eventid: string, deviceid: string, data: any) => void
-  ): void
+  on(callback: (eventid: string, deviceid: string, data: any) => void): void
   send(deviceid: string, jsonstr: string): Promise<void>
   save(deviceid: string): Promise<void>
 }
@@ -26,7 +23,7 @@ export interface IElectronApi {
 
 declare global {
   interface Window {
-    nanoSerialApi: INanoSerialApi
-    electronApi: IElectronApi
+    nanoIpc: INanoSerialApi
+    appIpc: IElectronApi
   }
 }

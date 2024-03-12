@@ -23,7 +23,7 @@ app.use(pinia)
 app.use(i18n)
 
 // TODO remove this
-// window.nanoSerialApi.on_event('*', (eventid, deviceid, ...data) => {
+// window.nanoIpc.on_event('*', (eventid, deviceid, ...data) => {
 //   console.log('Event on window ', eventid, deviceid, data)
 // })
 
