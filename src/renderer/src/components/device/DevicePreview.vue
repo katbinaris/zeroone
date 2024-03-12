@@ -8,7 +8,7 @@
       }"
     >
       <Transition name="fade">
-        <div v-if="store.connected" class="flex h-12 items-center justify-between px-10">
+        <div v-if="deviceStore.connected" class="flex h-12 items-center justify-between px-10">
           <h2>
             <ScrambleText
               :delay="100"
@@ -32,7 +32,7 @@
       </Transition>
       <Transition name="fade-delayed">
         <DeviceLEDRing
-          v-if="store.connected"
+          v-if="deviceStore.connected"
           :value="barValue"
           class="absolute inset-x-0 top-[12.5%] mx-auto h-[66%]"
         />
@@ -44,11 +44,13 @@
       >
         <TransitionGroup name="fade-display">
           <div
-            v-if="store.connected"
+            v-if="deviceStore.connected"
             class="absolute flex flex-col items-center pb-2 text-center mix-blend-screen"
           >
             <img :src="LogoMidi" alt="midi-logo" class="h-4 opacity-50" />
-            <h2 class="font-pixellg text-5xl">{{ parseInt(barValue - store.turns * 100) }}</h2>
+            <h2 class="font-pixellg text-5xl">
+              {{ parseInt(barValue - deviceStore.turns * 100) }}
+            </h2>
             <div class="font-pixelsm text-md">HIGH PASS</div>
             <DeviceBar :value="barValue" :count="30" :width="120" />
             <span class="font-pixelsm w-36 text-[7pt] uppercase text-muted-foreground">
@@ -71,21 +73,21 @@
       </div>
       <Transition name="fade-delayed">
         <button
-          v-if="store.connected"
+          v-if="deviceStore.connected"
           class="absolute inset-x-0 top-[24.5%] mx-auto aspect-square h-[41.5%] rounded-full outline-2 transition-all"
           :class="{
-            'outline outline-white': store.selectedFeature === 'knob',
-            'outline-zinc-400 hover:outline': store.selectedFeature !== 'knob'
+            'outline outline-white': appStore.selectedFeature === 'knob',
+            'outline-zinc-400 hover:outline': appStore.selectedFeature !== 'knob'
           }"
-          @click="store.selectConfigFeature('knob')"
+          @click="appStore.selectConfigFeature('knob')"
         />
       </Transition>
       <Transition name="fade-delayed">
         <DeviceKeys
-          v-if="store.connected"
+          v-if="deviceStore.connected"
           class="absolute inset-x-0 top-[77.5%] mx-auto w-[72.7%] gap-[2.2%]"
-          :selected="store.selectedFeature === 'key' ? store.selectedKey : ''"
-          @select="store.selectKey"
+          :selected="appStore.selectedFeature === 'key' ? appStore.selectedKey : ''"
+          @select="appStore.selectKey"
         />
       </Transition>
     </div>
@@ -96,15 +98,17 @@ import RenderNanoOne from '@renderer/assets/images/renderNanoOneTransparent.png'
 import RenderNanoZero from '@renderer/assets/images/renderNanoZeroTransparent.png'
 import LogoMidi from '@renderer/assets/logos/logoMidi.svg'
 import DeviceBar from '@renderer/components/device/DeviceBar.vue'
-import { useStore } from '@renderer/store'
+import { useAppStore } from '@renderer/appStore'
+import { useDeviceStore } from '@renderer/deviceStore'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { computed, ref } from 'vue'
 import DeviceLEDRing from '@renderer/components/device/DeviceLEDRing.vue'
 import DeviceKeys from '@renderer/components/device/DeviceKeys.vue'
 
-const store = useStore()
+const appStore = useAppStore()
+const deviceStore = useDeviceStore()
 
-const barValue = computed(() => 100 - (store.angle / Math.PI / 2) * 100)
+const barValue = computed(() => 100 - (deviceStore.angle / Math.PI / 2) * 100)
 
 const previewDeviceImages = {
   nanoOne: RenderNanoOne,
@@ -112,7 +116,7 @@ const previewDeviceImages = {
 }
 
 const previewDeviceImage = computed(
-  () => previewDeviceImages[store.previewDeviceModel || 'nanoOne']
+  () => previewDeviceImages[appStore.previewDeviceModel || 'nanoOne']
 )
 
 const offlineText = ref('NO DEVICE CONNECTED')

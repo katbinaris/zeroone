@@ -3,41 +3,39 @@ import ProfileManager from '@renderer/components/profile/ProfileManager.vue'
 import DevicePreview from '@renderer/components/device/DevicePreview.vue'
 import ConfigPane from '@renderer/components/config/ConfigPane.vue'
 import Navbar from '@renderer/components/navbar/Navbar.vue'
-import { useStore } from '@renderer/store'
-import { useMessageHandlers } from '@renderer/device'
+import { useDeviceStore } from '@renderer/deviceStore'
 
-const { electronApi, nanoSerialApi } = window
-const store = useStore()
+const deviceStore = useDeviceStore()
 
-const menuActions = {
-  connect: () => store.setConnected(!store.connected),
-  orientation: () => store.cycleScreenOrientation(),
-  skin: () => store.switchPreviewDeviceModel()
-}
+// const menuActions = {
+//   connect: () => store.setConnected(!store.connected),
+//   orientation: () => store.cycleScreenOrientation(),
+//   skin: () => store.switchPreviewDeviceModel()
+// }
 
-electronApi.onMenu((key) => {
-  console.log('menu', key)
-  if (menuActions[key]) {
-    menuActions[key]()
-  }
-})
+// electronApi.onMenu((key) => {
+//   console.log('menu', key)
+//   if (menuActions[key]) {
+//     menuActions[key]()
+//   }
+// })
 
-store.fetchProfiles() // TODO remove me!
+// store.fetchProfiles() // TODO remove me!
 
 // handle device events
-const handlers = useMessageHandlers(store)
-nanoSerialApi.on_event('device-attached', (evt, deviceid, data) => store.device_attached(deviceid))
-nanoSerialApi.on_event('device-detached', (evt, deviceid, data) => store.device_detached(deviceid))
-nanoSerialApi.on_event('device-error', (evt, deviceid, data) => {
-  /* TODO handle connection errors */
-})
-nanoSerialApi.on_event('connected', (evt, deviceid, data) => store.device_connected(deviceid))
-nanoSerialApi.on_event('disconnected', (evt, deviceid, data) => store.device_disconnected(deviceid))
-nanoSerialApi.on_event('update', (evt, deviceid, data) => {
-  handlers.handle_message(data)
-})
-// get list of the currently attached devices
-nanoSerialApi.list_devices().then((devs) => store.init_devices(devs))
+// const handlers = useMessageHandlers(store)
+// nanoSerialApi.on_event('device-attached', (evt, deviceid, data) => store.device_attached(deviceid))
+// nanoSerialApi.on_event('device-detached', (evt, deviceid, data) => store.device_detached(deviceid))
+// nanoSerialApi.on_event('device-error', (evt, deviceid, data) => {
+//   /* TODO handle connection errors */
+// })
+// nanoSerialApi.on_event('connected', (evt, deviceid, data) => store.device_connected(deviceid))
+// nanoSerialApi.on_event('disconnected', (evt, deviceid, data) => store.device_disconnected(deviceid))
+// nanoSerialApi.on_event('update', (evt, deviceid, data) => {
+//   handlers.handle_message(data)
+// })
+// // get list of the currently attached devices
+// nanoSerialApi.list_devices().then((devs) => store.init_devices(devs))
 </script>
 <template>
   <main class="flex h-screen w-screen select-none flex-col">
@@ -46,7 +44,7 @@ nanoSerialApi.list_devices().then((devs) => store.init_devices(devs))
       <div class="flex min-w-60 flex-1 basis-1/3 overflow-hidden">
         <Transition name="slide-left">
           <ProfileManager
-            v-if="store.connected"
+            v-if="deviceStore.connected"
             class="flex max-w-full flex-1 flex-col border-0 border-r border-solid bg-zinc-900/50"
           />
         </Transition>
@@ -55,7 +53,7 @@ nanoSerialApi.list_devices().then((devs) => store.init_devices(devs))
       <div class="flex flex-1 basis-2/5 overflow-hidden">
         <Transition name="slide-right">
           <ConfigPane
-            v-if="store.connected"
+            v-if="deviceStore.connected"
             class="flex max-w-full flex-1 flex-col border-0 border-l border-solid bg-zinc-900/50"
           />
         </Transition>

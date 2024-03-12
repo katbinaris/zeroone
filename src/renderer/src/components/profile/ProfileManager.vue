@@ -6,11 +6,11 @@
       >
         <button
           class="font-heading flex h-full min-w-0 flex-1 items-center"
-          @click="showProfileConfig = store.selectedProfile && !showProfileConfig"
+          @click="showProfileConfig = deviceStore.currentProfileName && !showProfileConfig"
         >
           <component :is="showProfileConfig ? ArrowLeft : List" class="mr-1 h-full w-5 shrink-0" />
           <ScrambleText
-            :text="showProfileConfig ? store.selectedProfile?.name : $t('profiles.title')"
+            :text="showProfileConfig ? deviceStore.currentProfileName : $t('profiles.title')"
             class="min-w-0 overflow-hidden text-ellipsis"
           />
           <ScrambleText
@@ -19,7 +19,7 @@
             scramble-on-mount
             :fill-interval="20"
             :delay="500"
-            :text="`(${store.profiles.length}/${maxProfiles})`"
+            :text="`(${deviceStore.profileNames.length}/${maxProfiles})`"
           />
         </button>
         <DropdownMenu>
@@ -28,7 +28,7 @@
               <button
                 v-if="!showProfileConfig"
                 class="flex aspect-square h-8 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-300 text-black hover:bg-zinc-200"
-                @click="store.addProfile"
+                @click="console.log('Add profile not implemented!')"
               >
                 <Plus class="h-4" />
               </button>
@@ -44,7 +44,7 @@
     </div>
     <div class="relative grow overflow-y-auto">
       <div v-if="renderProfileList" class="absolute w-full">
-        <div v-if="store.profiles.length === 0">
+        <div v-if="deviceStore.profileNames.length === 0">
           <div class="flex h-32 flex-col items-center justify-center">
             <ScrambleText
               scramble-on-mount
@@ -59,7 +59,7 @@
             key="categoriesDraggable"
             group="profileCategories"
             item-key="name"
-            :list="store.profileCategories"
+            :list="deviceStore.profileCategories"
             v-bind="dragOptions"
             handle=".category-handle"
             @start="drag = true"
@@ -105,15 +105,15 @@
                         <ProfileButton
                           :profile="dragProfile.element"
                           :show-hover-buttons="!drag"
-                          :selected="store.selectedProfile?.id === dragProfile.element.id"
+                          :selected="deviceStore.currentProfileName === dragProfile.element.name"
                           @select="
                             () => {
-                              store.selectProfile(dragProfile.element.id)
+                              console.log('Select profile not implemented!')
                               showProfileConfig = true
                             }
                           "
-                          @duplicate="store.duplicateProfile(dragProfile.element.id)"
-                          @delete="store.removeProfile(dragProfile.element.id)"
+                          @duplicate="console.log('Duplicate profile not implemented!')"
+                          @delete="console.log('Delete profile not implemented!')"
                         />
                       </div>
                     </template>
@@ -149,7 +149,6 @@ import {
   CollapsibleTrigger
 } from '@renderer/components/ui/collapsible'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
-import { useStore } from '@renderer/store'
 import ProfileButton from '@renderer/components/profile/ProfileButton.vue'
 import ProfileConfig from '@renderer/components/profile/ProfileConfig.vue'
 import draggable from 'vuedraggable'
@@ -159,6 +158,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@renderer/components/ui/dropdown-menu'
+import { useDeviceStore } from '@renderer/deviceStore'
 
 defineProps({
   showFilter: {
@@ -166,6 +166,8 @@ defineProps({
     default: false
   }
 })
+
+const deviceStore = useDeviceStore()
 
 const dragOptions = ref({
   ghostClass: 'ghost',
@@ -175,7 +177,6 @@ const dragOptions = ref({
 
 const maxProfiles = 32
 
-const store = useStore()
 const collapse = ref({})
 
 const showProfileConfig = ref(false)
@@ -228,7 +229,8 @@ const onCategoryDrop = (event) => {
     const category = event.moved.element
     const oldIndex = event.moved.oldIndex
     const newIndex = event.moved.newIndex
-    store.moveProfileCategory(category.name, oldIndex, newIndex)
+    // store.moveProfileCategory(category.name, oldIndex, newIndex)
+    console.log('Move category not implemented!')
   }
 }
 
@@ -237,12 +239,14 @@ const onProfileDrop = (event, categoryIndex) => {
     const profile = event.moved.element
     const oldIndex = event.moved.oldIndex
     const newIndex = event.moved.newIndex
-    store.moveProfile(profile.id, oldIndex, newIndex)
+    // store.moveProfile(profile.id, oldIndex, newIndex)
+    console.log('Move profile not implemented!')
   }
   if (event.added) {
     const profile = event.added.element
     const newIndex = event.added.newIndex
-    store.changeProfileCategory(profile.id, categoryIndex, newIndex)
+    // store.changeProfileCategory(profile.id, categoryIndex, newIndex)
+    console.log('Change profile category not implemented!')
   }
 }
 </script>

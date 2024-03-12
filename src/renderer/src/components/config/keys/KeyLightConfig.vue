@@ -9,9 +9,9 @@ import ConfigSection from '@renderer/components/common/ConfigSection.vue'
 import PaletteInput from '@renderer/components/common/PaletteInput.vue'
 import Color from 'color'
 import { ref, watch } from 'vue'
-import { useStore } from '@renderer/store'
+import { useDeviceStore } from '@renderer/deviceStore'
 
-const store = useStore()
+const deviceStore = useDeviceStore()
 
 const keyColors = ref({
   default: {
@@ -27,8 +27,8 @@ const keyColors = ref({
 watch(
   keyColors,
   (newVal) => {
-    store.setKeyDefaultColor(newVal.default.color)
-    store.setKeyPressedColor(newVal.pressed.color)
+    // store.setKeyDefaultColor(newVal.default.color)
+    // store.setKeyPressedColor(newVal.pressed.color)
   },
   { deep: true }
 )

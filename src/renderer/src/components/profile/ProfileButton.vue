@@ -13,7 +13,10 @@
       :class="{ 'bg-zinc-300': selected }"
       @submit.prevent="
         () => {
-          store.renameProfile(profile.id, nameInput)
+          // store.renameProfile(profile.id, nameInput)
+          console.log('Renaming profile to:', nameInput)
+          console.log('NOT IMPLEMENTED YET!')
+          // TODO: Implement deviceStore.renameProfile
           editing = false
         }
       "
@@ -136,9 +139,6 @@
 import { Check, Copy, PenLine, Trash2, X, GripHorizontal } from 'lucide-vue-next'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { nextTick, ref } from 'vue'
-import { useStore } from '@renderer/store'
-
-const store = useStore()
 
 defineEmits(['select', 'duplicate', 'delete'])
 

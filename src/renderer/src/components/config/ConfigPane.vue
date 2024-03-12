@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="store.selectedProfile">
+    <template v-if="deviceStore.currentProfile">
       <TabSelect
         v-if="showTabs"
         v-model="configPage"
@@ -12,7 +12,7 @@
         </template>
       </TabSelect>
       <div class="grow overflow-y-auto">
-        <component :is="store.currentConfigComponent" />
+        <component :is="appStore.currentConfigComponent" />
       </div>
     </template>
     <template v-else>
@@ -29,18 +29,20 @@
   </div>
 </template>
 <script setup>
-import { useStore } from '@renderer/store'
+import { useAppStore } from '@renderer/appStore'
+import { useDeviceStore } from '@renderer/deviceStore'
 import TabSelect from '@renderer/components/common/TabSelect.vue'
 import { computed } from 'vue'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { ChevronLeft } from 'lucide-vue-next'
 
-const store = useStore()
+const appStore = useAppStore()
+const deviceStore = useDeviceStore()
 
-const configPages = computed(() => store.currentConfigPages)
+const configPages = computed(() => appStore.currentConfigPages)
 const configPage = computed({
-  get: () => store.currentConfigPage,
-  set: (value) => store.setCurrentConfigPage(value)
+  get: () => appStore.currentConfigPage,
+  set: (value) => appStore.setCurrentConfigPage(value)
 })
 
 defineProps({

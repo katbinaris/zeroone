@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron'
 
 // expose an API to choose available devices
 contextBridge.exposeInMainWorld('nanoSerialApi', {
-  list_devices() {
+  listConnectedDevices() {
     return ipcRenderer.invoke('nanoSerialApi:list_devices')
   },
   connect(deviceid) {
@@ -11,20 +11,13 @@ contextBridge.exposeInMainWorld('nanoSerialApi', {
   disconnect(deviceid) {
     return ipcRenderer.invoke('nanoSerialApi:disconnect', deviceid)
   },
-  on_event(eventid_filter, callback) {
-    //console.log('attaching filter for ', eventid_filter)
+  on(callback) {
     ipcRenderer.on('nanoSerialApi:event', (_event, eventid, deviceid, ...data) => {
-      //console.log('Event in ipcRenderer ', eventid, deviceid, data)
-      if (eventid_filter == '*' || eventid_filter == eventid) {
-        callback(eventid, deviceid, ...data)
-      }
+      callback(eventid, deviceid, ...data)
     })
   },
   send(deviceid, obj) {
     return ipcRenderer.invoke('nanoSerialApi:send', deviceid, JSON.stringify(obj))
-  },
-  save(deviceid) {
-    return ipcRenderer.invoke('nanoSerialApi:send', deviceid, JSON.stringify({ save: true }))
   }
 })
 

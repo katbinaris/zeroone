@@ -4,7 +4,7 @@ import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 import App from './App.vue'
 
-import { pinia } from '@renderer/store'
+import { createPinia } from 'pinia'
 
 import en from '@renderer/lang/en.json'
 
@@ -15,14 +15,16 @@ const i18n = createI18n({
   messages: { en: en }
 })
 
+const pinia = createPinia()
+
 const app = createApp(App)
 
 app.use(pinia)
 app.use(i18n)
 
 // TODO remove this
-window.nanoSerialApi.on_event('*', (eventid, deviceid, ...data) => {
-  console.log('Event on window ', eventid, deviceid, data)
-})
+// window.nanoSerialApi.on_event('*', (eventid, deviceid, ...data) => {
+//   console.log('Event on window ', eventid, deviceid, data)
+// })
 
 app.mount('#app')

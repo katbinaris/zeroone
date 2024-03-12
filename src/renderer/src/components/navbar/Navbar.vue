@@ -41,31 +41,35 @@
       <div class="flex gap-2">
         <MenubarMenu>
           <MenubarTrigger class="app-titlebar-button">
-            <template v-if="store.numAttachedDevices !== 1">
-              Devices<span class="text-zinc-500">&nbsp;({{ '' + store.numAttachedDevices }})</span>
+            <template v-if="deviceStore.attachedDeviceIds.length !== 1">
+              Devices<span class="text-zinc-500"
+                >&nbsp;({{ '' + deviceStore.attachedDeviceIds.length }})</span
+              >
             </template>
             <template v-else> Device </template>
           </MenubarTrigger>
           <MenubarContent>
             <!-- TODO: Switch keyboard shortcut icons based on platform -->
-            <MenubarItem @click="store.setConnected(!store.connected)">
-              {{ store.connected ? $t('navbar.device.disconnect') : $t('navbar.device.connect') }}
+            <MenubarItem @click="deviceStore.setConnected(!deviceStore.connected)">
+              {{
+                deviceStore.connected ? $t('navbar.device.disconnect') : $t('navbar.device.connect')
+              }}
               <MenubarShortcut>⌘D</MenubarShortcut>
             </MenubarItem>
-            <MenubarItem v-if="store.multipleDevicesConnected"
+            <MenubarItem v-if="deviceStore.attachedDeviceIds.length > 1"
               >Next Device
               <MenubarShortcut>⌘N</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem class="flex justify-between" @click="store.cycleScreenOrientation">
+            <MenubarItem class="flex justify-between" @click="deviceStore.cycleOrientation">
               <p>Orientation:&nbsp;</p>
-              <p>{{ store.screenOrientation }}°</p>
+              <p>{{ deviceStore.orientation }}°</p>
               <MenubarShortcut>⌘R</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem class="flex justify-between" @click="store.switchPreviewDeviceModel">
+            <MenubarItem class="flex justify-between" @click="appStore.switchPreviewDeviceModel">
               <p>Skin:&nbsp;</p>
-              <p>{{ previewDeviceNames[store.previewDeviceModel || 'nanoOne'] }}</p>
+              <p>{{ previewDeviceNames[appStore.previewDeviceModel || 'nanoOne'] }}</p>
               <MenubarShortcut>⌘S</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
@@ -133,7 +137,7 @@
       </div>
       <div class="grow" />
       <Transition name="fade">
-        <div v-if="store.connected" class="flex items-center gap-2 px-2">
+        <div v-if="deviceStore.connected" class="flex items-center gap-2 px-2">
           <div v-if="numberOfChanges" class="text-sm">
             <PenLine class="inline-block h-4" />{{ numberOfChanges }} Changes
           </div>
@@ -145,7 +149,7 @@
                 : 'border-2'
             "
             class="app-titlebar-button"
-            @click="nanoSerialApi.save(store.connectedId)"
+            @click="console.log('Save not implemented!')"
           >
             Save
           </MenubarButton>
@@ -154,9 +158,9 @@
       <MenubarButton
         v-if="showDisconnectButton"
         class="app-titlebar-button border-2"
-        @click="store.setConnected(!store.connected)"
+        @click="deviceStore.setConnected(!deviceStore.connected)"
       >
-        {{ store.connected ? 'Disconnect' : 'Connect' }}
+        {{ deviceStore.connected ? 'Disconnect' : 'Connect' }}
       </MenubarButton>
       <div v-if="!isMacOS" class="flex h-full">
         <button
@@ -198,10 +202,12 @@ import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { Minus, Square, Copy, X, PenLine } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
 import { Separator } from '@renderer/components/ui/separator'
-import { useStore } from '@renderer/store'
 import MenubarButton from '@renderer/components/navbar/MenubarButton.vue'
+import { useAppStore } from '@renderer/appStore'
+import { useDeviceStore } from '@renderer/deviceStore'
 
-const store = useStore()
+const appStore = useAppStore()
+const deviceStore = useDeviceStore()
 
 const minimizable = ref(true)
 const maximizable = ref(true)
@@ -209,7 +215,7 @@ const showDisconnectButton = ref(false)
 
 const isMaximized = ref(false)
 
-const { electronApi, nanoSerialApi } = window
+const { electronApi } = window
 
 const isMacOS = electronApi.platform === 'darwin'
 const zoomFactor = ref(1)
