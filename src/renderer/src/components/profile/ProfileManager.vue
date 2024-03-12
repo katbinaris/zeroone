@@ -79,7 +79,9 @@
                     ({{ deviceStore.profilesByTag[dragCategory.element].length || 0 }})</span
                   >
                   <span class="float-right mx-4 w-4 cursor-grab text-zinc-600">
-                    <GripHorizontal class="category-handle mb-0.5 inline-block size-4" />
+                    <GripHorizontal
+                      class="category-handle mb-0.5 inline-block size-4 opacity-0 transition-all group-hover:opacity-100"
+                    />
                   </span>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
