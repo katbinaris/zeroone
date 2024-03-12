@@ -13,10 +13,7 @@
       :class="{ 'bg-zinc-300': selected }"
       @submit.prevent="
         () => {
-          // store.renameProfile(profile.id, nameInput)
-          console.log('Renaming profile to:', nameInput)
-          console.log('NOT IMPLEMENTED YET!')
-          // TODO: Implement deviceStore.renameProfile
+          $emit('rename', { profile: profile.name, name: nameInput })
           editing = false
         }
       "
@@ -140,7 +137,7 @@ import { Check, Copy, PenLine, Trash2, X, GripHorizontal } from 'lucide-vue-next
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { nextTick, ref } from 'vue'
 
-defineEmits(['select', 'duplicate', 'delete'])
+defineEmits(['select', 'rename', 'duplicate', 'delete'])
 
 const nameSubmitButton = ref(null)
 

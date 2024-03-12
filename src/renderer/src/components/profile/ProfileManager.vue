@@ -109,8 +109,16 @@
                           :selected="deviceStore.currentProfileName === dragProfile.element.name"
                           @select="
                             () => {
-                              console.log('Select profile not implemented!')
+                              deviceStore.selectProfile(dragProfile.element.name)
                               showProfileConfig = true
+                            }
+                          "
+                          @rename="
+                            (event) => {
+                              deviceStore.renameProfile(event.profile, event.name)
+                              if (deviceStore.currentProfileName === event.profile) {
+                                deviceStore.selectProfile(event.name)
+                              }
                             }
                           "
                           @duplicate="console.log('Duplicate profile not implemented!')"

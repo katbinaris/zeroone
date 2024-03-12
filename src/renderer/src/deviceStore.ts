@@ -86,6 +86,12 @@ export const useDeviceStore = defineStore('device', {
         this.attachedDeviceIds.push(deviceId)
       }
     },
+    selectProfile(profileName: string, updateDevice: boolean = true) {
+      this.currentProfileName = profileName
+      if (updateDevice) {
+        nanoIpc.send(this.currentDeviceId!, JSON.stringify({ current: profileName }))
+      }
+    },
     addProfile(profile: Profile, updateDevice: boolean = true) {
       if (!this.profileNames.includes(profile.name)) {
         this.profileNames.push(profile.name)
@@ -101,6 +107,21 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({ profile: profile.name, updates: profile })
         )
+      }
+    },
+    renameProfile(oldName: string, newName: string, updateDevice: boolean = true) {
+      if (this.profileNames.includes(newName)) {
+        console.error('Profile name already exists:', newName)
+      }
+      const profile = this.profiles.find((p) => p.name === oldName)
+      if (profile) {
+        profile.name = newName
+        if (updateDevice) {
+          nanoIpc.send(
+            this.currentDeviceId!,
+            JSON.stringify({ profile: oldName, updates: { name: newName } })
+          )
+        }
       }
     },
     detachDevice(deviceId: string) {
@@ -207,7 +228,12 @@ export const initializeDevices = () => {
   nanoIpc.listAttachedDevices().then((deviceIds) => {
     deviceStore.setAttachedDeviceIds(deviceIds)
     if (!deviceStore.connected && deviceIds.length > 0) {
-      nanoIpc.connect(deviceIds[0])
+      nanoIpc.connect(deviceIds[0]).catch((e) => {
+        console.error(e)
+        console.log('Serial port might still be open, requesting profiles...')
+        deviceStore.connectDevice(deviceIds[0], false)
+        nanoIpc.send(deviceIds[0], JSON.stringify({ profiles: '#all' }))
+      })
     }
   })
 }
