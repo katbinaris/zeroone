@@ -86,7 +86,7 @@
         <DeviceKeys
           v-if="deviceStore.connected"
           :keys="keyColors"
-          class="absolute inset-x-0 top-[77.5%] mx-auto w-[72.7%] gap-[2.2%]"
+          class="absolute inset-x-0 top-[75.35%] mx-auto w-[78%] gap-[2.2%] overflow-hidden rounded-lg px-[2.5%] py-[2.8%]"
           :selected="appStore.selectedFeature === 'key' ? appStore.selectedKey : ''"
           @select="appStore.selectKey"
         />
