@@ -126,7 +126,7 @@
                               deviceStore.duplicateProfile(originalName, profile)
                             }
                           "
-                          @delete="console.log('Delete profile not implemented!')"
+                          @delete="(profileName) => deviceStore.deleteProfile(profileName)"
                         />
                       </div>
                     </template>

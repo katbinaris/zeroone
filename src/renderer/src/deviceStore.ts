@@ -135,6 +135,23 @@ export const useDeviceStore = defineStore('device', {
         }
       }
     },
+    deleteProfile(profileName: string, updateDevice: boolean = true) {
+      const index = this.profileNames.indexOf(profileName)
+      if (index !== -1) {
+        this.profileNames.splice(index, 1)
+      }
+      const profile = this.profiles.find((p) => p.name === profileName)
+      if (profile) {
+        const profileIndex = this.profiles.indexOf(profile)
+        this.profiles.splice(profileIndex, 1)
+      }
+      if (this.currentProfileName === profileName && this.profileNames.length > 0) {
+        this.selectProfile(this.profileNames[0], updateDevice)
+      }
+      if (updateDevice) {
+        nanoIpc.send(this.currentDeviceId!, JSON.stringify({ profiles: this.profileNames }))
+      }
+    },
     duplicateProfile(profileName: string, updateDevice: boolean = true) {
       const profile = this.profiles.find((p) => p.name === profileName)
       if (profile) {
