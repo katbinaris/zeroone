@@ -131,6 +131,7 @@
         "
       />
       <SliderThumb
+        :class="{ 'transition-all': animateSliders }"
         class="flex h-6 w-8 cursor-pointer items-center justify-center rounded-[8px] border border-zinc-100 bg-zinc-300 text-zinc-600 hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
         style="box-shadow: -3px 0 15px 0 rgba(0, 0, 0, 0.6)"
       >
@@ -152,6 +153,7 @@
         }"
       />
       <SliderThumb
+        :class="{ 'transition-all': animateSliders }"
         class="flex h-6 w-8 cursor-pointer items-center justify-center rounded-[8px] border border-zinc-100 bg-zinc-300 text-zinc-600 hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
         style="box-shadow: -3px 0 15px 0 rgba(0, 0, 0, 0.6)"
       >
@@ -171,6 +173,7 @@
         :style="{ background: `linear-gradient(90deg, black, ${valueSliderColor.hex()} 100%` }"
       />
       <SliderThumb
+        :class="{ 'transition-all': animateSliders }"
         class="flex h-6 w-8 cursor-pointer items-center justify-center rounded-[8px] border border-zinc-100 bg-zinc-300 text-zinc-600 hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
         style="box-shadow: -3px 0 15px 0 rgba(0, 0, 0, 0.6)"
       >
@@ -266,6 +269,17 @@ const valueSliderColor = computed(() => {
   return Color.hsv(hueSliderModel.value[0], saturationSliderModel.value[0], 100)
 })
 
+const animateSliders = ref(false)
+const disableAnimateSliders = useDebounceFn(() => {
+  animateSliders.value = false
+}, 150)
+const enableAnimateSliders = () => {
+  console.log('ANIMATE!!!')
+  animateSliders.value = true
+  disableAnimateSliders()
+}
+defineExpose({ enableAnimateSliders })
+
 const hexInput = ref('FF0000')
 const hueInput = ref('000')
 const saturationInput = ref('100')
@@ -280,6 +294,7 @@ function onSubmitHexInput() {
     input = '#' + input
   }
   if (input.match(/^#[0-9A-F]{6}$/i)) {
+    enableAnimateSliders()
     color.value = Color(input)
   } else shake()
 }
@@ -290,6 +305,7 @@ function onSubmitHueInput() {
     shake()
     return
   }
+  enableAnimateSliders()
   const newHue = Math.max(0, Math.min(input, 360))
   if (newHue === color.value.hue()) {
     updateInputs()
@@ -303,6 +319,7 @@ function onSubmitSaturationInput() {
     shake()
     return
   }
+  enableAnimateSliders()
   const newSaturation = Math.max(0, Math.min(input, 100))
   if (newSaturation === color.value.saturationv()) {
     updateInputs()
@@ -316,6 +333,7 @@ function onSubmitValueInput() {
     shake()
     return
   }
+  enableAnimateSliders()
   const newValue = Math.max(0, Math.min(input, 100))
   if (newValue === color.value.value()) {
     updateInputs()
@@ -331,6 +349,7 @@ function onSubmitRGBInput() {
     shake()
     return
   }
+  enableAnimateSliders()
   const newColor = Color.rgb(r, g, b)
   if (newColor.hex() === color.value.hex()) {
     updateInputs()

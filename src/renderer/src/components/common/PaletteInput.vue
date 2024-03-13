@@ -17,7 +17,12 @@
             ? 'hover:bg-zinc-800 text-muted-foreground mx-[1px]'
             : 'text-black bg-zinc-300 hover:bg-zinc-200 border-x border-t border-zinc-100'
         "
-        @click="currentOption = key"
+        @click="
+          () => {
+            enableAnimateSliders()
+            currentOption = key
+          }
+        "
       >
         {{ $t(option.titleKey) }}
       </button>
@@ -29,10 +34,16 @@
         class="h-6 flex-1 transition-colors"
         :class="{ 'color-tab': currentOption === key }"
         :style="{ background: Color(option.colorNumber).hex() }"
-        @click="currentOption = key"
+        @click="
+          () => {
+            enableAnimateSliders()
+            currentOption = key
+          }
+        "
       />
     </div>
     <HSVInput
+      ref="hsvInput"
       :color-number="options[currentOption].colorNumber"
       @input="(colorNumber) => $emit('input', currentOption, colorNumber)"
     />
@@ -46,6 +57,8 @@ import { computed, onBeforeMount, ref } from 'vue'
 defineEmits(['input'])
 
 const currentOption = ref(null)
+
+const hsvInput = ref(null)
 
 const currentColorHex = computed(() => Color(props.options[currentOption.value].colorNumber).hex())
 
@@ -68,6 +81,11 @@ const props = defineProps({
     })
   }
 })
+
+function enableAnimateSliders() {
+  hsvInput.value.enableAnimateSliders()
+}
+defineExpose({ enableAnimateSliders })
 
 onBeforeMount(() => {
   if (currentOption.value === null) currentOption.value = Object.keys(props.options)[0]

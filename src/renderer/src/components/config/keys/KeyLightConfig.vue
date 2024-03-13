@@ -1,6 +1,7 @@
 <template>
   <ConfigSection title="Key Colors" :icon-component="Palette">
     <PaletteInput
+      ref="paletteInput"
       :options="keyColors"
       @input="
         (optionKey, colorNumber) => {
@@ -23,11 +24,13 @@ import PaletteInput from '@renderer/components/common/PaletteInput.vue'
 import { useDeviceStore } from '@renderer/deviceStore'
 import { useAppStore } from '@renderer/appStore'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const appStore = useAppStore()
 const deviceStore = useDeviceStore()
 const { keyColor } = storeToRefs(deviceStore)
+
+const paletteInput = ref(null)
 
 const keyColors = computed({
   get() {
@@ -51,4 +54,9 @@ const keyColors = computed({
     }
   }
 })
+
+watch(
+  () => appStore.selectedKey,
+  () => paletteInput.value.enableAnimateSliders()
+)
 </script>
