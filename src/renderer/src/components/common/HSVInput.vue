@@ -188,9 +188,9 @@ import { MoreHorizontal } from 'lucide-vue-next'
 import { Separator } from '@renderer/components/ui/separator'
 
 const props = defineProps({
-  color: {
-    type: Color,
-    default: () => Color.rgb(255, 0, 0)
+  colorNumber: {
+    type: Number,
+    default: () => Color('#ff0000').rgbNumber()
   },
   roundedTop: {
     type: Boolean,
@@ -198,14 +198,24 @@ const props = defineProps({
   }
 })
 
-// TODO: Currently color updates are passed up with input events and then passed back down as props
-// This is the vue way, but that also means that the color is converted into a number and then back into a color
-// This causes a loss of precision and the sliders to jump around a bit when the color is updated
-// It would be better to pass the color number here and convert it to a color object here as well
-// Then we can use the color object to update the sliders and inputs
-// And only pass the color number up when it actually changes
-
 const emit = defineEmits(['input'])
+
+const previousColor = ref(Color(props.colorNumber))
+
+const color = computed({
+  get() {
+    if (previousColor.value.rgbNumber() === props.colorNumber) {
+      return previousColor.value
+    }
+    return Color(props.colorNumber)
+  },
+  set(newColor) {
+    if (newColor.rgbNumber() !== color.value.rgbNumber()) {
+      previousColor.value = newColor
+      emit('input', newColor.rgbNumber())
+    }
+  }
+})
 
 const hueSliderValue = ref(0)
 const saturationSliderValue = ref(100)
@@ -217,7 +227,7 @@ const hueSliderModel = computed({
   },
   set(hue) {
     hueSliderValue.value = hue[0]
-    emit('input', props.color.hue(hue[0]))
+    color.value = color.value.hue(hue[0])
   }
 })
 
@@ -227,7 +237,7 @@ const saturationSliderModel = computed({
   },
   set(saturation) {
     saturationSliderValue.value = saturation[0]
-    emit('input', props.color.saturationv(saturation[0]))
+    color.value = color.value.saturationv(saturation[0])
   }
 })
 
@@ -237,7 +247,7 @@ const valueSliderModel = computed({
   },
   set(value) {
     valueSliderValue.value = value[0]
-    emit('input', props.color.value(value[0]))
+    color.value = color.value.value(value[0])
   }
 })
 
@@ -263,7 +273,7 @@ function onSubmitHexInput() {
     input = '#' + input
   }
   if (input.match(/^#[0-9A-F]{6}$/i)) {
-    emit('input', Color(input))
+    color.value = Color(input)
   } else shake()
 }
 
@@ -274,10 +284,10 @@ function onSubmitHueInput() {
     return
   }
   const newHue = Math.max(0, Math.min(input, 360))
-  if (newHue === props.color.hue()) {
+  if (newHue === color.value.hue()) {
     updateInputs()
   }
-  emit('input', props.color.hue(newHue))
+  color.value = color.value.hue(newHue)
 }
 
 function onSubmitSaturationInput() {
@@ -287,10 +297,10 @@ function onSubmitSaturationInput() {
     return
   }
   const newSaturation = Math.max(0, Math.min(input, 100))
-  if (newSaturation === props.color.saturationv()) {
+  if (newSaturation === color.value.saturationv()) {
     updateInputs()
   }
-  emit('input', props.color.saturationv(newSaturation))
+  color.value = color.value.saturationv(newSaturation)
 }
 
 function onSubmitValueInput() {
@@ -300,10 +310,10 @@ function onSubmitValueInput() {
     return
   }
   const newValue = Math.max(0, Math.min(input, 100))
-  if (newValue === props.color.value()) {
+  if (newValue === color.value.value()) {
     updateInputs()
   }
-  emit('input', props.color.value(newValue))
+  color.value = color.value.value(newValue)
 }
 
 function onSubmitRGBInput() {
@@ -315,27 +325,26 @@ function onSubmitRGBInput() {
     return
   }
   const newColor = Color.rgb(r, g, b)
-  if (newColor.hex() === props.color.hex()) {
+  if (newColor.hex() === color.value.hex()) {
     updateInputs()
   }
-  emit('input', newColor)
+  color.value = newColor
 }
 
 function updateInputs() {
-  console.log('COLORRR', props.color)
-  hexInput.value = props.color.hex().substring(1, 7)
-  hueInput.value = String(parseInt(props.color.hue())).padStart(3, '0')
-  saturationInput.value = String(parseInt(props.color.saturationv())).padStart(3, '0')
-  valueInput.value = String(parseInt(props.color.value())).padStart(3, '0')
-  rInput.value = String(parseInt(props.color.red())).padStart(3, '0')
-  gInput.value = String(parseInt(props.color.green())).padStart(3, '0')
-  bInput.value = String(parseInt(props.color.blue())).padStart(3, '0')
-  hueSliderValue.value = props.color.hue()
-  saturationSliderValue.value = props.color.saturationv()
-  valueSliderValue.value = props.color.value()
+  hexInput.value = color.value.hex().substring(1, 7)
+  hueInput.value = String(parseInt(color.value.hue())).padStart(3, '0')
+  saturationInput.value = String(parseInt(color.value.saturationv())).padStart(3, '0')
+  valueInput.value = String(parseInt(color.value.value())).padStart(3, '0')
+  rInput.value = String(parseInt(color.value.red())).padStart(3, '0')
+  gInput.value = String(parseInt(color.value.green())).padStart(3, '0')
+  bInput.value = String(parseInt(color.value.blue())).padStart(3, '0')
+  hueSliderValue.value = color.value.hue()
+  saturationSliderValue.value = color.value.saturationv()
+  valueSliderValue.value = color.value.value()
 }
 
-watch(() => props.color, updateInputs)
+watch(() => props.colorNumber, updateInputs)
 onBeforeMount(updateInputs)
 
 const colorFieldText = ref(null)

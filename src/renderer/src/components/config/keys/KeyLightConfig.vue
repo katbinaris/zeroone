@@ -3,12 +3,12 @@
     <PaletteInput
       :options="keyColors"
       @input="
-        (optionKey, color) => {
+        (optionKey, colorNumber) => {
           keyColors = {
             ...keyColors,
             [optionKey]: {
               ...keyColors[optionKey],
-              color
+              colorNumber
             }
           }
         }
@@ -20,7 +20,6 @@
 import { Palette } from 'lucide-vue-next'
 import ConfigSection from '@renderer/components/common/ConfigSection.vue'
 import PaletteInput from '@renderer/components/common/PaletteInput.vue'
-import Color from 'color'
 import { useDeviceStore } from '@renderer/deviceStore'
 import { useAppStore } from '@renderer/appStore'
 import { storeToRefs } from 'pinia'
@@ -35,17 +34,17 @@ const keyColors = computed({
     return {
       default: {
         titleKey: 'default',
-        color: Color(keyColor.value(appStore.selectedKey, false))
+        colorNumber: keyColor.value(appStore.selectedKey, false)
       },
       pressed: {
         titleKey: 'pressed',
-        color: Color(keyColor.value(appStore.selectedKey, true))
+        colorNumber: keyColor.value(appStore.selectedKey, true)
       }
     }
   },
   set(newValue) {
-    deviceStore.setKeyColor(appStore.selectedKey, false, Color(newValue.default.color).rgbNumber())
-    deviceStore.setKeyColor(appStore.selectedKey, true, Color(newValue.pressed.color).rgbNumber())
+    deviceStore.setKeyColor(appStore.selectedKey, false, newValue.default.colorNumber)
+    deviceStore.setKeyColor(appStore.selectedKey, true, newValue.pressed.colorNumber)
   }
 })
 </script>

@@ -2,7 +2,7 @@
   <div
     class="pt-2"
     :style="{
-      background: `linear-gradient(180deg, ${options[currentOption].color.hex() + '11'}, ${options[currentOption].color.hex() + '30'} 25%, ${options[currentOption].color.hex() + '30'} 40%, transparent 60%`
+      background: `linear-gradient(180deg, ${currentColorHex + '11'}, ${currentColorHex + '30'} 25%, ${currentColorHex + '30'} 40%, transparent 60%`
     }"
   >
     <div
@@ -28,13 +28,13 @@
         :key="key"
         class="h-6 flex-1"
         :class="{ 'color-tab': currentOption === key }"
-        :style="{ background: option.color.hex() }"
+        :style="{ background: Color(option.colorNumber).hex() }"
         @click="currentOption = key"
       />
     </div>
     <HSVInput
-      :color="options[currentOption].color"
-      @input="(color) => $emit('input', currentOption, color)"
+      :color-number="options[currentOption].colorNumber"
+      @input="(colorNumber) => $emit('input', currentOption, colorNumber)"
     />
   </div>
 </template>
@@ -47,7 +47,7 @@ defineEmits(['input'])
 
 const currentOption = ref(null)
 
-const currentColorHex = computed(() => props.options[currentOption.value].color.hex())
+const currentColorHex = computed(() => Color(props.options[currentOption.value].colorNumber).hex())
 
 const props = defineProps({
   options: {
@@ -55,15 +55,15 @@ const props = defineProps({
     default: () => ({
       one: {
         titleKey: 'One',
-        color: Color('#ff0000')
+        colorNumber: Color('#ff0000').rgbNumber()
       },
       two: {
         titleKey: 'Two',
-        color: Color('#00ff00')
+        colorNumber: Color('#00ff00').rgbNumber()
       },
       three: {
         titleKey: 'Three',
-        color: Color('#0000ff')
+        colorNumber: Color('#0000ff').rgbNumber()
       }
     })
   }
