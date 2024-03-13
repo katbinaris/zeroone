@@ -9,7 +9,7 @@
         'bg-black/20': keyObject.pressed
       }"
       class="flex aspect-square flex-1 items-center justify-center rounded-[2px] outline-2 transition-all"
-      :style="`box-shadow: 0 3px 20px -2px ${keyObject.color.hex()}`"
+      :style="`box-shadow: 0 10px 40px -2px ${keyObject.color.hex()}`"
       @click="$emit('select', key)"
     >
       <span
