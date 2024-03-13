@@ -43,8 +43,12 @@ const keyColors = computed({
     }
   },
   set(newValue) {
-    deviceStore.setKeyColor(appStore.selectedKey, false, newValue.default.colorNumber)
-    deviceStore.setKeyColor(appStore.selectedKey, true, newValue.pressed.colorNumber)
+    if (newValue.default.colorNumber !== keyColor.value(appStore.selectedKey, false)) {
+      deviceStore.setKeyColor(appStore.selectedKey, false, newValue.default.colorNumber)
+    }
+    if (newValue.pressed.colorNumber !== keyColor.value(appStore.selectedKey, true)) {
+      deviceStore.setKeyColor(appStore.selectedKey, true, newValue.pressed.colorNumber)
+    }
   }
 })
 </script>

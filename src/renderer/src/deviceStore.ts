@@ -44,6 +44,8 @@ interface UpdateData {
   profiles: string[] | undefined
   current: string | undefined
   profile: Profile | undefined
+  kd: number | undefined
+  ku: number | undefined
 }
 
 const { nanoIpc } = window
@@ -60,6 +62,7 @@ export const useDeviceStore = defineStore('device', {
     angle: 0 as number, // angle of the knob
     turns: 0 as number, // number of turns of the knob
     velocity: 0 as number, // velocity of the knob
+    keyLabels: ['a', 'b', 'c', 'd'] as string[], // labels for the keys
     keyStates: {} as Record<string, boolean> // state of the keys (true if pressed)
   }),
   getters: {
@@ -239,21 +242,27 @@ export const initializeDevices = () => {
           console.error(e)
         }
       }
-      if (update.a) {
+      if (update.a !== undefined) {
         deviceStore.setAngle(update.a)
       }
-      if (update.profiles) {
+      if (update.profiles !== undefined) {
         deviceStore.setProfileNames(update.profiles, false)
         for (const profileName of update.profiles) {
           console.log('Requesting profile', profileName)
           nanoIpc.send(deviceid, JSON.stringify({ profile: profileName }))
         }
       }
-      if (update.current) {
+      if (update.current !== undefined) {
         deviceStore.setCurrentProfile(update.current, false)
       }
-      if (update.profile) {
+      if (update.profile !== undefined) {
         deviceStore.addProfile(update.profile, false)
+      }
+      if (update.kd !== undefined) {
+        deviceStore.keyStates[deviceStore.keyLabels[update.kd]] = true
+      }
+      if (update.ku !== undefined) {
+        deviceStore.keyStates[deviceStore.keyLabels[update.ku]] = false
       }
     }
   })

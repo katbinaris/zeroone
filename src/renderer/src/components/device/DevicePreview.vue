@@ -85,6 +85,7 @@
       <Transition name="fade-delayed">
         <DeviceKeys
           v-if="deviceStore.connected"
+          :keys="keyColors"
           class="absolute inset-x-0 top-[77.5%] mx-auto w-[72.7%] gap-[2.2%]"
           :selected="appStore.selectedFeature === 'key' ? appStore.selectedKey : ''"
           @select="appStore.selectKey"
@@ -104,6 +105,8 @@ import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { computed, ref } from 'vue'
 import DeviceLEDRing from '@renderer/components/device/DeviceLEDRing.vue'
 import DeviceKeys from '@renderer/components/device/DeviceKeys.vue'
+import { storeToRefs } from 'pinia'
+import Color from 'color'
 
 const appStore = useAppStore()
 const deviceStore = useDeviceStore()
@@ -118,6 +121,17 @@ const previewDeviceImages = {
 const previewDeviceImage = computed(
   () => previewDeviceImages[appStore.previewDeviceModel || 'nanoOne']
 )
+
+const { keyColor } = storeToRefs(deviceStore)
+
+const keyColors = computed(() => {
+  return {
+    a: Color(keyColor.value('a', deviceStore.keyStates.a)),
+    b: Color(keyColor.value('b', deviceStore.keyStates.b)),
+    c: Color(keyColor.value('c', deviceStore.keyStates.c)),
+    d: Color(keyColor.value('d', deviceStore.keyStates.d))
+  }
+})
 
 const offlineText = ref('NO DEVICE CONNECTED')
 const offlineTexts = [
