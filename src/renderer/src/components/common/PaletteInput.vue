@@ -26,7 +26,7 @@
       <button
         v-for="(option, key) in options"
         :key="key"
-        class="h-6 flex-1"
+        class="h-6 flex-1 transition-colors"
         :class="{ 'color-tab': currentOption === key }"
         :style="{ background: Color(option.colorNumber).hex() }"
         @click="currentOption = key"
@@ -86,6 +86,8 @@ onBeforeMount(() => {
   width: var(--rounded);
   height: var(--rounded);
   content: ' ';
+  transition: box-shadow 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .color-tab:before {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="font-heading mx-2 flex rounded-b-lg border-x border-b border-zinc-800 p-4"
+    class="font-heading mx-2 flex rounded-b-lg border-x border-b border-zinc-800 p-4 transition-colors"
     :class="{ 'rounded-t-lg': roundedTop }"
     :style="{ backgroundColor: color.hex() }"
   >
@@ -186,6 +186,7 @@ import Color from 'color'
 import { SliderRoot, SliderThumb, SliderTrack } from 'radix-vue'
 import { MoreHorizontal } from 'lucide-vue-next'
 import { Separator } from '@renderer/components/ui/separator'
+import { useDebounceFn } from '@vueuse/core'
 
 const props = defineProps({
   colorNumber: {
@@ -202,6 +203,17 @@ const emit = defineEmits(['input'])
 
 const previousColor = ref(Color(props.colorNumber))
 
+const updateColor = useDebounceFn(
+  (newColor) => {
+    if (newColor.rgbNumber() !== color.value.rgbNumber()) {
+      previousColor.value = newColor
+      emit('input', newColor.rgbNumber())
+    }
+  },
+  20,
+  { maxWait: 30 }
+)
+
 const color = computed({
   get() {
     if (previousColor.value.rgbNumber() === props.colorNumber) {
@@ -210,10 +222,7 @@ const color = computed({
     return Color(props.colorNumber)
   },
   set(newColor) {
-    if (newColor.rgbNumber() !== color.value.rgbNumber()) {
-      previousColor.value = newColor
-      emit('input', newColor.rgbNumber())
-    }
+    updateColor(newColor)
   }
 })
 

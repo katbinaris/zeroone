@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useDebounceFn } from '@vueuse/core'
 
 interface Profile {
   version: number
@@ -194,13 +195,17 @@ export const useDeviceStore = defineStore('device', {
       const propertyName = `button${key.toUpperCase()}${pressed ? 'Press' : 'Idle'}`
       this.currentProfile![propertyName] = color
       if (updateDevice) {
-        nanoIpc.send(
+        sendDebounced(
           this.currentDeviceId!,
           JSON.stringify({ profile: this.currentProfileName, updates: { [propertyName]: color } })
         )
       }
     }
   }
+})
+
+const sendDebounced = useDebounceFn((deviceid, jsonstr) => nanoIpc.send(deviceid, jsonstr), 20, {
+  maxWait: 30
 })
 
 export const initializeDevices = () => {
