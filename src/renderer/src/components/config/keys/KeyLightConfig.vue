@@ -59,4 +59,11 @@ watch(
   () => appStore.selectedKey,
   () => paletteInput.value.enableAnimateSliders()
 )
+// watch(
+//   () => deviceStore.keyStates[appStore.selectedKey],
+//   () =>
+//     paletteInput.value.selectOption(
+//       deviceStore.keyStates[appStore.selectedKey] ? 'pressed' : 'default'
+//     )
+// )
 </script>

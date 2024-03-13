@@ -17,12 +17,7 @@
             ? 'hover:bg-zinc-800 text-muted-foreground mx-[1px]'
             : 'text-black bg-zinc-300 hover:bg-zinc-200 border-x border-t border-zinc-100'
         "
-        @click="
-          () => {
-            enableAnimateSliders()
-            currentOption = key
-          }
-        "
+        @click="selectOption(key)"
       >
         {{ $t(option.titleKey) }}
       </button>
@@ -34,12 +29,7 @@
         class="h-6 flex-1 transition-colors"
         :class="{ 'color-tab': currentOption === key }"
         :style="{ background: Color(option.colorNumber).hex() }"
-        @click="
-          () => {
-            enableAnimateSliders()
-            currentOption = key
-          }
-        "
+        @click="selectOption(key)"
       />
     </div>
     <HSVInput
@@ -85,7 +75,11 @@ const props = defineProps({
 function enableAnimateSliders() {
   hsvInput.value.enableAnimateSliders()
 }
-defineExpose({ enableAnimateSliders })
+function selectOption(key) {
+  enableAnimateSliders()
+  currentOption.value = key
+}
+defineExpose({ selectOption, enableAnimateSliders })
 
 onBeforeMount(() => {
   if (currentOption.value === null) currentOption.value = Object.keys(props.options)[0]
