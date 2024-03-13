@@ -126,10 +126,22 @@ const { keyColor } = storeToRefs(deviceStore)
 
 const keyColors = computed(() => {
   return {
-    a: Color(keyColor.value('a', deviceStore.keyStates.a)),
-    b: Color(keyColor.value('b', deviceStore.keyStates.b)),
-    c: Color(keyColor.value('c', deviceStore.keyStates.c)),
-    d: Color(keyColor.value('d', deviceStore.keyStates.d))
+    a: {
+      color: Color(keyColor.value('a', deviceStore.keyStates.a)),
+      pressed: deviceStore.keyStates.a
+    },
+    b: {
+      color: Color(keyColor.value('b', deviceStore.keyStates.b)),
+      pressed: deviceStore.keyStates.b
+    },
+    c: {
+      color: Color(keyColor.value('c', deviceStore.keyStates.c)),
+      pressed: deviceStore.keyStates.c
+    },
+    d: {
+      color: Color(keyColor.value('d', deviceStore.keyStates.d)),
+      pressed: deviceStore.keyStates.d
+    }
   }
 })
 

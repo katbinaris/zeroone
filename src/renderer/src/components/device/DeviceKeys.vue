@@ -1,14 +1,15 @@
 <template>
   <div class="flex">
     <button
-      v-for="(color, key) in keys"
+      v-for="(keyObject, key) in keys"
       :key="key"
       :class="{
         'outline outline-white ': key === selected,
-        'outline-zinc-400 hover:outline': key !== selected
+        'outline-zinc-400 hover:outline': key !== selected,
+        'bg-black/20': keyObject.pressed
       }"
       class="flex aspect-square flex-1 items-center justify-center rounded-[2px] outline-2 transition-all"
-      :style="`box-shadow: 0 3px 20px -2px ${color.hex()}`"
+      :style="`box-shadow: 0 3px 20px -2px ${keyObject.color.hex()}`"
       @click="$emit('select', key)"
     >
       <span
@@ -27,10 +28,22 @@ defineProps({
   keys: {
     type: Object,
     default: () => ({
-      a: Color.hsl(265, 100, 50),
-      b: Color.hsl(280, 100, 50),
-      c: Color.hsl(300, 100, 50),
-      d: Color.hsl(330, 100, 50)
+      a: {
+        color: Color.hsl(265, 100, 50),
+        pressed: false
+      },
+      b: {
+        color: Color.hsl(0, 100, 50),
+        pressed: false
+      },
+      c: {
+        color: Color.hsl(120, 100, 50),
+        pressed: false
+      },
+      d: {
+        color: Color.hsl(60, 100, 50),
+        pressed: false
+      }
     })
   },
   selected: {
