@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useDebounceFn } from '@vueuse/core'
+import { useAppStore } from '@renderer/appStore'
 
 interface Profile {
   version: number
@@ -213,6 +214,7 @@ const sendDebounced = useDebounceFn((deviceid, jsonstr) => nanoIpc.send(deviceid
 
 export const initializeDevices = () => {
   const deviceStore = useDeviceStore()
+  const appStore = useAppStore()
 
   // register event handlers
   nanoIpc.on((eventid, deviceid, dataString) => {
@@ -244,6 +246,15 @@ export const initializeDevices = () => {
       }
       if (update.a !== undefined) {
         deviceStore.setAngle(update.a)
+        appStore.selectConfigFeature('knob')
+      }
+      if (update.kd !== undefined) {
+        const keyLabel = deviceStore.keyLabels[update.kd]
+        deviceStore.keyStates[keyLabel] = true
+        appStore.selectKey(keyLabel)
+      }
+      if (update.ku !== undefined) {
+        deviceStore.keyStates[deviceStore.keyLabels[update.ku]] = false
       }
       if (update.profiles !== undefined) {
         deviceStore.setProfileNames(update.profiles, false)
@@ -257,12 +268,6 @@ export const initializeDevices = () => {
       }
       if (update.profile !== undefined) {
         deviceStore.addProfile(update.profile, false)
-      }
-      if (update.kd !== undefined) {
-        deviceStore.keyStates[deviceStore.keyLabels[update.kd]] = true
-      }
-      if (update.ku !== undefined) {
-        deviceStore.keyStates[deviceStore.keyLabels[update.ku]] = false
       }
     }
   })
