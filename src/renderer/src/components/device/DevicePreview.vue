@@ -45,7 +45,7 @@
         <TransitionGroup name="fade-display">
           <div
             v-if="deviceStore.connected"
-            class="absolute flex flex-col items-center pb-2 text-center mix-blend-screen"
+            class="absolute flex scale-[80%] flex-col items-center pb-2 text-center opacity-90 mix-blend-screen"
           >
             <img :src="LogoMidi" alt="midi-logo" class="h-4 opacity-50" />
             <h2 class="font-pixellg text-5xl">
