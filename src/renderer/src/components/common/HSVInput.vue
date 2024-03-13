@@ -198,6 +198,13 @@ const props = defineProps({
   }
 })
 
+// TODO: Currently color updates are passed up with input events and then passed back down as props
+// This is the vue way, but that also means that the color is converted into a number and then back into a color
+// This causes a loss of precision and the sliders to jump around a bit when the color is updated
+// It would be better to pass the color number here and convert it to a color object here as well
+// Then we can use the color object to update the sliders and inputs
+// And only pass the color number up when it actually changes
+
 const emit = defineEmits(['input'])
 
 const hueSliderValue = ref(0)
@@ -328,7 +335,7 @@ function updateInputs() {
   valueSliderValue.value = props.color.value()
 }
 
-watch(props.color, updateInputs)
+watch(() => props.color, updateInputs)
 onBeforeMount(updateInputs)
 
 const colorFieldText = ref(null)
