@@ -68,10 +68,8 @@ export const useDeviceStore = defineStore('device', {
   }),
   getters: {
     connected: (state) => state.currentDeviceId !== null,
-    currentProfile: (state) =>
-      state.currentProfileName
-        ? state.profiles.find((profile) => profile.name === state.currentProfileName)
-        : null,
+    currentProfile: (state): Profile | null =>
+      state.profiles.find((profile) => profile.name === state.currentProfileName) || null,
     profileTags: (state) => [...new Set(state.profiles.map((profile) => profile.profileTag))],
     profilesByTag: (state) =>
       state.profiles.reduce((acc, profile) => {
@@ -202,6 +200,33 @@ export const useDeviceStore = defineStore('device', {
         sendDebounced(
           this.currentDeviceId!,
           JSON.stringify({ profile: this.currentProfileName, updates: { [propertyName]: color } })
+        )
+      }
+    },
+    setPrimaryColor(color: number, updateDevice: boolean = true) {
+      this.currentProfile!.primary = color
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({ profile: this.currentProfileName, updates: { primary: color } })
+        )
+      }
+    },
+    setSecondaryColor(color: number, updateDevice: boolean = true) {
+      this.currentProfile!.secondary = color
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({ profile: this.currentProfileName, updates: { secondary: color } })
+        )
+      }
+    },
+    setPointerColor(color: number, updateDevice: boolean = true) {
+      this.currentProfile!.pointer = color
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({ profile: this.currentProfileName, updates: { pointer: color } })
         )
       }
     }
