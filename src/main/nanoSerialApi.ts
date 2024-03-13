@@ -3,8 +3,8 @@ import { PortInfo } from '@serialport/bindings-interface'
 import { EventEmitter } from 'events'
 
 // JTAG interface, TODO: change me!
-const NANO_PRODUCT_ID = '1001'
-const NANO_VENDOR_ID = '303A'
+const NANO_PRODUCT_ID = '8010'
+const NANO_VENDOR_ID = '239A'
 const NANO_BAUD_RATE = 115200
 
 class NanoSerialApi extends EventEmitter {
