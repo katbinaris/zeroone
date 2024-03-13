@@ -205,10 +205,8 @@ const previousColor = ref(Color(props.colorNumber))
 
 const updateColor = useDebounceFn(
   (newColor) => {
-    if (newColor.rgbNumber() !== color.value.rgbNumber()) {
-      previousColor.value = newColor
-      emit('input', newColor.rgbNumber())
-    }
+    previousColor.value = newColor
+    emit('input', newColor.rgbNumber())
   },
   20,
   { maxWait: 30 }
