@@ -7,12 +7,7 @@
       <div class="flex items-center">
         <h1
           class="app-titlebar-button min-w-32 text-nowrap text-2xl text-zinc-100"
-          @click="
-            () => {
-              $refs.zerooneTitle.scramble(1, 100, 0)
-              $refs.zerooneSubtitle.scramble(1, 75, 30)
-            }
-          "
+          @click="scrambleTitle"
         >
           <ScrambleText
             ref="zerooneTitle"
@@ -200,7 +195,7 @@ import {
 } from '@renderer/components/ui/menubar'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { Minus, Square, Copy, X, PenLine } from 'lucide-vue-next'
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Separator } from '@renderer/components/ui/separator'
 import MenubarButton from '@renderer/components/navbar/MenubarButton.vue'
 import { useAppStore } from '@renderer/appStore'
@@ -227,19 +222,27 @@ const previewDeviceNames = ref({
   nanoZero: 'Zero'
 })
 
-onMounted(() => {
-  window.addEventListener('resize', () => {
-    zoomFactor.value = window.outerWidth / window.innerWidth
-  })
-  appIpc.onMaximized((maximized) => {
-    console.log(maximized)
-    isMaximized.value = true
-  })
+const zerooneTitle = ref(null)
+const zerooneSubtitle = ref(null)
 
-  appIpc.onUnmaximized(() => {
-    isMaximized.value = false
-  })
+const scrambleTitle = () => {
+  zerooneTitle.value.scramble(1, 100, 0)
+  zerooneSubtitle.value.scramble(1, 75, 30)
+}
+
+window.addEventListener('resize', () => {
+  zoomFactor.value = window.outerWidth / window.innerWidth
 })
+appIpc.onMaximized((maximized) => {
+  console.log(maximized)
+  isMaximized.value = true
+})
+
+appIpc.onUnmaximized(() => {
+  isMaximized.value = false
+})
+
+watch(() => deviceStore.connected, scrambleTitle)
 </script>
 <style scoped>
 .app-titlebar {

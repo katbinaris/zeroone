@@ -241,7 +241,7 @@ export const initializeDevices = () => {
         try {
           update = JSON.parse(dataString) as UpdateData
         } catch (e) {
-          console.error(e)
+          console.error('Failed to parse update data:', e, dataString)
         }
       }
       if (update.a !== undefined) {
