@@ -39,7 +39,9 @@ export const useAppStore = defineStore('app', {
           }
         }
       },
-      previewDeviceModel: localStorage.getItem('previewDeviceModel') || 'nanoOne'
+      previewDeviceModel: localStorage.getItem('previewDeviceModel') || 'nanoOne',
+      profileManagerDragging: false,
+      showProfileConfig: false
     }
   },
   getters: {
@@ -179,6 +181,12 @@ export const useAppStore = defineStore('app', {
     switchPreviewDeviceModel() {
       this.previewDeviceModel = this.previewDeviceModel === 'nanoOne' ? 'nanoZero' : 'nanoOne'
       localStorage.setItem('previewDeviceModel', this.previewDeviceModel)
+    },
+    setProfileManagerDragging(dragging) {
+      this.profileManagerDragging = dragging
+    },
+    setShowProfileConfig(show) {
+      this.showProfileConfig = show
     }
     // cycleScreenOrientation() {
     //   this.screenOrientation = (this.screenOrientation + 90) % 360

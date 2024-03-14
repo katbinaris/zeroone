@@ -6,15 +6,24 @@
       >
         <button
           class="font-heading flex h-full min-w-0 flex-1 items-center"
-          @click="showProfileConfig = deviceStore.currentProfileName && !showProfileConfig"
+          @click="
+            appStore.setShowProfileConfig(
+              deviceStore.currentProfileName && !appStore.showProfileConfig
+            )
+          "
         >
-          <component :is="showProfileConfig ? ArrowLeft : List" class="mr-1 h-full w-5 shrink-0" />
+          <component
+            :is="appStore.showProfileConfig ? ArrowLeft : List"
+            class="mr-1 h-full w-5 shrink-0"
+          />
           <ScrambleText
-            :text="showProfileConfig ? deviceStore.currentProfileName : $t('profiles.title')"
+            :text="
+              appStore.showProfileConfig ? deviceStore.currentProfileName : $t('profiles.title')
+            "
             class="min-w-0 overflow-hidden text-ellipsis"
           />
           <ScrambleText
-            v-if="!showProfileConfig"
+            v-if="!appStore.showProfileConfig"
             class="min-w-0 overflow-hidden text-ellipsis text-sm text-zinc-600"
             scramble-on-mount
             :fill-interval="20"
@@ -26,7 +35,7 @@
           <DropdownMenuTrigger>
             <Transition name="fade">
               <button
-                v-if="!showProfileConfig"
+                v-if="!appStore.showProfileConfig"
                 class="flex aspect-square h-8 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-300 text-black hover:bg-zinc-200"
                 @click="console.log('Add profile not implemented!')"
               >
@@ -61,84 +70,21 @@
             :list="deviceStore.profileTags"
             v-bind="dragOptions"
             handle=".category-handle"
-            @start="drag = true"
-            @end="drag = false"
+            @start="appStore.setProfileManagerDragging(true)"
+            @end="appStore.setProfileManagerDragging(false)"
             @change="onCategoryDrop"
           >
             <template #item="dragCategory">
-              <Collapsible v-model:open="collapse[dragCategory.element]" :default-open="true">
-                <!-- TODO: Make profile groups computed instead defining them of using v-for -->
-                <CollapsibleTrigger
-                  class="group h-12 w-full border-0 border-b bg-zinc-900 py-2 text-left text-sm text-muted-foreground"
-                >
-                  <ChevronRight
-                    class="chevrot mb-0.5 ml-4 inline-block size-4 transition-transform"
-                  />
-                  {{ dragCategory.element
-                  }}<span class="font-heading text-sm text-zinc-600">
-                    ({{ deviceStore.profilesByTag[dragCategory.element].length || 0 }})</span
-                  >
-                  <span class="float-right mx-4 w-4 cursor-grab text-zinc-600">
-                    <GripHorizontal
-                      class="category-handle mb-0.5 inline-block size-4 opacity-0 transition-all group-hover:opacity-100"
-                    />
-                  </span>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <draggable
-                    key="profilesDraggable"
-                    group="profiles"
-                    item-key="id"
-                    :list="deviceStore.profilesByTag[dragCategory.element]"
-                    v-bind="dragOptions"
-                    handle=".profile-handle"
-                    @start="drag = true"
-                    @end="drag = false"
-                    @change="(event) => onProfileDrop(event, dragCategory.index)"
-                  >
-                    <template #header>
-                      <div class="hideable-header m-2 flex h-12 items-center justify-center">
-                        <MoreHorizontal class="w-4 text-zinc-600" />
-                      </div>
-                    </template>
-                    <template #item="dragProfile">
-                      <div :key="dragProfile.element.name">
-                        <ProfileButton
-                          :profile="dragProfile.element"
-                          :show-hover-buttons="!drag"
-                          :selected="deviceStore.currentProfileName === dragProfile.element.name"
-                          @select="
-                            () => {
-                              deviceStore.selectProfile(dragProfile.element.name)
-                              showProfileConfig = true
-                            }
-                          "
-                          @rename="
-                            (oldName, newName) => {
-                              deviceStore.renameProfile(oldName, newName)
-                              if (deviceStore.currentProfileName === oldName) {
-                                deviceStore.selectProfile(newName)
-                              }
-                            }
-                          "
-                          @duplicate="
-                            (originalName, profile) => {
-                              deviceStore.duplicateProfile(originalName, profile)
-                            }
-                          "
-                          @delete="(profileName) => deviceStore.deleteProfile(profileName)"
-                        />
-                      </div>
-                    </template>
-                  </draggable>
-                </CollapsibleContent>
-              </Collapsible>
+              <ProfileCategory
+                :category-name="dragCategory.element"
+                :category-index="dragCategory.index"
+              />
             </template>
           </draggable>
         </div>
       </div>
       <Transition name="slide">
-        <div v-if="showProfileConfig" class="absolute h-full bg-[#101013]">
+        <div v-if="appStore.showProfileConfig" class="absolute h-full bg-[#101013]">
           <ProfileConfig />
         </div>
       </Transition>
@@ -146,32 +92,21 @@
   </div>
 </template>
 <script setup>
-import { Separator } from '@renderer/components/ui/separator'
-import {
-  ChevronRight,
-  Plus,
-  ArrowLeft,
-  List,
-  MoreHorizontal,
-  GripHorizontal
-} from 'lucide-vue-next'
-import { ref, watch } from 'vue'
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger
-} from '@renderer/components/ui/collapsible'
+import { useAppStore } from '@renderer/appStore'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
-import ProfileButton from '@renderer/components/profile/ProfileButton.vue'
+import ProfileCategory from '@renderer/components/profile/ProfileCategory.vue'
 import ProfileConfig from '@renderer/components/profile/ProfileConfig.vue'
-import draggable from 'vuedraggable'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@renderer/components/ui/dropdown-menu'
+import { Separator } from '@renderer/components/ui/separator'
 import { useDeviceStore } from '@renderer/deviceStore'
+import { ArrowLeft, List, Plus } from 'lucide-vue-next'
+import { ref, watch } from 'vue'
+import draggable from 'vuedraggable'
 
 defineProps({
   showFilter: {
@@ -181,6 +116,7 @@ defineProps({
 })
 
 const deviceStore = useDeviceStore()
+const appStore = useAppStore()
 
 const dragOptions = ref({
   ghostClass: 'ghost',
@@ -190,15 +126,10 @@ const dragOptions = ref({
 
 const maxProfiles = 32
 
-const collapse = ref({})
+const renderProfileConfig = ref(appStore.showProfileConfig)
+const renderProfileList = ref(!appStore.showProfileConfig)
 
-const showProfileConfig = ref(false)
-const renderProfileConfig = ref(showProfileConfig.value)
-const renderProfileList = ref(!showProfileConfig.value)
-
-const drag = ref(false)
-
-watch(showProfileConfig, (value) => {
+watch(appStore.showProfileConfig, (value) => {
   if (value) {
     renderProfileConfig.value = true
     setTimeout(() => {
@@ -246,28 +177,8 @@ const onCategoryDrop = (event) => {
     console.log('Move category not implemented!')
   }
 }
-
-const onProfileDrop = (event, categoryIndex) => {
-  if (event.moved) {
-    const profile = event.moved.element
-    const oldIndex = event.moved.oldIndex
-    const newIndex = event.moved.newIndex
-    // store.moveProfile(profile.id, oldIndex, newIndex)
-    console.log('Move profile not implemented!')
-  }
-  if (event.added) {
-    const profile = event.added.element
-    const newIndex = event.added.newIndex
-    // store.changeProfileCategory(profile.id, categoryIndex, newIndex)
-    console.log('Change profile category not implemented!')
-  }
-}
 </script>
 <style scoped>
-[data-state='open'] > .chevrot {
-  transform: rotate(90deg);
-}
-
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 300ms ease;
@@ -294,13 +205,5 @@ const onProfileDrop = (event, categoryIndex) => {
 
 .sortable-drag {
   opacity: 0;
-}
-
-.hideable-header:not(:only-child) {
-  display: none;
-}
-
-.hideable-header:only-child {
-  display: flex;
 }
 </style>

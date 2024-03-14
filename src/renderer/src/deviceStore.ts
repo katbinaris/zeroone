@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { useDebounceFn } from '@vueuse/core'
 import { useAppStore } from '@renderer/appStore'
 
-interface Profile {
+export interface Profile {
   version: number
   name: string
   desc: string
