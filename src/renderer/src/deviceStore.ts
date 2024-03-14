@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useDebounceFn } from '@vueuse/core'
 import { useAppStore } from '@renderer/appStore'
+import { randomName } from '@renderer/randomName'
 
 export interface Profile {
   version: number
@@ -98,6 +99,25 @@ export const useDeviceStore = defineStore('device', {
       if (updateDevice) {
         nanoIpc.send(this.currentDeviceId!, JSON.stringify({ current: profileName }))
       }
+    },
+    createProfile() {
+      let name = randomName()
+      let count = 0
+      while (this.profileNames.includes(name) && count < 10) {
+        name = randomName()
+        count++
+      }
+      if (this.profileNames.includes(name)) {
+        let index = 0
+        while (this.profileNames.includes(`name (${index})`)) {
+          index++
+        }
+        name = `name (${index})`
+      }
+      nanoIpc.send(this.currentDeviceId!, JSON.stringify({ profile: name }))
+      setTimeout(() => {
+        this.selectProfile(name)
+      }, 1000)
     },
     addProfile(profile: Profile, updateDevice: boolean = true) {
       if (!this.profileNames.includes(profile.name)) {

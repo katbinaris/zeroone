@@ -1,6 +1,6 @@
 <template>
   <Collapsible v-model:open="collapse" :default-open="true">
-    <div class="flex h-12 w-full border-b border-zinc-800 bg-zinc-900 hover:bg-zinc-800">
+    <div class="flex h-12 w-full border-b border-zinc-800 bg-zinc-900">
       <div
         class="flex flex-1 items-center px-4"
         :class="{ 'cursor-pointer hover:bg-zinc-800': showToggle }"
@@ -17,9 +17,11 @@
       </div>
       <CollapsibleTrigger
         v-if="foldable"
-        class="flex aspect-square h-12 items-center justify-center"
+        class="group flex aspect-square h-12 items-center justify-center hover:bg-zinc-800"
       >
-        <ChevronLeft class="chevrot mt-0.5 size-4 text-muted-foreground transition-transform" />
+        <ChevronLeft
+          class="mt-0.5 size-4 text-muted-foreground transition-transform group-data-[state='open']:-rotate-90"
+        />
       </CollapsibleTrigger>
     </div>
     <CollapsibleContent>
@@ -63,8 +65,3 @@ defineProps({
   }
 })
 </script>
-<style scoped>
-[data-state='open'] > .chevrot {
-  transform: rotate(-90deg);
-}
-</style>

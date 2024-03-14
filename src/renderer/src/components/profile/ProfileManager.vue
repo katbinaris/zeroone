@@ -37,14 +37,13 @@
               <button
                 v-if="!appStore.showProfileConfig"
                 class="flex aspect-square h-8 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-300 text-black hover:bg-zinc-200"
-                @click="console.log('Add profile not implemented!')"
               >
                 <Plus class="h-4" />
               </button>
             </Transition>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem> Profile </DropdownMenuItem>
+            <DropdownMenuItem @click="deviceStore.createProfile"> Profile </DropdownMenuItem>
             <DropdownMenuItem> Category </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

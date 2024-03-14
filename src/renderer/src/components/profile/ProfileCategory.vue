@@ -4,9 +4,11 @@
     <div
       class="group flex h-12 w-full items-center justify-between border-0 border-b bg-zinc-900 py-2 text-left text-sm text-muted-foreground"
     >
-      <CollapsibleTrigger class="flex flex-1 items-center">
-        <ChevronRight class="chevrot mb-0.5 ml-4 inline-block size-4 transition-transform" />
-        {{ categoryName
+      <CollapsibleTrigger class="group flex min-w-0 items-center gap-2">
+        <ChevronRight
+          class="mb-0.5 ml-4 inline-block size-4 shrink-0 transition-transform group-data-[state='open']:rotate-90"
+        />
+        {{ categoryName ? categoryName : 'Uncategorized'
         }}<span class="font-heading text-sm text-zinc-600">
           ({{ deviceStore.profilesByTag[categoryName].length || 0 }})</span
         >
@@ -16,11 +18,11 @@
       >
         <template v-if="!confirmDelete">
           <Button
-            class="aspect-square border border-zinc-800 bg-transparent p-1 text-muted-foreground hover:bg-orange-900 hover:text-zinc-100"
+            class="aspect-square border border-zinc-800 bg-zinc-900 p-1 text-muted-foreground hover:bg-orange-900 hover:text-zinc-100"
             ><PenLine class="size-4"
           /></Button>
           <Button
-            class="aspect-square border border-zinc-800 bg-transparent p-1 text-muted-foreground hover:bg-orange-900 hover:text-zinc-100"
+            class="aspect-square border border-zinc-800 bg-zinc-900 p-1 text-muted-foreground hover:bg-orange-900 hover:text-zinc-100"
             @click="confirmDelete = true"
             ><Trash2 class="size-4"
           /></Button>
@@ -54,7 +56,7 @@
         @change="(event) => onProfileDrop(event, categoryIndex)"
       >
         <template #header>
-          <div class="hideable-header m-2 flex h-12 items-center justify-center">
+          <div class="m-2 hidden h-12 items-center justify-center only:flex">
             <MoreHorizontal class="w-4 text-zinc-600" />
           </div>
         </template>
@@ -155,10 +157,6 @@ const onProfileDrop = (event, categoryIndex) => {
 </script>
 
 <style scoped>
-[data-state='open'] > .chevrot {
-  transform: rotate(90deg);
-}
-
 .hideable-header:not(:only-child) {
   display: none;
 }
