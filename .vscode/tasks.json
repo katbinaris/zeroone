@@ -5,7 +5,7 @@
 			"type": "npm",
 			"script": "dev",
 			"problemMatcher": [],
-			"label": "ZERO/ONE Development Mode",
+			"label": "npm: dev",
 			"detail": "electron-vite dev"
 		}
 	]
