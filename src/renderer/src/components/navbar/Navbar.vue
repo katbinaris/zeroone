@@ -144,7 +144,7 @@
                 : 'border-2'
             "
             class="app-titlebar-button"
-            @click="console.log('Save not implemented!')"
+            @click="deviceStore.saveChangesOnDevice"
           >
             Save
           </MenubarButton>

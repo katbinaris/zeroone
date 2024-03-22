@@ -117,9 +117,7 @@ export const useDeviceStore = defineStore('device', {
         name = `name (${index})`
       }
       nanoIpc.send(this.currentDeviceId!, JSON.stringify({ profile: name }))
-      setTimeout(() => {
-        this.selectProfile(name)
-      }, 1000)
+      this.selectProfile(name)
     },
     addProfile(profile: Profile, updateDevice: boolean = true) {
       if (!this.profileNames.includes(profile.name)) {
@@ -207,6 +205,13 @@ export const useDeviceStore = defineStore('device', {
         nanoIpc.disconnect(deviceId)
       }
     },
+    setDirtyState(dirty: boolean) {
+      this.dirtyState = dirty
+    },
+    saveChangesOnDevice() {
+      this.setDirtyState(true)
+      nanoIpc.send(this.currentDeviceId!, JSON.stringify({ save: true }))
+    },
     setProfileNames(profileNames: string[], updateDevice: boolean = true) {
       this.profileNames = profileNames
       if (updateDevice) {
@@ -287,6 +292,7 @@ export const initializeDevices = () => {
       messageCallbacks.forEach((callback) => callback('Error', dataString))
     }
     if (eventid === 'saved') {
+      deviceStore.setDirtyState(false)
       messageCallbacks.forEach((callback) => callback('Saved', 'Changes saved to device'))
     }
     if (eventid === 'device-attached') {
