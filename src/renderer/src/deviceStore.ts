@@ -197,6 +197,7 @@ export const useDeviceStore = defineStore('device', {
     connectDevice(deviceId: string | undefined = undefined, updateDevice: boolean = true) {
       if (deviceId) {
         this.currentDeviceId = deviceId
+        this.setDirtyState(false)
         if (updateDevice) {
           nanoIpc.connect(deviceId)
         }
@@ -206,6 +207,7 @@ export const useDeviceStore = defineStore('device', {
     },
     disconnectDevice(deviceId: string, updateDevice: boolean = true) {
       this.currentDeviceId = null
+      this.setDirtyState(false)
       if (updateDevice) {
         nanoIpc.disconnect(deviceId)
       }
