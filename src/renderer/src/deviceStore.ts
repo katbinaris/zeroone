@@ -30,13 +30,35 @@ export interface Profile {
   buttonBPress: number
   buttonCPress: number
   buttonDPress: number
-  internalMacro: boolean
-  knobMap: string
-  switchA: string
-  switchB: string
-  switchC: string
-  switchD: string
   guiEnable: boolean
+  keys: Key[]
+  knob: Knob[]
+}
+
+export interface Key {
+  pressed: Pressed[]
+}
+
+export interface Pressed {
+  type: string
+  keyCodes?: number[]
+  channel?: number
+  cc?: number
+  val?: number
+  buttons?: number
+}
+
+export interface Knob {
+  keyState: number
+  angleMin: number
+  angleMax: number
+  valueMin: number
+  valueMax: number
+  step: number
+  wrap: boolean
+  type: string
+  channel: number
+  cc: number
 }
 
 interface UpdateData {
