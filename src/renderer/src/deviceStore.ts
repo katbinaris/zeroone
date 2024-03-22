@@ -3,6 +3,8 @@ import { useDebounceFn } from '@vueuse/core'
 import { useAppStore } from '@renderer/appStore'
 import { randomName } from '@renderer/randomName'
 
+// Generated from https://github.com/katbinaris/NanoD_RatchetH1/blob/runger/communications.md
+// Using https://app.quicktype.io/
 export interface Profile {
   version: number
   name: string
