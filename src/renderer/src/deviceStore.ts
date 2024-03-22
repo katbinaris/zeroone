@@ -34,14 +34,16 @@ export interface Profile {
   buttonDPress: number
   guiEnable: boolean
   keys: Key[]
-  knob: Knob[]
+  knob: Value[]
 }
 
 export interface Key {
-  pressed: Pressed[]
+  pressedActions: Action[]
+  releasedActions: Action[]
+  heldActions: Action[]
 }
 
-export interface Pressed {
+export interface Action {
   type: string
   keyCodes?: number[]
   channel?: number
@@ -50,7 +52,7 @@ export interface Pressed {
   buttons?: number
 }
 
-export interface Knob {
+export interface Value {
   keyState: number
   angleMin: number
   angleMax: number
