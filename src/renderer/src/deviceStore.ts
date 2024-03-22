@@ -118,6 +118,7 @@ export const useDeviceStore = defineStore('device', {
       }
       nanoIpc.send(this.currentDeviceId!, JSON.stringify({ profile: name }))
       this.selectProfile(name)
+      this.setDirtyState(true)
     },
     addProfile(profile: Profile, updateDevice: boolean = true) {
       if (!this.profileNames.includes(profile.name)) {
@@ -138,6 +139,7 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({ profile: profile.name, updates: newProfile })
         )
+        this.setDirtyState(true)
       }
     },
     renameProfile(oldName: string, newName: string, updateDevice: boolean = true) {
@@ -153,6 +155,7 @@ export const useDeviceStore = defineStore('device', {
             JSON.stringify({ profile: oldName, updates: { name: newName } })
           )
         }
+        this.setDirtyState(true)
       }
     },
     deleteProfile(profileName: string, updateDevice: boolean = true) {
@@ -170,6 +173,7 @@ export const useDeviceStore = defineStore('device', {
       }
       if (updateDevice) {
         nanoIpc.send(this.currentDeviceId!, JSON.stringify({ profiles: this.profileNames }))
+        this.setDirtyState(true)
       }
     },
     duplicateProfile(profileName: string, updateDevice: boolean = true) {
@@ -181,6 +185,7 @@ export const useDeviceStore = defineStore('device', {
         if (this.currentProfileName === profileName) {
           this.selectProfile(newProfile.name, updateDevice)
         }
+        this.setDirtyState(true)
       }
     },
     detachDevice(deviceId: string) {
@@ -216,6 +221,7 @@ export const useDeviceStore = defineStore('device', {
       this.profileNames = profileNames
       if (updateDevice) {
         nanoIpc.send(this.currentDeviceId!, JSON.stringify({ profiles: profileNames }))
+        this.setDirtyState(true)
       }
     },
     setCurrentProfile(profileName: string, updateDevice: boolean = true) {
@@ -245,6 +251,7 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({ profile: this.currentProfileName, updates: { [propertyName]: color } })
         )
+        this.setDirtyState(true)
       }
     },
     setPrimaryColor(color: number, updateDevice: boolean = true) {
@@ -254,6 +261,7 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({ profile: this.currentProfileName, updates: { primary: color } })
         )
+        this.setDirtyState(true)
       }
     },
     setSecondaryColor(color: number, updateDevice: boolean = true) {
@@ -263,6 +271,7 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({ profile: this.currentProfileName, updates: { secondary: color } })
         )
+        this.setDirtyState(true)
       }
     },
     setPointerColor(color: number, updateDevice: boolean = true) {
@@ -272,6 +281,7 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({ profile: this.currentProfileName, updates: { pointer: color } })
         )
+        this.setDirtyState(true)
       }
     }
   }

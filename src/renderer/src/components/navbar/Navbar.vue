@@ -133,13 +133,13 @@
       <div class="grow" />
       <Transition name="fade">
         <div v-if="deviceStore.connected" class="flex items-center gap-2 px-2">
-          <div v-if="numberOfChanges" class="text-sm">
-            <PenLine class="inline-block h-4" />{{ numberOfChanges }} Changes
+          <div v-if="deviceStore.dirtyState" class="text-sm">
+            <PenLine class="inline-block h-4" />Unsaved Changes
           </div>
           <MenubarButton class="app-titlebar-button border-2"> Revert </MenubarButton>
           <MenubarButton
             :class="
-              numberOfChanges
+              deviceStore.dirtyState
                 ? 'border border-zinc-100 bg-zinc-300 text-zinc-950 hover:bg-zinc-200 hover:text-zinc-950'
                 : 'border-2'
             "
@@ -214,8 +214,6 @@ const { appIpc } = window
 
 const isMacOS = appIpc.platform === 'darwin'
 const zoomFactor = ref(1)
-
-const numberOfChanges = ref(27)
 
 const previewDeviceNames = ref({
   nanoOne: 'One',
