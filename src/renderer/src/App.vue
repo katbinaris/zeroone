@@ -3,10 +3,18 @@ import ProfileManager from '@renderer/components/profile/ProfileManager.vue'
 import DevicePreview from '@renderer/components/device/DevicePreview.vue'
 import ConfigPane from '@renderer/components/config/ConfigPane.vue'
 import Navbar from '@renderer/components/navbar/Navbar.vue'
-import { useDeviceStore, initializeDevices } from '@renderer/deviceStore'
+import { useDeviceStore, initializeDevices, onDeviceError } from '@renderer/deviceStore'
+import { Toaster } from '@renderer/components/ui/sonner'
+import { toast } from 'vue-sonner'
 
 const deviceStore = useDeviceStore()
 initializeDevices()
+
+onDeviceError((error) => {
+  toast('Error', {
+    description: error
+  })
+})
 
 // const menuActions = {
 //   connect: () => store.setConnected(!store.connected),
@@ -61,6 +69,7 @@ initializeDevices()
       </div>
     </div>
   </main>
+  <Toaster />
 </template>
 <style scoped>
 .slide-left-enter-active,

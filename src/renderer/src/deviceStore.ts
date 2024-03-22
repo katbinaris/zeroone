@@ -52,6 +52,8 @@ interface UpdateData {
 
 const { nanoIpc } = window
 
+const errorCallbacks: ((error: string) => void)[] = []
+
 export const useDeviceStore = defineStore('device', {
   state: () => ({
     attachedDeviceIds: [] as string[], // list of attached device ids
@@ -281,6 +283,9 @@ export const initializeDevices = () => {
   // register event handlers
   nanoIpc.on((eventid, deviceid, dataString) => {
     console.log('Received event', eventid, deviceid, dataString)
+    if (eventid === 'error') {
+      errorCallbacks.forEach((callback) => callback(dataString))
+    }
     if (eventid === 'device-attached') {
       deviceStore.attachDevice(deviceid)
       if (deviceStore.attachedDeviceIds.length === 1) {
@@ -346,6 +351,10 @@ export const initializeDevices = () => {
       })
     }
   })
+}
+
+export const onDeviceError = (callback: (error: string) => void) => {
+  errorCallbacks.push(callback)
 }
 
 // // devices, device attachment, connection, and disconnection
