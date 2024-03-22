@@ -18,45 +18,39 @@
     <ActionGroup :actions="actionsHeld" class="p-2" />
   </ConfigSection>
 </template>
-<script setup>
+<script setup lang="ts">
 import { PanelBottomClose, PanelBottomOpen, Clock2 } from 'lucide-vue-next'
 import ConfigSection from '@renderer/components/common/ConfigSection.vue'
 import { useAppStore } from '@renderer/appStore'
-import { ref } from 'vue'
+import { useDeviceStore } from '@renderer/deviceStore'
 import ActionGroup from '@renderer/components/config/actions/ActionGroup.vue'
+import { computed } from 'vue'
+import { Action } from '@renderer/deviceStore'
 
 const appStore = useAppStore()
-const actionsPressed = ref([
-  {
-    id: '1'
+const deviceStore = useDeviceStore()
+const actionsPressed = computed({
+  get() {
+    return deviceStore.keyActions(appStore.selectedKey).pressedActions as Action[]
   },
-  {
-    id: '2'
-  },
-  {
-    id: '3'
+  set(newValue) {
+    deviceStore.setKeyPressedActions(appStore.selectedKey, newValue)
   }
-])
-const actionsReleased = ref([
-  {
-    id: '4'
+})
+const actionsReleased = computed({
+  get() {
+    return deviceStore.keyActions(appStore.selectedKey).releasedActions as Action[]
   },
-  {
-    id: '5'
-  },
-  {
-    id: '6'
+  set(newValue) {
+    deviceStore.setKeyReleasedActions(appStore.selectedKey, newValue)
   }
-])
-const actionsHeld = ref([
-  {
-    id: '7'
+})
+const actionsHeld = computed({
+  get() {
+    return deviceStore.keyActions(appStore.selectedKey).heldActions as Action[]
   },
-  {
-    id: '8'
-  },
-  {
-    id: '9'
+  set(newValue) {
+    deviceStore.setKeyHeldActions(appStore.selectedKey, newValue)
   }
-])
+})
 </script>

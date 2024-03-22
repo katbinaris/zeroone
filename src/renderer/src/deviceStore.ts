@@ -5,6 +5,7 @@ import { randomName } from '@renderer/randomName'
 
 // Generated from https://github.com/katbinaris/NanoD_RatchetH1/blob/runger/communications.md
 // Using https://app.quicktype.io/
+// WARNING: The tool does 80% of the work, but you need to make sure the types are correct
 export interface Profile {
   version: number
   name: string
@@ -38,9 +39,9 @@ export interface Profile {
 }
 
 export interface Key {
-  pressedActions: Action[]
-  releasedActions: Action[]
-  heldActions: Action[]
+  pressed?: Action[]
+  released?: Action[]
+  held?: Action[]
 }
 
 export interface Action {
@@ -111,6 +112,17 @@ export const useDeviceStore = defineStore('device', {
     keyColor: (state) => (key: string, pressed: boolean) => {
       const propertyName = `button${key.toUpperCase()}${pressed ? 'Press' : 'Idle'}`
       return state.currentProfile ? state.currentProfile[propertyName] : 0
+    },
+    keyActions: (state) => (key: string) => {
+      const keyIndex = state.keyLabels.indexOf(key)
+      return (
+        state.currentProfile?.keys[keyIndex] ||
+        ({
+          pressed: [],
+          released: [],
+          held: []
+        } as Key)
+      )
     }
   },
   actions: {
@@ -308,6 +320,48 @@ export const useDeviceStore = defineStore('device', {
         sendDebounced(
           this.currentDeviceId!,
           JSON.stringify({ profile: this.currentProfileName, updates: { pointer: color } })
+        )
+        this.setDirtyState(true)
+      }
+    },
+    setKeyPressedActions(key: string, actions: Action[], updateDevice: boolean = true) {
+      const keyIndex = this.keyLabels.indexOf(key)
+      this.currentProfile!.keys[keyIndex].pressed = actions
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { keys: this.currentProfile!.keys }
+          })
+        )
+        this.setDirtyState(true)
+      }
+    },
+    setKeyReleasedActions(key: string, actions: Action[], updateDevice: boolean = true) {
+      const keyIndex = this.keyLabels.indexOf(key)
+      this.currentProfile!.keys[keyIndex].released = actions
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { keys: this.currentProfile!.keys }
+          })
+        )
+        this.setDirtyState(true)
+      }
+    },
+    setKeyHeldActions(key: string, actions: Action[], updateDevice: boolean = true) {
+      const keyIndex = this.keyLabels.indexOf(key)
+      this.currentProfile!.keys[keyIndex].held = actions
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { keys: this.currentProfile!.keys }
+          })
         )
         this.setDirtyState(true)
       }
