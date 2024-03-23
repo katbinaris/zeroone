@@ -10,11 +10,22 @@
     <div v-if="lastEvent" class="mt-6 text-center font-mono text-sm text-muted-foreground">
       Key: {{ lastEvent?.key }} | Code: {{ lastEvent?.keyCode }} | Type: {{ lastEvent?.type }}
     </div>
+    <div class="mt-6 text-center font-mono text-sm text-muted-foreground">
+      Keycode: {{ action.keyCodes ? action.keyCodes.join(', ') : 'None' }}
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import { Button } from '@renderer/components/ui/button'
 import { ref, Ref } from 'vue'
+import { Action } from '@renderer/deviceStore'
+
+defineProps({
+  action: {
+    type: Object as () => Action,
+    required: true
+  }
+})
 
 const isCapturing = ref(false)
 const listener = (e: KeyboardEvent) => {

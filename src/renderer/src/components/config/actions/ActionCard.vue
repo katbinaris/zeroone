@@ -81,6 +81,7 @@
       :is="
         actionTypeOptions[inputValue]?.component ? actionTypeOptions[inputValue]?.component : WIP
       "
+      :action="action"
     />
   </div>
 </template>
@@ -105,23 +106,21 @@ import SendStringAction from '@renderer/components/config/actions/SendStringActi
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { ChevronsUpDown, Check, GripHorizontal, Trash2, X } from 'lucide-vue-next'
 import { useElementSize } from '@vueuse/core'
+import { Action } from '@renderer/deviceStore'
 
 defineProps({
   actionIndex: {
     type: Number,
     required: false
+  },
+  action: {
+    type: Object as () => Action,
+    required: true
   }
 })
 
 const actionTypeOptions = ref({
-  sendKey: { label: 'Press Key or Combination', component: SendKeyAction },
-  sendString: { label: 'Type a String', component: SendStringAction },
-  sendMouse: { label: 'Move, Scroll or Click', component: 'SendMouseAction' },
-  sendGamepad: { label: 'Send a Gamepad Input', component: 'SendGamepadAction' },
-  sendMidi: { label: 'Send a MIDI Message', component: 'SendMidiAction' },
-  sendOsc: { label: 'Send an OSC Message', component: 'SendOscAction' },
-  sendSerial: { label: 'Send a Serial Message', component: 'SendSerialAction' },
-  changeProfile: { label: 'Change Device Profile', component: 'ChangeProfileAction' }
+  key: { label: 'Press a Key', component: SendKeyAction }
 })
 
 const comboboxButton = ref(null)

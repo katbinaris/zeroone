@@ -11,7 +11,7 @@
     >
       <template #item="dragAction">
         <div :key="dragAction.element.id">
-          <ActionCard :action-index="dragAction.index + 1" />
+          <ActionCard :action-index="dragAction.index + 1" :action="dragAction.element" />
         </div>
       </template>
     </draggable>
