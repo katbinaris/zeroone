@@ -20,7 +20,9 @@
               <ScrambleText
                 class="overflow-hidden text-ellipsis text-nowrap"
                 :text="
-                  inputValue ? actionTypeOptions[inputValue].label : 'Select an action type...'
+                  typeInputValue
+                    ? actionTypeOptions[typeInputValue].label
+                    : 'Select an action type...'
                 "
               />
               <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
@@ -40,7 +42,7 @@
                     :value="actionType"
                     @select="
                       () => {
-                        inputValue = key
+                        typeInputValue = key
                         open = false
                       }
                     "
@@ -48,7 +50,7 @@
                     {{ actionType.label }}
                     <Check
                       :class="
-                        cn('ml-auto h-4 w-4', inputValue === key ? 'opacity-100' : 'opacity-0')
+                        cn('ml-auto h-4 w-4', typeInputValue === key ? 'opacity-100' : 'opacity-0')
                       "
                     />
                   </CommandItem>
@@ -79,7 +81,9 @@
     <Separator />
     <component
       :is="
-        actionTypeOptions[inputValue]?.component ? actionTypeOptions[inputValue]?.component : WIP
+        actionTypeOptions[typeInputValue]?.component
+          ? actionTypeOptions[typeInputValue]?.component
+          : WIP
       "
       :action="action"
     />
@@ -102,13 +106,13 @@ import {
 import { ref } from 'vue'
 import { cn } from '@renderer/lib/utils'
 import SendKeyAction from '@renderer/components/config/actions/SendKeyAction.vue'
-import SendStringAction from '@renderer/components/config/actions/SendStringAction.vue'
+import SendMidiCCAction from '@renderer/components/config/actions/SendMidiCCAction.vue'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { ChevronsUpDown, Check, GripHorizontal, Trash2, X } from 'lucide-vue-next'
 import { useElementSize } from '@vueuse/core'
 import { Action } from '@renderer/deviceStore'
 
-defineProps({
+const props = defineProps({
   actionIndex: {
     type: Number,
     required: false
@@ -120,13 +124,14 @@ defineProps({
 })
 
 const actionTypeOptions = ref({
-  key: { label: 'Press a Key', component: SendKeyAction }
+  key: { label: 'Press a Keyboard Key', component: SendKeyAction },
+  midi: { label: 'Send a MIDI Control Change', component: SendMidiCCAction }
 })
 
 const comboboxButton = ref(null)
 const { width } = useElementSize(comboboxButton)
 
 const open = ref(false)
-const inputValue = ref('')
+const typeInputValue = ref(props.action.type)
 const confirmDelete = ref(false)
 </script>
