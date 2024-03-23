@@ -1,21 +1,21 @@
 <template>
   <ConfigSection :title="`${appStore.selectedKey} Pressed`" :icon-component="PanelBottomClose">
     <template #title>
-      <span class="text-zinc-500">&nbsp;({{ actionsPressed.length }})</span></template
+      <span class="text-zinc-500">&nbsp;({{ pressedActions.length }})</span></template
     >
-    <ActionGroup :actions="actionsPressed" class="p-2" />
+    <ActionGroup :actions="pressedActions" class="p-2" />
   </ConfigSection>
   <ConfigSection :title="`${appStore.selectedKey} Released`" :icon-component="PanelBottomOpen">
     <template #title>
-      <span class="text-zinc-500">&nbsp;({{ actionsReleased.length }})</span></template
+      <span class="text-zinc-500">&nbsp;({{ releasedActions.length }})</span></template
     >
-    <ActionGroup :actions="actionsReleased" class="p-2" />
+    <ActionGroup :actions="releasedActions" class="p-2" />
   </ConfigSection>
   <ConfigSection :title="`${appStore.selectedKey} Held`" :icon-component="Clock2">
     <template #title>
-      <span class="text-zinc-500">&nbsp;({{ actionsHeld.length }})</span></template
+      <span class="text-zinc-500">&nbsp;({{ heldActions.length }})</span></template
     >
-    <ActionGroup :actions="actionsHeld" class="p-2" />
+    <ActionGroup :actions="heldActions" class="p-2" />
   </ConfigSection>
 </template>
 <script setup lang="ts">
@@ -26,28 +26,30 @@ import { useDeviceStore } from '@renderer/deviceStore'
 import ActionGroup from '@renderer/components/config/actions/ActionGroup.vue'
 import { computed } from 'vue'
 import { Action } from '@renderer/deviceStore'
+import { storeToRefs } from 'pinia'
 
 const appStore = useAppStore()
 const deviceStore = useDeviceStore()
-const actionsPressed = computed({
+const { keyActions } = storeToRefs(deviceStore)
+const pressedActions = computed({
   get() {
-    return deviceStore.keyActions(appStore.selectedKey).pressedActions as Action[]
+    return (keyActions.value(appStore.selectedKey).pressed as Action[]) || []
   },
   set(newValue) {
     deviceStore.setKeyPressedActions(appStore.selectedKey, newValue)
   }
 })
-const actionsReleased = computed({
+const releasedActions = computed({
   get() {
-    return deviceStore.keyActions(appStore.selectedKey).releasedActions as Action[]
+    return (keyActions.value(appStore.selectedKey).released as Action[]) || []
   },
   set(newValue) {
     deviceStore.setKeyReleasedActions(appStore.selectedKey, newValue)
   }
 })
-const actionsHeld = computed({
+const heldActions = computed({
   get() {
-    return deviceStore.keyActions(appStore.selectedKey).heldActions as Action[]
+    return (keyActions.value(appStore.selectedKey).held as Action[]) || []
   },
   set(newValue) {
     deviceStore.setKeyHeldActions(appStore.selectedKey, newValue)
