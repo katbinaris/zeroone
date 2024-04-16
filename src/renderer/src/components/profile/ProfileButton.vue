@@ -55,8 +55,8 @@
       <span class="mx-2 w-4 cursor-grab" :class="{ 'ml-2': !draggable }">
         <GripHorizontal
           v-if="draggable"
-          :class="{ 'text-zinc-600': selected, 'text-muted-foreground': !selected }"
-          class="profile-handle mb-0.5 inline-block size-4 opacity-0 transition-all group-hover:opacity-100"
+          :class="{ 'text-zinc-600': selected, 'text-muted-foreground opacity-0': !selected }"
+          class="profile-handle mb-0.5 inline-block size-4 transition-all group-hover:opacity-100"
         />
       </span>
       <ScrambleText
