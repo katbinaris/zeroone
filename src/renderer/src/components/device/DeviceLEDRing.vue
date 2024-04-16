@@ -24,8 +24,11 @@
   </svg>
 </template>
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Color from 'color'
+import { useDeviceStore } from '@renderer/deviceStore'
+
+const deviceStore = useDeviceStore()
 
 const props = defineProps({
   value: {
@@ -45,24 +48,27 @@ const padding = ref(40)
 
 const size = computed(() => (radius.value + ledRadius.value + padding.value) * 2)
 
-let interval = null
+const updateLEDs = (value) => {
+  for (let i = 0; i < ledCount.value; i++) {
+    if (i / ledCount.value < value / 100) {
+      leds.value[i] = Color(deviceStore.currentProfile?.primary)
+    } else if ((i - 1) / ledCount.value < value / 100) {
+      leds.value[i] = Color(deviceStore.currentProfile?.pointer)
+    } else {
+      leds.value[i] = Color(deviceStore.currentProfile?.secondary)
+    }
+  }
+}
 
-onMounted(() => {
-  interval = setInterval(() => {
-    const valueIndex = Math.floor((props.value / 100) * ledCount.value)
-    leds.value.forEach((color, index) => {
-      const distance = Math.abs(index - valueIndex) % ledCount.value
-      if (distance < 1) {
-        leds.value[index] = Color.hsl(40, 100, 100)
-      } else if (distance < 2) {
-        leds.value[index] = Color.hsl(40, 100, 60)
-      } else {
-        leds.value[index] = color.mix(Color.hsl(310, 100, 20), 0.03)
-      }
-    })
-  })
-  onUnmounted(() => {
-    clearInterval(interval)
-  })
-})
+updateLEDs(props.value)
+
+watch(
+  () => [
+    deviceStore.currentProfile?.primary,
+    deviceStore.currentProfile?.pointer,
+    deviceStore.currentProfile?.secondary,
+    props.value
+  ],
+  () => updateLEDs(props.value)
+)
 </script>

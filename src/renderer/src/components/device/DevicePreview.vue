@@ -49,7 +49,7 @@
           >
             <img :src="LogoMidi" alt="midi-logo" class="h-4 opacity-50" />
             <h2 class="font-pixellg text-5xl">
-              {{ parseInt(barValue - deviceStore.turns * 100) }}
+              {{ parseInt(barValue + deviceStore.turns * 100) }}
             </h2>
             <div class="font-pixelsm text-md">HIGH PASS</div>
             <DeviceBar :value="barValue" :count="30" :width="120" />
@@ -111,7 +111,7 @@ import Color from 'color'
 const appStore = useAppStore()
 const deviceStore = useDeviceStore()
 
-const barValue = computed(() => 100 - (deviceStore.angle / Math.PI / 2) * 100)
+const barValue = computed(() => 100 + (deviceStore.angle / Math.PI / 2) * 100)
 
 const previewDeviceImages = {
   nanoOne: RenderNanoOne,
