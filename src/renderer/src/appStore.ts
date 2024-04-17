@@ -6,6 +6,7 @@ import KeyLightConfig from '@renderer/components/config/keys/KeyLightConfig.vue'
 import KnobMappingConfig from '@renderer/components/config/knob/KnobMappingConfig.vue'
 import KeyMappingConfig from '@renderer/components/config/keys/KeyMappingConfig.vue'
 import { shallowRef } from 'vue'
+import KeyFeedbackConfig from './components/config/keys/KeyFeedbackConfig.vue'
 
 export const useAppStore = defineStore('app', {
   state: () => {
@@ -32,6 +33,10 @@ export const useAppStore = defineStore('app', {
           mapping: {
             titleKey: 'config_options.mapping_configuration.title',
             component: shallowRef(KeyMappingConfig)
+          },
+          feedback: {
+            titleKey: 'config_options.feedback_designer.title',
+            component: shallowRef(KeyFeedbackConfig)
           },
           lighting: {
             titleKey: 'config_options.light_designer.title',

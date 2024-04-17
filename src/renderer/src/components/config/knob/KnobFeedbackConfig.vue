@@ -1,11 +1,5 @@
 <template>
   <ConfigSection
-    :title="$t('config_options.feedback_designer.feedback_type.title')"
-    :icon-component="GaugeCircle"
-  >
-    <TabSelect v-model="feedbackType" :options="feedbackTypeOptions" />
-  </ConfigSection>
-  <ConfigSection
     :title="$t('config_options.feedback_designer.haptic_response.title')"
     :icon-component="AudioWaveform"
     :show-toggle="true"

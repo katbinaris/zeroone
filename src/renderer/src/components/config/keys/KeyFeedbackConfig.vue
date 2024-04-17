@@ -1,31 +1,5 @@
 <template>
   <ConfigSection
-    :title="$t('config_options.feedback_designer.feedback_type.title')"
-    :icon-component="GaugeCircle"
-  >
-    <TabSelect v-model="feedbackType" :options="feedbackTypeOptions" />
-  </ConfigSection>
-  <ConfigSection
-    :title="$t('config_options.feedback_designer.haptic_response.title')"
-    :icon-component="AudioWaveform"
-    :show-toggle="true"
-  >
-    <SteppedSlider
-      v-model="feedbackStrength"
-      :label="$t('config_options.feedback_designer.haptic_response.feedback_strength')"
-    />
-    <Separator />
-    <SteppedSlider
-      v-model="bounceBackStrength"
-      :label="$t('config_options.feedback_designer.haptic_response.bounce_back_strength')"
-    />
-    <Separator />
-    <SteppedSlider
-      v-model="outputRampDampening"
-      :label="$t('config_options.feedback_designer.haptic_response.output_ramp_dampening')"
-    />
-  </ConfigSection>
-  <ConfigSection
     :title="$t('config_options.feedback_designer.auditory_response.title')"
     :icon-component="AudioLines"
     :show-toggle="true"
