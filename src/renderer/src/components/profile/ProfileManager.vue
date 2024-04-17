@@ -13,7 +13,7 @@
           "
         >
           <component
-            :is="appStore.showProfileConfig ? ArrowLeft : List"
+            :is="appStore.showProfileConfig ? Settings : List"
             class="mr-1 h-full w-5 shrink-0"
           />
           <ScrambleText
@@ -31,22 +31,33 @@
             :text="`(${deviceStore.profiles.length}/${maxProfiles})`"
           />
         </button>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Transition name="fade">
-              <button
-                v-if="!appStore.showProfileConfig"
-                class="flex aspect-square h-8 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-300 text-black hover:bg-zinc-200"
-              >
-                <Plus class="h-4" />
-              </button>
-            </Transition>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem @click="deviceStore.createProfile"> Profile </DropdownMenuItem>
-            <DropdownMenuItem> Category </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div class="relative size-8">
+          <Transition name="fade" class="absolute size-full">
+            <button
+              v-if="appStore.showProfileConfig"
+              class="flex items-center justify-center text-muted-foreground hover:text-zinc-200"
+              @click="appStore.setShowProfileConfig(false)"
+            >
+              <X class="h-5" />
+            </button>
+          </Transition>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Transition name="fade">
+                <button
+                  v-if="!appStore.showProfileConfig"
+                  class="flex aspect-square h-8 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-300 text-black hover:bg-zinc-200"
+                >
+                  <Plus class="h-4" />
+                </button>
+              </Transition>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem @click="deviceStore.createProfile"> Profile </DropdownMenuItem>
+              <DropdownMenuItem> Category </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <Separator />
     </div>
@@ -103,7 +114,7 @@ import {
 } from '@renderer/components/ui/dropdown-menu'
 import { Separator } from '@renderer/components/ui/separator'
 import { useDeviceStore } from '@renderer/deviceStore'
-import { ArrowLeft, List, Plus } from 'lucide-vue-next'
+import { Settings, List, Plus, X } from 'lucide-vue-next'
 import { ref, watch } from 'vue'
 import draggable from 'vuedraggable'
 
