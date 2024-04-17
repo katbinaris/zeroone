@@ -49,10 +49,11 @@ const padding = ref(40)
 const size = computed(() => (radius.value + ledRadius.value + padding.value) * 2)
 
 const updateLEDs = (value) => {
+  const clamped = Math.min(98, Math.max(0, value))
   for (let i = 0; i < ledCount.value; i++) {
-    if (i / ledCount.value < value / 100) {
+    if (i / ledCount.value < clamped / 100) {
       leds.value[i] = Color(deviceStore.currentProfile?.primary)
-    } else if ((i - 1) / ledCount.value < value / 100) {
+    } else if ((i - 1) / ledCount.value < clamped / 100) {
       leds.value[i] = Color(deviceStore.currentProfile?.pointer)
     } else {
       leds.value[i] = Color(deviceStore.currentProfile?.secondary)
