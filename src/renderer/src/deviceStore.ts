@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { set, useDebounceFn } from '@vueuse/core'
+import { useDebounceFn } from '@vueuse/core'
 import { useAppStore } from '@renderer/appStore'
 import { randomName } from '@renderer/randomName'
 
@@ -64,6 +64,15 @@ export interface Value {
   type: string
   channel: number
   cc: number
+  haptic: HapticSettings
+}
+
+export interface HapticSettings {
+  mode: number
+  startPos: number
+  endPos: number
+  detentCount: number
+  vernier: number
 }
 
 export interface DeviceSettings {
