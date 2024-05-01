@@ -15,36 +15,6 @@ onDeviceMessage((title, message) => {
     description: message
   })
 })
-
-// const menuActions = {
-//   connect: () => store.setConnected(!store.connected),
-//   orientation: () => store.cycleScreenOrientation(),
-//   skin: () => store.switchPreviewDeviceModel()
-// }
-
-// appIpc.onMenu((key) => {
-//   console.log('menu', key)
-//   if (menuActions[key]) {
-//     menuActions[key]()
-//   }
-// })
-
-// store.fetchProfiles() // TODO remove me!
-
-// handle device events
-// const handlers = useMessageHandlers(store)
-// nanoIpc.on_event('device-attached', (evt, deviceid, data) => store.device_attached(deviceid))
-// nanoIpc.on_event('device-detached', (evt, deviceid, data) => store.device_detached(deviceid))
-// nanoIpc.on_event('device-error', (evt, deviceid, data) => {
-//   /* TODO handle connection errors */
-// })
-// nanoIpc.on_event('connected', (evt, deviceid, data) => store.device_connected(deviceid))
-// nanoIpc.on_event('disconnected', (evt, deviceid, data) => store.device_disconnected(deviceid))
-// nanoIpc.on_event('update', (evt, deviceid, data) => {
-//   handlers.handle_message(data)
-// })
-// // get list of the currently attached devices
-// nanoIpc.list_devices().then((devs) => store.init_devices(devs))
 </script>
 <template>
   <main class="flex h-screen w-screen select-none flex-col">
