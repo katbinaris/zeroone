@@ -17,14 +17,14 @@ const deviceStore = useDeviceStore()
 
 const knobValues = computed({
   get() {
-    return Object.values(deviceStore.currentProfile.knob).map((value, index) => ({
+    if (!deviceStore.currentProfile) return []
+    return Object.values(deviceStore.currentProfile!.knob).map((value, index) => ({
       id: index.toString(),
       value: value
     }))
   },
   set(newValues) {
-    //TODO: Update deviceStore & device
-    //deviceStore.setValues(newValues)
+    deviceStore.setKnobValues(newValues.map((value) => value.value))
   }
 })
 </script>

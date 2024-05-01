@@ -405,6 +405,16 @@ export const useDeviceStore = defineStore('device', {
         )
         this.setDirtyState(true)
       }
+    },
+    setKnobValues(values: Value[], updateDevice: boolean = true) {
+      this.currentProfile!.knob = values
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({ profile: this.currentProfileName, updates: { knob: values } })
+        )
+        this.setDirtyState(true)
+      }
     }
   }
 })
