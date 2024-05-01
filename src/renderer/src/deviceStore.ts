@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useDebounceFn } from '@vueuse/core'
+import { set, useDebounceFn } from '@vueuse/core'
 import { useAppStore } from '@renderer/appStore'
 import { randomName } from '@renderer/randomName'
 
@@ -66,6 +66,27 @@ export interface Value {
   cc: number
 }
 
+export interface DeviceSettings {
+  debug: boolean
+  ledMaxBrightness: number
+  maxVelocity: number
+  maxVoltage: number
+  deviceOrientation: number
+  deviceName: string
+  serialNumber: string
+  firmwareVersion: string
+  midiUsb: MidiSettings
+  midi2: MidiSettings
+}
+
+export interface MidiSettings {
+  in: boolean
+  out: boolean
+  thru: boolean
+  route: boolean
+  nano: boolean
+}
+
 interface UpdateData {
   a: number | undefined
   t: number | undefined
@@ -75,6 +96,7 @@ interface UpdateData {
   profile: Profile | undefined
   kd: number | undefined
   ku: number | undefined
+  settings: DeviceSettings | undefined
 }
 
 const { nanoIpc } = window
@@ -88,7 +110,7 @@ export const useDeviceStore = defineStore('device', {
     profileNames: [] as string[], // list of profile names
     profiles: [] as Profile[], // list of profiles
     currentProfileName: null as string | null, // name of the current profile
-    orientation: 0 as number, // orientation of the device
+    settings: null as DeviceSettings | null, // settings of the device
     dirtyState: false as boolean, // whether the device state has changed
     angle: 0 as number, // angle of the knob
     turns: 0 as number, // number of turns of the knob
@@ -257,6 +279,13 @@ export const useDeviceStore = defineStore('device', {
       nanoIpc.send(this.currentDeviceId!, JSON.stringify({ save: true }))
       this.setDirtyState(false)
     },
+    setSettings(settings: DeviceSettings, updateDevice: boolean = true) {
+      this.settings = settings
+      if (updateDevice) {
+        nanoIpc.send(this.currentDeviceId!, JSON.stringify({ settings }))
+        this.setDirtyState(true)
+      }
+    },
     setProfileNames(profileNames: string[], updateDevice: boolean = true) {
       this.profileNames = profileNames
       if (updateDevice) {
@@ -271,14 +300,16 @@ export const useDeviceStore = defineStore('device', {
       }
     },
     setOrientation(orientation: number, updateDevice: boolean = true) {
-      this.orientation = orientation
+      this.settings!.deviceOrientation = orientation
       if (updateDevice) {
-        // TODO: send orientation to device
-        console.log('No orientation API message yet! Orientation:', orientation)
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({ settings: { deviceOrientation: orientation } })
+        )
       }
     },
     cycleOrientation() {
-      this.setOrientation((this.orientation + 90) % 360)
+      this.setOrientation((this.settings!.deviceOrientation + 90) % 360)
     },
     setAngle(angle: number) {
       this.angle = angle
@@ -398,7 +429,7 @@ export const initializeDevices = () => {
     }
     if (eventid === 'connected') {
       deviceStore.connectDevice(deviceid, false)
-      nanoIpc.send(deviceid, JSON.stringify({ profiles: '#all' }))
+      nanoIpc.send(deviceid, JSON.stringify({ profiles: '#all', settings: '?' }))
     }
     if (eventid === 'disconnected') {
       deviceStore.disconnectDevice(deviceid, false)
@@ -437,6 +468,9 @@ export const initializeDevices = () => {
       if (update.profile !== undefined) {
         deviceStore.addProfile(update.profile, false)
       }
+      if (update.settings !== undefined) {
+        deviceStore.setSettings(update.settings, false)
+      }
     }
   })
 
@@ -448,7 +482,7 @@ export const initializeDevices = () => {
         console.error(e)
         console.log('Serial port might still be open, requesting profiles...')
         deviceStore.connectDevice(deviceIds[0], false)
-        nanoIpc.send(deviceIds[0], JSON.stringify({ profiles: '#all' }))
+        nanoIpc.send(deviceIds[0], JSON.stringify({ profiles: '#all', settings: '?' }))
       })
     }
   })
