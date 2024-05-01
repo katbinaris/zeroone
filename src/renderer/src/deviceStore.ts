@@ -254,8 +254,8 @@ export const useDeviceStore = defineStore('device', {
       this.dirtyState = dirty
     },
     saveChangesOnDevice() {
-      this.setDirtyState(true)
       nanoIpc.send(this.currentDeviceId!, JSON.stringify({ save: true }))
+      this.setDirtyState(false)
     },
     setProfileNames(profileNames: string[], updateDevice: boolean = true) {
       this.profileNames = profileNames
