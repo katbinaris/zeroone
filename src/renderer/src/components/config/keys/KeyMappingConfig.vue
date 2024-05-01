@@ -31,6 +31,7 @@ import { storeToRefs } from 'pinia'
 const appStore = useAppStore()
 const deviceStore = useDeviceStore()
 const { keyActions } = storeToRefs(deviceStore)
+// TODO: Only set the actions if they are different, only send those actions to the device
 const pressedActions = computed({
   get() {
     return (keyActions.value(appStore.selectedKey).pressed as Action[]) || []

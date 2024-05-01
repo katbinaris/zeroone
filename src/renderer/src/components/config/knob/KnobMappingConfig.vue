@@ -1,23 +1,30 @@
 <template>
   <ConfigSection title="Knob Values" :icon-component="PlusCircle">
     <template #title>
-      <span class="text-zinc-500">&nbsp;({{ values.length }})</span></template
+      <span class="text-zinc-500">&nbsp;({{ knobValues.length }})</span></template
     >
-    <ValueGroup :values="values" class="p-2" />
+    <ValueGroup :values="knobValues" class="p-2" />
   </ConfigSection>
 </template>
-<script setup>
+<script setup lang="ts">
 import { PlusCircle } from 'lucide-vue-next'
 import ConfigSection from '@renderer/components/common/ConfigSection.vue'
-import { ref } from 'vue'
 import ValueGroup from '@renderer/components/config/values/ValueGroup.vue'
+import { useDeviceStore } from '@renderer/deviceStore'
+import { computed } from 'vue'
 
-const values = ref([
-  {
-    id: '1'
+const deviceStore = useDeviceStore()
+
+const knobValues = computed({
+  get() {
+    return Object.values(deviceStore.currentProfile.knob).map((value, index) => ({
+      id: index.toString(),
+      value: value
+    }))
   },
-  {
-    id: '2'
+  set(newValues) {
+    //TODO: Update deviceStore & device
+    //deviceStore.setValues(newValues)
   }
-])
+})
 </script>
