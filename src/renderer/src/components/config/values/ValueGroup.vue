@@ -18,7 +18,7 @@
     <button
       class="flex flex-1 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/50 p-2 text-sm text-muted-foreground hover:bg-zinc-800 hover:text-zinc-200"
     >
-      <Plus class="mr-2" /> Add a value
+      <Plus class="mr-2" @click="deviceStore.addKnobValue" /> Add a value
     </button>
   </div>
 </template>
@@ -28,6 +28,10 @@ import { Plus } from 'lucide-vue-next'
 import ValueCard from '@renderer/components/config/values/ValueCard.vue'
 import draggable from 'vuedraggable'
 import { ref } from 'vue'
+import { useDeviceStore } from '@renderer/deviceStore'
+
+const deviceStore = useDeviceStore()
+
 defineProps({
   values: {
     type: Array,

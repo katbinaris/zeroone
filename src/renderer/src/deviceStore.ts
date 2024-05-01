@@ -125,7 +125,26 @@ export const useDeviceStore = defineStore('device', {
     turns: 0 as number, // number of turns of the knob
     velocity: 0 as number, // velocity of the knob
     keyLabels: ['a', 'b', 'c', 'd'] as string[], // labels for the keys
-    keyStates: {} as Record<string, boolean> // state of the keys (true if pressed)
+    keyStates: {} as Record<string, boolean>, // state of the keys (true if pressed)
+    defaultKnobValue: {
+      keyState: 0,
+      angleMin: 0,
+      angleMax: 360,
+      valueMin: 0,
+      valueMax: 127,
+      step: 1,
+      wrap: true,
+      type: 'cc',
+      channel: 1,
+      cc: 1,
+      haptic: {
+        mode: 0,
+        startPos: 0,
+        endPos: Math.PI * 2,
+        detentCount: 10,
+        vernier: 10
+      }
+    } as Value
   }),
   getters: {
     connected: (state) => state.currentDeviceId !== null,
@@ -412,6 +431,22 @@ export const useDeviceStore = defineStore('device', {
         sendDebounced(
           this.currentDeviceId!,
           JSON.stringify({ profile: this.currentProfileName, updates: { knob: values } })
+        )
+        this.setDirtyState(true)
+      }
+    },
+    addKnobValue(value: Value | null = null, updateDevice: boolean = true) {
+      if (!value) {
+        value = JSON.parse(JSON.stringify(this.defaultKnobValue)) as Value
+      }
+      this.currentProfile!.knob.push(value)
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { knob: this.currentProfile!.knob }
+          })
         )
         this.setDirtyState(true)
       }
