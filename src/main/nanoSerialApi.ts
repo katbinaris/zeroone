@@ -51,10 +51,15 @@ class NanoSerialApi extends EventEmitter {
     if (lines.length > 1) {
       for (let i = 0; i < lines.length - 1; i++) {
         if (lines[i].length > 0) {
+          if (lines[i].startsWith('undefined')) {
+            // This is an absolutely horrible hack, but it works for now
+            // TODO: Fix the root cause of this issue
+            lines[i] = lines[i].substring(9)
+          }
           if (lines[i].startsWith('{'))
             // if its a json object
             this.emit('nanoSerialApi:update', serialNumber, lines[i])
-          else console.log('Device: ' + lines[i]) // otherwise just log it
+          else console.warn('Device: ' + lines[i]) // otherwise just log it
         }
       }
       connected_port.data = lines[lines.length - 1]
