@@ -97,6 +97,7 @@ export interface MidiSettings {
 }
 
 interface UpdateData {
+  idle: number | undefined
   a: number | undefined
   t: number | undefined
   v: number | undefined
@@ -464,9 +465,10 @@ export const initializeDevices = () => {
 
   // register event handlers
   nanoIpc.on((eventid, deviceid, dataString) => {
-    console.log('Received event', eventid, deviceid, dataString)
+    //console.log('Received event', eventid, deviceid, dataString)
     if (eventid === 'error') {
       messageCallbacks.forEach((callback) => callback('Error', dataString))
+      console.error('Error:', dataString)
     }
     if (eventid === 'saved') {
       deviceStore.setDirtyState(false)
@@ -474,19 +476,23 @@ export const initializeDevices = () => {
     }
     if (eventid === 'device-attached') {
       deviceStore.attachDevice(deviceid)
+      console.log('Attached device', deviceid)
       if (deviceStore.attachedDeviceIds.length === 1) {
         deviceStore.connectDevice(deviceid)
       }
     }
     if (eventid === 'device-detached') {
       deviceStore.detachDevice(deviceid)
+      console.log('Detached device', deviceid)
     }
     if (eventid === 'connected') {
       deviceStore.connectDevice(deviceid, false)
+      console.log('Connected device', deviceid)
       nanoIpc.send(deviceid, JSON.stringify({ profiles: '#all', settings: '?' }))
     }
     if (eventid === 'disconnected') {
       deviceStore.disconnectDevice(deviceid, false)
+      console.log('Disconnected device', deviceid)
     }
     if (eventid === 'update') {
       let update: UpdateData = {} as UpdateData
@@ -496,6 +502,9 @@ export const initializeDevices = () => {
         } catch (e) {
           console.error('Failed to parse update data:', e, dataString)
         }
+      }
+      if (!update.idle && !update.a) {
+        console.log('Received update:', update)
       }
       if (update.a !== undefined) {
         deviceStore.setAngle(update.a)
