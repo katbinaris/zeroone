@@ -184,7 +184,7 @@ app.whenReady().then(() => {
 
   Menu.setApplicationMenu(menu)
   //mainWindow.webContents.openDevTools()
-  setInterval(() => nanoSerialApi._list(), 1000)
+  setInterval(() => nanoSerialApi._list(), 500)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
