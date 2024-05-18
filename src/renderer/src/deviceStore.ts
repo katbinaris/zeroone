@@ -100,6 +100,7 @@ interface UpdateData {
   idle: number | undefined
   a: number | undefined
   t: number | undefined
+  p: number | undefined
   v: number | undefined
   profiles: string[] | undefined
   current: string | undefined
