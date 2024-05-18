@@ -4,22 +4,27 @@
     :icon-component="AudioLines"
     :show-toggle="true"
   >
-    <SteppedSlider
-      v-model="auditoryHapticLevel"
-      :label="$t('config_options.feedback_designer.auditory_response.haptic_level')"
-    />
-    <Separator />
-    <SteppedSlider
-      v-model="auditoryMagnitude"
-      :label="$t('config_options.feedback_designer.auditory_response.magnitude')"
-      :max="3"
-      :named-positions="[
-        { value: 0, label: 'Faint' },
-        { value: 1, label: 'Soft' },
-        { value: 2, label: 'Normal' },
-        { value: 3, label: 'Loud' }
-      ]"
-    />
+    <template v-if="false">
+      <SteppedSlider
+        v-model="auditoryHapticLevel"
+        :label="$t('config_options.feedback_designer.auditory_response.haptic_level')"
+      />
+      <Separator />
+      <SteppedSlider
+        v-model="auditoryMagnitude"
+        :label="$t('config_options.feedback_designer.auditory_response.magnitude')"
+        :max="3"
+        :named-positions="[
+          { value: 0, label: 'Faint' },
+          { value: 1, label: 'Soft' },
+          { value: 2, label: 'Normal' },
+          { value: 3, label: 'Loud' }
+        ]"
+      />
+    </template>
+    <template v-else>
+      <WIP />
+    </template>
   </ConfigSection>
 </template>
 <script setup>
@@ -33,6 +38,7 @@ import CdIcon from '@renderer/assets/icons/iconCoarseDetents.svg'
 import VfIcon from '@renderer/assets/icons/iconViscousRotation.svg'
 import RcIcon from '@renderer/assets/icons/iconReturnToCenter.svg'
 import SteppedSlider from '@renderer/components/common/SteppedSlider.vue'
+import WIP from '@renderer/components/WIP.vue'
 
 const feedbackType = ref('fineDetents') // TODO: replace with actual value
 
