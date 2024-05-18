@@ -74,6 +74,7 @@ export const useAppStore = defineStore('app', {
       this.profileManagerDragging = dragging
     },
     setShowProfileConfig(show) {
+      show = false // TODO: Remove this / replace with actual logic
       this.showProfileConfig = show
     }
   }
