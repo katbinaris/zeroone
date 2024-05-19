@@ -341,6 +341,7 @@ export const useDeviceStore = defineStore('device', {
       this.currentProfileName = profileName
       if (updateDevice) {
         nanoIpc.send(this.currentDeviceId!, JSON.stringify({ current: profileName }))
+        this.setDirtyState(true)
       }
     },
     setOrientation(orientation: number, updateDevice: boolean = true) {
@@ -350,6 +351,7 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({ settings: { deviceOrientation: orientation } })
         )
+        this.setDirtyState(true)
       }
     },
     cycleOrientation() {
@@ -359,6 +361,7 @@ export const useDeviceStore = defineStore('device', {
       this.settings!.idleTimeout = timeout
       if (updateDevice) {
         sendDebounced(this.currentDeviceId!, JSON.stringify({ settings: { idleTimeout: timeout } }))
+        this.setDirtyState(true)
       }
     },
     setPosition(position: number) {
