@@ -98,10 +98,7 @@ export interface MidiSettings {
 
 interface UpdateData {
   idle: number | undefined
-  a: number | undefined
-  t: number | undefined
   p: number | undefined
-  v: number | undefined
   profiles: string[] | undefined
   current: string | undefined
   profile: Profile | undefined
@@ -123,8 +120,7 @@ export const useDeviceStore = defineStore('device', {
     currentProfileName: null as string | null, // name of the current profile
     settings: null as DeviceSettings | null, // settings of the device
     dirtyState: false as boolean, // whether the device state has changed
-    angle: 0 as number, // angle of the knob
-    turns: 0 as number, // number of turns of the knob
+    position: 0 as number, // current position of the knob
     velocity: 0 as number, // velocity of the knob
     keyLabels: ['a', 'b', 'c', 'd'] as string[], // labels for the keys
     keyStates: {} as Record<string, boolean>, // state of the keys (true if pressed)
@@ -190,6 +186,7 @@ export const useDeviceStore = defineStore('device', {
       this.currentProfileName = profileName
       if (updateDevice) {
         nanoIpc.send(this.currentDeviceId!, JSON.stringify({ current: profileName }))
+        this.setDirtyState(true)
       }
     },
     createProfile() {
@@ -341,8 +338,8 @@ export const useDeviceStore = defineStore('device', {
     cycleOrientation() {
       this.setOrientation((this.settings!.deviceOrientation + 90) % 360)
     },
-    setAngle(angle: number) {
-      this.angle = angle
+    setPosition(position: number) {
+      this.position = position
     },
     setKeyColor(key: string, pressed: boolean, color: number, updateDevice: boolean = true) {
       const propertyName = `button${key.toUpperCase()}${pressed ? 'Press' : 'Idle'}`
@@ -504,11 +501,11 @@ export const initializeDevices = () => {
           console.error('Failed to parse update data:', e, dataString)
         }
       }
-      if (!update.idle && !update.a) {
+      if (!update.idle && !update.p) {
         console.log('Received update:', update)
       }
-      if (update.a !== undefined) {
-        deviceStore.setAngle(update.a)
+      if (update.p !== undefined) {
+        deviceStore.setPosition(update.p)
         appStore.selectConfigFeature('knob')
       }
       if (update.kd !== undefined) {

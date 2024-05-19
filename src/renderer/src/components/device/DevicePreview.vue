@@ -33,7 +33,7 @@
       <Transition name="fade-delayed">
         <DeviceLEDRing
           v-if="deviceStore.connected"
-          :value="barValue"
+          :value="ringValue"
           class="absolute inset-x-0 top-[12.5%] mx-auto h-[66%]"
         />
       </Transition>
@@ -49,10 +49,9 @@
           >
             <img :src="LogoMidi" alt="midi-logo" class="h-4 opacity-50" />
             <h2 class="font-pixellg text-5xl">
-              {{ parseInt(barValue + deviceStore.turns * 100) }}
+              {{ deviceStore.position }}
             </h2>
             <div class="font-pixelsm text-md">HIGH PASS</div>
-            <DeviceBar :value="barValue" :count="30" :width="120" />
             <span class="font-pixelsm w-36 text-[7pt] uppercase text-muted-foreground">
               KORG MINILOGUE HIGH PASS FILTER 0-127
             </span>
@@ -111,7 +110,8 @@ import Color from 'color'
 const appStore = useAppStore()
 const deviceStore = useDeviceStore()
 
-const barValue = computed(() => 100 + (deviceStore.angle / Math.PI / 2) * 100)
+const devicePosition = computed(() => deviceStore.position)
+const ringValue = computed(() => devicePosition)
 
 const previewDeviceImages = {
   nanoOne: RenderNanoOne,
