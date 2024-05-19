@@ -25,7 +25,7 @@
               scramble-on-mount
               :fill-interval="50"
               :replace-interval="50"
-              :text="deviceStore.settings.firmwareVersion || 'Unknown'"
+              :text="deviceStore.settings?.firmwareVersion || 'Unknown'"
             />
           </div>
         </div>
