@@ -86,6 +86,7 @@ export interface DeviceSettings {
   firmwareVersion: string
   midiUsb: MidiSettings
   midi2: MidiSettings
+  idleTimeout: number
 }
 
 export interface MidiSettings {
@@ -142,7 +143,8 @@ export const useDeviceStore = defineStore('device', {
         detentCount: 10,
         vernier: 10
       }
-    } as Value
+    } as Value,
+    orientationLabels: [0, 90, 180, 270]
   }),
   getters: {
     connected: (state) => state.currentDeviceId !== null,
@@ -336,7 +338,13 @@ export const useDeviceStore = defineStore('device', {
       }
     },
     cycleOrientation() {
-      this.setOrientation((this.settings!.deviceOrientation + 90) % 360)
+      this.setOrientation((this.settings!.deviceOrientation + 1) % this.orientationLabels.length)
+    },
+    setIdleTimeout(timeout: number, updateDevice: boolean = true) {
+      this.settings!.idleTimeout = timeout
+      if (updateDevice) {
+        sendDebounced(this.currentDeviceId!, JSON.stringify({ settings: { idleTimeout: timeout } }))
+      }
     },
     setPosition(position: number) {
       this.position = position

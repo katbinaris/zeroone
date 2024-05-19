@@ -58,7 +58,9 @@
             <MenubarSeparator />
             <MenubarItem class="flex justify-between" @click="deviceStore.cycleOrientation">
               <p>Orientation:&nbsp;</p>
-              <p>{{ deviceStore.settings?.orientation || 0 }}°</p>
+              <p>
+                {{ deviceStore.orientationLabels[deviceStore.settings?.deviceOrientation || 0] }}°
+              </p>
               <MenubarShortcut>⌘R</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
