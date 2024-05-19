@@ -63,7 +63,7 @@
                 {{ deviceStore.position }}
               </h2>
             </div>
-            <div class="font-pixelsm text-[8pt] text-[#c66936]">
+            <div class="font-pixellg text-[8pt] text-[#c66936]">
               {{ deviceStore.currentProfileName?.toUpperCase() }}
             </div>
             <span class="font-pixelsm w-32 text-[6pt] uppercase text-muted-foreground">
