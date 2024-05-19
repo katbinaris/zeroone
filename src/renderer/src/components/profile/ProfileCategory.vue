@@ -8,7 +8,7 @@
         <ChevronRight
           class="mb-0.5 ml-4 inline-block size-4 shrink-0 transition-transform group-data-[state='open']:rotate-90"
         />
-        {{ categoryName ? categoryName : 'Uncategorized'
+        {{ categoryName ? categoryName.toUpperCase() : 'UNCATEGORIZED'
         }}<span class="font-heading text-sm text-zinc-600">
           ({{ deviceStore.profilesByTag[categoryName].length || 0 }})</span
         >

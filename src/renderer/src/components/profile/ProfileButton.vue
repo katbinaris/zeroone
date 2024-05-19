@@ -13,7 +13,7 @@
       :class="{ 'bg-zinc-300': selected }"
       @submit.prevent="
         () => {
-          $emit('rename', profile.name, nameInput)
+          $emit('rename', profile.name, nameInput.toUpperCase())
           editing = false
         }
       "
@@ -23,7 +23,7 @@
         v-model="nameInput"
         onfocus="this.select()"
         :placeholder="$t('profiles.name_placeholder')"
-        class="h-full min-w-0 flex-1 rounded-lg bg-transparent pl-8 text-sm transition-all focus-visible:outline-none focus-visible:ring-0"
+        class="h-full min-w-0 flex-1 rounded-lg bg-transparent pl-8 text-sm uppercase transition-all focus-visible:outline-none focus-visible:ring-0"
         :class="{
           'bg-zinc-300 font-semibold text-black hover:bg-zinc-200': selected,
           'text-muted-foreground hover:bg-zinc-800': !selected
@@ -61,7 +61,7 @@
       </span>
       <ScrambleText
         ref="profileTitle"
-        class="transition-colors"
+        class="uppercase transition-colors"
         :class="{ 'text-black': selected, 'text-muted-foreground': !selected }"
         :text="profile.name"
       />
@@ -146,7 +146,7 @@ const props = defineProps({
     type: Object,
     default: () => ({
       id: '1234',
-      name: 'Profile Name'
+      name: 'PROFILE NAME'
     }),
     required: true
   },

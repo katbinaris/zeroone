@@ -45,5 +45,5 @@ const secondParts = [
 export const randomName = () => {
   const first = firstParts[Math.floor(Math.random() * firstParts.length)]
   const second = secondParts[Math.floor(Math.random() * secondParts.length)]
-  return `${first} ${second}`
+  return `${first} ${second}`.toUpperCase()
 }
