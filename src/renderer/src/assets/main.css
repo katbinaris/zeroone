@@ -96,6 +96,11 @@
   }
 
   @font-face {
+    font-family: 'PixelLgOverlay';
+    src: url(fonts/SG12-12-7.otf), local('monospace');
+  }
+
+  @font-face {
       font-family: 'PixelSm';
       src: url(fonts/andina.ttf), local('monospace');
   }
@@ -106,6 +111,10 @@
 
   .font-pixellg {
       font-family: 'PixelLg', monospace, sans-serif;
+  }
+
+  .font-pixellg-overlay {
+    font-family: 'PixelLgOverlay', monospace, sans-serif;
   }
 
   .font-pixelsm {

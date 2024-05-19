@@ -53,9 +53,16 @@
             v-if="deviceStore.connected"
             class="absolute flex scale-[80%] flex-col items-center pb-2 text-center opacity-90 mix-blend-screen"
           >
-            <h2 class="font-pixellg text-[34pt] leading-none">
-              {{ deviceStore.position }}
-            </h2>
+            <div class="relative">
+              <h2 class="font-pixellg text-[34pt] leading-none">
+                {{ deviceStore.position }}
+              </h2>
+              <h2
+                class="font-pixellg-overlay absolute top-0 text-[34pt] leading-none text-[#888888]"
+              >
+                {{ deviceStore.position }}
+              </h2>
+            </div>
             <div class="font-pixelsm text-[8pt] text-[#c66936]">
               {{ deviceStore.currentProfileName?.toUpperCase() }}
             </div>
