@@ -144,7 +144,7 @@ app.whenReady().then(() => {
     mainWindow.webContents.send('nanoSerialApi:event', 'disconnected', deviceid, data)
   })
   nanoSerialApi.on('nanoSerialApi:update', (deviceid, data) => {
-    if (!data.startsWith('{"idle"') && !data.startsWith('{"p"'))
+    if (!data.startsWith('{"idle"') && !data.startsWith('{"p"') && !data.startsWith('{"ks"'))
       console.log('Update event', deviceid, data)
     mainWindow.webContents.send('nanoSerialApi:event', 'update', deviceid, data)
   })

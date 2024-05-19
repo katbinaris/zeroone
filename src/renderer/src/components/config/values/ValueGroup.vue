@@ -11,7 +11,11 @@
     >
       <template #item="dragValue">
         <div :key="dragValue.element.id">
-          <ValueCard :value-index="dragValue.index + 1" />
+          <ValueCard
+            :value="dragValue.element"
+            :value-index="dragValue.index + 1"
+            @delete="deviceStore.removeKnobValue(dragValue.index)"
+          />
         </div>
       </template>
     </draggable>

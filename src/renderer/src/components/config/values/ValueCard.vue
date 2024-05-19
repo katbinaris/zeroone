@@ -19,7 +19,7 @@
             >
               <ScrambleText
                 class="overflow-hidden text-ellipsis text-nowrap"
-                :text="inputValue ? valueTypeOptions[inputValue].label : 'Select a value type...'"
+                :text="valueType?.label || 'Select a value type...'"
               />
               <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
             </Button>
@@ -64,6 +64,7 @@
         <template v-else>
           <Button
             class="aspect-square bg-orange-950 p-1 text-zinc-200 hover:bg-orange-900 hover:text-zinc-100"
+            @click="$emit('delete')"
             ><Check class="size-4"
           /></Button>
           <Button
@@ -95,7 +96,12 @@
     </div>
     <Separator />
     <component
-      :is="valueTypeOptions[inputValue]?.component ? valueTypeOptions[inputValue]?.component : WIP"
+      :is="
+        inputValue && valueTypeOptions[inputValue]?.component
+          ? valueTypeOptions[inputValue]?.component
+          : WIP
+      "
+      :value="value"
     />
   </div>
 </template>
@@ -113,7 +119,7 @@ import {
   CommandItem,
   CommandList
 } from '@renderer/components/ui/command'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { cn } from '@renderer/lib/utils'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import {
@@ -128,8 +134,15 @@ import {
 } from 'lucide-vue-next'
 import { useElementSize } from '@vueuse/core'
 import TriggerActionsValue from '@renderer/components/config/values/TriggerActionsValue.vue'
+import MidiValue from './MidiValue.vue'
 
-defineProps({
+defineEmits(['delete'])
+
+const props = defineProps({
+  value: {
+    type: Object,
+    required: true
+  },
   valueIndex: {
     type: Number,
     required: false
@@ -137,13 +150,17 @@ defineProps({
 })
 
 const valueTypeOptions = ref({
-  controlMouse: { label: 'Move or Scroll the Mouse', component: 'ControlMouseValue' },
-  controlGamepad: { label: 'Control a Gamepad Axis', component: 'ControlGamepadValue' },
-  controlMidi: { label: 'Control a MIDI Value', component: 'ControlMidiValue' },
-  controlOsc: { label: 'Control an OSC Value', component: 'ControlOscValue' },
-  controlSerial: { label: 'Control a Value over Serial', component: 'ControlSerialValue' },
-  controlProfile: { label: 'Switch Device Profiles', component: 'ControlProfileValue' },
-  triggerActions: { label: 'Trigger Actions on Rotation', component: TriggerActionsValue }
+  mouse: { label: 'Move or Scroll the Mouse', component: 'ControlMouseValue' },
+  gamepad: { label: 'Control a Gamepad Axis', component: 'ControlGamepadValue' },
+  midi: { label: 'Control a MIDI CC Value', component: MidiValue },
+  action: { label: 'Trigger Actions on Rotation', component: TriggerActionsValue }
+})
+
+const valueType = computed(() => {
+  if (inputValue.value in valueTypeOptions.value) {
+    return valueTypeOptions.value[inputValue.value]
+  }
+  return null
 })
 
 const conditions = ref({
@@ -163,6 +180,6 @@ const comboboxButton = ref(null)
 const { width } = useElementSize(comboboxButton)
 
 const open = ref(false)
-const inputValue = ref('')
+const inputValue = ref(props.value.value.type || null)
 const confirmDelete = ref(false)
 </script>

@@ -30,4 +30,11 @@ const actionsEvery = ref([
 ])
 const actionsCw = ref([])
 const actionsCcw = ref([])
+
+defineProps({
+  value: {
+    type: Object,
+    required: true
+  }
+})
 </script>

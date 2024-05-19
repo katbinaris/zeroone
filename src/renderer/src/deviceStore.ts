@@ -103,6 +103,7 @@ interface UpdateData {
   profiles: string[] | undefined
   current: string | undefined
   profile: Profile | undefined
+  ks: number | undefined
   kd: number | undefined
   ku: number | undefined
   settings: DeviceSettings | undefined
@@ -463,8 +464,28 @@ export const useDeviceStore = defineStore('device', {
     addKnobValue(value: Value | null = null, updateDevice: boolean = true) {
       if (!value) {
         value = JSON.parse(JSON.stringify(this.defaultKnobValue)) as Value
+        let lowestKeyState = 0
+        this.currentProfile!.knob.forEach((v) => {
+          if (v.keyState > lowestKeyState) {
+            lowestKeyState = v.keyState
+          }
+        })
+        value.keyState = (lowestKeyState + 1) % 16
       }
       this.currentProfile!.knob.push(value)
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { knob: this.currentProfile!.knob }
+          })
+        )
+        this.setDirtyState(true)
+      }
+    },
+    removeKnobValue(index: number, updateDevice: boolean = true) {
+      this.currentProfile!.knob.splice(index, 1)
       if (updateDevice) {
         sendDebounced(
           this.currentDeviceId!,
@@ -527,7 +548,7 @@ export const initializeDevices = () => {
           console.error('Failed to parse update data:', e, dataString)
         }
       }
-      if (!update.idle && !update.p) {
+      if (!update.idle && !update.p && !update.ks) {
         console.log('Received update:', update)
       }
       if (update.p !== undefined) {
