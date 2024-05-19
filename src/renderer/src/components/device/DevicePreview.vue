@@ -37,11 +37,17 @@
           class="absolute inset-x-0 top-[12.5%] mx-auto h-[66%]"
         />
       </Transition>
-
       <div
         class="absolute inset-x-0 top-[30.5%] mx-auto flex aspect-square h-[30%] flex-col items-center justify-center overflow-hidden rounded-full"
         style="background: linear-gradient(45deg, black 30%, #252525 50%, #232323 60%, black)"
       >
+        <Transition name="fade-display">
+          <DeviceRingBar
+            v-if="deviceStore.connected"
+            :value="ringValue"
+            class="absolute opacity-90 mix-blend-screen"
+          />
+        </Transition>
         <TransitionGroup name="fade-display">
           <div
             v-if="deviceStore.connected"
@@ -52,7 +58,7 @@
               {{ deviceStore.position }}
             </h2>
             <div class="font-pixelsm text-md">HIGH PASS</div>
-            <span class="font-pixelsm w-36 text-[7pt] uppercase text-muted-foreground">
+            <span class="font-pixelsm w-32 text-[7pt] uppercase text-muted-foreground">
               KORG MINILOGUE HIGH PASS FILTER 0-127
             </span>
           </div>
@@ -97,7 +103,7 @@
 import RenderNanoOne from '@renderer/assets/images/renderNanoOneTransparent.png'
 import RenderNanoZero from '@renderer/assets/images/renderNanoZeroTransparent.png'
 import LogoMidi from '@renderer/assets/logos/logoMidi.svg'
-import DeviceBar from '@renderer/components/device/DeviceBar.vue'
+import DeviceRingBar from '@renderer/components/device/DeviceRingBar.vue'
 import { useAppStore } from '@renderer/appStore'
 import { useDeviceStore } from '@renderer/deviceStore'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
