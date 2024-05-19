@@ -25,7 +25,7 @@
               scramble-on-mount
               :fill-interval="50"
               :replace-interval="50"
-              text="v1.3.2a"
+              :text="deviceStore.settings.firmwareVersion || 'Unknown'"
             />
           </div>
         </div>
@@ -53,13 +53,14 @@
             v-if="deviceStore.connected"
             class="absolute flex scale-[80%] flex-col items-center pb-2 text-center opacity-90 mix-blend-screen"
           >
-            <img :src="LogoMidi" alt="midi-logo" class="h-4 opacity-50" />
-            <h2 class="font-pixellg text-5xl">
+            <h2 class="font-pixellg text-[34pt] leading-none">
               {{ deviceStore.position }}
             </h2>
-            <div class="font-pixelsm text-md">HIGH PASS</div>
-            <span class="font-pixelsm w-32 text-[7pt] uppercase text-muted-foreground">
-              KORG MINILOGUE HIGH PASS FILTER 0-127
+            <div class="font-pixelsm text-[8pt] text-[#c66936]">
+              {{ deviceStore.currentProfileName.toUpperCase() }}
+            </div>
+            <span class="font-pixelsm w-32 text-[6pt] uppercase text-muted-foreground">
+              MIDI CC 0
             </span>
           </div>
           <div v-else class="flex flex-col items-center text-center mix-blend-screen">
