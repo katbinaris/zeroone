@@ -15,7 +15,7 @@
     <circle
       v-for="index in ledCount"
       :key="index"
-      :transform="`rotate(${(index / ledCount) * 360} ${size / 2} ${size / 2})`"
+      :transform="`rotate(${(index / ledCount) * 360 + rotationOffset} ${size / 2} ${size / 2})`"
       :r="ledRadius"
       :cx="size / 2"
       :cy="padding + ledRadius"
@@ -45,6 +45,7 @@ const ledCount = ref(60)
 const blur = ref(2)
 const blurSteps = ref(5)
 const padding = ref(40)
+const rotationOffset = ref(180)
 
 const size = computed(() => (radius.value + ledRadius.value + padding.value) * 2)
 
