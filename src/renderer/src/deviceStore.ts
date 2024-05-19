@@ -134,7 +134,7 @@ export const useDeviceStore = defineStore('device', {
       valueMax: 127,
       step: 1,
       wrap: true,
-      type: 'cc',
+      type: 'midi',
       channel: 1,
       cc: 1,
       haptic: {
