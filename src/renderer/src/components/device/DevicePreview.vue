@@ -57,7 +57,7 @@
               {{ deviceStore.position }}
             </h2>
             <div class="font-pixelsm text-[8pt] text-[#c66936]">
-              {{ deviceStore.currentProfileName.toUpperCase() }}
+              {{ deviceStore.currentProfileName?.toUpperCase() }}
             </div>
             <span class="font-pixelsm w-32 text-[6pt] uppercase text-muted-foreground">
               MIDI CC 0
