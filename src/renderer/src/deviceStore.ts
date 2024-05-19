@@ -144,7 +144,7 @@ export const useDeviceStore = defineStore('device', {
         vernier: 10
       }
     } as Value,
-    orientationLabels: [0, 90, 180, 270]
+    orientationLabels: [270, 0, 90, 180]
   }),
   getters: {
     connected: (state) => state.currentDeviceId !== null,
@@ -173,6 +173,21 @@ export const useDeviceStore = defineStore('device', {
           held: []
         } as Key)
       )
+    },
+    keyState: (state) => {
+      // Calculate the key state number from the key states
+      let keyState = 0
+      if (state.keyStates.a) keyState += 1
+      if (state.keyStates.b) keyState += 2
+      if (state.keyStates.c) keyState += 4
+      if (state.keyStates.d) keyState += 8
+      return keyState
+    },
+    activeValue: (state) => {
+      return state.currentProfile?.knob.find((value) => value.keyState === state.keyState) ||
+        state.currentProfile?.knob.length > 0
+        ? state.currentProfile?.knob[0]
+        : null
     }
   },
   actions: {
