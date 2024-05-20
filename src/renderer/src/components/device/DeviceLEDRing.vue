@@ -19,13 +19,14 @@
       :r="ledRadius"
       :cx="size / 2"
       :cy="padding + ledRadius"
-      :fill="leds[index - 1]?.hex()"
+      :fill="colorToLED(leds[index - 1])?.hex()"
     />
   </svg>
 </template>
 <script setup>
 import { computed, ref, watch } from 'vue'
 import Color from 'color'
+import { colorToLED } from '@renderer/colorToLED'
 import { useDeviceStore } from '@renderer/deviceStore'
 
 const deviceStore = useDeviceStore()
