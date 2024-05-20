@@ -102,6 +102,7 @@
           : WIP
       "
       :value="value"
+      @update="(updates) => deviceStore.updateKnobValueParameter(valueIndex - 1, updates)"
     />
   </div>
 </template>
@@ -135,6 +136,9 @@ import {
 import { useElementSize } from '@vueuse/core'
 import TriggerActionsValue from '@renderer/components/config/values/TriggerActionsValue.vue'
 import MidiValue from './MidiValue.vue'
+import { useDeviceStore } from '@renderer/deviceStore'
+
+const deviceStore = useDeviceStore()
 
 defineEmits(['delete'])
 
@@ -145,7 +149,7 @@ const props = defineProps({
   },
   valueIndex: {
     type: Number,
-    required: false
+    required: true
   }
 })
 
@@ -180,6 +184,6 @@ const comboboxButton = ref(null)
 const { width } = useElementSize(comboboxButton)
 
 const open = ref(false)
-const inputValue = ref(props.value.value.type || null)
+const inputValue = ref(props.value.type || null)
 const confirmDelete = ref(false)
 </script>

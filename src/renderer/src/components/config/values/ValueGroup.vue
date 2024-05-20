@@ -12,7 +12,7 @@
       <template #item="dragValue">
         <div :key="dragValue.element.id">
           <ValueCard
-            :value="dragValue.element"
+            :value="dragValue.element.value"
             :value-index="dragValue.index + 1"
             @delete="deviceStore.removeKnobValue(dragValue.index)"
           />
