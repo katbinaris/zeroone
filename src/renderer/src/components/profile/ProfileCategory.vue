@@ -80,6 +80,11 @@
                   }
                 }
               "
+              @description="
+                (profileName, description) => {
+                  deviceStore.updateProfileDescription(profileName, description)
+                }
+              "
               @duplicate="
                 (originalName, profile) => {
                   deviceStore.duplicateProfile(originalName, profile)

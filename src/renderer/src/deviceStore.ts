@@ -293,6 +293,23 @@ export const useDeviceStore = defineStore('device', {
         this.setDirtyState(true)
       }
     },
+    updateProfileDescription(
+      profileName: string,
+      description: string,
+      updateDevice: boolean = true
+    ) {
+      const profile = this.profiles.find((p) => p.name === profileName)
+      if (profile) {
+        profile.desc = description
+        if (updateDevice) {
+          nanoIpc.send(
+            this.currentDeviceId!,
+            JSON.stringify({ profile: profileName, updates: { desc: description } })
+          )
+          this.setDirtyState(true)
+        }
+      }
+    },
     detachDevice(deviceId: string) {
       const index = this.attachedDeviceIds.indexOf(deviceId)
       if (index !== -1) {

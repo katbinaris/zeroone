@@ -86,6 +86,17 @@
         :class="{
           'bg-zinc-300 text-black hover:bg-zinc-200': selected,
           'text-zinc-100 hover:bg-zinc-800': !selected,
+          'group-focus-within:w-12 group-hover:w-12': !editing
+        }"
+        class="flex w-0 shrink-0 items-center justify-center rounded-lg transition-all"
+        @click="dialog?.show"
+      >
+        <Settings class="size-4" />
+      </button>
+      <button
+        :class="{
+          'bg-zinc-300 text-black hover:bg-zinc-200': selected,
+          'text-zinc-100 hover:bg-zinc-800': !selected,
           'group-focus-within:w-12 group-hover:w-12': !editing,
           'rounded-l-lg': !nameEditable
         }"
@@ -130,23 +141,35 @@
         <X class="size-4" />
       </button>
     </template>
+    <ProfileDialog
+      ref="dialog"
+      :profile="profile"
+      @update:name="(name) => $emit('rename', profile.name, name.toUpperCase())"
+      @update:description="
+        (description) => $emit('description', profile.name, description.toUpperCase())
+      "
+    />
   </div>
 </template>
 <script setup>
-import { Check, Copy, PenLine, Trash2, X, GripHorizontal } from 'lucide-vue-next'
+import { Check, Copy, PenLine, Trash2, X, GripHorizontal, Settings } from 'lucide-vue-next'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { nextTick, ref } from 'vue'
+import ProfileDialog from '@renderer/components/profile/ProfileDialog.vue'
 
-defineEmits(['select', 'rename', 'duplicate', 'delete'])
+defineEmits(['select', 'rename', 'description', 'duplicate', 'delete'])
 
 const nameSubmitButton = ref(null)
+
+const dialog = ref(null)
 
 const props = defineProps({
   profile: {
     type: Object,
     default: () => ({
       id: '1234',
-      name: 'PROFILE NAME'
+      name: 'PROFILE NAME',
+      desc: 'PROFILE DESCRIPTION'
     }),
     required: true
   },
@@ -160,7 +183,7 @@ const props = defineProps({
   },
   nameEditable: {
     type: Boolean,
-    default: true
+    default: false
   },
   initEditing: {
     type: Boolean,
