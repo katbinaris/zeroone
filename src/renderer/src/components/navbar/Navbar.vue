@@ -72,7 +72,7 @@
                     : 'Off'
                 }}
               </p>
-              <MenubarShortcut>⌘R</MenubarShortcut>
+              <MenubarShortcut>⌘T</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem class="flex justify-between" @click="appStore.switchPreviewDeviceModel">
