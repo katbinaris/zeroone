@@ -67,7 +67,7 @@
               {{ deviceStore.currentProfileName?.toUpperCase() }}
             </div>
             <span class="font-pixelsm w-32 text-[6pt] uppercase text-muted-foreground">
-              MIDI CC 0
+              {{ deviceStore.currentProfile?.desc?.toUpperCase() }}
             </span>
           </div>
           <div v-else class="flex flex-col items-center text-center mix-blend-screen">
