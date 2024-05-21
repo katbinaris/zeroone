@@ -20,7 +20,7 @@
               <ScrambleText
                 class="overflow-hidden text-ellipsis text-nowrap"
                 :text="
-                  typeInputValue
+                  typeInputValue && actionTypeOptions[typeInputValue]
                     ? actionTypeOptions[typeInputValue].label
                     : 'Select an action type...'
                 "
