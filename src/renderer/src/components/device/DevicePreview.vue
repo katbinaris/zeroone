@@ -58,7 +58,7 @@
                 {{ deviceStore.position }}
               </h2>
               <h2
-                class="font-pixellg-overlay absolute top-0 text-[34pt] leading-none text-[#888888]"
+                class="font-pixellg-overlay absolute top-0 hidden text-[34pt] leading-none text-[#888888]"
               >
                 {{ deviceStore.position }}
               </h2>
@@ -110,7 +110,6 @@
 <script setup>
 import RenderNanoOne from '@renderer/assets/images/renderNanoOneTransparent.png'
 import RenderNanoZero from '@renderer/assets/images/renderNanoZeroTransparent.png'
-import LogoMidi from '@renderer/assets/logos/logoMidi.svg'
 import DeviceRingBar from '@renderer/components/device/DeviceRingBar.vue'
 import { useAppStore } from '@renderer/appStore'
 import { useDeviceStore } from '@renderer/deviceStore'
