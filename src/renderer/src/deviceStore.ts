@@ -384,11 +384,11 @@ export const useDeviceStore = defineStore('device', {
     },
     cycleIdleTimeout() {
       if (this.settings!.idleTimeout === 0) {
-        this.setIdleTimeout(10)
-      } else if (this.settings!.idleTimeout === 10) {
-        this.setIdleTimeout(30)
-      } else if (this.settings!.idleTimeout === 30) {
-        this.setIdleTimeout(60)
+        this.setIdleTimeout(10000)
+      } else if (this.settings!.idleTimeout === 10000) {
+        this.setIdleTimeout(30000)
+      } else if (this.settings!.idleTimeout === 30000) {
+        this.setIdleTimeout(60000)
       } else {
         this.setIdleTimeout(0)
       }
