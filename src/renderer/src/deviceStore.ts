@@ -382,6 +382,17 @@ export const useDeviceStore = defineStore('device', {
         this.setDirtyState(true)
       }
     },
+    cycleIdleTimeout() {
+      if (this.settings!.idleTimeout === 0) {
+        this.setIdleTimeout(10)
+      } else if (this.settings!.idleTimeout === 10) {
+        this.setIdleTimeout(30)
+      } else if (this.settings!.idleTimeout === 30) {
+        this.setIdleTimeout(60)
+      } else {
+        this.setIdleTimeout(0)
+      }
+    },
     setPosition(position: number) {
       this.position = position
     },

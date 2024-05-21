@@ -63,6 +63,17 @@
               </p>
               <MenubarShortcut>⌘R</MenubarShortcut>
             </MenubarItem>
+            <MenubarItem class="flex justify-between" @click="deviceStore.cycleIdleTimeout">
+              <p>Idle Timeout:&nbsp;</p>
+              <p>
+                {{
+                  deviceStore.settings?.idleTimeout
+                    ? `${Math.round(deviceStore.settings.idleTimeout / 1000)}s`
+                    : 'Off'
+                }}
+              </p>
+              <MenubarShortcut>⌘R</MenubarShortcut>
+            </MenubarItem>
             <MenubarSeparator />
             <MenubarItem class="flex justify-between" @click="appStore.switchPreviewDeviceModel">
               <p>Skin:&nbsp;</p>
