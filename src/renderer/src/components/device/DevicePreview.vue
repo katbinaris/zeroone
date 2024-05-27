@@ -124,7 +124,7 @@ const appStore = useAppStore()
 const deviceStore = useDeviceStore()
 
 const devicePosition = computed(() => deviceStore.position || 0)
-const maxDetent = computed(() => deviceStore.activeValue?.haptic?.detentCount || 100)
+const maxDetent = computed(() => deviceStore.activeValue?.haptic?.endPos || 100)
 const ringValue = computed(() => (devicePosition.value / maxDetent.value) * 100)
 
 const previewDeviceImages = {
