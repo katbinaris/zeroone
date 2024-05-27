@@ -124,17 +124,8 @@ const appStore = useAppStore()
 const deviceStore = useDeviceStore()
 
 const devicePosition = computed(() => deviceStore.position || 0)
-const minValue = computed(() => deviceStore.activeValue?.valueMin || 0)
-const maxValue = computed(() => deviceStore.activeValue?.valueMax || 100)
-const ringValue = computed(() =>
-  Math.min(
-    Math.max(
-      minValue.value,
-      ((devicePosition.value - minValue.value) / (maxValue.value - minValue.value)) * 100
-    ),
-    maxValue.value
-  )
-)
+const maxDetent = computed(() => deviceStore.activeValue?.haptic?.detentCount || 100)
+const ringValue = computed(() => (devicePosition.value / maxDetent.value) * 100)
 
 const previewDeviceImages = {
   nanoOne: RenderNanoOne,
