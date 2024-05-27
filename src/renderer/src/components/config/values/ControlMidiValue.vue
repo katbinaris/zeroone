@@ -24,12 +24,12 @@ const props = defineProps({
 const emit = defineEmits(['update'])
 //TODO: These inputs are limited to 0-127 and 1-16, but once the value is at min/max the change events don't propagate and the field can contain invalid values
 const ccModel = computed({
-  get: () => props.value.cc,
+  get: () => props.value.cc || 0,
   set: (cc) => emit('update', { cc: Math.max(0, Math.min(Number(cc), 127)) })
 })
 
 const channelModel = computed({
-  get: () => props.value.channel,
+  get: () => props.value.channel || 1,
   set: (channel) => emit('update', { channel: Math.max(1, Math.min(Number(channel), 16)) })
 })
 </script>
