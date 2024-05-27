@@ -40,6 +40,7 @@
                       () => {
                         inputValue = key
                         open = false
+                        deviceStore.updateKnobValueParameter(valueIndex - 1, { type: key })
                       }
                     "
                   >

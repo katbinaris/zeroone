@@ -527,7 +527,6 @@ export const useDeviceStore = defineStore('device', {
     },
     updateKnobValueParameter(index: number, updates: object, updateDevice: boolean = true) {
       Object.assign(this.currentProfile!.knob[index], updates)
-      console.log(updates)
       if (updateDevice) {
         sendDebounced(
           this.currentDeviceId!,
