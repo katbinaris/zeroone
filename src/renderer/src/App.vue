@@ -17,7 +17,7 @@ onDeviceMessage((title, message) => {
 })
 </script>
 <template>
-  <main class="flex h-screen w-screen select-none flex-col">
+  <main class="flex h-screen w-screen select-none flex-col bg-[#050506]">
     <Navbar class="flex-none" />
     <div class="flex min-h-0 flex-1 flex-row justify-center">
       <div class="flex min-w-60 flex-1 basis-1/3 overflow-hidden">

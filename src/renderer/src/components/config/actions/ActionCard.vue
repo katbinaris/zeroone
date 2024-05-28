@@ -1,5 +1,8 @@
 <template>
-  <div class="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50">
+  <div
+    :key="appStore.selectedKey || 'no-key'"
+    class="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50"
+  >
     <div class="p-4">
       <span class="font-mono text-sm text-muted-foreground"
         >Action{{ actionIndex ? ` ${actionIndex}` : '' }}:</span
@@ -113,8 +116,10 @@ import { ChevronsUpDown, Check, GripHorizontal, Trash2, X } from 'lucide-vue-nex
 import { useElementSize } from '@vueuse/core'
 import { Action } from '@renderer/deviceStore'
 import { useDeviceStore } from '@renderer/deviceStore'
+import { useAppStore } from '@renderer/appStore'
 
 const deviceStore = useDeviceStore()
+const appStore = useAppStore()
 
 const props = defineProps({
   actionIndex: {

@@ -1,5 +1,8 @@
 <template>
-  <div class="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50">
+  <div
+    :key="deviceStore.currentProfileName || 'no-profile'"
+    class="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50"
+  >
     <div class="p-4">
       <span class="font-mono text-sm text-muted-foreground"
         >Value{{ valueIndex ? ` ${valueIndex}` : '' }}:</span
