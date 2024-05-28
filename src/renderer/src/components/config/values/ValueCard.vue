@@ -121,7 +121,7 @@ import {
   CommandItem,
   CommandList
 } from '@renderer/components/ui/command'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { cn } from '@renderer/lib/utils'
 import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import {
@@ -169,17 +169,28 @@ const valueType = computed(() => {
   return null
 })
 
+const keyState = ref(props.value.keyState || 0)
+
+watch(keyState, (newKeyState) => {
+  deviceStore.updateKnobValueParameter(props.valueIndex - 1, { keyState: newKeyState })
+})
+
 const conditions = ref({
-  a: true,
-  b: false,
-  c: false,
-  d: false
+  a: !!(keyState.value & 1),
+  b: !!(keyState.value & 2),
+  c: !!(keyState.value & 4),
+  d: !!(keyState.value & 8)
 })
 
 const cycleCondition = (key: string) => {
   const condition = conditions.value[key]
   if (condition === true) conditions.value[key] = false
   else conditions.value[key] = true
+  keyState.value =
+    (conditions.value.a ? 1 : 0) +
+    (conditions.value.b ? 2 : 0) +
+    (conditions.value.c ? 4 : 0) +
+    (conditions.value.d ? 8 : 0)
 }
 
 const comboboxButton = ref(null)
