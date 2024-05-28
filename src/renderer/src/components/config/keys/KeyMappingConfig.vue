@@ -1,4 +1,4 @@
-<template>
+<template :key="deviceStore.currentProfileName + appStore.selectedKey || 'no-profile'">
   <ConfigSection :title="`${appStore.selectedKey} Pressed`" :icon-component="PanelBottomClose">
     <template #title>
       <span class="text-zinc-500">&nbsp;({{ pressedActions.length }})</span></template

@@ -1,6 +1,6 @@
 <template>
   <div
-    :key="appStore.selectedKey || 'no-key'"
+    :key="deviceStore.currentProfileName + appStore.selectedKey || 'no-profile'"
     class="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50"
   >
     <div class="p-4">
