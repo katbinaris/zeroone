@@ -642,10 +642,12 @@ export const initializeDevices = () => {
       }
       if (update.profiles !== undefined) {
         deviceStore.setProfileNames(update.profiles, false)
-        for (const profileName of update.profiles) {
-          console.log('Requesting profile', profileName)
-          nanoIpc.send(deviceid, JSON.stringify({ profile: profileName }))
-        }
+        update.profiles.forEach((profileName, i) => {
+          setTimeout(function timer() {
+            console.log('Requesting profile', profileName)
+            nanoIpc.send(deviceid, JSON.stringify({ profile: profileName }))
+          }, i * 10)
+        })
       }
       if (update.current !== undefined) {
         deviceStore.setCurrentProfile(update.current, false)
