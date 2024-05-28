@@ -5,19 +5,11 @@
     :show-toggle="true"
   >
     <SteppedSlider
-      v-model="feedbackStrength"
-      :label="$t('config_options.feedback_designer.haptic_response.feedback_strength')"
-    />
-    <Separator />
-    <SteppedSlider
-      v-model="bounceBackStrength"
-      :label="$t('config_options.feedback_designer.haptic_response.bounce_back_strength')"
-    />
-    <Separator />
-    <SteppedSlider
       v-model="outputRampDampening"
       :label="$t('config_options.feedback_designer.haptic_response.output_ramp_dampening')"
     />
+    <Separator />
+    <WIP />
   </ConfigSection>
   <ConfigSection
     :title="$t('config_options.feedback_designer.auditory_response.title')"
@@ -50,7 +42,7 @@
 <script setup>
 import { AudioLines, AudioWaveform, GaugeCircle } from 'lucide-vue-next'
 import ConfigSection from '@renderer/components/common/ConfigSection.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import TabSelect from '@renderer/components/common/TabSelect.vue'
 import FdIcon from '@renderer/assets/icons/iconFineDetents.svg'
 import CdIcon from '@renderer/assets/icons/iconCoarseDetents.svg'
@@ -59,6 +51,9 @@ import RcIcon from '@renderer/assets/icons/iconReturnToCenter.svg'
 import SteppedSlider from '@renderer/components/common/SteppedSlider.vue'
 import { Separator } from '@renderer/components/ui/separator'
 import WIP from '@renderer/components/WIP.vue'
+import { useDeviceStore } from '@renderer/deviceStore'
+
+const deviceStore = useDeviceStore()
 
 const feedbackType = ref('fineDetents') // TODO: replace with actual value
 
@@ -81,9 +76,14 @@ const feedbackTypeOptions = {
   }
 }
 
-const feedbackStrength = ref(2)
-const bounceBackStrength = ref(2)
-const outputRampDampening = ref(2)
+const outputRampValues = [0, 100, 200, 5000, 10000]
+
+const index = outputRampValues.indexOf(deviceStore.activeValue?.haptic?.outputRamp)
+const outputRampDampening = ref(index === -1 ? 2 : index)
+
+watch(outputRampDampening, (value) => {
+  deviceStore.setHapticOutputRamp(outputRampValues[value])
+})
 
 const auditoryHapticLevel = ref(2)
 const auditoryMagnitude = ref(2)

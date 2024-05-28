@@ -37,20 +37,21 @@
               <CommandList>
                 <CommandGroup>
                   <CommandItem
-                    v-for="(actionType, key) in actionTypeOptions"
+                    v-for="(actionTypeOption, key) in actionTypeOptions"
                     :key="key"
-                    :value="actionType"
+                    :value="actionTypeOption"
                     @select="
                       () => {
                         typeInputValue = key
                         open = false
+                        deviceStore.updateKeyActionParameter(actionIndex - 1, { type: key })
                       }
                     "
                   >
-                    {{ actionType.label }}
+                    {{ actionTypeOption.label }}
                     <Check
                       :class="
-                        cn('ml-auto h-4 w-4', typeInputValue === key ? 'opacity-100' : 'opacity-0')
+                        cn('ml-auto h-4 w-4', actionType === key ? 'opacity-100' : 'opacity-0')
                       "
                     />
                   </CommandItem>
@@ -103,7 +104,7 @@ import {
   CommandItem,
   CommandList
 } from '@renderer/components/ui/command'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { cn } from '@renderer/lib/utils'
 import SendKeyAction from '@renderer/components/config/actions/SendKeyAction.vue'
 import SendMidiCCAction from '@renderer/components/config/actions/SendMidiCCAction.vue'
@@ -111,11 +112,14 @@ import ScrambleText from '@renderer/components/common/ScrambleText.vue'
 import { ChevronsUpDown, Check, GripHorizontal, Trash2, X } from 'lucide-vue-next'
 import { useElementSize } from '@vueuse/core'
 import { Action } from '@renderer/deviceStore'
+import { useDeviceStore } from '@renderer/deviceStore'
+
+const deviceStore = useDeviceStore()
 
 const props = defineProps({
   actionIndex: {
     type: Number,
-    required: false
+    required: true
   },
   action: {
     type: Object as () => Action,
@@ -125,7 +129,17 @@ const props = defineProps({
 
 const actionTypeOptions = ref({
   key: { label: 'Press a Keyboard Key', component: SendKeyAction },
-  midi: { label: 'Send a MIDI Control Change', component: SendMidiCCAction }
+  midi: { label: 'Send a MIDI Control Change', component: SendMidiCCAction },
+  next_profile: { label: 'Go to the Next Profile', component: WIP },
+  prev_profile: { label: 'Go to the Previous Profile', component: WIP },
+  profile: { label: 'Go to a specific Profile', component: WIP }
+})
+
+const actionType = computed(() => {
+  if (typeInputValue.value in actionTypeOptions.value) {
+    return actionTypeOptions.value[typeInputValue.value]
+  }
+  return null
 })
 
 const comboboxButton = ref(null)

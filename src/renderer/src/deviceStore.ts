@@ -73,6 +73,9 @@ export interface HapticSettings {
   endPos: number
   detentCount: number
   vernier: number
+  kxForce: number
+  outputRamp: number
+  detentStrength: number
 }
 
 export interface DeviceSettings {
@@ -107,6 +110,7 @@ interface UpdateData {
   kd: number | undefined
   ku: number | undefined
   settings: DeviceSettings | undefined
+  error: string | undefined // TODO: Error messages have eventid 'update', change this once it's fixed
 }
 
 const { nanoIpc } = window
@@ -537,6 +541,34 @@ export const useDeviceStore = defineStore('device', {
         )
         this.setDirtyState(true)
       }
+    },
+    updateKeyActionParameter(index: number, updates: object, updateDevice: boolean = true) {
+      Object.assign(this.currentProfile!.keys[index], updates)
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { keys: this.currentProfile!.keys }
+          })
+        )
+        this.setDirtyState(true)
+      }
+    },
+    setHapticOutputRamp(value: number, updateDevice: boolean = true) {
+      this.currentProfile!.knob.forEach((v) => {
+        v.haptic.outputRamp = value
+      })
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { knob: this.currentProfile!.knob }
+          })
+        )
+        this.setDirtyState(true)
+      }
     }
   }
 })
@@ -552,9 +584,13 @@ export const initializeDevices = () => {
   // register event handlers
   nanoIpc.on((eventid, deviceid, dataString) => {
     //console.log('Received event', eventid, deviceid, dataString)
-    if (eventid === 'error') {
-      messageCallbacks.forEach((callback) => callback('Error', dataString))
-      console.error('Error:', dataString)
+    if (eventid === 'error' || (eventid === 'update' && dataString.includes('error'))) {
+      // TODO: Error messages have eventid 'update', change this once it's fixed
+      const data = JSON.parse(dataString) as UpdateData
+      if (data.error) {
+        messageCallbacks.forEach((callback) => callback('Error', data.error as string))
+        console.error('Error:', data.error)
+      }
     }
     if (eventid === 'saved') {
       deviceStore.setDirtyState(false)
