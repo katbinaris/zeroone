@@ -5,11 +5,36 @@
     :show-toggle="true"
   >
     <SteppedSlider
-      v-model="outputRampDampening"
-      :label="$t('config_options.feedback_designer.haptic_response.output_ramp_dampening')"
+      v-model="feedbackStrength"
+      :max="feedbackStrengthValues.length - 1"
+      :named-positions="[
+        {
+          label: 'Min',
+          value: 0
+        },
+        {
+          label: 'Max',
+          value: feedbackStrengthValues.length - 1
+        }
+      ]"
+      :label="$t('config_options.feedback_designer.haptic_response.feedback_strength')"
     />
     <Separator />
-    <WIP />
+    <SteppedSlider
+      v-model="outputRampDampening"
+      :max="outputRampValues.length - 1"
+      :named-positions="[
+        {
+          label: 'Min',
+          value: 0
+        },
+        {
+          label: 'Max',
+          value: outputRampValues.length - 1
+        }
+      ]"
+      :label="$t('config_options.feedback_designer.haptic_response.output_ramp_dampening')"
+    />
   </ConfigSection>
   <ConfigSection
     :title="$t('config_options.feedback_designer.auditory_response.title')"
@@ -76,13 +101,24 @@ const feedbackTypeOptions = {
   }
 }
 
-const outputRampValues = [0, 100, 200, 5000, 10000]
+const outputRampValues = ref([5, 20, 50, 1000, 10000])
 
-const index = outputRampValues.indexOf(deviceStore.activeValue?.haptic?.outputRamp)
-const outputRampDampening = ref(index === -1 ? 2 : index)
+const outputRampIndex = outputRampValues.value.indexOf(deviceStore.activeValue?.haptic?.outputRamp)
+const outputRampDampening = ref(outputRampIndex === -1 ? 2 : outputRampIndex)
 
 watch(outputRampDampening, (value) => {
-  deviceStore.setHapticOutputRamp(outputRampValues[value])
+  deviceStore.setHapticOutputRamp(outputRampValues.value[value])
+})
+
+const feedbackStrengthValues = ref([0, 2, 5, 7, 10])
+
+const feedbackStrengthIndex = feedbackStrengthValues.value.indexOf(
+  deviceStore.activeValue?.haptic?.detentStrength
+)
+const feedbackStrength = ref(feedbackStrengthIndex === -1 ? 5 : feedbackStrengthIndex)
+
+watch(feedbackStrength, (value) => {
+  deviceStore.setHapticFeedbackStrength(feedbackStrengthValues.value[value])
 })
 
 const auditoryHapticLevel = ref(2)

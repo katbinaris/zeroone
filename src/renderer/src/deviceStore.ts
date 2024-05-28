@@ -569,6 +569,21 @@ export const useDeviceStore = defineStore('device', {
         )
         this.setDirtyState(true)
       }
+    },
+    setHapticFeedbackStrength(value: number, updateDevice: boolean = true) {
+      this.currentProfile!.knob.forEach((v) => {
+        v.haptic.detentStrength = value
+      })
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { knob: this.currentProfile!.knob }
+          })
+        )
+        this.setDirtyState(true)
+      }
     }
   }
 })
