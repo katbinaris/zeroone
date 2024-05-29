@@ -49,3 +49,6 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ matrix.binary_path }}
         asset_name: ${{ matrix.asset_name }}
+        tag: ${{ github.ref }}
+        file_glob: true
+        overwrite: true
