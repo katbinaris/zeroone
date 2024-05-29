@@ -27,7 +27,7 @@ jobs:
 
   build-linux:
     name: 🐧 Build for Linux
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: 🚚 Checkout latest code
       uses: actions/checkout@v4
