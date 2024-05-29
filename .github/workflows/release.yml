@@ -13,17 +13,17 @@ jobs:
             os: ubuntu-latest
             pnpm-command: 'build:linux'
             binary_path: dist/*.deb
-            asset_name: zeroone-${{ github.ref }}.deb
+            asset_name: zeroone.deb
           - name: 🪟 Windows
             os: windows-latest
             pnpm-command: 'build:win'
             binary_path: dist/*.exe
-            asset_name: zeroone-${{ github.ref }}.exe
+            asset_name: zeroone.exe
           - name: 🍏 Mac
             os: macos-latest
             pnpm-command: 'build:mac'
             binary_path: dist/*.dmg
-            asset_name: zeroone-${{ github.ref }}.dmg
+            asset_name: zeroone.dmg
     name: ${{ matrix.name }} Release
     runs-on: ${{ matrix.os }}
     steps:
