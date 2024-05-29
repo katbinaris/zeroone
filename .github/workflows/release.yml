@@ -5,9 +5,24 @@ on:
       - 'release'
   workflow_dispatch:
 jobs:
-  build-win:
-    name: 🪟 Build for Windows
-    runs-on: windows-latest
+  release:
+    name: 🚀 Release
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            pnpm-command: 'build:linux'
+            binary_path: dist/*.deb
+            asset_name: zeroone-${{ github.ref }}.deb
+          - os: windows-latest
+            pnpm-command: 'build:win'
+            binary_path: dist/*.exe
+            asset_name: zeroone-${{ github.ref }}.exe
+          - os: macos-latest
+            pnpm-command: 'build:mac'
+            binary_path: dist/*.dmg
+            asset_name: zeroone-${{ github.ref }}.dmg
+    runs-on: ${{ matrix.os }}
     steps:
     - name: 🚚 Checkout latest code
       uses: actions/checkout@v4
@@ -23,44 +38,10 @@ jobs:
     - name: 🔨 Build Project
       run: |
         pnpm i
-        pnpm build:win
+        pnpm ${{ matrix.pnpm-command }}
 
-  build-linux:
-    name: 🐧 Build for Linux
-    runs-on: windows-latest
-    steps:
-    - name: 🚚 Checkout latest code
-      uses: actions/checkout@v4
-
-    - name: 🟩 Use Node.js 20.x
-      uses: actions/setup-node@v4
+    - name: 📦 Release binary
+      uses: svenstaro/upload-release-action@v2
       with:
-        node-version: '20.x'
-        
-    - name: ⚡ Setup pnpm
-      uses: pnpm/action-setup@v3.0.0
-    
-    - name: 🔨 Build Project
-      run: |
-        pnpm i
-        pnpm build:linux
-
-  build-mac:
-    name: 🍎 Build for MacOS
-    runs-on: macos-latest
-    steps:
-    - name: 🚚 Checkout latest code
-      uses: actions/checkout@v4
-
-    - name: 🟩 Use Node.js 20.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        
-    - name: ⚡ Setup pnpm
-      uses: pnpm/action-setup@v3.0.0
-    
-    - name: 🔨 Build Project
-      run: |
-        pnpm i
-        pnpm build:mac
+        file: ${{ matrix.binary_path }}
+        asset_name: ${{ matrix.asset_name }}
