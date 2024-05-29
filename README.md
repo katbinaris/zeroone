@@ -1,6 +1,8 @@
 # ZERO/ONE
 
-Haptic configuration tool
+Haptic Configuration Suite for [Binaris Devices](https://store.binaris.io/)
+
+![zeroone-screenshot](https://github.com/katbinaris/zeroone/assets/34353377/7c9f576d-e142-4de2-a58f-ebb83ff6a472)
 
 ## Running the code
 
