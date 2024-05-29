@@ -24,7 +24,7 @@ jobs:
             pnpm-command: 'build:mac'
             binary_path: dist/*.dmg
             asset_name: zeroone-${{ github.ref }}.dmg
-    name: ${{ matrix.name }} Release 🚀
+    name: ${{ matrix.name }} Release
     runs-on: ${{ matrix.os }}
     steps:
     - name: 🚚 Checkout latest code
@@ -46,5 +46,6 @@ jobs:
     - name: 📦 Release binary
       uses: svenstaro/upload-release-action@v2
       with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ matrix.binary_path }}
         asset_name: ${{ matrix.asset_name }}
