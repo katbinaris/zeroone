@@ -6,6 +6,10 @@
   "author": "katbinaris",
   "packageManager": "pnpm@8.14.1",
   "homepage": "https://github.com/katbinaris/zeroone",
+  "build": {
+    "appId": "io.binaris.zeroone",
+    "productName": "ZERO_ONE"
+  },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "format": "prettier --write .",
