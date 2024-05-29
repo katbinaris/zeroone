@@ -1,0 +1,66 @@
+on:
+  push:
+    branches:
+      - 'main'
+      - 'release'
+  workflow_dispatch:
+jobs:
+  build-win:
+    name: 🪟 Build for Windows
+    runs-on: windows-latest
+    steps:
+    - name: 🚚 Checkout latest code
+      uses: actions/checkout@v4
+
+    - name: 🟩 Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        
+    - name: ⚡ Setup pnpm
+      uses: pnpm/action-setup@v3.0.0
+    
+    - name: 🔨 Build Project
+      run: |
+        pnpm i
+        pnpm build:win
+
+  build-linux:
+    name: 🐧 Build for Linux
+    runs-on: windows-latest
+    steps:
+    - name: 🚚 Checkout latest code
+      uses: actions/checkout@v4
+
+    - name: 🟩 Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        
+    - name: ⚡ Setup pnpm
+      uses: pnpm/action-setup@v3.0.0
+    
+    - name: 🔨 Build Project
+      run: |
+        pnpm i
+        pnpm build:linux
+
+  build-mac:
+    name: 🍎 Build for MacOS
+    runs-on: macos-latest
+    steps:
+    - name: 🚚 Checkout latest code
+      uses: actions/checkout@v4
+
+    - name: 🟩 Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        
+    - name: ⚡ Setup pnpm
+      uses: pnpm/action-setup@v3.0.0
+    
+    - name: 🔨 Build Project
+      run: |
+        pnpm i
+        pnpm build:mac
