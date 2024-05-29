@@ -65,14 +65,14 @@
   </ConfigSection>
 </template>
 <script setup>
-import { AudioLines, AudioWaveform, GaugeCircle } from 'lucide-vue-next'
+import { AudioLines, AudioWaveform } from 'lucide-vue-next'
 import ConfigSection from '@renderer/components/common/ConfigSection.vue'
 import { ref, watch } from 'vue'
-import TabSelect from '@renderer/components/common/TabSelect.vue'
-import FdIcon from '@renderer/assets/icons/iconFineDetents.svg'
-import CdIcon from '@renderer/assets/icons/iconCoarseDetents.svg'
-import VfIcon from '@renderer/assets/icons/iconViscousRotation.svg'
-import RcIcon from '@renderer/assets/icons/iconReturnToCenter.svg'
+// import TabSelect from '@renderer/components/common/TabSelect.vue'
+// import FdIcon from '@renderer/assets/icons/iconFineDetents.svg'
+// import CdIcon from '@renderer/assets/icons/iconCoarseDetents.svg'
+// import VfIcon from '@renderer/assets/icons/iconViscousRotation.svg'
+// import RcIcon from '@renderer/assets/icons/iconReturnToCenter.svg'
 import SteppedSlider from '@renderer/components/common/SteppedSlider.vue'
 import { Separator } from '@renderer/components/ui/separator'
 import WIP from '@renderer/components/WIP.vue'
@@ -80,26 +80,26 @@ import { useDeviceStore } from '@renderer/deviceStore'
 
 const deviceStore = useDeviceStore()
 
-const feedbackType = ref('fineDetents') // TODO: replace with actual value
+// const feedbackType = ref('fineDetents') // TODO: replace with actual value
 
-const feedbackTypeOptions = {
-  fineDetents: {
-    icon: FdIcon,
-    titleKey: 'config_options.feedback_designer.feedback_type.fine_detents'
-  },
-  coarseDetents: {
-    icon: CdIcon,
-    titleKey: 'config_options.feedback_designer.feedback_type.coarse_detents'
-  },
-  viscousRotation: {
-    icon: VfIcon,
-    titleKey: 'config_options.feedback_designer.feedback_type.viscous_rotation'
-  },
-  returnToCenter: {
-    icon: RcIcon,
-    titleKey: 'config_options.feedback_designer.feedback_type.return_to_center'
-  }
-}
+// const feedbackTypeOptions = {
+//   fineDetents: {
+//     icon: FdIcon,
+//     titleKey: 'config_options.feedback_designer.feedback_type.fine_detents'
+//   },
+//   coarseDetents: {
+//     icon: CdIcon,
+//     titleKey: 'config_options.feedback_designer.feedback_type.coarse_detents'
+//   },
+//   viscousRotation: {
+//     icon: VfIcon,
+//     titleKey: 'config_options.feedback_designer.feedback_type.viscous_rotation'
+//   },
+//   returnToCenter: {
+//     icon: RcIcon,
+//     titleKey: 'config_options.feedback_designer.feedback_type.return_to_center'
+//   }
+// }
 
 const outputRampValues = ref([5, 20, 50, 1000, 10000])
 
