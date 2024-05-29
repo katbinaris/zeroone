@@ -6,22 +6,25 @@ on:
   workflow_dispatch:
 jobs:
   release:
-    name: 🚀 Release
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
+          - name: 🐧 Linux
+            os: ubuntu-latest
             pnpm-command: 'build:linux'
             binary_path: dist/*.deb
             asset_name: zeroone-${{ github.ref }}.deb
-          - os: windows-latest
+          - name: 🪟 Windows
+            os: windows-latest
             pnpm-command: 'build:win'
             binary_path: dist/*.exe
             asset_name: zeroone-${{ github.ref }}.exe
-          - os: macos-latest
+          - name: 🍏 Mac
+            os: macos-latest
             pnpm-command: 'build:mac'
             binary_path: dist/*.dmg
             asset_name: zeroone-${{ github.ref }}.dmg
+    name: ${{ matrix.name }} Release 🚀
     runs-on: ${{ matrix.os }}
     steps:
     - name: 🚚 Checkout latest code
