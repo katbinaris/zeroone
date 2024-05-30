@@ -155,10 +155,10 @@ const props = defineProps({
 })
 
 const valueTypeOptions = ref({
-  mouse: { label: 'Move or Scroll the Mouse', component: 'ControlMouseValue' },
-  gamepad: { label: 'Control a Gamepad Axis', component: 'ControlGamepadValue' },
+  // mouse: { label: 'Move or Scroll the Mouse', component: 'ControlMouseValue' },
+  // gamepad: { label: 'Control a Gamepad Axis', component: 'ControlGamepadValue' },
   midi: { label: 'Control a MIDI CC Value', component: ControlMidiValue },
-  action: { label: 'Trigger Actions on Rotation', component: TriggerActionsValue },
+  // action: { label: 'Trigger Actions on Rotation', component: TriggerActionsValue },
   profiles: { label: 'Switch Profiles', component: 'SwitchProfilesValue' }
 })
 
