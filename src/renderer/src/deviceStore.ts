@@ -719,7 +719,7 @@ export const initializeDevices = () => {
           setTimeout(function timer() {
             console.log('Requesting profile', profileName)
             nanoIpc.send(deviceid, JSON.stringify({ profile: profileName }))
-          }, i * 10)
+          }, i * 15)
         })
       }
       if (update.current !== undefined) {
