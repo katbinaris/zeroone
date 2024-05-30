@@ -7,6 +7,7 @@ on:
 jobs:
   release:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - name: 🐧 Linux
