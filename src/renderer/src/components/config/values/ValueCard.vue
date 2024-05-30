@@ -1,8 +1,5 @@
-<template>
-  <div
-    :key="deviceStore.currentProfileName || 'no-profile'"
-    class="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50"
-  >
+<template :key="deviceStore.currentProfileName || 'no-profile'">
+  <div class="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50">
     <div class="p-4">
       <span class="font-mono text-sm text-muted-foreground"
         >Value{{ valueIndex ? ` ${valueIndex}` : '' }}:</span
@@ -172,10 +169,13 @@ const valueType = computed(() => {
   return null
 })
 
-const keyState = ref(props.value.keyState || 0)
-
-watch(keyState, (newKeyState) => {
-  deviceStore.updateKnobValueParameter(props.valueIndex - 1, { keyState: newKeyState })
+const keyState = computed({
+  get() {
+    return props.value.keyState || 0
+  },
+  set(newKeyState) {
+    deviceStore.updateKnobValueParameter(props.valueIndex - 1, { keyState: newKeyState })
+  }
 })
 
 const conditions = ref({
