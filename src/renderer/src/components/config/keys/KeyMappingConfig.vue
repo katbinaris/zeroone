@@ -3,19 +3,34 @@
     <template #title>
       <span class="text-zinc-500">&nbsp;({{ pressedActions.length }})</span></template
     >
-    <ActionGroup :actions="pressedActions" class="p-2" />
+    <ActionGroup
+      :actions="pressedActions"
+      class="p-2"
+      @add="deviceStore.addKeyAction(null, appStore.selectedKey, 0)"
+      @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 0)"
+    />
   </ConfigSection>
   <ConfigSection :title="`${appStore.selectedKey} Released`" :icon-component="PanelBottomOpen">
     <template #title>
       <span class="text-zinc-500">&nbsp;({{ releasedActions.length }})</span></template
     >
-    <ActionGroup :actions="releasedActions" class="p-2" />
+    <ActionGroup
+      :actions="releasedActions"
+      class="p-2"
+      @add="deviceStore.addKeyAction(null, appStore.selectedKey, 1)"
+      @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 1)"
+    />
   </ConfigSection>
   <ConfigSection :title="`${appStore.selectedKey} Held`" :icon-component="Clock2">
     <template #title>
       <span class="text-zinc-500">&nbsp;({{ heldActions.length }})</span></template
     >
-    <ActionGroup :actions="heldActions" class="p-2" />
+    <ActionGroup
+      :actions="heldActions"
+      class="p-2"
+      @add="deviceStore.addKeyAction(null, appStore.selectedKey, 2)"
+      @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 3)"
+    />
   </ConfigSection>
 </template>
 <script setup lang="ts">

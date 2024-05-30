@@ -149,6 +149,7 @@ export const useDeviceStore = defineStore('device', {
         vernier: 10
       }
     } as Value,
+    defaultKeyAction: { type: 'next_profile' } as Action,
     orientationLabels: [270, 0, 90, 180]
   }),
   getters: {
@@ -537,6 +538,63 @@ export const useDeviceStore = defineStore('device', {
           JSON.stringify({
             profile: this.currentProfileName,
             updates: { knob: this.currentProfile!.knob }
+          })
+        )
+        this.setDirtyState(true)
+      }
+    },
+    addKeyAction(
+      action: Action | null = null,
+      key: string,
+      trigger: number,
+      updateDevice: boolean = true
+    ) {
+      if (!action) {
+        action = JSON.parse(JSON.stringify(this.defaultKeyAction)) as Action
+      }
+      const keyIndex = this.keyLabels.indexOf(key)
+      if (trigger === 0) {
+        if (!this.currentProfile!.keys[keyIndex].pressed) {
+          this.currentProfile!.keys[keyIndex].pressed = []
+        }
+        this.currentProfile!.keys[keyIndex].pressed!.push(action)
+      } else if (trigger === 1) {
+        if (!this.currentProfile!.keys[keyIndex].released) {
+          this.currentProfile!.keys[keyIndex].released = []
+        }
+        this.currentProfile!.keys[keyIndex].released!.push(action)
+      } else if (trigger === 2) {
+        if (!this.currentProfile!.keys[keyIndex].held) {
+          this.currentProfile!.keys[keyIndex].held = []
+        }
+        this.currentProfile!.keys[keyIndex].held!.push(action)
+      }
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { keys: this.currentProfile!.keys }
+          })
+        )
+        this.setDirtyState(true)
+      }
+    },
+    removeKeyAction(index: number, key: string, trigger: number, updateDevice: boolean = true) {
+      const keyIndex = this.keyLabels.indexOf(key)
+      if (trigger === 0) {
+        this.currentProfile!.keys[keyIndex].pressed!.splice(index, 1)
+      } else if (trigger === 1) {
+        this.currentProfile!.keys[keyIndex].released!.splice(index, 1)
+      } else if (trigger === 2) {
+        this.currentProfile!.keys[keyIndex].held!.splice(index, 1)
+      }
+      if (updateDevice) {
+        sendDebounced(
+          this.currentDeviceId!,
+          JSON.stringify({
+            profile: this.currentProfileName,
+            updates: { keys: this.currentProfile!.keys }
           })
         )
         this.setDirtyState(true)

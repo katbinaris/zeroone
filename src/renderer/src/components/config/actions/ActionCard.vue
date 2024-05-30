@@ -72,6 +72,7 @@
         <template v-else>
           <Button
             class="aspect-square bg-orange-950 p-1 text-zinc-200 hover:bg-orange-900 hover:text-zinc-100"
+            @click="$emit('delete')"
             ><Check class="size-4"
           /></Button>
           <Button
@@ -120,6 +121,8 @@ import { useAppStore } from '@renderer/appStore'
 
 const deviceStore = useDeviceStore()
 const appStore = useAppStore()
+
+defineEmits(['delete'])
 
 const props = defineProps({
   actionIndex: {
