@@ -45,15 +45,15 @@
           </MenubarTrigger>
           <MenubarContent>
             <!-- TODO: Switch keyboard shortcut icons based on platform -->
-            <MenubarItem @click="deviceStore.setConnected(!deviceStore.connected)">
+            <MenubarItem v-if="false" @click="deviceStore.setConnected(!deviceStore.connected)">
               {{
                 deviceStore.connected ? $t('navbar.device.disconnect') : $t('navbar.device.connect')
               }}
-              <MenubarShortcut>⌘D</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘D</MenubarShortcut>
             </MenubarItem>
             <MenubarItem v-if="deviceStore.attachedDeviceIds.length > 1"
               >Next Device
-              <MenubarShortcut>⌘N</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘N</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem class="flex justify-between" @click="deviceStore.cycleOrientation">
@@ -61,7 +61,7 @@
               <p>
                 {{ deviceStore.orientationLabels[deviceStore.settings?.deviceOrientation || 0] }}°
               </p>
-              <MenubarShortcut>⌘R</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘R</MenubarShortcut>
             </MenubarItem>
             <MenubarItem class="flex justify-between" @click="deviceStore.cycleIdleTimeout">
               <p>Idle Timeout:&nbsp;</p>
@@ -72,32 +72,32 @@
                     : 'Off'
                 }}
               </p>
-              <MenubarShortcut>⌘T</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘T</MenubarShortcut>
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem class="flex justify-between" @click="appStore.switchPreviewDeviceModel">
               <p>Skin:&nbsp;</p>
               <p>{{ previewDeviceNames[appStore.previewDeviceModel || 'nanoOne'] }}</p>
-              <MenubarShortcut>⌘S</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘S</MenubarShortcut>
             </MenubarItem>
             <MenubarItem class="flex justify-between" @click="appStore.toggleSelectOnInput">
               <p>Auto Select:&nbsp;</p>
               <p>{{ appStore.selectOnInput ? 'On' : 'Off' }}</p>
-              <MenubarShortcut>⌘K</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘K</MenubarShortcut>
             </MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem
+            <MenubarSeparator v-if="false" />
+            <MenubarItem v-if="false"
               >{{ $t('navbar.device.export') }}
-              <MenubarShortcut>⌘E</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘E</MenubarShortcut>
             </MenubarItem>
-            <MenubarItem
+            <MenubarItem v-if="false"
               >{{ $t('navbar.device.import') }}
-              <MenubarShortcut>⌘I</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘I</MenubarShortcut>
             </MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem
+            <MenubarSeparator v-if="false" />
+            <MenubarItem v-if="false"
               >{{ $t('navbar.device.quit') }}
-              <MenubarShortcut>⌘Q</MenubarShortcut>
+              <MenubarShortcut v-if="showShortcuts">⌘Q</MenubarShortcut>
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
@@ -154,7 +154,7 @@
           <div v-if="deviceStore.dirtyState" class="text-sm">
             <PenLine class="inline-block h-4" />Unsaved Changes
           </div>
-          <MenubarButton class="app-titlebar-button border-2"> Revert </MenubarButton>
+          <MenubarButton v-if="false" class="app-titlebar-button border-2"> Revert </MenubarButton>
           <MenubarButton
             :class="
               deviceStore.dirtyState
@@ -225,6 +225,7 @@ const deviceStore = useDeviceStore()
 const minimizable = ref(true)
 const maximizable = ref(true)
 const showDisconnectButton = ref(false)
+const showShortcuts = ref(false)
 
 const isMaximized = ref(false)
 
