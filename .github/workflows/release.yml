@@ -16,7 +16,7 @@ jobs:
             binary_path: dist/*.deb
             asset_name: zeroone.deb
           - name: 🪟 Windows
-            os: windows-latest
+            os: macos-latest
             pnpm_command: 'build:win'
             binary_path: dist/*.exe
             asset_name: zeroone.exe
