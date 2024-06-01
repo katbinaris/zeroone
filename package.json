@@ -20,7 +20,7 @@
     "dev": "electron-vite dev",
     "build": "electron-vite build",
     "build:unpack": "pnpm build && electron-builder --dir",
-    "build:win": "pnpm build && electron-builder --win --x64",
+    "build:win": "pnpm build && electron-builder --win",
     "build:mac": "pnpm build && electron-builder --mac",
     "build:linux": "pnpm build && electron-builder --linux"
   },
