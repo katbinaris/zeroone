@@ -80,6 +80,11 @@
               <p>{{ previewDeviceNames[appStore.previewDeviceModel || 'nanoOne'] }}</p>
               <MenubarShortcut>⌘S</MenubarShortcut>
             </MenubarItem>
+            <MenubarItem class="flex justify-between" @click="appStore.toggleSelectOnInput">
+              <p>Auto Select:&nbsp;</p>
+              <p>{{ appStore.selectOnInput ? 'On' : 'Off' }}</p>
+              <MenubarShortcut>⌘K</MenubarShortcut>
+            </MenubarItem>
             <MenubarSeparator />
             <MenubarItem
               >{{ $t('navbar.device.export') }}
