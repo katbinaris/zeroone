@@ -80,14 +80,14 @@ watch(valueMaxInput, (valueMax) => {
 
 watch(totalDetentsInput, (totalDetents) => {
   nextTick(() => {
-    totalDetentsInput.value = Math.max(1, Math.min(Number(totalDetents), 9999))
+    totalDetentsInput.value = Math.max(0, Math.min(Number(totalDetents), 9999))
   })
   emit('update', { haptic: { endPos: totalDetents } })
 })
 
 watch(detentsPerRotationInput, (detentsPerRotation) => {
   nextTick(() => {
-    detentsPerRotationInput.value = Math.max(1, Math.min(Number(detentsPerRotation), 9999))
+    detentsPerRotationInput.value = Math.max(0, Math.min(Number(detentsPerRotation), 9999))
   })
   emit('update', { haptic: { detentCount: detentsPerRotation } })
 })
