@@ -46,6 +46,8 @@ jobs:
       uses: pnpm/action-setup@v3.0.0
     
     - name: 🔨 Build Project
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pnpm i
         pnpm ${{ matrix.pnpm-command }}
