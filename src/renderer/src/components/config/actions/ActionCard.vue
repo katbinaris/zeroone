@@ -47,7 +47,12 @@
                       () => {
                         typeInputValue = key
                         open = false
-                        deviceStore.updateKeyActionParameter(actionIndex - 1, { type: key })
+                        deviceStore.updateKeyActionParameter(
+                          actionIndex - 1,
+                          appStore.selectedKey,
+                          trigger,
+                          { type: key }
+                        )
                       }
                     "
                   >
@@ -83,20 +88,26 @@
         </template>
       </div>
     </div>
-    <Separator />
-    <component
-      :is="
-        actionTypeOptions[typeInputValue]?.component
-          ? actionTypeOptions[typeInputValue]?.component
-          : WIP
-      "
-      :action="action"
-    />
+    <template v-if="actionTypeOptions[typeInputValue]?.component">
+      <Separator />
+      <component
+        :is="actionTypeOptions[typeInputValue]?.component"
+        :action="action"
+        @update="
+          (updates) =>
+            deviceStore.updateKeyActionParameter(
+              actionIndex - 1,
+              appStore.selectedKey,
+              trigger,
+              updates
+            )
+        "
+      />
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import WIP from '@renderer/components/WIP.vue'
 import { Popover, PopoverTrigger, PopoverContent } from '@renderer/components/ui/popover'
 import { Button } from '@renderer/components/ui/button'
 import { Separator } from '@renderer/components/ui/separator'
@@ -118,6 +129,7 @@ import { useElementSize } from '@vueuse/core'
 import { Action } from '@renderer/deviceStore'
 import { useDeviceStore } from '@renderer/deviceStore'
 import { useAppStore } from '@renderer/appStore'
+import SwitchProfileAction from './SwitchProfileAction.vue'
 
 const deviceStore = useDeviceStore()
 const appStore = useAppStore()
@@ -132,15 +144,19 @@ const props = defineProps({
   action: {
     type: Object as () => Action,
     required: true
+  },
+  trigger: {
+    type: Number,
+    required: true
   }
 })
 
 const actionTypeOptions = ref({
   key: { label: 'Press a Keyboard Key', component: SendKeyAction },
   midi: { label: 'Send a MIDI Control Change', component: SendMidiCCAction },
-  next_profile: { label: 'Go to the Next Profile', component: WIP },
-  prev_profile: { label: 'Go to the Previous Profile', component: WIP },
-  profile: { label: 'Go to a specific Profile', component: WIP }
+  next_profile: { label: 'Go to the Next Profile', component: null },
+  prev_profile: { label: 'Go to the Previous Profile', component: null },
+  profile: { label: 'Go to a specific Profile', component: SwitchProfileAction }
 })
 
 const actionType = computed(() => {

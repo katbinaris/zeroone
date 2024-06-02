@@ -6,6 +6,7 @@
     <ActionGroup
       :actions="pressedActions"
       class="p-2"
+      :trigger="0"
       @add="deviceStore.addKeyAction(null, appStore.selectedKey, 0)"
       @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 0)"
     />
@@ -17,6 +18,7 @@
     <ActionGroup
       :actions="releasedActions"
       class="p-2"
+      :trigger="1"
       @add="deviceStore.addKeyAction(null, appStore.selectedKey, 1)"
       @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 1)"
     />
@@ -28,6 +30,7 @@
     <ActionGroup
       :actions="heldActions"
       class="p-2"
+      :trigger="2"
       @add="deviceStore.addKeyAction(null, appStore.selectedKey, 2)"
       @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 2)"
     />

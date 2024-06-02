@@ -51,6 +51,7 @@ export interface Action {
   cc?: number
   val?: number
   buttons?: number
+  name?: string
 }
 
 export interface Value {
@@ -600,8 +601,21 @@ export const useDeviceStore = defineStore('device', {
         this.setDirtyState(true)
       }
     },
-    updateKeyActionParameter(index: number, updates: object, updateDevice: boolean = true) {
-      Object.assign(this.currentProfile!.keys[index], updates)
+    updateKeyActionParameter(
+      index: number,
+      key: string,
+      trigger: number,
+      updates: object,
+      updateDevice: boolean = true
+    ) {
+      const keyIndex = this.keyLabels.indexOf(key)
+      if (trigger === 0) {
+        Object.assign(this.currentProfile!.keys[keyIndex].pressed![index], updates)
+      } else if (trigger === 1) {
+        Object.assign(this.currentProfile!.keys[keyIndex].released![index], updates)
+      } else if (trigger === 2) {
+        Object.assign(this.currentProfile!.keys[keyIndex].held![index], updates)
+      }
       if (updateDevice) {
         sendDebounced(
           this.currentDeviceId!,

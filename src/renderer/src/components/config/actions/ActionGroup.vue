@@ -14,6 +14,7 @@
           <ActionCard
             :action-index="dragAction.index + 1"
             :action="dragAction.element"
+            :trigger="trigger"
             @delete="$emit('delete', dragAction.index)"
           />
         </div>
@@ -39,6 +40,10 @@ defineEmits(['add', 'delete'])
 defineProps({
   actions: {
     type: Array,
+    required: true
+  },
+  trigger: {
+    type: Number,
     required: true
   }
 })
