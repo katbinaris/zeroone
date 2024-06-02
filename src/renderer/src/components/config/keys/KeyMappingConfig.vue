@@ -11,7 +11,11 @@
       @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 0)"
     />
   </ConfigSection>
-  <ConfigSection :title="`${appStore.selectedKey} Released`" :icon-component="PanelBottomOpen">
+  <ConfigSection
+    v-if="false"
+    :title="`${appStore.selectedKey} Released`"
+    :icon-component="PanelBottomOpen"
+  >
     <template #title>
       <span class="text-zinc-500">&nbsp;({{ releasedActions.length }})</span></template
     >
@@ -23,7 +27,7 @@
       @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 1)"
     />
   </ConfigSection>
-  <ConfigSection :title="`${appStore.selectedKey} Held`" :icon-component="Clock2">
+  <ConfigSection v-if="false" :title="`${appStore.selectedKey} Held`" :icon-component="Clock2">
     <template #title>
       <span class="text-zinc-500">&nbsp;({{ heldActions.length }})</span></template
     >
