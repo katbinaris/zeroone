@@ -132,14 +132,6 @@
               "
               >Report Device Issue</MenubarItem
             >
-            <MenubarSeparator />
-            <MenubarItem class="flex justify-between">
-              <p>Software Version:&nbsp;</p>
-              <p>v0.1</p>
-            </MenubarItem>
-            <MenubarItem @click="appIpc.openExternal('https://discord.gg/jgRd77YN5T')"
-              >Contact Support</MenubarItem
-            >
             <template v-if="appIpc.isDevelopment">
               <MenubarSeparator />
               <MenubarItem @click="appIpc.openDevTools">Developer Tools</MenubarItem>
