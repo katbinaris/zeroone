@@ -11,7 +11,7 @@
           <ScrambleText ref="title" :text="$t(page.titleKey)" />
         </template>
       </TabSelect>
-      <div class="grow overflow-y-auto">
+      <div :key="deviceStore.currentProfileName" class="grow overflow-y-auto">
         <component :is="appStore.currentConfigComponent" />
       </div>
     </template>

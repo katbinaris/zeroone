@@ -2,6 +2,7 @@
   <Collapsible v-model:open="expanded" :default-open="true">
     <!-- TODO: Make profile groups computed instead defining them of using v-for -->
     <div
+      v-if="false"
       class="group flex h-12 w-full items-center justify-between border-0 border-b bg-zinc-900 py-2 text-left text-sm text-muted-foreground"
     >
       <CollapsibleTrigger class="group flex min-w-0 items-center gap-2">

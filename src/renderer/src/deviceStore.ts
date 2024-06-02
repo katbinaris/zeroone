@@ -703,12 +703,12 @@ export const initializeDevices = () => {
       }
       if (update.p !== undefined) {
         deviceStore.setPosition(update.p)
-        appStore.selectConfigFeature('knob')
+        if (appStore.selectOnInput) appStore.selectConfigFeature('knob')
       }
       if (update.kd !== undefined) {
         const keyLabel = deviceStore.keyLabels[update.kd]
         deviceStore.keyStates[keyLabel] = true
-        appStore.selectKey(keyLabel)
+        if (appStore.selectOnInput) appStore.selectKey(keyLabel)
       }
       if (update.ku !== undefined) {
         deviceStore.keyStates[deviceStore.keyLabels[update.ku]] = false

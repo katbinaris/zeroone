@@ -41,7 +41,16 @@
               <X class="h-5" />
             </button>
           </Transition>
-          <DropdownMenu>
+          <Transition name="fade">
+            <button
+              v-if="!appStore.showProfileConfig"
+              class="flex aspect-square h-8 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-300 text-black hover:bg-zinc-200"
+              @click="deviceStore.createProfile"
+            >
+              <Plus class="h-4" />
+            </button>
+          </Transition>
+          <DropdownMenu v-if="false">
             <DropdownMenuTrigger>
               <Transition name="fade">
                 <button
@@ -54,7 +63,7 @@
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem @click="deviceStore.createProfile"> Profile </DropdownMenuItem>
-              <DropdownMenuItem> Category </DropdownMenuItem>
+              <DropdownMenuItem v-if="false"> Category </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -134,7 +143,7 @@ const dragOptions = ref({
   direction: 'vertical'
 })
 
-const maxProfiles = 32
+const maxProfiles = 10
 
 const renderProfileConfig = ref(appStore.showProfileConfig)
 const renderProfileList = ref(!appStore.showProfileConfig)

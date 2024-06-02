@@ -46,7 +46,8 @@ export const useAppStore = defineStore('app', {
       },
       previewDeviceModel: localStorage.getItem('previewDeviceModel') || 'nanoOne',
       profileManagerDragging: false,
-      showProfileConfig: false
+      showProfileConfig: false,
+      selectOnInput: false
     }
   },
   getters: {
@@ -76,6 +77,9 @@ export const useAppStore = defineStore('app', {
     setShowProfileConfig(show) {
       show = false // TODO: Remove this / replace with actual logic
       this.showProfileConfig = show
+    },
+    toggleSelectOnInput() {
+      this.selectOnInput = !this.selectOnInput
     }
   }
 })

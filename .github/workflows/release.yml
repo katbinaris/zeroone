@@ -7,21 +7,22 @@ on:
 jobs:
   release:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - name: 🐧 Linux
             os: ubuntu-latest
-            pnpm-command: 'build:linux'
+            pnpm_command: 'build:linux'
             binary_path: dist/*.deb
             asset_name: zeroone.deb
           - name: 🪟 Windows
-            os: windows-latest
-            pnpm-command: 'build:win'
+            os: macos-latest
+            pnpm_command: 'build:win'
             binary_path: dist/*.exe
             asset_name: zeroone.exe
           - name: 🍏 Mac
             os: macos-latest
-            pnpm-command: 'build:mac'
+            pnpm_command: 'build:mac'
             binary_path: dist/*.dmg
             asset_name: zeroone.dmg
     name: ${{ matrix.name }} Release
@@ -29,7 +30,7 @@ jobs:
     steps:
     - name: 🔢 Semantic Versioning
       id: version
-      uses: paulhatch/semantic-version@v5.3.0
+      uses: paulhatch/semantic-version@v5.4.0
       with:
         tag_prefix: "v"
         bump_each_commit: true
@@ -50,7 +51,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pnpm i
-        pnpm ${{ matrix.pnpm-command }}
+        pnpm ${{ matrix.pnpm_command }}
 
     - name: 📦 Release binary
       uses: svenstaro/upload-release-action@v2

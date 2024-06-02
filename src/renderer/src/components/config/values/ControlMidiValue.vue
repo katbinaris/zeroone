@@ -20,6 +20,16 @@
         <Input v-model="valueMaxInput" class="my-2" type="number" />
       </div>
     </div>
+    <div class="flex gap-2">
+      <div class="flex-1">
+        <span class="font-mono text-sm text-muted-foreground">Total Detents:</span>
+        <Input v-model="totalDetentsInput" class="my-2" type="number" />
+      </div>
+      <div class="flex-1">
+        <span class="font-mono text-sm text-muted-foreground">Detents/Rotation:</span>
+        <Input v-model="detentsPerRotationInput" class="my-2" type="number" />
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -37,6 +47,8 @@ const ccInput = ref(props.value.cc)
 const channelInput = ref(props.value.channel)
 const valueMinInput = ref(props.value.valueMin)
 const valueMaxInput = ref(props.value.valueMax)
+const totalDetentsInput = ref(props.value.haptic.endPos)
+const detentsPerRotationInput = ref(props.value.haptic.detentCount)
 
 watch(ccInput, (cc) => {
   nextTick(() => {
@@ -64,5 +76,19 @@ watch(valueMaxInput, (valueMax) => {
     valueMaxInput.value = Math.max(0, Math.min(Number(valueMax), 127))
   })
   emit('update', { valueMax: valueMaxInput.value })
+})
+
+watch(totalDetentsInput, (totalDetents) => {
+  nextTick(() => {
+    totalDetentsInput.value = Math.max(0, Math.min(Number(totalDetents), 9999))
+  })
+  emit('update', { haptic: { endPos: totalDetents } })
+})
+
+watch(detentsPerRotationInput, (detentsPerRotation) => {
+  nextTick(() => {
+    detentsPerRotationInput.value = Math.max(0, Math.min(Number(detentsPerRotation), 9999))
+  })
+  emit('update', { haptic: { detentCount: detentsPerRotation } })
 })
 </script>

@@ -29,7 +29,7 @@
       :actions="heldActions"
       class="p-2"
       @add="deviceStore.addKeyAction(null, appStore.selectedKey, 2)"
-      @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 3)"
+      @delete="(index) => deviceStore.removeKeyAction(index, appStore.selectedKey, 2)"
     />
   </ConfigSection>
 </template>
