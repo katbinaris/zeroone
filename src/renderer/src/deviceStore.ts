@@ -646,8 +646,8 @@ export const useDeviceStore = defineStore('device', {
   }
 })
 
-const sendDebounced = useDebounceFn((deviceid, jsonstr) => nanoIpc.send(deviceid, jsonstr), 5, {
-  maxWait: 10
+const sendDebounced = useDebounceFn((deviceid, jsonstr) => nanoIpc.send(deviceid, jsonstr), 10, {
+  maxWait: 20
 })
 
 export const initializeDevices = () => {

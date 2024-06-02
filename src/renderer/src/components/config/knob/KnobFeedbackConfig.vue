@@ -101,7 +101,7 @@ const deviceStore = useDeviceStore()
 //   }
 // }
 
-const outputRampValues = ref([5, 20, 50, 1000, 10000])
+const outputRampValues = ref([25, 40, 80, 200, 10000])
 
 const outputRampIndex = outputRampValues.value.indexOf(deviceStore.activeValue?.haptic?.outputRamp)
 const outputRampDampening = ref(outputRampIndex === -1 ? 2 : outputRampIndex)
