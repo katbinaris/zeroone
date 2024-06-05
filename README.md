@@ -6,7 +6,14 @@ Haptic Configuration Suite for [Binaris Devices](https://store.binaris.io/)
 
 ## ⚠️ Signed builds will be available soon, for now you can build and run the app locally
 
----
+## ✨ Features
+
+- 📃 Create and manage multiple profiles on your Nano_D++
+- 🎛️ Configure mappings for the Nano's knob and keys
+- 🤌 Customize the haptic feedback of your profiles
+- 🎨 Change up the lighting for each profile
+
+More features are on the way!
 
 ## 🚀 How to run the app from source
 
@@ -25,6 +32,8 @@ Haptic Configuration Suite for [Binaris Devices](https://store.binaris.io/)
 - 🔎 The built app will be available in the `dist` directory
 
 We recommend using [VSCode](https://code.visualstudio.com/) with the included recommended extensions for the best development experience 💪
+
+ZERO/ONE is built with [electron-vite](https://electron-vite.org/) and [Vue.js](https://vuejs.org/) and uses [shadcn-vue](https://www.shadcn-vue.com/) as a base for the UI.
 
 ---
 
