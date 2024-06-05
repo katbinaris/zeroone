@@ -4,40 +4,28 @@ Haptic Configuration Suite for [Binaris Devices](https://store.binaris.io/)
 
 ![zeroone-screenshot](https://github.com/katbinaris/zeroone/assets/34353377/7c9f576d-e142-4de2-a58f-ebb83ff6a472)
 
-## Running the code
+## ⚠️ Signed builds will be available soon, for now you can build and run the app locally
 
-- use VSCode (or WebStorm) with the appropriate Vue plugins (Vetur, i18n Ally, ESLint, Prettier, etc.)
-- run `pnpm i` to install dependencies
-- run `pnpm dev` to start the json-server and electron app
+---
 
-## Connecting your Nano
+## 🚀 How to run the app from source
 
-Plug the nano to the USB port. :-)
+- 🟩 Make sure you have [Node.js](https://nodejs.org/en/) installed (v20 or later)
 
-ZERO/ONE will automatically detect the Nano_D++ device.
+- 🏃 Install [pnpm](https://pnpm.io/installation) (a better alternative to npm)
 
-### Device connection states
+- ⬇️ Clone the repository and navigate to the project directory
 
-The connection between the device and the haptic controller software can be in the following states. Entering each state is associated with equivalent events emitted in the ZERO/ONE software:
+- 📚 Run `pnpm i` to install the dependencies
 
-**Attached**
+- 👨‍🔬 Run `pnpm dev` to start the app in development mode
 
-The device is attached when it is connected to USB.
+- 🛠️ Alternatively, you can run `pnpm build:win`, `pnpm build:mac`, or `pnpm build:linux` to build the app for your platform
 
-**Detached**
+- 🔎 The built app will be available in the `dist` directory
 
-The device is detached when disconnected from USB.
+We recommend using [VSCode](https://code.visualstudio.com/) with the included recommended extensions for the best development experience 💪
 
-**Connected**
+---
 
-The device is in connected state when the USB serial port is successfully opened.
-
-**Disconnected**
-
-The device enters disconnected state when the USB serial port is closed. 
-
-Note that a **connected** device is also always **attached**, and if the USB plug is pulled on a **connected** device, it becomes both **disconnected** and **detached** simultaneously. If the connection is closed without disconnecting USB, the device becomes **disconnected** but remains **attached**.
-
-
-
-
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/contains-cat-gifs.svg)](https://forthebadge.com)
