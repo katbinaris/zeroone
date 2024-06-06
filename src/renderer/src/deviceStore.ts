@@ -649,7 +649,10 @@ export const useDeviceStore = defineStore('device', {
           JSON.stringify({
             profile: this.currentProfileName,
             updates: {
-              knob: this.currentProfile!.knob
+              knob: this.currentProfile!.knob.map((v) => ({
+                haptic: { outputRamp: v.haptic.outputRamp },
+                type: v.type
+              }))
             }
           })
         )
@@ -666,7 +669,10 @@ export const useDeviceStore = defineStore('device', {
           JSON.stringify({
             profile: this.currentProfileName,
             updates: {
-              knob: this.currentProfile!.knob
+              knob: this.currentProfile!.knob.map((v) => ({
+                haptic: { detentStrength: v.haptic.detentStrength },
+                type: v.type
+              }))
             }
           })
         )
