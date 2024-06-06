@@ -118,6 +118,9 @@ const { nanoIpc } = window
 
 const messageCallbacks: ((title: string, message: string) => void)[] = []
 
+// Helper function to create an array with a single value at a specific index
+// The idea is to save space by only sending the updated value to the device
+// The firmware doesn't appear to handle this correctly atm :(
 const createUpdateArray = (index: number, value) => {
   const arr = Array(index + 1).fill({})
   arr[index] = value
@@ -645,7 +648,9 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({
             profile: this.currentProfileName,
-            updates: { knob: this.currentProfile!.knob }
+            updates: {
+              knob: this.currentProfile!.knob
+            }
           })
         )
         this.setDirtyState(true)
@@ -660,7 +665,9 @@ export const useDeviceStore = defineStore('device', {
           this.currentDeviceId!,
           JSON.stringify({
             profile: this.currentProfileName,
-            updates: { knob: this.currentProfile!.knob }
+            updates: {
+              knob: this.currentProfile!.knob
+            }
           })
         )
         this.setDirtyState(true)
