@@ -21,7 +21,7 @@
     </draggable>
     <button
       class="flex flex-1 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/50 p-2 text-sm text-muted-foreground hover:bg-zinc-800 hover:text-zinc-200"
-      @click="deviceStore.addKnobValue"
+      @click="deviceStore.addKnobValue()"
     >
       <Plus class="mr-2" /> Add a value
     </button>

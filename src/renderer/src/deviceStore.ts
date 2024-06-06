@@ -118,6 +118,12 @@ const { nanoIpc } = window
 
 const messageCallbacks: ((title: string, message: string) => void)[] = []
 
+const createUpdateArray = (index: number, value) => {
+  const arr = Array(index + 1).fill({})
+  arr[index] = value
+  return arr
+}
+
 export const useDeviceStore = defineStore('device', {
   state: () => ({
     attachedDeviceIds: [] as string[], // list of attached device ids
@@ -145,9 +151,12 @@ export const useDeviceStore = defineStore('device', {
       haptic: {
         mode: 0,
         startPos: 0,
-        endPos: Math.PI * 2,
-        detentCount: 10,
-        vernier: 10
+        endPos: 127,
+        detentCount: 127,
+        vernier: 0,
+        kxForce: 0,
+        outputRamp: 200,
+        detentStrength: 4
       }
     } as Value,
     defaultKeyAction: { type: 'next_profile' } as Action,
