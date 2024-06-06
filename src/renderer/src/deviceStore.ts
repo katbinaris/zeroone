@@ -401,14 +401,14 @@ export const useDeviceStore = defineStore('device', {
       }
     },
     cycleIdleTimeout() {
-      if (this.settings!.idleTimeout === 0) {
+      if (this.settings!.idleTimeout === 999999999) {
         this.setIdleTimeout(10000)
       } else if (this.settings!.idleTimeout === 10000) {
         this.setIdleTimeout(30000)
       } else if (this.settings!.idleTimeout === 30000) {
         this.setIdleTimeout(60000)
       } else {
-        this.setIdleTimeout(0)
+        this.setIdleTimeout(999999999)
       }
     },
     setPosition(position: number) {

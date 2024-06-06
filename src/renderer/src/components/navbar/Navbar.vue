@@ -67,7 +67,7 @@
               <p>Idle Timeout:&nbsp;</p>
               <p>
                 {{
-                  deviceStore.settings?.idleTimeout
+                  deviceStore.settings?.idleTimeout !== 999999999
                     ? `${Math.round(deviceStore.settings.idleTimeout / 1000)}s`
                     : 'Off'
                 }}
