@@ -3,8 +3,10 @@ import { PortInfo } from '@serialport/bindings-interface'
 import { EventEmitter } from 'events'
 
 // JTAG interface, TODO: change me!
-const NANO_PRODUCT_ID = '8010'
-const NANO_VENDOR_ID = '239A'
+const NANO_VID_PID_PAIRS = [
+  { vid: '239A', pid: '8010' },
+  { vid: '303A', pid: '1001' }
+]
 const NANO_BAUD_RATE = 115200
 
 class NanoSerialApi extends EventEmitter {
@@ -18,9 +20,10 @@ class NanoSerialApi extends EventEmitter {
           const found_nano_devices: string[] = []
           for (const port of ports) {
             if (
-              port.productId?.toUpperCase() === NANO_PRODUCT_ID &&
-              port.vendorId?.toUpperCase() === NANO_VENDOR_ID &&
-              port.serialNumber
+              port.serialNumber &&
+              NANO_VID_PID_PAIRS.some(
+                (pair) => pair.vid === port.vendorId && pair.pid === port.productId
+              )
             ) {
               found_nano_devices.push(port.serialNumber)
               if (this.all_nano_devices[port.serialNumber] === undefined) {
@@ -30,13 +33,6 @@ class NanoSerialApi extends EventEmitter {
               }
             }
           }
-          resolve(found_nano_devices)
-          for (const serialNumber in this.all_nano_devices) {
-            if (found_nano_devices.indexOf(serialNumber) === -1) {
-              delete this.all_nano_devices[serialNumber]
-              this.emit('nanoSerialApi:device-detached', serialNumber)
-              console.log('detached', serialNumber)
-            }
           }
         })
         .catch((error) => {
