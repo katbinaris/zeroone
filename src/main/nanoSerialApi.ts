@@ -33,7 +33,6 @@ class NanoSerialApi extends EventEmitter {
               }
             }
           }
-          }
         })
         .catch((error) => {
           reject(error)
