@@ -120,6 +120,7 @@ class NanoSerialApi extends EventEmitter {
         })
         port.open((err) => {
           if (err) {
+            console.log('Error opening port: ', err)
             reject(err)
           }
         })
