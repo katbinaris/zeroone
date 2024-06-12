@@ -1,11 +1,10 @@
 on:
   push:
     branches:
-      - 'main'
-      - 'release'
+      - '*'
   workflow_dispatch:
 jobs:
-  release:
+  build:
     strategy:
       fail-fast: false
       matrix:
@@ -25,16 +24,9 @@ jobs:
             pnpm_command: 'build:mac'
             binary_path: dist/*.dmg
             asset_name: zeroone.dmg
-    name: ${{ matrix.name }} Release
+    name: ${{ matrix.name }} Build
     runs-on: ${{ matrix.os }}
     steps:
-    - name: 🔢 Semantic Versioning
-      id: version
-      uses: paulhatch/semantic-version@v5.4.0
-      with:
-        tag_prefix: "v"
-        bump_each_commit: true
-
     - name: 🚚 Checkout latest code
       uses: actions/checkout@v4
 
@@ -59,14 +51,10 @@ jobs:
         pnpm i
         pnpm ${{ matrix.pnpm_command }}
 
-    - name: 📦 Release binary
-      uses: svenstaro/upload-release-action@v2
+    - name: 📦 Upload artifact
+      uses: actions/upload-artifact@v4
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ matrix.binary_path }}
-        asset_name: ${{ matrix.asset_name }}
-        tag: ${{ steps.version.outputs.version_tag }}
-        file_glob: true
-        overwrite: true
+        name: ${{ matrix.asset_name }}
+        path: ${{ matrix.binary_path }}
 permissions:
   contents: write
