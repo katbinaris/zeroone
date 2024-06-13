@@ -22,7 +22,9 @@ class NanoSerialApi extends EventEmitter {
             if (
               port.serialNumber &&
               NANO_VID_PID_PAIRS.some(
-                (pair) => pair.vid === port.vendorId && pair.pid === port.productId
+                (pair) =>
+                  pair.vid === port.vendorId?.toUpperCase() &&
+                  pair.pid === port.productId?.toUpperCase()
               )
             ) {
               found_nano_devices.push(port.serialNumber)
